@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaBasic-09(String) | Java Server Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="문자열 (Strings)문자열의 특징 클래스로 구현되어 있다. 내부에 문자의 배열로 데이터가 구현되어 있다. 한번 만든 문자열은 변하지 않는다. (Immutable)  문자열의 생성 new 키워드를 이용하여 생성 1String string &#x3D; new String(&quot;문자열 생성&quot;);  new 키워드 없이 생성 (권장) 1String stri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaBasic-09(String)">
+<meta property="og:url" content="https://kimyechan.github.io/2020/08/10/JavaBasic-09-String/index.html">
+<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="문자열 (Strings)문자열의 특징 클래스로 구현되어 있다. 내부에 문자의 배열로 데이터가 구현되어 있다. 한번 만든 문자열은 변하지 않는다. (Immutable)  문자열의 생성 new 키워드를 이용하여 생성 1String string &#x3D; new String(&quot;문자열 생성&quot;);  new 키워드 없이 생성 (권장) 1String stri">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-10T10:28:30.000Z">
+<meta property="article:modified_time" content="2020-08-10T10:33:41.787Z">
+<meta property="article:author" content="Yechan Kim">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Java Server Developer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Java Server Developer</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Kimyechan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaBasic-09-String" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/10/JavaBasic-09-String/" class="article-date">
+  <time datetime="2020-08-10T10:28:30.000Z" itemprop="datePublished">2020-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaBasic-09(String)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="문자열-Strings"><a href="#문자열-Strings" class="headerlink" title="문자열 (Strings)"></a>문자열 (Strings)</h1><h2 id="문자열의-특징"><a href="#문자열의-특징" class="headerlink" title="문자열의 특징"></a>문자열의 특징</h2><ul>
+<li>클래스로 구현되어 있다.</li>
+<li>내부에 문자의 배열로 데이터가 구현되어 있다.</li>
+<li>한번 만든 문자열은 변하지 않는다. (Immutable)</li>
+</ul>
+<h2 id="문자열의-생성"><a href="#문자열의-생성" class="headerlink" title="문자열의 생성"></a>문자열의 생성</h2><ul>
+<li><p>new 키워드를 이용하여 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="keyword">new</span> String(<span class="string">&quot;문자열 생성&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>new 키워드 없이 생성 (권장)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="string">&quot;문자열 생성&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="문자열-메소드"><a href="#문자열-메소드" class="headerlink" title="문자열 메소드"></a>문자열 메소드</h2><table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>length()</td>
+<td><code>public int length()</code></td>
+<td>문자열의 길이를 출력</td>
+</tr>
+<tr>
+<td>charAt()</td>
+<td><code>public char charAt(int index)</code></td>
+<td>index번째에 위치한 문자 출력</td>
+</tr>
+<tr>
+<td>indexOf()</td>
+<td><code>public int indexOf(char ch)</code></td>
+<td>ch가 위치한 index 출력. 없을 시 -1</td>
+</tr>
+<tr>
+<td>equals()</td>
+<td><code>public boolean equals(Object anObject</code></td>
+<td>anObject와 비교한 결과 출력</td>
+</tr>
+<tr>
+<td>equalsIgnoreCase()</td>
+<td><code>public boolean equalsIgnoreCase(String anotherString)</code></td>
+<td>대소문자 구분없이 anotherString과 비교 결과 출력</td>
+</tr>
+<tr>
+<td>replace()</td>
+<td><code>public String replace(char odlChar, char newChar)</code></td>
+<td>oldChar를 찾아 newChar로 변경된 문자열 출력</td>
+</tr>
+<tr>
+<td>substring()</td>
+<td><code>public String substring(int beginIndex, int endIndex)</code></td>
+<td>문자열을 beginIndex부터 endIndex-1까지 잘라서 출력</td>
+</tr>
+<tr>
+<td>trim()</td>
+<td><code>public String trim()</code></td>
+<td>문자열 좌우 공백을 없앤 결과를 출력</td>
+</tr>
+<tr>
+<td>matches()</td>
+<td><code>public boolean matches(String regex)</code></td>
+<td>문자열을 정규표현식 regex 확인 결과 출력</td>
+</tr>
+<tr>
+<td>split()</td>
+<td><code>public String[] split(String regex)</code></td>
+<td>문자열을 정규표현식 형태로 나눈 후 배열로 출력</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-09-String/" data-id="ckdodp8jj0008rwa847vr138f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/08/10/JavaBasic-07-Arrays/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JavaBasic-07(Arrays)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/10/JavaBasic-08-NDArrays/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaBasic-08(NDArrays)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/10/JavaBasic-07-Arrays/">JavaBasic-07(Arrays)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/10/JavaBasic-09-String/">JavaBasic-09(String)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/10/JavaBasic-08-NDArrays/">JavaBasic-08(NDArrays)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/10/JavaBasic-06-Loops/">JavaBasic-06(Loops)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/10/JavaBasic-05-Conditional/">JavaBasic-05(Conditional)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Yechan Kim<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
