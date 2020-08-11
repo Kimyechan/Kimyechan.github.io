@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OOP-3(JavaDoc) | Java Server Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JavaDoc 주석JavaDoc 주석이란 Java 클래스 및 패키지를 문서화 하기 위한 주석 클래스의 용도와 사용법 등을 설명하는 규칙 자동으로 JavaDoc 문서를 생성할 수 있음  JavaDoc 작성 방법12345678910111213141516171819202122232425262728293031323334&#x2F;** * Class description *">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP-3(JavaDoc)">
+<meta property="og:url" content="https://kimyechan.github.io/2020/08/11/OOP-3-JavaDoc/index.html">
+<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="JavaDoc 주석JavaDoc 주석이란 Java 클래스 및 패키지를 문서화 하기 위한 주석 클래스의 용도와 사용법 등을 설명하는 규칙 자동으로 JavaDoc 문서를 생성할 수 있음  JavaDoc 작성 방법12345678910111213141516171819202122232425262728293031323334&#x2F;** * Class description *">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-11T11:57:19.000Z">
+<meta property="article:modified_time" content="2020-08-11T12:01:40.792Z">
+<meta property="article:author" content="Yechan Kim">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Java Server Developer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Java Server Developer</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Kimyechan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OOP-3-JavaDoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/11/OOP-3-JavaDoc/" class="article-date">
+  <time datetime="2020-08-11T11:57:19.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OOP-3(JavaDoc)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JavaDoc-주석"><a href="#JavaDoc-주석" class="headerlink" title="JavaDoc 주석"></a>JavaDoc 주석</h1><h2 id="JavaDoc-주석이란"><a href="#JavaDoc-주석이란" class="headerlink" title="JavaDoc 주석이란"></a>JavaDoc 주석이란</h2><ul>
+<li>Java 클래스 및 패키지를 문서화 하기 위한 주석</li>
+<li>클래스의 용도와 사용법 등을 설명하는 규칙</li>
+<li>자동으로 JavaDoc 문서를 생성할 수 있음</li>
+</ul>
+<h2 id="JavaDoc-작성-방법"><a href="#JavaDoc-작성-방법" class="headerlink" title="JavaDoc 작성 방법"></a>JavaDoc 작성 방법</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Class description</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Author Name</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for a member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> memberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for another member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> secondMemberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructor description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x description for parameter x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y description for parameter y</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.memberVar = x;</span><br><span class="line">        <span class="keyword">this</span>.secondMemberVar = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A member method description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string description for parameter string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> description for the return value</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ClassA</span><span class="params">(String string)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-3-JavaDoc/" data-id="ckdpwa0df000c2na8d74b32z5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/08/11/OOP-4-Inheritance/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OOP-4(Inheritance)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/11/OOP-2-Class/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OOP-2(Class)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/11/OOP-7-Polymorphism/">OOP-7(Polymorphism)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/11/OOP-6-Modifier/">OOP-6(Modifier)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/11/OOP-5-Package/">OOP-5(Package)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/11/OOP-4-Inheritance/">OOP-4(Inheritance)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/11/OOP-3-JavaDoc/">OOP-3(JavaDoc)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Yechan Kim<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
