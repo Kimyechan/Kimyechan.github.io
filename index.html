@@ -86,11 +86,90 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="Wrapper-클래스-Wrapper-Class"><a href="#Wrapper-클래스-Wrapper-Class" class="headerlink" title="Wrapper 클래스 (Wrapper Class)"></a>Wrapper 클래스 (Wrapper Class)</h1><h2 id="Wrapper-클래스란"><a href="#Wrapper-클래스란" class="headerlink" title="Wrapper 클래스란"></a>Wrapper 클래스란</h2><ul>
+<li>기본형 타입을 객체로 사용하기 위한 클래스</li>
+</ul>
+<h2 id="Wrapper-클래스의-종류"><a href="#Wrapper-클래스의-종류" class="headerlink" title="Wrapper 클래스의 종류"></a>Wrapper 클래스의 종류</h2><table>
+<thead>
+<tr>
+<th>기본형</th>
+<th>Wrapper 클래스</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+</tbody></table>
+<h2 id="Wrapper-객체-생성"><a href="#Wrapper-객체-생성" class="headerlink" title="Wrapper 객체 생성"></a>Wrapper 객체 생성</h2><ul>
+<li><p>생성자를 이용한 객체 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer integer = <span class="keyword">new</span> Integer(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>valueOf를 이용한 객체 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer integer = Integer.valueOf(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Autoboxing-amp-Unboxing"><a href="#Autoboxing-amp-Unboxing" class="headerlink" title="Autoboxing &amp; Unboxing"></a>Autoboxing &amp; Unboxing</h2><ul>
+<li><p>오토박싱 (Autoboxing)</p>
+<ul>
+<li>Java1.5부터 추가된 기능으로, 객체로 다루어야 할 때 자동으로 Wrapper 클래스로 변경하는 기능</li>
+</ul>
+</li>
+<li><p>언박싱 (Unboxing)</p>
+<ul>
+<li>Wrapper 객체를 기본형으로 자동으로 변경하는 기능</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line">Integer wrapped = i;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span> + wrapped;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Wrapper-타입의-값-비교"><a href="#Wrapper-타입의-값-비교" class="headerlink" title="Wrapper 타입의 값 비교"></a>Wrapper 타입의 값 비교</h2><ul>
+<li><p>Wrapper 타입은 객체이므로, ==를 이용하여 값을 비교할 수 없다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Integer intOne = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">Integer intTwo = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(intOne == intTwo); <span class="comment">// false</span></span><br><span class="line">System.out.println(intOne.equals(intTwo)) <span class="comment">// true</span></span><br><span class="line">System.out.println(intOne == <span class="number">100</span>) <span class="comment">// true (Unboxing)</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="문자열의-기본-자료형-변환"><a href="#문자열의-기본-자료형-변환" class="headerlink" title="문자열의 기본 자료형 변환"></a>문자열의 기본 자료형 변환</h2><ul>
+<li><p>Parsing 정적 메소드를 이용한 변환</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = Integer.parseInt(<span class="string">&quot;100&quot;</span>);</span><br><span class="line"><span class="keyword">long</span> y = Long.parseLong(<span class="string">&quot;512345124&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Wrapper 객체로의 변환</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer intObj = Integer.valueOf(<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">Integer intObjTwo = <span class="keyword">new</span> Integer(<span class="string">&quot;1234&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/13/OOP-Advanced05-WrapperClass-md/" data-id="ckdsqumb2000l9ja82j8a2h9l" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/13/OOP-Advanced05-WrapperClass-md/" data-id="ckdsqvpt7000md8a8ez8ifdws" class="article-share-link">Share</a>
       
       
     </footer>
@@ -196,7 +275,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/13/OOP-Advanced04-Generic-md/" data-id="ckdsqumb1000k9ja87r0u7d7l" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/13/OOP-Advanced04-Generic-md/" data-id="ckdsqvpt6000kd8a85o7r3hfs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -257,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced03-Enumeration/" data-id="ckdsqumb1000j9ja83nq27594" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced03-Enumeration/" data-id="ckdsqvpt5000jd8a8fmsi350e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -338,7 +417,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced02-Interface/" data-id="ckdsqumb0000i9ja89ots5toc" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced02-Interface/" data-id="ckdsqvpt5000id8a81a5k4n94" class="article-share-link">Share</a>
       
       
     </footer>
@@ -387,7 +466,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/" data-id="ckdsqumb0000h9ja89gmgaelm" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/" data-id="ckdsqvpt4000hd8a8fsw23efq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -441,7 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-7-Polymorphism/" data-id="ckdsqumaz000g9ja81pdze6di" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-7-Polymorphism/" data-id="ckdsqvpt3000gd8a868l75hhw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -582,7 +661,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-6-Modifier/" data-id="ckdsqumaz000f9ja8hnnx8ziy" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-6-Modifier/" data-id="ckdsqvpt3000fd8a8br2a5dk1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -638,7 +717,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-5-Package/" data-id="ckdsqumay000e9ja83iyw7c32" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-5-Package/" data-id="ckdsqvpt1000ed8a824cs3pgl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -722,7 +801,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-4-Inheritance/" data-id="ckdsqumax000d9ja8gc6u9gbk" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-4-Inheritance/" data-id="ckdsqvpt0000dd8a87u8c0ler" class="article-share-link">Share</a>
       
       
     </footer>
@@ -763,7 +842,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-3-JavaDoc/" data-id="ckdsqumax000c9ja8e7hm3qyt" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-3-JavaDoc/" data-id="ckdsqvpt0000cd8a8bzcr42yd" class="article-share-link">Share</a>
       
       
     </footer>
