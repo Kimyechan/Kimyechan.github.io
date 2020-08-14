@@ -64,6 +64,131 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OOP-4-Inheritance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/11/OOP-4-Inheritance/" class="article-date">
+  <time datetime="2020-08-11T11:57:41.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/11/OOP-4-Inheritance/">OOP-4(Inheritance)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="상속-Inheritence"><a href="#상속-Inheritence" class="headerlink" title="상속 (Inheritence)"></a>상속 (Inheritence)</h1><h2 id="상속이란"><a href="#상속이란" class="headerlink" title="상속이란"></a>상속이란</h2><ul>
+<li>클래스의 모든 멤버 변수 및 메소드를 계승하여 새로운 클래스를 생성하는 것</li>
+<li>상속 대상 - 조상 클래스, 부모 클래스, 상위 클래스, 슈퍼 클래스</li>
+<li>상속 결과 - 자손 클래스, 자식 클래스, 하위 클래스, 서브 클래스</li>
+<li>상속 대상일 필요 조건을 달성하므로 <code>IS-A 관계</code>라고도 부른다.</li>
+</ul>
+<h2 id="클래스의-관계"><a href="#클래스의-관계" class="headerlink" title="클래스의 관계"></a>클래스의 관계</h2><h3 id="클래스의-상속"><a href="#클래스의-상속" class="headerlink" title="클래스의 상속"></a>클래스의 상속</h3><ul>
+<li><p>부모 클래스</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;일하기&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;잠자기&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>자식 클래스</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String mainLang;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;코딩하기&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String major;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;밤새 코딩하기&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="클래스의-포함"><a href="#클래스의-포함" class="headerlink" title="클래스의 포함"></a>클래스의 포함</h3><ul>
+<li><p>상속과 유사하나, 한 클래스가 다른 클래스의 인스턴스를 포함하는 관계로 되어 있다.</p>
+</li>
+<li><p>내부에 포함하고 있어, <code>HAS-A</code> 관계라고 부른다.</p>
+</li>
+<li><p>클래스 컴포지션 (Composition)이라 부른다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainMachine</span> </span>&#123;</span><br><span class="line">    String model;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainMachine</span><span class="params">(String model)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.model = model;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    MainMachine machine = <span class="keyword">new</span> MainMachine(<span class="string">&quot;Macbook Air&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(machine.model + <span class="string">&quot;(으)로 코딩하기&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="메소드-재정의"><a href="#메소드-재정의" class="headerlink" title="메소드 재정의"></a>메소드 재정의</h2><ul>
+<li><p>메소드의 기능을 재정의하는 것을 메소드 재정의 (Method overriding)이라 부른다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;아무 코드나 일단 적어보았다.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;깔끔하고 예쁜 코드를 적어보았다.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="super-키워드"><a href="#super-키워드" class="headerlink" title="super 키워드"></a>super 키워드</h2><ul>
+<li><p><code>this</code>가 현재 객체를 참조하듯, <code>super</code>는 부모 객체를 참조한다.</p>
+</li>
+<li><p><code>super</code>로 부모의 부모 객체에는 접근할 수 없다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    String x = <span class="string">&quot;foo&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">    String x = <span class="string">&quot;bar&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String x = <span class="string">&quot;method&quot;</span>;</span><br><span class="line">        System.out.println(x);</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.x);</span><br><span class="line">        System.out.println(<span class="keyword">super</span>.x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>부모의 생성자를 호출하는 <code>super</code></p>
+</li>
+<li><p>반드시 생성자의 첫줄에만 올 수 있음</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    String x;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(String x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    String y;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bar</span><span class="params">(String x, String y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(x);</span><br><span class="line">        <span class="keyword">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-4-Inheritance/" data-id="ckdu46bel000ewoa8cuem8u6p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OOP-3-JavaDoc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/11/OOP-3-JavaDoc/" class="article-date">
+  <time datetime="2020-08-11T11:57:19.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/11/OOP-3-JavaDoc/">OOP-3(JavaDoc)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JavaDoc-주석"><a href="#JavaDoc-주석" class="headerlink" title="JavaDoc 주석"></a>JavaDoc 주석</h1><h2 id="JavaDoc-주석이란"><a href="#JavaDoc-주석이란" class="headerlink" title="JavaDoc 주석이란"></a>JavaDoc 주석이란</h2><ul>
+<li>Java 클래스 및 패키지를 문서화 하기 위한 주석</li>
+<li>클래스의 용도와 사용법 등을 설명하는 규칙</li>
+<li>자동으로 JavaDoc 문서를 생성할 수 있음</li>
+</ul>
+<h2 id="JavaDoc-작성-방법"><a href="#JavaDoc-작성-방법" class="headerlink" title="JavaDoc 작성 방법"></a>JavaDoc 작성 방법</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Class description</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Author Name</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for a member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> memberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for another member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> secondMemberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructor description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x description for parameter x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y description for parameter y</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.memberVar = x;</span><br><span class="line">        <span class="keyword">this</span>.secondMemberVar = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A member method description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string description for parameter string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> description for the return value</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ClassA</span><span class="params">(String string)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-3-JavaDoc/" data-id="ckdu46bel000dwoa84idd9l4g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OOP-2-Class" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/11/OOP-2-Class/" class="article-date">
@@ -331,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-2-Class/" data-id="ckdsr0om1000bs5a845sb02zx" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-2-Class/" data-id="ckdu46bek000cwoa81kv45jzf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -398,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-1-Basic/" data-id="ckdsr0om1000as5a8fpe9gn24" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/11/OOP-1-Basic/" data-id="ckdu46bei000bwoa8dncj2dx0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -472,7 +597,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-07-Arrays/" data-id="ckdsr0oly0006s5a8ee8m63y0" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-07-Arrays/" data-id="ckdu46beg0007woa8htuw6boc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -581,7 +706,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-09-String/" data-id="ckdsr0olz0008s5a8g0nkcylh" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-09-String/" data-id="ckdu46beh0009woa8gft4dz5r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -644,7 +769,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-08-NDArrays/" data-id="ckdsr0oly0007s5a8h0p1gsir" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-08-NDArrays/" data-id="ckdu46beg0008woa82xn8h5hi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -712,7 +837,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-06-Loops/" data-id="ckdsr0olx0005s5a85rx42rav" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-06-Loops/" data-id="ckdu46bee0005woa8fyx88vba" class="article-share-link">Share</a>
       
       
     </footer>
@@ -774,7 +899,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-05-Conditional/" data-id="ckdsr0olx0004s5a8cwo1dk79" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-05-Conditional/" data-id="ckdu46bed0004woa8gg08gt6p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1127,573 +1252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/" data-id="ckdsr0olv0002s5a8a6gmh5vt" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaBasic-03-InputOutput" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/10/JavaBasic-03-InputOutput/" class="article-date">
-  <time datetime="2020-08-10T10:26:20.000Z" itemprop="datePublished">2020-08-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/10/JavaBasic-03-InputOutput/">JavaBasic-03(InputOutput)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="자료의-입출력-Inputs-and-Outputs"><a href="#자료의-입출력-Inputs-and-Outputs" class="headerlink" title="자료의 입출력 (Inputs and Outputs)"></a>자료의 입출력 (Inputs and Outputs)</h1><h2 id="출력-메소드"><a href="#출력-메소드" class="headerlink" title="출력 메소드"></a>출력 메소드</h2><ul>
-<li>포맷 문자열을 이용한 문자열/기본형 출력</li>
-<li>객체를 직접 출력</li>
-</ul>
-<h3 id="PrintStream의-출력-메소드"><a href="#PrintStream의-출력-메소드" class="headerlink" title="PrintStream의 출력 메소드"></a>PrintStream의 출력 메소드</h3><table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>메소드 선언</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>print()</td>
-<td><code>public void print(Object obj)</code></td>
-<td>obj를 스트림으로 출력한다.</td>
-</tr>
-<tr>
-<td>println()</td>
-<td><code>public void println(Object x)</code></td>
-<td>x를 스트림으로 출력하고 줄바꿈한다.</td>
-</tr>
-<tr>
-<td>printf()</td>
-<td><code>public PrintStream printf(String format, Object ... args)</code></td>
-<td>Format 맞추어 args를 출력한다.</td>
-</tr>
-</tbody></table>
-<h3 id="포맷-문자열-지시자"><a href="#포맷-문자열-지시자" class="headerlink" title="포맷 문자열 지시자"></a>포맷 문자열 지시자</h3><table>
-<thead>
-<tr>
-<th>지시자</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%b</td>
-<td>boolean</td>
-</tr>
-<tr>
-<td>%d</td>
-<td>decimal integer</td>
-</tr>
-<tr>
-<td>%o</td>
-<td>octal</td>
-</tr>
-<tr>
-<td>%x, %X</td>
-<td>hexadecimal</td>
-</tr>
-<tr>
-<td>%f</td>
-<td>decial float</td>
-</tr>
-<tr>
-<td>%e, %E</td>
-<td>exponent</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>character</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>string</td>
-</tr>
-<tr>
-<td>%n</td>
-<td>newline</td>
-</tr>
-</tbody></table>
-<h3 id="지시자-자릿수-표현"><a href="#지시자-자릿수-표현" class="headerlink" title="지시자 자릿수 표현"></a>지시자 자릿수 표현</h3><table>
-<thead>
-<tr>
-<th>표현</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%nd</td>
-<td>최소 n칸을 사용하고 숫자를 오른쪽 정렬</td>
-</tr>
-<tr>
-<td>%-nd</td>
-<td>최소 n칸을 사용하고 숫자를 왼쪽 정렬</td>
-</tr>
-<tr>
-<td>%0nd</td>
-<td>최소 n칸을 사용하고 빈칸은 0으로 채움</td>
-</tr>
-<tr>
-<td>%n.mf</td>
-<td>최소 n칸을 사용하고 소수점 이하 m자리까지 표현</td>
-</tr>
-</tbody></table>
-<h3 id="시간을-출력하는-포맷-문자"><a href="#시간을-출력하는-포맷-문자" class="headerlink" title="시간을 출력하는 포맷 문자"></a>시간을 출력하는 포맷 문자</h3><table>
-<thead>
-<tr>
-<th>지시자</th>
-<th>설명</th>
-<th>예시</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%tH</td>
-<td>24시간 표기법의 시간</td>
-<td>22</td>
-</tr>
-<tr>
-<td>%tl</td>
-<td>12시간 표기법의 시간</td>
-<td>08</td>
-</tr>
-<tr>
-<td>%tM</td>
-<td>분</td>
-<td>59</td>
-</tr>
-<tr>
-<td>%tS</td>
-<td>초</td>
-<td>60</td>
-</tr>
-<tr>
-<td>%tp</td>
-<td>오전/오후</td>
-<td>AM</td>
-</tr>
-<tr>
-<td>%tT</td>
-<td>%tH:%tM:%tS</td>
-<td>23:11:06</td>
-</tr>
-<tr>
-<td>%tR</td>
-<td>%tH:%tM</td>
-<td>16:42</td>
-</tr>
-<tr>
-<td>%tr</td>
-<td>%tl:%tM:%tS %tp</td>
-<td>04:15:55 PM</td>
-</tr>
-</tbody></table>
-<h3 id="날짜를-출력하는-포맷-문자"><a href="#날짜를-출력하는-포맷-문자" class="headerlink" title="날짜를 출력하는 포맷 문자"></a>날짜를 출력하는 포맷 문자</h3><table>
-<thead>
-<tr>
-<th>지시자</th>
-<th>설명</th>
-<th>예시</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%tB</td>
-<td>월</td>
-<td>March</td>
-</tr>
-<tr>
-<td>%tb</td>
-<td>축약형 월</td>
-<td>Mar</td>
-</tr>
-<tr>
-<td>%tm</td>
-<td>월</td>
-<td>03</td>
-</tr>
-<tr>
-<td>%tA</td>
-<td>요일</td>
-<td>Monday</td>
-</tr>
-<tr>
-<td>%ta</td>
-<td>축약형 요일</td>
-<td>Mon</td>
-</tr>
-<tr>
-<td>%tY</td>
-<td>년도</td>
-<td>2020</td>
-</tr>
-<tr>
-<td>%ty</td>
-<td>축약형 년도</td>
-<td>20</td>
-</tr>
-<tr>
-<td>%td</td>
-<td>일</td>
-<td>09</td>
-</tr>
-<tr>
-<td>%te</td>
-<td>일</td>
-<td>9</td>
-</tr>
-<tr>
-<td>%tZ</td>
-<td>Time Zone</td>
-<td>KST</td>
-</tr>
-<tr>
-<td>%tD</td>
-<td>%tm/%td/%ty</td>
-<td>02/24/89</td>
-</tr>
-<tr>
-<td>%tF</td>
-<td>%tY-%tm-%td</td>
-<td>1989-02-24</td>
-</tr>
-<tr>
-<td>%tc</td>
-<td>%ta %tb %td %tT %tZ %tY</td>
-<td>Sun Feb 24 07:20:15 KST 1989</td>
-</tr>
-</tbody></table>
-<h2 id="입력-메소드"><a href="#입력-메소드" class="headerlink" title="입력 메소드"></a>입력 메소드</h2><ul>
-<li><p>Scanner 클래스를 이용하여 입력받을 수 있다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Scanner 클래스의 주요 메소드</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>메소드 선언</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>next()</td>
-<td><code>public String next()</code></td>
-<td>공백을 기준으로 한 단어씩 입력받는다.</td>
-</tr>
-<tr>
-<td>nextLine()</td>
-<td><code>public String nextLine()</code></td>
-<td>한 줄 전체를 입력받는다.</td>
-</tr>
-<tr>
-<td>nextInt()</td>
-<td><code>public int nextInt()</code></td>
-<td><code>int</code> 값을 입력받는다.</td>
-</tr>
-<tr>
-<td>nextDouble()</td>
-<td><code>public double nextDouble()</code></td>
-<td><code>double</code> 값을 입력 받는다.</td>
-</tr>
-<tr>
-<td>close()</td>
-<td><code>public void close()</code></td>
-<td>입력 스트림을 종료한다.</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/" data-id="ckdsr0olw0003s5a8gaud6qev" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaBasic-02-DataType" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/10/JavaBasic-02-DataType/" class="article-date">
-  <time datetime="2020-08-10T10:25:44.000Z" itemprop="datePublished">2020-08-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/10/JavaBasic-02-DataType/">JavaBasic-02(DataType)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="자료형-Data-Type"><a href="#자료형-Data-Type" class="headerlink" title="자료형 (Data Type)"></a>자료형 (Data Type)</h1><h2 id="자료형이란"><a href="#자료형이란" class="headerlink" title="자료형이란"></a>자료형이란</h2><ul>
-<li><p>변수의 종류, 타입</p>
-</li>
-<li><p>기본형 (Primitive Type)</p>
-<ul>
-<li><p>값을 변수에 직접 저장하는 자료형</p>
-<table>
-<thead>
-<tr>
-<th>종류</th>
-<th>자료형</th>
-<th>크기 (byte)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>문자</td>
-<td><code>char</code></td>
-<td>2</td>
-</tr>
-<tr>
-<td>정수</td>
-<td><code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code></td>
-<td>1, 2, 4, 8</td>
-</tr>
-<tr>
-<td>실수</td>
-<td><code>float</code>, <code>double</code></td>
-<td>4, 8</td>
-</tr>
-<tr>
-<td>논리</td>
-<td><code>boolean</code></td>
-<td>1</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>정수형의 값 표현 범위</p>
-<table>
-<thead>
-<tr>
-<th>자료형</th>
-<th>범위</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>byte</code></td>
-<td>-2^7 ~ 2^7 - 1</td>
-</tr>
-<tr>
-<td><code>short</code></td>
-<td>-2^15 ~ 2^15 - 1</td>
-</tr>
-<tr>
-<td><code>int</code></td>
-<td>-2^31 ~ 2^31 - 1</td>
-</tr>
-<tr>
-<td><code>long</code></td>
-<td>-2^63 ~ 2^63 - 1</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>실수형의 값 표현 범위</p>
-<table>
-<thead>
-<tr>
-<th>자료형</th>
-<th>범위</th>
-<th>m</th>
-<th>e</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>float</code></td>
-<td>-m * 10^e ~ m * 10^e</td>
-<td>23</td>
-<td>8</td>
-</tr>
-<tr>
-<td><code>double</code></td>
-<td>-m * 10^e ~ m * 10^e</td>
-<td>52</td>
-<td>11</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>참조형 (Reference Type)</p>
-<ul>
-<li>값을 직접 저장하지 않고, 값이 저장된 주소를 저장<br>ex) <code>Date birthDay = new Date();</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="여러가지-자료형"><a href="#여러가지-자료형" class="headerlink" title="여러가지 자료형"></a>여러가지 자료형</h2><h3 id="정수형"><a href="#정수형" class="headerlink" title="정수형"></a>정수형</h3><ul>
-<li>정수 리터럴<ul>
-<li>진수 표기법<table>
-<thead>
-<tr>
-<th>진수법</th>
-<th>접두어</th>
-<th>예시</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10진수(decimal)</td>
-<td>-</td>
-<td><code>32</code></td>
-</tr>
-<tr>
-<td>2진수(binary)</td>
-<td>0b</td>
-<td><code>0b1011</code></td>
-</tr>
-<tr>
-<td>8진수(octal)</td>
-<td>0</td>
-<td><code>0342</code></td>
-</tr>
-<tr>
-<td>16진수(hexadecimal)</td>
-<td>0x</td>
-<td><code>0x4A</code></td>
-</tr>
-</tbody></table>
-</li>
-<li>정수 리터럴은 기본적으로 <code>int</code> 자료형</li>
-<li><code>int</code> 범위를 넘어서는 리터럴의 경우 <code>L</code>을 붙여서 표기<br>ex) <code>long largeValue = 100000000000L;</code></li>
-<li>가독성 향상을 위해 세자리 수 마다 <code>_</code>를 이용해 천단위 표기<br>ex) <code>long largeValue = 100_000_000_000L;</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="실수형"><a href="#실수형" class="headerlink" title="실수형"></a>실수형</h3><ul>
-<li>실수 리터럴<ul>
-<li>실수 리터럴은 기본적으로 <code>double</code> 자료형</li>
-<li><code>f</code>를 붙여 <code>float</code> 타입을 표현할 수 있음<br>ex) <code>float value = 14.42f;</code></li>
-<li><code>e</code>를 이용해 지수 표현을 할 수 있음<br>ex) <code>double value = 1.42e3;</code> 1.42 * 10^3 = 1420</li>
-</ul>
-</li>
-</ul>
-<h3 id="문자형"><a href="#문자형" class="headerlink" title="문자형"></a>문자형</h3><ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.ascii-code.com/">ASCII 코드</a></p>
-<ul>
-<li>작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨<br>ex) <code>char asciiCharacter = &#39;A&#39;;</code></li>
-<li>ASCII 코드의 특수 문자 입력</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>의미</th>
-<th>표시</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>tab</td>
-<td><code>\t</code></td>
-</tr>
-<tr>
-<td>backspace</td>
-<td><code>\b</code></td>
-</tr>
-<tr>
-<td>newline</td>
-<td><code>\n</code></td>
-</tr>
-<tr>
-<td>form feed</td>
-<td><code>\f</code></td>
-</tr>
-<tr>
-<td>\</td>
-<td><code>\\</code></td>
-</tr>
-<tr>
-<td>carriage return</td>
-<td><code>\r</code></td>
-</tr>
-<tr>
-<td>‘</td>
-<td><code>\&#39;</code></td>
-</tr>
-<tr>
-<td>“</td>
-<td><code>\&quot;</code></td>
-</tr>
-</tbody></table>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://unicode.org/charts/">유니코드 테이블</a></p>
-<ul>
-<li>유니코드는 <code>\u</code> + 16진수로 표현<br>ex) <code>char unicodeCharacter = &#39;\u0041&#39;;</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="논리형"><a href="#논리형" class="headerlink" title="논리형"></a>논리형</h3><ul>
-<li><p><code>true</code>, <code>false</code> 두 가지 값만이 허용된다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isTrue = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">boolean</span> isFalse = <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="문자열"><a href="#문자열" class="headerlink" title="문자열"></a>문자열</h3><ul>
-<li><p>문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;문자열은 큰따옴표로 묶는다.&quot;</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;a&quot;</span> + <span class="string">&quot;b&quot;</span> + <span class="string">&quot;c&quot;</span>;</span><br><span class="line">String s2 = <span class="number">1</span> + <span class="string">&quot;1&quot;</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="형변환-Type-Casting"><a href="#형변환-Type-Casting" class="headerlink" title="형변환 (Type Casting)"></a>형변환 (Type Casting)</h3><h4 id="형변환-연산자"><a href="#형변환-연산자" class="headerlink" title="형변환 연산자"></a>형변환 연산자</h4><ul>
-<li>형변환 연산자는 ()로 변수 앞에 입력한다.<br>ex) <code>int value = (int)10.8;</code> -&gt; value = 10</li>
-</ul>
-<h4 id="업캐스팅-Upcasting"><a href="#업캐스팅-Upcasting" class="headerlink" title="업캐스팅 (Upcasting)"></a>업캐스팅 (Upcasting)</h4><ul>
-<li><p>값의 범위가 더 큰 자료형으로 변환하는 경우</p>
-<ul>
-<li><p>묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = (<span class="keyword">int</span>)x;</span><br><span class="line"><span class="keyword">int</span> z = x;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="다운캐스팅-Downcasting"><a href="#다운캐스팅-Downcasting" class="headerlink" title="다운캐스팅 (Downcasting)"></a>다운캐스팅 (Downcasting)</h4><ul>
-<li><p>값의 범위가 더 작은 자료형으로 변환하는 경우</p>
-<ul>
-<li><p>명시적인 방법으로만 캐스팅 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1024</span>;</span><br><span class="line"><span class="comment">// byte y = x;</span></span><br><span class="line"><span class="keyword">byte</span> z = (<span class="keyword">byte</span>)x;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> x = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">float</span> y = x;</span><br><span class="line"><span class="comment">// long z = y;</span></span><br><span class="line"><span class="keyword">long</span> z = (<span class="keyword">long</span>)y;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/" data-id="ckdsr0olu0001s5a8emf256j9" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/" data-id="ckdu46bec0002woa8618r7fp4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1739,6 +1298,14 @@
       <ul>
         
           <li>
+            <a href="/2020/08/14/Java-Advanced01-ExceptionHanding/">Java-Advanced01-ExceptionHanding</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/14/OOP-Advanced06-ClassDiagram/">OOP-Advanced06-ClassDiagram</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/13/OOP-Advanced05-WrapperClass/">OOP-Advanced05(WrapperClass)</a>
           </li>
         
@@ -1748,14 +1315,6 @@
         
           <li>
             <a href="/2020/08/12/OOP-Advanced03-Enumeration/">OOP-Advanced03(Enumeration)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/OOP-Advanced02-Interface/">OOP-Advanced02(Interface)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/OOP-Advanced01-Abstract-Class/">OOP-Advanced01(Abstract Class)</a>
           </li>
         
       </ul>

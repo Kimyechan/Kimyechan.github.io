@@ -64,6 +64,572 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JavaBasic-03-InputOutput" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/10/JavaBasic-03-InputOutput/" class="article-date">
+  <time datetime="2020-08-10T10:26:20.000Z" itemprop="datePublished">2020-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/10/JavaBasic-03-InputOutput/">JavaBasic-03(InputOutput)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="자료의-입출력-Inputs-and-Outputs"><a href="#자료의-입출력-Inputs-and-Outputs" class="headerlink" title="자료의 입출력 (Inputs and Outputs)"></a>자료의 입출력 (Inputs and Outputs)</h1><h2 id="출력-메소드"><a href="#출력-메소드" class="headerlink" title="출력 메소드"></a>출력 메소드</h2><ul>
+<li>포맷 문자열을 이용한 문자열/기본형 출력</li>
+<li>객체를 직접 출력</li>
+</ul>
+<h3 id="PrintStream의-출력-메소드"><a href="#PrintStream의-출력-메소드" class="headerlink" title="PrintStream의 출력 메소드"></a>PrintStream의 출력 메소드</h3><table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>print()</td>
+<td><code>public void print(Object obj)</code></td>
+<td>obj를 스트림으로 출력한다.</td>
+</tr>
+<tr>
+<td>println()</td>
+<td><code>public void println(Object x)</code></td>
+<td>x를 스트림으로 출력하고 줄바꿈한다.</td>
+</tr>
+<tr>
+<td>printf()</td>
+<td><code>public PrintStream printf(String format, Object ... args)</code></td>
+<td>Format 맞추어 args를 출력한다.</td>
+</tr>
+</tbody></table>
+<h3 id="포맷-문자열-지시자"><a href="#포맷-문자열-지시자" class="headerlink" title="포맷 문자열 지시자"></a>포맷 문자열 지시자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%b</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>decimal integer</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>octal</td>
+</tr>
+<tr>
+<td>%x, %X</td>
+<td>hexadecimal</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>decial float</td>
+</tr>
+<tr>
+<td>%e, %E</td>
+<td>exponent</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>character</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>string</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>newline</td>
+</tr>
+</tbody></table>
+<h3 id="지시자-자릿수-표현"><a href="#지시자-자릿수-표현" class="headerlink" title="지시자 자릿수 표현"></a>지시자 자릿수 표현</h3><table>
+<thead>
+<tr>
+<th>표현</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%nd</td>
+<td>최소 n칸을 사용하고 숫자를 오른쪽 정렬</td>
+</tr>
+<tr>
+<td>%-nd</td>
+<td>최소 n칸을 사용하고 숫자를 왼쪽 정렬</td>
+</tr>
+<tr>
+<td>%0nd</td>
+<td>최소 n칸을 사용하고 빈칸은 0으로 채움</td>
+</tr>
+<tr>
+<td>%n.mf</td>
+<td>최소 n칸을 사용하고 소수점 이하 m자리까지 표현</td>
+</tr>
+</tbody></table>
+<h3 id="시간을-출력하는-포맷-문자"><a href="#시간을-출력하는-포맷-문자" class="headerlink" title="시간을 출력하는 포맷 문자"></a>시간을 출력하는 포맷 문자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%tH</td>
+<td>24시간 표기법의 시간</td>
+<td>22</td>
+</tr>
+<tr>
+<td>%tl</td>
+<td>12시간 표기법의 시간</td>
+<td>08</td>
+</tr>
+<tr>
+<td>%tM</td>
+<td>분</td>
+<td>59</td>
+</tr>
+<tr>
+<td>%tS</td>
+<td>초</td>
+<td>60</td>
+</tr>
+<tr>
+<td>%tp</td>
+<td>오전/오후</td>
+<td>AM</td>
+</tr>
+<tr>
+<td>%tT</td>
+<td>%tH:%tM:%tS</td>
+<td>23:11:06</td>
+</tr>
+<tr>
+<td>%tR</td>
+<td>%tH:%tM</td>
+<td>16:42</td>
+</tr>
+<tr>
+<td>%tr</td>
+<td>%tl:%tM:%tS %tp</td>
+<td>04:15:55 PM</td>
+</tr>
+</tbody></table>
+<h3 id="날짜를-출력하는-포맷-문자"><a href="#날짜를-출력하는-포맷-문자" class="headerlink" title="날짜를 출력하는 포맷 문자"></a>날짜를 출력하는 포맷 문자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%tB</td>
+<td>월</td>
+<td>March</td>
+</tr>
+<tr>
+<td>%tb</td>
+<td>축약형 월</td>
+<td>Mar</td>
+</tr>
+<tr>
+<td>%tm</td>
+<td>월</td>
+<td>03</td>
+</tr>
+<tr>
+<td>%tA</td>
+<td>요일</td>
+<td>Monday</td>
+</tr>
+<tr>
+<td>%ta</td>
+<td>축약형 요일</td>
+<td>Mon</td>
+</tr>
+<tr>
+<td>%tY</td>
+<td>년도</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>%ty</td>
+<td>축약형 년도</td>
+<td>20</td>
+</tr>
+<tr>
+<td>%td</td>
+<td>일</td>
+<td>09</td>
+</tr>
+<tr>
+<td>%te</td>
+<td>일</td>
+<td>9</td>
+</tr>
+<tr>
+<td>%tZ</td>
+<td>Time Zone</td>
+<td>KST</td>
+</tr>
+<tr>
+<td>%tD</td>
+<td>%tm/%td/%ty</td>
+<td>02/24/89</td>
+</tr>
+<tr>
+<td>%tF</td>
+<td>%tY-%tm-%td</td>
+<td>1989-02-24</td>
+</tr>
+<tr>
+<td>%tc</td>
+<td>%ta %tb %td %tT %tZ %tY</td>
+<td>Sun Feb 24 07:20:15 KST 1989</td>
+</tr>
+</tbody></table>
+<h2 id="입력-메소드"><a href="#입력-메소드" class="headerlink" title="입력 메소드"></a>입력 메소드</h2><ul>
+<li><p>Scanner 클래스를 이용하여 입력받을 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Scanner 클래스의 주요 메소드</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>next()</td>
+<td><code>public String next()</code></td>
+<td>공백을 기준으로 한 단어씩 입력받는다.</td>
+</tr>
+<tr>
+<td>nextLine()</td>
+<td><code>public String nextLine()</code></td>
+<td>한 줄 전체를 입력받는다.</td>
+</tr>
+<tr>
+<td>nextInt()</td>
+<td><code>public int nextInt()</code></td>
+<td><code>int</code> 값을 입력받는다.</td>
+</tr>
+<tr>
+<td>nextDouble()</td>
+<td><code>public double nextDouble()</code></td>
+<td><code>double</code> 값을 입력 받는다.</td>
+</tr>
+<tr>
+<td>close()</td>
+<td><code>public void close()</code></td>
+<td>입력 스트림을 종료한다.</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/" data-id="ckdu46bec0003woa8b69wg5vh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaBasic-02-DataType" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/10/JavaBasic-02-DataType/" class="article-date">
+  <time datetime="2020-08-10T10:25:44.000Z" itemprop="datePublished">2020-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/10/JavaBasic-02-DataType/">JavaBasic-02(DataType)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="자료형-Data-Type"><a href="#자료형-Data-Type" class="headerlink" title="자료형 (Data Type)"></a>자료형 (Data Type)</h1><h2 id="자료형이란"><a href="#자료형이란" class="headerlink" title="자료형이란"></a>자료형이란</h2><ul>
+<li><p>변수의 종류, 타입</p>
+</li>
+<li><p>기본형 (Primitive Type)</p>
+<ul>
+<li><p>값을 변수에 직접 저장하는 자료형</p>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>자료형</th>
+<th>크기 (byte)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>문자</td>
+<td><code>char</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>정수</td>
+<td><code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code></td>
+<td>1, 2, 4, 8</td>
+</tr>
+<tr>
+<td>실수</td>
+<td><code>float</code>, <code>double</code></td>
+<td>4, 8</td>
+</tr>
+<tr>
+<td>논리</td>
+<td><code>boolean</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>정수형의 값 표현 범위</p>
+<table>
+<thead>
+<tr>
+<th>자료형</th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>byte</code></td>
+<td>-2^7 ~ 2^7 - 1</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>-2^15 ~ 2^15 - 1</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>-2^31 ~ 2^31 - 1</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>-2^63 ~ 2^63 - 1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>실수형의 값 표현 범위</p>
+<table>
+<thead>
+<tr>
+<th>자료형</th>
+<th>범위</th>
+<th>m</th>
+<th>e</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>float</code></td>
+<td>-m * 10^e ~ m * 10^e</td>
+<td>23</td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>-m * 10^e ~ m * 10^e</td>
+<td>52</td>
+<td>11</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>참조형 (Reference Type)</p>
+<ul>
+<li>값을 직접 저장하지 않고, 값이 저장된 주소를 저장<br>ex) <code>Date birthDay = new Date();</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="여러가지-자료형"><a href="#여러가지-자료형" class="headerlink" title="여러가지 자료형"></a>여러가지 자료형</h2><h3 id="정수형"><a href="#정수형" class="headerlink" title="정수형"></a>정수형</h3><ul>
+<li>정수 리터럴<ul>
+<li>진수 표기법<table>
+<thead>
+<tr>
+<th>진수법</th>
+<th>접두어</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10진수(decimal)</td>
+<td>-</td>
+<td><code>32</code></td>
+</tr>
+<tr>
+<td>2진수(binary)</td>
+<td>0b</td>
+<td><code>0b1011</code></td>
+</tr>
+<tr>
+<td>8진수(octal)</td>
+<td>0</td>
+<td><code>0342</code></td>
+</tr>
+<tr>
+<td>16진수(hexadecimal)</td>
+<td>0x</td>
+<td><code>0x4A</code></td>
+</tr>
+</tbody></table>
+</li>
+<li>정수 리터럴은 기본적으로 <code>int</code> 자료형</li>
+<li><code>int</code> 범위를 넘어서는 리터럴의 경우 <code>L</code>을 붙여서 표기<br>ex) <code>long largeValue = 100000000000L;</code></li>
+<li>가독성 향상을 위해 세자리 수 마다 <code>_</code>를 이용해 천단위 표기<br>ex) <code>long largeValue = 100_000_000_000L;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="실수형"><a href="#실수형" class="headerlink" title="실수형"></a>실수형</h3><ul>
+<li>실수 리터럴<ul>
+<li>실수 리터럴은 기본적으로 <code>double</code> 자료형</li>
+<li><code>f</code>를 붙여 <code>float</code> 타입을 표현할 수 있음<br>ex) <code>float value = 14.42f;</code></li>
+<li><code>e</code>를 이용해 지수 표현을 할 수 있음<br>ex) <code>double value = 1.42e3;</code> 1.42 * 10^3 = 1420</li>
+</ul>
+</li>
+</ul>
+<h3 id="문자형"><a href="#문자형" class="headerlink" title="문자형"></a>문자형</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.ascii-code.com/">ASCII 코드</a></p>
+<ul>
+<li>작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨<br>ex) <code>char asciiCharacter = &#39;A&#39;;</code></li>
+<li>ASCII 코드의 특수 문자 입력</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>의미</th>
+<th>표시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tab</td>
+<td><code>\t</code></td>
+</tr>
+<tr>
+<td>backspace</td>
+<td><code>\b</code></td>
+</tr>
+<tr>
+<td>newline</td>
+<td><code>\n</code></td>
+</tr>
+<tr>
+<td>form feed</td>
+<td><code>\f</code></td>
+</tr>
+<tr>
+<td>\</td>
+<td><code>\\</code></td>
+</tr>
+<tr>
+<td>carriage return</td>
+<td><code>\r</code></td>
+</tr>
+<tr>
+<td>‘</td>
+<td><code>\&#39;</code></td>
+</tr>
+<tr>
+<td>“</td>
+<td><code>\&quot;</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://unicode.org/charts/">유니코드 테이블</a></p>
+<ul>
+<li>유니코드는 <code>\u</code> + 16진수로 표현<br>ex) <code>char unicodeCharacter = &#39;\u0041&#39;;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="논리형"><a href="#논리형" class="headerlink" title="논리형"></a>논리형</h3><ul>
+<li><p><code>true</code>, <code>false</code> 두 가지 값만이 허용된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isTrue = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">boolean</span> isFalse = <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="문자열"><a href="#문자열" class="headerlink" title="문자열"></a>문자열</h3><ul>
+<li><p>문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;문자열은 큰따옴표로 묶는다.&quot;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;a&quot;</span> + <span class="string">&quot;b&quot;</span> + <span class="string">&quot;c&quot;</span>;</span><br><span class="line">String s2 = <span class="number">1</span> + <span class="string">&quot;1&quot;</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="형변환-Type-Casting"><a href="#형변환-Type-Casting" class="headerlink" title="형변환 (Type Casting)"></a>형변환 (Type Casting)</h3><h4 id="형변환-연산자"><a href="#형변환-연산자" class="headerlink" title="형변환 연산자"></a>형변환 연산자</h4><ul>
+<li>형변환 연산자는 ()로 변수 앞에 입력한다.<br>ex) <code>int value = (int)10.8;</code> -&gt; value = 10</li>
+</ul>
+<h4 id="업캐스팅-Upcasting"><a href="#업캐스팅-Upcasting" class="headerlink" title="업캐스팅 (Upcasting)"></a>업캐스팅 (Upcasting)</h4><ul>
+<li><p>값의 범위가 더 큰 자료형으로 변환하는 경우</p>
+<ul>
+<li><p>묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = (<span class="keyword">int</span>)x;</span><br><span class="line"><span class="keyword">int</span> z = x;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="다운캐스팅-Downcasting"><a href="#다운캐스팅-Downcasting" class="headerlink" title="다운캐스팅 (Downcasting)"></a>다운캐스팅 (Downcasting)</h4><ul>
+<li><p>값의 범위가 더 작은 자료형으로 변환하는 경우</p>
+<ul>
+<li><p>명시적인 방법으로만 캐스팅 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1024</span>;</span><br><span class="line"><span class="comment">// byte y = x;</span></span><br><span class="line"><span class="keyword">byte</span> z = (<span class="keyword">byte</span>)x;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> x = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">float</span> y = x;</span><br><span class="line"><span class="comment">// long z = y;</span></span><br><span class="line"><span class="keyword">long</span> z = (<span class="keyword">long</span>)y;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/" data-id="ckdu46be20000woa8521c06d0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-JavaBasic-01-Variable" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/10/JavaBasic-01-Variable/" class="article-date">
@@ -143,7 +709,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-01-Variable/" data-id="ckdsr0olk0000s5a89s5oawoo" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-01-Variable/" data-id="ckdu46bea0001woa87bnf6rll" class="article-share-link">Share</a>
       
       
     </footer>
@@ -276,7 +842,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/07/how-to-use-git-and-blog-hosting/" data-id="ckdsr0om9000ns5a8e27w9sgt" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/07/how-to-use-git-and-blog-hosting/" data-id="ckdu46beu000pwoa86g4s9952" class="article-share-link">Share</a>
       
       
     </footer>
@@ -317,7 +883,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/07/My-new-hexo-post/" data-id="ckdsr0om00009s5a8d7br07ht" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/07/My-new-hexo-post/" data-id="ckdu46bei000awoa8fuax4zyx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -366,7 +932,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/07/hello-world/" data-id="ckdsr0om8000ls5a89gtk9q1k" class="article-share-link">Share</a>
+      <a data-url="https://kimyechan.github.io/2020/08/07/hello-world/" data-id="ckdu46bes000owoa82e0u5b5j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -412,6 +978,14 @@
       <ul>
         
           <li>
+            <a href="/2020/08/14/Java-Advanced01-ExceptionHanding/">Java-Advanced01-ExceptionHanding</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/14/OOP-Advanced06-ClassDiagram/">OOP-Advanced06-ClassDiagram</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/13/OOP-Advanced05-WrapperClass/">OOP-Advanced05(WrapperClass)</a>
           </li>
         
@@ -421,14 +995,6 @@
         
           <li>
             <a href="/2020/08/12/OOP-Advanced03-Enumeration/">OOP-Advanced03(Enumeration)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/OOP-Advanced02-Interface/">OOP-Advanced02(Interface)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/OOP-Advanced01-Abstract-Class/">OOP-Advanced01(Abstract Class)</a>
           </li>
         
       </ul>
