@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java-advanced03-InnerClass | Java Server Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="내부 클래스 (Inner Classes)내부 클래스란 클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름 HAS-A 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용  내부 클래스의 종류 클래스 영역에 선언 인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능 클래스 내부 클래스: static이 붙은 정적인">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-advanced03-InnerClass">
+<meta property="og:url" content="https://kimyechan.github.io/2020/09/17/Java-advanced03-InnerClass/index.html">
+<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="내부 클래스 (Inner Classes)내부 클래스란 클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름 HAS-A 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용  내부 클래스의 종류 클래스 영역에 선언 인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능 클래스 내부 클래스: static이 붙은 정적인">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-17T10:43:15.000Z">
+<meta property="article:modified_time" content="2020-09-17T11:33:03.307Z">
+<meta property="article:author" content="Yechan Kim">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Java Server Developer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Java Server Developer</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Kimyechan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Java-advanced03-InnerClass" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/17/Java-advanced03-InnerClass/" class="article-date">
+  <time datetime="2020-09-17T10:43:15.000Z" itemprop="datePublished">2020-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java-advanced03-InnerClass
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="내부-클래스-Inner-Classes"><a href="#내부-클래스-Inner-Classes" class="headerlink" title="내부 클래스 (Inner Classes)"></a>내부 클래스 (Inner Classes)</h1><h2 id="내부-클래스란"><a href="#내부-클래스란" class="headerlink" title="내부 클래스란"></a>내부 클래스란</h2><ul>
+<li>클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름</li>
+<li><code>HAS-A</code> 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용</li>
+</ul>
+<h2 id="내부-클래스의-종류"><a href="#내부-클래스의-종류" class="headerlink" title="내부 클래스의 종류"></a>내부 클래스의 종류</h2><ul>
+<li>클래스 영역에 선언<ul>
+<li>인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능</li>
+<li>클래스 내부 클래스: static이 붙은 정적인 내부 클래스</li>
+</ul>
+</li>
+<li>로컬 영역에 선언<ul>
+<li>로컬 내부 클래스: 선언된 영역의 Scope 내에서 사용 가능</li>
+<li>익명 내부 클래스: 객체를 일회성으로 생성하기 위한 이름이 없는 클래스</li>
+</ul>
+</li>
+</ul>
+<h2 id="다양한-내부-클래스"><a href="#다양한-내부-클래스" class="headerlink" title="다양한 내부 클래스"></a>다양한 내부 클래스</h2><h3 id="인스턴스-내부-클래스-Instance-Inner-Class"><a href="#인스턴스-내부-클래스-Instance-Inner-Class" class="headerlink" title="인스턴스 내부 클래스 (Instance Inner Class)"></a>인스턴스 내부 클래스 (Instance Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드 없이 선언된 클래스</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>외부 클래스 객체를 통해서만 생성 가능</p>
+</li>
+<li><p>static 멤버 변수는 사용할 수 없으나, <code>static final</code>은 사용 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerMemberVar = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//static int staticMemberVar = 1;</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONSTANT_VAR = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(innerMemberVar);</span><br><span class="line">            System.out.println(outerMemberVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> outerMemberVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      IstanceInner obj = <span class="keyword">new</span> InstanceInner();</span><br><span class="line">      obj.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>외부 클래스의 멤버 변수와 이름이 겹치는 경우 <code>this</code> 활용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span>;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);<span class="comment">// 0</span></span><br><span class="line">            System.out.println(<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 1</span></span><br><span class="line">            System.out.println(Outer.<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 2</span></span><br><span class="line">            System.out.println(Outer.y); <span class="comment">// 3 static variable</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="클래스-내부-클래스-Class-Inner-Class"><a href="#클래스-내부-클래스-Class-Inner-Class" class="headerlink" title="클래스 내부 클래스 (Class Inner Class)"></a>클래스 내부 클래스 (Class Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드와 함께 선언된 내부 클래스</p>
+</li>
+<li><p>외부 클래스 객체가 없어도 생성 가능</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>static 멤버 변수를 가질 수 있음</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerVar = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> staticInnerVar = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">            System.out.println(outer.outerVar);</span><br><span class="line">            System.out.println(innerVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> outerVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="로컬-내부-클래스-Local-Inner-Class"><a href="#로컬-내부-클래스-Local-Inner-Class" class="headerlink" title="로컬 내부 클래스 (Local Inner Class)"></a>로컬 내부 클래스 (Local Inner Class)</h3><ul>
+<li><p>클래스 영역이 아닌 로컬 영역에서 선언된 클래스</p>
+<ul>
+<li>메소드, 생성자, 초기화 블록의 내부</li>
+</ul>
+</li>
+<li><p>정적 변수는 가질 수 없으나, static final 변수는 가질 수 있음</p>
+</li>
+<li><p>로컬 영역의 변수 다음과 같은 사항을 따름</p>
+<ul>
+<li>Java1.7: final로 선언된 변수에만 접근 가능</li>
+<li>Java1.8: 모든 변수에 접근 가능하나, final로 간주되어 새로운 값 할당 불가</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>; <span class="comment">// 메소드 호출 스택</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">LocalInner</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LocalInner inner = <span class="keyword">new</span> LocalInner(); <span class="comment">// 힙 영역</span></span><br><span class="line">    inner.innerMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="익명의-내부-클래스-Anonymous-Inner-Class"><a href="#익명의-내부-클래스-Anonymous-Inner-Class" class="headerlink" title="익명의 내부 클래스 (Anonymous Inner Class)"></a>익명의 내부 클래스 (Anonymous Inner Class)</h3><ul>
+<li><p>로컬 내부 클래스와 동일하나, 이름이 없어 선언 즉시 한 번 사용 가능</p>
+</li>
+<li><p>추상 클래스나 인터페이스의 구현에 많이 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnonymousInnerClassTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useFoo</span><span class="params">(IFoo foo)</span> </span>&#123;</span><br><span class="line">        foo.<span class="keyword">do</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        useFoo(<span class="keyword">new</span> IFoo() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Do!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kimyechan.github.io/2020/09/17/Java-advanced03-InnerClass/" data-id="ckf6ugq8l0002tza8d26pgowi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/18/HTML-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HTML 1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/17/Java-advanced03-InnerClass/">Java-advanced03-InnerClass</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/18/HTML-1/">HTML 1</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/14/Java-Advanced01-ExceptionHanding/">Java-Advanced01-ExceptionHanding</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/14/OOP-Advanced05-ClassDiagram/">OOP-Advanced06-ClassDiagram</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/Java-Advanced02-WrapperClass/">Java-Advanced02(WrapperClass)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Yechan Kim<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
