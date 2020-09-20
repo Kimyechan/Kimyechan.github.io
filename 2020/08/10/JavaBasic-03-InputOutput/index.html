@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
 
-  
-  <title>JavaBasic-03(InputOutput) | Java Server Developer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="자료의 입출력 (Inputs and Outputs)출력 메소드 포맷 문자열을 이용한 문자열&#x2F;기본형 출력 객체를 직접 출력  PrintStream의 출력 메소드   메소드 메소드 선언 설명    print() public void print(Object obj) obj를 스트림으로 출력한다.   println() public void println(Objec">
-<meta property="og:type" content="article">
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Java Server Developer">
+    <title>JavaBasic-03(InputOutput) - Java Server Developer</title>
+    <meta name="author" content="Yechan Kim">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"자료의 입출력 (Inputs and Outputs)출력 메소드\n포맷 문자열을 이용한 문자열/기본형 출력\n객체를 직접 출력\n\nPrintStream의 출력 메소드\n\n\n메소드\n메소드 선언\n설명\n\n\n\nprint()\npublic void print(Object obj)\nobj를 스트림으로 출력한다.\n\n\nprintln()\npublic void println(Object x)\nx를 스트림으로 출력하고 줄바꿈한다.\n\n\nprintf()\npublic PrintStream printf(String format, Object ... args)\nFormat 맞추어 args를 출력한다.\n\n\n포맷 문자열 지시자\n\n\n지시자\n설명\n\n\n\n%b\nboolean\n\n\n%d\ndecimal integer\n\n\n%o\noctal\n\n\n%x, %X\nhexadecimal\n\n\n%f\ndecial float\n\n\n%e, %E\nexponent\n\n\n%c\ncharacter\n\n\n%s\nstring\n\n\n%n\nnewline\n\n\n지시자 자릿수 표현\n\n\n표현\n설명\n\n\n\n%nd\n최소 n칸을 사용하고 숫자를 오른쪽 정렬\n\n\n%-nd\n최소 n칸을 사용하고 숫자를 왼쪽 정렬\n\n\n%0nd\n최소 n칸을 사용하고 빈칸은 0으로 채움\n\n\n%n.mf\n최소 n칸을 사용하고 소수점 이하 m자리까지 표현\n\n\n시간을 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tH\n24시간 표기법의 시간\n22\n\n\n%tl\n12시간 표기법의 시간\n08\n\n\n%tM\n분\n59\n\n\n%tS\n초\n60\n\n\n%tp\n오전/오후\nAM\n\n\n%tT\n%tH:%tM:%tS\n23:11:06\n\n\n%tR\n%tH:%tM\n16:42\n\n\n%tr\n%tl:%tM:%tS %tp\n04:15:55 PM\n\n\n날짜를 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tB\n월\nMarch\n\n\n%tb\n축약형 월\nMar\n\n\n%tm\n월\n03\n\n\n%tA\n요일\nMonday\n\n\n%ta\n축약형 요일\nMon\n\n\n%tY\n년도\n2020\n\n\n%ty\n축약형 년도\n20\n\n\n%td\n일\n09\n\n\n%te\n일\n9\n\n\n%tZ\nTime Zone\nKST\n\n\n%tD\n%tm/%td/%ty\n02/24/89\n\n\n%tF\n%tY-%tm-%td\n1989-02-24\n\n\n%tc\n%ta %tb %td %tT %tZ %tY\nSun Feb 24 07:20:15 KST 1989\n\n\n입력 메소드\nScanner 클래스를 이용하여 입력받을 수 있다.\n12345import java.util.Scanner;...Scanner scanner = new Scanner(System.in);\n\nScanner 클래스의 주요 메소드\n\n\n\n\n\n메소드\n메소드 선언\n설명\n\n\n\nnext()\npublic String next()\n공백을 기준으로 한 단어씩 입력받는다.\n\n\nnextLine()\npublic String nextLine()\n한 줄 전체를 입력받는다.\n\n\nnextInt()\npublic int nextInt()\nint 값을 입력받는다.\n\n\nnextDouble()\npublic double nextDouble()\ndouble 값을 입력 받는다.\n\n\nclose()\npublic void close()\n입력 스트림을 종료한다.\n\n\n","dateCreated":"2020-08-10T19:26:20+09:00","dateModified":"2020-08-10T19:31:28+09:00","datePublished":"2020-08-10T19:26:20+09:00","description":"","headline":"JavaBasic-03(InputOutput)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"}</script>
+    <meta name="description" content="자료의 입출력 (Inputs and Outputs)출력 메소드 포맷 문자열을 이용한 문자열&#x2F;기본형 출력 객체를 직접 출력  PrintStream의 출력 메소드   메소드 메소드 선언 설명    print() public void print(Object obj) obj를 스트림으로 출력한다.   println() public void println(Objec">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="JavaBasic-03(InputOutput)">
 <meta property="og:url" content="https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/index.html">
 <meta property="og:site_name" content="Java Server Developer">
@@ -18,77 +23,330 @@
 <meta property="article:modified_time" content="2020-08-10T10:31:28.518Z">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Java Server Developer" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
 
-<meta name="generator" content="Hexo 5.0.0"></head>
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Java Server Developer</a>
-      </h1>
-      
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Java Server Developer
+        </a>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+    
         
-          <a class="main-nav-link" href="/">Home</a>
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
         
-          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Kimyechan.github.io"></form>
-      </div>
-    </div>
-  </div>
+        </a>
+    
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-JavaBasic-03-InputOutput" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/10/JavaBasic-03-InputOutput/" class="article-date">
-  <time datetime="2020-08-10T10:26:20.000Z" itemprop="datePublished">2020-08-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      JavaBasic-03(InputOutput)
-    </h1>
-  
 
-      </header>
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="http://stackoverflow.com/users"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Stack Overflow"
+                        >
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://plus.google.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Google +"
+                        >
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://www.linkedin.com/profile/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="LinkedIn"
+                        >
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="자료의-입출력-Inputs-and-Outputs"><a href="#자료의-입출력-Inputs-and-Outputs" class="headerlink" title="자료의 입출력 (Inputs and Outputs)"></a>자료의 입출력 (Inputs and Outputs)</h1><h2 id="출력-메소드"><a href="#출력-메소드" class="headerlink" title="출력 메소드"></a>출력 메소드</h2><ul>
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            JavaBasic-03(InputOutput)
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-08-10T19:26:20+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="자료의-입출력-Inputs-and-Outputs"><a href="#자료의-입출력-Inputs-and-Outputs" class="headerlink" title="자료의 입출력 (Inputs and Outputs)"></a>자료의 입출력 (Inputs and Outputs)</h1><h2 id="출력-메소드"><a href="#출력-메소드" class="headerlink" title="출력 메소드"></a>출력 메소드</h2><ul>
 <li>포맷 문자열을 이용한 문자열/기본형 출력</li>
 <li>객체를 직접 출력</li>
 </ul>
@@ -349,130 +607,326 @@
 </tr>
 </tbody></table>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/" data-id="ckf6v78ua0005q5a8cejv62yc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2020/08/10/JavaBasic-04-Operators/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          JavaBasic-04(Operators)
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/08/10/JavaBasic-02-DataType/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JavaBasic-02(DataType)</div>
-    </a>
-  
-</nav>
+            
 
-  
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-04-Operators/"
+                    data-tooltip="JavaBasic-04(Operators)"
+                    aria-label="PREVIOUS: JavaBasic-04(Operators)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-02-DataType/"
+                    data-tooltip="JavaBasic-02(DataType)"
+                    aria-label="NEXT: JavaBasic-02(DataType)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
 </article>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/09/17/Java-advanced03-InnerClass/">Java-advanced03-InnerClass</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/18/HTML-1/">HTML 1</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/14/Java-Advanced01-ExceptionHanding/">Java-Advanced01-ExceptionHanding</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/14/OOP-Advanced05-ClassDiagram/">OOP-Advanced06-ClassDiagram</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/13/Java-Advanced02-WrapperClass/">Java-Advanced02(WrapperClass)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Yechan Kim<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Yechan Kim. All Rights Reserved.
+    </span>
 </footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-04-Operators/"
+                    data-tooltip="JavaBasic-04(Operators)"
+                    aria-label="PREVIOUS: JavaBasic-04(Operators)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-02-DataType/"
+                    data-tooltip="JavaBasic-02(DataType)"
+                    aria-label="NEXT: JavaBasic-02(DataType)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
-</body>
+    </body>
 </html>

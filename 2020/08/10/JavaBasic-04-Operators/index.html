@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
 
-  
-  <title>JavaBasic-04(Operators) | Java Server Developer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="연산자 (Operators)연산의 구성 연산자 (Operator), 피연산자 (Operand), 연산식 (Expression)  우선순위 표 우선순위가 같은 경우, 결합 방향 순으로 이루어진다.    연산자 결합 방향 우선순위    () → 1   ++ – + - ~ ! (int) ← 2   * &#x2F; % → 3   + - → 4   &lt;&lt; &gt;&amp;">
-<meta property="og:type" content="article">
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Java Server Developer">
+    <title>JavaBasic-04(Operators) - Java Server Developer</title>
+    <meta name="author" content="Yechan Kim">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"연산자 (Operators)연산의 구성\n연산자 (Operator), 피연산자 (Operand), 연산식 (Expression)\n\n우선순위 표\n우선순위가 같은 경우, 결합 방향 순으로 이루어진다.\n\n\n\n연산자\n결합 방향\n우선순위\n\n\n\n()\n→\n1\n\n\n++ – + - ~ ! (int)\n←\n2\n\n\n* / %\n→\n3\n\n\n+ -\n→\n4\n\n\n&lt;&lt; &gt;&gt; &gt;&gt;&gt;\n→\n5\n\n\n&gt; &lt; &gt;= &lt;= instanceof\n→\n6\n\n\n== !=\n→\n7\n\n\n&amp;\n→\n8\n\n\n^\n→\n9\n\n\n|\n→\n10\n\n\n&amp;&amp;\n→\n11\n\n\n||\n→\n12\n\n\n?:\n→\n13\n\n\n= += -= *= /= %= ^= |= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=\n←\n14\n\n\n\n\n다양한 연산자산술 연산자 (Arithmatic Operators)\n\n\n연산자\n기능\n\n\n\n+\n두 피연산자의 합\n\n\n-\n두 피연산자의 차\n\n\n*\n두 피연산자의 곱\n\n\n/\n두 피연산자의 나눈 몫\n\n\n%\n두 피연산자의 나눈 나머지(Modulus)\n\n\n\n산술 연산자 사용 시 주의점\n정수형: 오버플로우\n실수형: 정확도\n/, % : Infinity, NaN\n\n\n\n대입 연산자 (Assignment Operators)\n\n\n연산자\n기능\n\n\n\n=\n우측 피연산자의 값을 좌측 피연산자 변수에 할당\n\n\n+=\n두 피연산자의 합을 좌측 피연산자에 할당\n\n\n-=\n두 피연산자의 차를 좌측 피연산자에 할당\n\n\n*=\n두 피연산자의 곱을 좌측 피연산자에 할당\n\n\n/=\n좌측 피연산자를 우측 피연산자로 나눈 몫을 좌측 피연산자에 할당\n\n\n%=\n좌측 피연산자를 우측 피연산자로 나눈 나머지를 좌측 피연산자에 할당\n\n\n비교 연산자 (Comparison Operators)\n\n\n연산자\n기능\n\n\n\n&lt;\n좌측 피연산자가 우측 피연산자보다 작은가?\n\n\n&gt;\n좌측 피연산자가 우측 피연산자보다 큰가?\n\n\n&lt;=\n좌측 피연산자가 우측 피연산자보다 작거나 같은가?\n\n\n&gt;=\n좌측 피연산자가 우측 피연산자보다 크거나 같은가?\n\n\n==\n좌측 피연산자와 우측 피연산자가 같은가?\n\n\n!=\n좌측 피연산자와 우측 피연산자가 다른가?\n\n\n\n비교 연산자의 출력은 true 또는 false이다.\n\n논리 연산자 (Logical Operators)\n\n\n연산자\n기능\n\n\n\n&amp;\nAND\n\n\n|\nOR\n\n\n!\nNOT\n\n\n^\nXOR\n\n\n\n\n\nShort Circuit 연산자\n기능\n\n\n\n&amp;&amp;\nAND\n\n\n||\nOR\n\n\n증감 연산자 (Increment and Decrement Operators)\n\n\n연산자\n기능\n\n\n\n++ (Prefix)\n피연산자의 값을 1 증가한 후 연산식 평가\n\n\n++ (Postfix)\n연산식을 평가한 후에 피연산자의 값을 1 증가\n\n\n– (Prefix)\n피연산자의 값을 1 감소시킨 후 연산식 평가\n\n\n– (Postfix)\n연산식을 평가한 후에 피연산자의 값을 1 감소\n\n\n삼항 연산자 (Ternary Operator)\n\n\n연산자\n기능\n\n\n\n? :\n첫 피연산자의 값의 true이면 두번째 연산자를, false이면 세번째 연산자를 출력\n\n\n비트 연산자 (Bitwise Operator)\n비트 연산자는 정수형을 피연산자를 대상으로 한다.\n\n논리 비트 연산자\n\n\n\n연산자\n기능\n\n\n\n&amp;\nBitwise AND\n\n\n|\nBitwise OR\n\n\n~\nBitwise INV\n\n\n^\nBitwise XOR\n\n\n\n이동 비트 연산자 (Shift Operator)\n\n\n\n연산자\n기능\n\n\n\n&lt;&lt;\n좌측 피연산자의 각 비트를 왼쪽으로 우측 피연산자만큼 이동시킨다. 빈자리는 0으로 채운다.\n\n\n&gt;&gt;\n좌측 피연산자의 각 비트를 우측으로 우측 피연산자만큼 이동시킨다. 빈자리는 Sign Bit로 채운다.\n\n\n&gt;&gt;&gt;\n좌측 피연산자의 각 비트를 우측으로 우측 피연산자만큼 이동시킨다. 빈자리는 0으로 채운다.\n\n\n\n\n","dateCreated":"2020-08-10T19:26:47+09:00","dateModified":"2020-08-10T19:31:48+09:00","datePublished":"2020-08-10T19:26:47+09:00","description":"","headline":"JavaBasic-04(Operators)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"}</script>
+    <meta name="description" content="연산자 (Operators)연산의 구성 연산자 (Operator), 피연산자 (Operand), 연산식 (Expression)  우선순위 표 우선순위가 같은 경우, 결합 방향 순으로 이루어진다.    연산자 결합 방향 우선순위    () → 1   ++ – + - ~ ! (int) ← 2   * &#x2F; % → 3   + - → 4   &lt;&lt; &gt;&amp;">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="JavaBasic-04(Operators)">
 <meta property="og:url" content="https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/index.html">
 <meta property="og:site_name" content="Java Server Developer">
@@ -18,77 +23,330 @@
 <meta property="article:modified_time" content="2020-08-10T10:31:48.635Z">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Java Server Developer" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
 
-<meta name="generator" content="Hexo 5.0.0"></head>
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Java Server Developer</a>
-      </h1>
-      
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Java Server Developer
+        </a>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+    
         
-          <a class="main-nav-link" href="/">Home</a>
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
         
-          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://Kimyechan.github.io"></form>
-      </div>
-    </div>
-  </div>
+        </a>
+    
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-JavaBasic-04-Operators" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/10/JavaBasic-04-Operators/" class="article-date">
-  <time datetime="2020-08-10T10:26:47.000Z" itemprop="datePublished">2020-08-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      JavaBasic-04(Operators)
-    </h1>
-  
 
-      </header>
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="http://stackoverflow.com/users"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Stack Overflow"
+                        >
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://plus.google.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Google +"
+                        >
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://www.linkedin.com/profile/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="LinkedIn"
+                        >
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="연산자-Operators"><a href="#연산자-Operators" class="headerlink" title="연산자 (Operators)"></a>연산자 (Operators)</h1><h2 id="연산의-구성"><a href="#연산의-구성" class="headerlink" title="연산의 구성"></a>연산의 구성</h2><ul>
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            JavaBasic-04(Operators)
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-08-10T19:26:47+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="연산자-Operators"><a href="#연산자-Operators" class="headerlink" title="연산자 (Operators)"></a>연산자 (Operators)</h1><h2 id="연산의-구성"><a href="#연산의-구성" class="headerlink" title="연산의 구성"></a>연산의 구성</h2><ul>
 <li>연산자 (Operator), 피연산자 (Operand), 연산식 (Expression)</li>
 </ul>
 <h3 id="우선순위-표"><a href="#우선순위-표" class="headerlink" title="우선순위 표"></a>우선순위 표</h3><ul>
@@ -406,130 +664,326 @@
 </li>
 </ul>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/" data-id="ckf6v78uc0008q5a886ag5kho" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2020/08/10/JavaBasic-05-Conditional/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          JavaBasic-05(Conditional)
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/08/10/JavaBasic-03-InputOutput/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JavaBasic-03(InputOutput)</div>
-    </a>
-  
-</nav>
+            
 
-  
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-05-Conditional/"
+                    data-tooltip="JavaBasic-05(Conditional)"
+                    aria-label="PREVIOUS: JavaBasic-05(Conditional)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-03-InputOutput/"
+                    data-tooltip="JavaBasic-03(InputOutput)"
+                    aria-label="NEXT: JavaBasic-03(InputOutput)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
 </article>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/09/17/Java-advanced03-InnerClass/">Java-advanced03-InnerClass</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/18/HTML-1/">HTML 1</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/14/Java-Advanced01-ExceptionHanding/">Java-Advanced01-ExceptionHanding</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/14/OOP-Advanced05-ClassDiagram/">OOP-Advanced06-ClassDiagram</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/13/Java-Advanced02-WrapperClass/">Java-Advanced02(WrapperClass)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Yechan Kim<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Yechan Kim. All Rights Reserved.
+    </span>
 </footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-05-Conditional/"
+                    data-tooltip="JavaBasic-05(Conditional)"
+                    aria-label="PREVIOUS: JavaBasic-05(Conditional)"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/10/JavaBasic-03-InputOutput/"
+                    data-tooltip="JavaBasic-03(InputOutput)"
+                    aria-label="NEXT: JavaBasic-03(InputOutput)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/08/10/JavaBasic-04-Operators/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
-</body>
+    </body>
 </html>
