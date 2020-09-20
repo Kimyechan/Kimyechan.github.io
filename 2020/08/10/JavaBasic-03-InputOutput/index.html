@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"자료의 입출력 (Inputs and Outputs)출력 메소드\n포맷 문자열을 이용한 문자열/기본형 출력\n객체를 직접 출력\n\nPrintStream의 출력 메소드\n\n\n메소드\n메소드 선언\n설명\n\n\n\nprint()\npublic void print(Object obj)\nobj를 스트림으로 출력한다.\n\n\nprintln()\npublic void println(Object x)\nx를 스트림으로 출력하고 줄바꿈한다.\n\n\nprintf()\npublic PrintStream printf(String format, Object ... args)\nFormat 맞추어 args를 출력한다.\n\n\n포맷 문자열 지시자\n\n\n지시자\n설명\n\n\n\n%b\nboolean\n\n\n%d\ndecimal integer\n\n\n%o\noctal\n\n\n%x, %X\nhexadecimal\n\n\n%f\ndecial float\n\n\n%e, %E\nexponent\n\n\n%c\ncharacter\n\n\n%s\nstring\n\n\n%n\nnewline\n\n\n지시자 자릿수 표현\n\n\n표현\n설명\n\n\n\n%nd\n최소 n칸을 사용하고 숫자를 오른쪽 정렬\n\n\n%-nd\n최소 n칸을 사용하고 숫자를 왼쪽 정렬\n\n\n%0nd\n최소 n칸을 사용하고 빈칸은 0으로 채움\n\n\n%n.mf\n최소 n칸을 사용하고 소수점 이하 m자리까지 표현\n\n\n시간을 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tH\n24시간 표기법의 시간\n22\n\n\n%tl\n12시간 표기법의 시간\n08\n\n\n%tM\n분\n59\n\n\n%tS\n초\n60\n\n\n%tp\n오전/오후\nAM\n\n\n%tT\n%tH:%tM:%tS\n23:11:06\n\n\n%tR\n%tH:%tM\n16:42\n\n\n%tr\n%tl:%tM:%tS %tp\n04:15:55 PM\n\n\n날짜를 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tB\n월\nMarch\n\n\n%tb\n축약형 월\nMar\n\n\n%tm\n월\n03\n\n\n%tA\n요일\nMonday\n\n\n%ta\n축약형 요일\nMon\n\n\n%tY\n년도\n2020\n\n\n%ty\n축약형 년도\n20\n\n\n%td\n일\n09\n\n\n%te\n일\n9\n\n\n%tZ\nTime Zone\nKST\n\n\n%tD\n%tm/%td/%ty\n02/24/89\n\n\n%tF\n%tY-%tm-%td\n1989-02-24\n\n\n%tc\n%ta %tb %td %tT %tZ %tY\nSun Feb 24 07:20:15 KST 1989\n\n\n입력 메소드\nScanner 클래스를 이용하여 입력받을 수 있다.\n12345import java.util.Scanner;...Scanner scanner = new Scanner(System.in);\n\nScanner 클래스의 주요 메소드\n\n\n\n\n\n메소드\n메소드 선언\n설명\n\n\n\nnext()\npublic String next()\n공백을 기준으로 한 단어씩 입력받는다.\n\n\nnextLine()\npublic String nextLine()\n한 줄 전체를 입력받는다.\n\n\nnextInt()\npublic int nextInt()\nint 값을 입력받는다.\n\n\nnextDouble()\npublic double nextDouble()\ndouble 값을 입력 받는다.\n\n\nclose()\npublic void close()\n입력 스트림을 종료한다.\n\n\n","dateCreated":"2020-08-10T19:26:20+09:00","dateModified":"2020-08-10T19:31:28+09:00","datePublished":"2020-08-10T19:26:20+09:00","description":"","headline":"JavaBasic-03(InputOutput)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"자료의 입출력 (Inputs and Outputs)출력 메소드\n포맷 문자열을 이용한 문자열/기본형 출력\n객체를 직접 출력\n\nPrintStream의 출력 메소드\n\n\n메소드\n메소드 선언\n설명\n\n\n\nprint()\npublic void print(Object obj)\nobj를 스트림으로 출력한다.\n\n\nprintln()\npublic void println(Object x)\nx를 스트림으로 출력하고 줄바꿈한다.\n\n\nprintf()\npublic PrintStream printf(String format, Object ... args)\nFormat 맞추어 args를 출력한다.\n\n\n포맷 문자열 지시자\n\n\n지시자\n설명\n\n\n\n%b\nboolean\n\n\n%d\ndecimal integer\n\n\n%o\noctal\n\n\n%x, %X\nhexadecimal\n\n\n%f\ndecial float\n\n\n%e, %E\nexponent\n\n\n%c\ncharacter\n\n\n%s\nstring\n\n\n%n\nnewline\n\n\n지시자 자릿수 표현\n\n\n표현\n설명\n\n\n\n%nd\n최소 n칸을 사용하고 숫자를 오른쪽 정렬\n\n\n%-nd\n최소 n칸을 사용하고 숫자를 왼쪽 정렬\n\n\n%0nd\n최소 n칸을 사용하고 빈칸은 0으로 채움\n\n\n%n.mf\n최소 n칸을 사용하고 소수점 이하 m자리까지 표현\n\n\n시간을 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tH\n24시간 표기법의 시간\n22\n\n\n%tl\n12시간 표기법의 시간\n08\n\n\n%tM\n분\n59\n\n\n%tS\n초\n60\n\n\n%tp\n오전/오후\nAM\n\n\n%tT\n%tH:%tM:%tS\n23:11:06\n\n\n%tR\n%tH:%tM\n16:42\n\n\n%tr\n%tl:%tM:%tS %tp\n04:15:55 PM\n\n\n날짜를 출력하는 포맷 문자\n\n\n지시자\n설명\n예시\n\n\n\n%tB\n월\nMarch\n\n\n%tb\n축약형 월\nMar\n\n\n%tm\n월\n03\n\n\n%tA\n요일\nMonday\n\n\n%ta\n축약형 요일\nMon\n\n\n%tY\n년도\n2020\n\n\n%ty\n축약형 년도\n20\n\n\n%td\n일\n09\n\n\n%te\n일\n9\n\n\n%tZ\nTime Zone\nKST\n\n\n%tD\n%tm/%td/%ty\n02/24/89\n\n\n%tF\n%tY-%tm-%td\n1989-02-24\n\n\n%tc\n%ta %tb %td %tT %tZ %tY\nSun Feb 24 07:20:15 KST 1989\n\n\n입력 메소드\nScanner 클래스를 이용하여 입력받을 수 있다.\n12345import java.util.Scanner;...Scanner scanner = new Scanner(System.in);\n\nScanner 클래스의 주요 메소드\n\n\n\n\n\n메소드\n메소드 선언\n설명\n\n\n\nnext()\npublic String next()\n공백을 기준으로 한 단어씩 입력받는다.\n\n\nnextLine()\npublic String nextLine()\n한 줄 전체를 입력받는다.\n\n\nnextInt()\npublic int nextInt()\nint 값을 입력받는다.\n\n\nnextDouble()\npublic double nextDouble()\ndouble 값을 입력 받는다.\n\n\nclose()\npublic void close()\n입력 스트림을 종료한다.\n\n\n","dateCreated":"2020-08-10T19:26:20+09:00","dateModified":"2020-09-21T00:24:30+09:00","datePublished":"2020-08-10T19:26:20+09:00","description":"","headline":"JavaBasic-03(InputOutput)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-03-InputOutput/","keywords":"Java"}</script>
     <meta name="description" content="자료의 입출력 (Inputs and Outputs)출력 메소드 포맷 문자열을 이용한 문자열&#x2F;기본형 출력 객체를 직접 출력  PrintStream의 출력 메소드   메소드 메소드 선언 설명    print() public void print(Object obj) obj를 스트림으로 출력한다.   println() public void println(Objec">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="JavaBasic-03(InputOutput)">
@@ -20,8 +20,9 @@
 <meta property="og:description" content="자료의 입출력 (Inputs and Outputs)출력 메소드 포맷 문자열을 이용한 문자열&#x2F;기본형 출력 객체를 직접 출력  PrintStream의 출력 메소드   메소드 메소드 선언 설명    print() public void print(Object obj) obj를 스트림으로 출력한다.   println() public void println(Objec">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-10T10:26:20.000Z">
-<meta property="article:modified_time" content="2020-08-10T10:31:28.518Z">
+<meta property="article:modified_time" content="2020-09-20T15:24:30.731Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
     
     
@@ -338,6 +339,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
 </div>
 
     
@@ -613,6 +620,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">

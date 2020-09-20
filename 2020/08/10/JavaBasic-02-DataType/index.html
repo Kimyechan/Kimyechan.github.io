@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"자료형 (Data Type)자료형이란\n변수의 종류, 타입\n\n기본형 (Primitive Type)\n\n값을 변수에 직접 저장하는 자료형\n\n\n\n종류\n자료형\n크기 (byte)\n\n\n\n문자\nchar\n2\n\n\n정수\nbyte, short, int, long\n1, 2, 4, 8\n\n\n실수\nfloat, double\n4, 8\n\n\n논리\nboolean\n1\n\n\n\n정수형의 값 표현 범위\n\n\n\n자료형\n범위\n\n\n\nbyte\n-2^7 ~ 2^7 - 1\n\n\nshort\n-2^15 ~ 2^15 - 1\n\n\nint\n-2^31 ~ 2^31 - 1\n\n\nlong\n-2^63 ~ 2^63 - 1\n\n\n\n실수형의 값 표현 범위\n\n\n\n자료형\n범위\nm\ne\n\n\n\nfloat\n-m * 10^e ~ m * 10^e\n23\n8\n\n\ndouble\n-m * 10^e ~ m * 10^e\n52\n11\n\n\n\n\n\n\n\n참조형 (Reference Type)\n\n값을 직접 저장하지 않고, 값이 저장된 주소를 저장ex) Date birthDay = new Date();\n\n\n\n여러가지 자료형정수형\n정수 리터럴\n진수 표기법\n\n\n진수법\n접두어\n예시\n\n\n\n10진수(decimal)\n-\n32\n\n\n2진수(binary)\n0b\n0b1011\n\n\n8진수(octal)\n0\n0342\n\n\n16진수(hexadecimal)\n0x\n0x4A\n\n\n\n정수 리터럴은 기본적으로 int 자료형\nint 범위를 넘어서는 리터럴의 경우 L을 붙여서 표기ex) long largeValue = 100000000000L;\n가독성 향상을 위해 세자리 수 마다 _를 이용해 천단위 표기ex) long largeValue = 100_000_000_000L;\n\n\n\n실수형\n실수 리터럴\n실수 리터럴은 기본적으로 double 자료형\nf를 붙여 float 타입을 표현할 수 있음ex) float value = 14.42f;\ne를 이용해 지수 표현을 할 수 있음ex) double value = 1.42e3; 1.42 * 10^3 = 1420\n\n\n\n문자형\nASCII 코드\n\n작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨ex) char asciiCharacter = &#39;A&#39;;\nASCII 코드의 특수 문자 입력\n\n\n\n\n의미\n표시\n\n\n\ntab\n\\t\n\n\nbackspace\n\\b\n\n\nnewline\n\\n\n\n\nform feed\n\\f\n\n\n\\\n\\\\\n\n\ncarriage return\n\\r\n\n\n‘\n\\&#39;\n\n\n“\n\\&quot;\n\n\n\n유니코드 테이블\n\n유니코드는 \\u + 16진수로 표현ex) char unicodeCharacter = &#39;\\u0041&#39;;\n\n\n\n논리형\ntrue, false 두 가지 값만이 허용된다.\n12boolean isTrue = true;boolean isFalse = false;\n\n\n\n문자열\n문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.\n1String s = &quot;문자열은 큰따옴표로 묶는다.&quot;;\n\n문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.\n12String s1 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;String s2 = 1 + &quot;1&quot; + 3;\n\n\n\n형변환 (Type Casting)형변환 연산자\n형변환 연산자는 ()로 변수 앞에 입력한다.ex) int value = (int)10.8; -&gt; value = 10\n\n업캐스팅 (Upcasting)\n값의 범위가 더 큰 자료형으로 변환하는 경우\n\n묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능\n123byte x = 10;int y = (int)x;int z = x;\n\n\n\n\n\n다운캐스팅 (Downcasting)\n값의 범위가 더 작은 자료형으로 변환하는 경우\n\n명시적인 방법으로만 캐스팅 가능\n123int x = 1024;// byte y = x;byte z = (byte)x;\n\n1234long x = 100;float y = x;// long z = y;long z = (long)y;\n\n\n\n\n","dateCreated":"2020-08-10T19:25:44+09:00","dateModified":"2020-08-10T19:30:41+09:00","datePublished":"2020-08-10T19:25:44+09:00","description":"","headline":"JavaBasic-02(DataType)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"자료형 (Data Type)자료형이란\n변수의 종류, 타입\n\n기본형 (Primitive Type)\n\n값을 변수에 직접 저장하는 자료형\n\n\n\n종류\n자료형\n크기 (byte)\n\n\n\n문자\nchar\n2\n\n\n정수\nbyte, short, int, long\n1, 2, 4, 8\n\n\n실수\nfloat, double\n4, 8\n\n\n논리\nboolean\n1\n\n\n\n정수형의 값 표현 범위\n\n\n\n자료형\n범위\n\n\n\nbyte\n-2^7 ~ 2^7 - 1\n\n\nshort\n-2^15 ~ 2^15 - 1\n\n\nint\n-2^31 ~ 2^31 - 1\n\n\nlong\n-2^63 ~ 2^63 - 1\n\n\n\n실수형의 값 표현 범위\n\n\n\n자료형\n범위\nm\ne\n\n\n\nfloat\n-m * 10^e ~ m * 10^e\n23\n8\n\n\ndouble\n-m * 10^e ~ m * 10^e\n52\n11\n\n\n\n\n\n\n\n참조형 (Reference Type)\n\n값을 직접 저장하지 않고, 값이 저장된 주소를 저장ex) Date birthDay = new Date();\n\n\n\n여러가지 자료형정수형\n정수 리터럴\n진수 표기법\n\n\n진수법\n접두어\n예시\n\n\n\n10진수(decimal)\n-\n32\n\n\n2진수(binary)\n0b\n0b1011\n\n\n8진수(octal)\n0\n0342\n\n\n16진수(hexadecimal)\n0x\n0x4A\n\n\n\n정수 리터럴은 기본적으로 int 자료형\nint 범위를 넘어서는 리터럴의 경우 L을 붙여서 표기ex) long largeValue = 100000000000L;\n가독성 향상을 위해 세자리 수 마다 _를 이용해 천단위 표기ex) long largeValue = 100_000_000_000L;\n\n\n\n실수형\n실수 리터럴\n실수 리터럴은 기본적으로 double 자료형\nf를 붙여 float 타입을 표현할 수 있음ex) float value = 14.42f;\ne를 이용해 지수 표현을 할 수 있음ex) double value = 1.42e3; 1.42 * 10^3 = 1420\n\n\n\n문자형\nASCII 코드\n\n작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨ex) char asciiCharacter = &#39;A&#39;;\nASCII 코드의 특수 문자 입력\n\n\n\n\n의미\n표시\n\n\n\ntab\n\\t\n\n\nbackspace\n\\b\n\n\nnewline\n\\n\n\n\nform feed\n\\f\n\n\n\\\n\\\\\n\n\ncarriage return\n\\r\n\n\n‘\n\\&#39;\n\n\n“\n\\&quot;\n\n\n\n유니코드 테이블\n\n유니코드는 \\u + 16진수로 표현ex) char unicodeCharacter = &#39;\\u0041&#39;;\n\n\n\n논리형\ntrue, false 두 가지 값만이 허용된다.\n12boolean isTrue = true;boolean isFalse = false;\n\n\n\n문자열\n문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.\n1String s = &quot;문자열은 큰따옴표로 묶는다.&quot;;\n\n문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.\n12String s1 = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;String s2 = 1 + &quot;1&quot; + 3;\n\n\n\n형변환 (Type Casting)형변환 연산자\n형변환 연산자는 ()로 변수 앞에 입력한다.ex) int value = (int)10.8; -&gt; value = 10\n\n업캐스팅 (Upcasting)\n값의 범위가 더 큰 자료형으로 변환하는 경우\n\n묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능\n123byte x = 10;int y = (int)x;int z = x;\n\n\n\n\n\n다운캐스팅 (Downcasting)\n값의 범위가 더 작은 자료형으로 변환하는 경우\n\n명시적인 방법으로만 캐스팅 가능\n123int x = 1024;// byte y = x;byte z = (byte)x;\n\n1234long x = 100;float y = x;// long z = y;long z = (long)y;\n\n\n\n\n","dateCreated":"2020-08-10T19:25:44+09:00","dateModified":"2020-09-21T00:24:09+09:00","datePublished":"2020-08-10T19:25:44+09:00","description":"","headline":"JavaBasic-02(DataType)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/10/JavaBasic-02-DataType/","keywords":"Java"}</script>
     <meta name="description" content="자료형 (Data Type)자료형이란 변수의 종류, 타입  기본형 (Primitive Type)  값을 변수에 직접 저장하는 자료형    종류 자료형 크기 (byte)    문자 char 2   정수 byte, short, int, long 1, 2, 4, 8   실수 float, double 4, 8   논리 boolean 1    정수형의 값 표현 범위">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="JavaBasic-02(DataType)">
@@ -20,8 +20,9 @@
 <meta property="og:description" content="자료형 (Data Type)자료형이란 변수의 종류, 타입  기본형 (Primitive Type)  값을 변수에 직접 저장하는 자료형    종류 자료형 크기 (byte)    문자 char 2   정수 byte, short, int, long 1, 2, 4, 8   실수 float, double 4, 8   논리 boolean 1    정수형의 값 표현 범위">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-10T10:25:44.000Z">
-<meta property="article:modified_time" content="2020-08-10T10:30:41.135Z">
+<meta property="article:modified_time" content="2020-09-20T15:24:09.348Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
     
     
@@ -338,6 +339,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
 </div>
 
     
@@ -587,6 +594,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">

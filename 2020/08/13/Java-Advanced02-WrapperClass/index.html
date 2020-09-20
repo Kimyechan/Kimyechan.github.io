@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Wrapper 클래스 (Wrapper Class)Wrapper 클래스란\n기본형 타입을 객체로 사용하기 위한 클래스\n\nWrapper 클래스의 종류\n\n\n기본형\nWrapper 클래스\n\n\n\nbyte\nByte\n\n\nchar\nCharacter\n\n\nshort\nShort\n\n\nint\nInteger\n\n\nlong\nLong\n\n\nfloat\nFloat\n\n\ndouble\nDouble\n\n\nboolean\nBoolean\n\n\nWrapper 객체 생성\n생성자를 이용한 객체 생성\n1Integer integer = new Integer(10);\n\nvalueOf를 이용한 객체 생성\n1Integer integer = Integer.valueOf(10);\n\n\n\nAutoboxing &amp; Unboxing\n오토박싱 (Autoboxing)\n\nJava1.5부터 추가된 기능으로, 객체로 다루어야 할 때 자동으로 Wrapper 클래스로 변경하는 기능\n\n\n언박싱 (Unboxing)\n\nWrapper 객체를 기본형으로 자동으로 변경하는 기능\n\n123int i = 10;Integer wrapped = i;int b = 20 + wrapped;\n\n\n\nWrapper 타입의 값 비교\nWrapper 타입은 객체이므로, ==를 이용하여 값을 비교할 수 없다.\n123456Integer intOne = new Integer(100);Integer intTwo = new Integer(100);System.out.println(intOne == intTwo); // falseSystem.out.println(intOne.equals(intTwo)) // trueSystem.out.println(intOne == 100) // true (Unboxing)\n\n\n\n문자열의 기본 자료형 변환\nParsing 정적 메소드를 이용한 변환\n12int x = Integer.parseInt(&quot;100&quot;);long y = Long.parseLong(&quot;512345124&quot;);\n\nWrapper 객체로의 변환\n12Integer intObj = Integer.valueOf(&quot;1000&quot;);Integer intObjTwo = new Integer(&quot;1234&quot;);\n\n","dateCreated":"2020-08-13T20:15:51+09:00","dateModified":"2020-09-17T19:42:27+09:00","datePublished":"2020-08-13T20:15:51+09:00","description":"","headline":"Java-Advanced02(WrapperClass)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/13/Java-Advanced02-WrapperClass/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/13/Java-Advanced02-WrapperClass/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Wrapper 클래스 (Wrapper Class)Wrapper 클래스란\n기본형 타입을 객체로 사용하기 위한 클래스\n\nWrapper 클래스의 종류\n\n\n기본형\nWrapper 클래스\n\n\n\nbyte\nByte\n\n\nchar\nCharacter\n\n\nshort\nShort\n\n\nint\nInteger\n\n\nlong\nLong\n\n\nfloat\nFloat\n\n\ndouble\nDouble\n\n\nboolean\nBoolean\n\n\nWrapper 객체 생성\n생성자를 이용한 객체 생성\n1Integer integer = new Integer(10);\n\nvalueOf를 이용한 객체 생성\n1Integer integer = Integer.valueOf(10);\n\n\n\nAutoboxing &amp; Unboxing\n오토박싱 (Autoboxing)\n\nJava1.5부터 추가된 기능으로, 객체로 다루어야 할 때 자동으로 Wrapper 클래스로 변경하는 기능\n\n\n언박싱 (Unboxing)\n\nWrapper 객체를 기본형으로 자동으로 변경하는 기능\n\n123int i = 10;Integer wrapped = i;int b = 20 + wrapped;\n\n\n\nWrapper 타입의 값 비교\nWrapper 타입은 객체이므로, ==를 이용하여 값을 비교할 수 없다.\n123456Integer intOne = new Integer(100);Integer intTwo = new Integer(100);System.out.println(intOne == intTwo); // falseSystem.out.println(intOne.equals(intTwo)) // trueSystem.out.println(intOne == 100) // true (Unboxing)\n\n\n\n문자열의 기본 자료형 변환\nParsing 정적 메소드를 이용한 변환\n12int x = Integer.parseInt(&quot;100&quot;);long y = Long.parseLong(&quot;512345124&quot;);\n\nWrapper 객체로의 변환\n12Integer intObj = Integer.valueOf(&quot;1000&quot;);Integer intObjTwo = new Integer(&quot;1234&quot;);\n\n\n","dateCreated":"2020-08-13T20:15:51+09:00","dateModified":"2020-09-21T00:26:46+09:00","datePublished":"2020-08-13T20:15:51+09:00","description":"","headline":"Java-Advanced02(WrapperClass)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/13/Java-Advanced02-WrapperClass/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/13/Java-Advanced02-WrapperClass/","keywords":"Java"}</script>
     <meta name="description" content="Wrapper 클래스 (Wrapper Class)Wrapper 클래스란 기본형 타입을 객체로 사용하기 위한 클래스  Wrapper 클래스의 종류   기본형 Wrapper 클래스    byte Byte   char Character   short Short   int Integer   long Long   float Float   double Double">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Java-Advanced02(WrapperClass)">
@@ -20,8 +20,9 @@
 <meta property="og:description" content="Wrapper 클래스 (Wrapper Class)Wrapper 클래스란 기본형 타입을 객체로 사용하기 위한 클래스  Wrapper 클래스의 종류   기본형 Wrapper 클래스    byte Byte   char Character   short Short   int Integer   long Long   float Float   double Double">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-13T11:15:51.000Z">
-<meta property="article:modified_time" content="2020-09-17T10:42:27.393Z">
+<meta property="article:modified_time" content="2020-09-20T15:26:46.716Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
     
     
@@ -338,6 +339,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
 </div>
 
     
@@ -423,7 +430,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = Integer.parseInt(<span class="string">&quot;100&quot;</span>);</span><br><span class="line"><span class="keyword">long</span> y = Long.parseLong(<span class="string">&quot;512345124&quot;</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Wrapper 객체로의 변환</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer intObj = Integer.valueOf(<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">Integer intObjTwo = <span class="keyword">new</span> Integer(<span class="string">&quot;1234&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer intObj = Integer.valueOf(<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">Integer intObjTwo = <span class="keyword">new</span> Integer(<span class="string">&quot;1234&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
             
@@ -432,6 +440,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">

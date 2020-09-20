@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"추상 클래스 (Abstract Class)추상 클래스란\n일부 메소드가 구현되지 않고 선언만 되어 있는 클래스\n자식 클래스에서 반드시 구현해야 하는 메소드를 abstract로 선언\n필요한 모든 클래스가 구현될 수 있도록 강제\n\n\n\n추상 클래스의 선언\nabstract 키워드를 이용해 클래스를 선언\n\nabstract 키워드를 이용해 메소드를 선언\n1234567abstract class AbstractFoo &#123;    public void method() &#123;        return;    &#125;    public abstract void abstractMethod();&#125;\n\n","dateCreated":"2020-08-12T22:35:27+09:00","dateModified":"2020-08-12T22:38:39+09:00","datePublished":"2020-08-12T22:35:27+09:00","description":"","headline":"OOP-Advanced01(Abstract Class)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"추상 클래스 (Abstract Class)추상 클래스란\n일부 메소드가 구현되지 않고 선언만 되어 있는 클래스\n자식 클래스에서 반드시 구현해야 하는 메소드를 abstract로 선언\n필요한 모든 클래스가 구현될 수 있도록 강제\n\n\n\n추상 클래스의 선언\nabstract 키워드를 이용해 클래스를 선언\n\nabstract 키워드를 이용해 메소드를 선언\n1234567abstract class AbstractFoo &#123;    public void method() &#123;        return;    &#125;    public abstract void abstractMethod();&#125;\n\n\n","dateCreated":"2020-08-12T22:35:27+09:00","dateModified":"2020-09-21T00:29:30+09:00","datePublished":"2020-08-12T22:35:27+09:00","description":"","headline":"OOP-Advanced01(Abstract Class)","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/08/12/OOP-Advanced01-Abstract-Class/","keywords":"Java"}</script>
     <meta name="description" content="추상 클래스 (Abstract Class)추상 클래스란 일부 메소드가 구현되지 않고 선언만 되어 있는 클래스 자식 클래스에서 반드시 구현해야 하는 메소드를 abstract로 선언 필요한 모든 클래스가 구현될 수 있도록 강제    추상 클래스의 선언 abstract 키워드를 이용해 클래스를 선언  abstract 키워드를 이용해 메소드를 선언 1234567a">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="OOP-Advanced01(Abstract Class)">
@@ -20,8 +20,9 @@
 <meta property="og:description" content="추상 클래스 (Abstract Class)추상 클래스란 일부 메소드가 구현되지 않고 선언만 되어 있는 클래스 자식 클래스에서 반드시 구현해야 하는 메소드를 abstract로 선언 필요한 모든 클래스가 구현될 수 있도록 강제    추상 클래스의 선언 abstract 키워드를 이용해 클래스를 선언  abstract 키워드를 이용해 메소드를 선언 1234567a">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-12T13:35:27.000Z">
-<meta property="article:modified_time" content="2020-08-12T13:38:39.854Z">
+<meta property="article:modified_time" content="2020-09-20T15:29:30.396Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
     
     
@@ -338,6 +339,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
+
+
+    
 </div>
 
     
@@ -357,7 +364,8 @@
 <li><p><code>abstract</code> 키워드를 이용해 클래스를 선언</p>
 </li>
 <li><p><code>abstract</code> 키워드를 이용해 메소드를 선언</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
             
@@ -366,6 +374,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">
