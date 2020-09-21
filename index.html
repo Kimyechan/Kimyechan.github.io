@@ -595,6 +595,10 @@
 <li><p>if ~ else if 구문처럼, 순차적으로 검사하면서 적용 가능한 예외를 처리</p>
 </li>
 <li><p>다형성이 적용되어, 자식 예외를 처리 가능</p>
+</li>
+<li><p>한가지의 catch 문에 대해서 예외가 잡힘</p>
+</li>
+<li><p>상위 Exception을 제일 밑의 catch문에 배치</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 예외 발생 가능 코드 영역</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (AException e) &#123;</span><br><span class="line">    <span class="comment">// A예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (BException e) &#123;</span><br><span class="line">    <span class="comment">// B예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (CException e) &#123;</span><br><span class="line">    <span class="comment">// C예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">// 나머지 모든 예외 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
