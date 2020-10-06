@@ -326,6 +326,506 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/07/Java-Advanced07-IO/"
+                            aria-label=": Java-Advanced07-IO"
+                        >
+                            Java-Advanced07-IO
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-07T00:36:52+09:00">
+	
+		    Oct 07, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h1><h2 id="I-O와-스트림"><a href="#I-O와-스트림" class="headerlink" title="I/O와 스트림"></a>I/O와 스트림</h2><ul>
+<li>I/O란 입출력(Input/Output)을 함께 부르는 것</li>
+<li>자바의 I/O는 스트림을 이용해 데이터를 주고 받는 형식으로 이루어짐<ul>
+<li>데이터의 소스와 목적지를 노드(node)라 부름</li>
+<li>노드는 키보드, 모니터, 파일, 메모리, 데이터베이스, 다른 프로그램 등이 될 수 있음</li>
+</ul>
+</li>
+</ul>
+<h2 id="노드-스트림"><a href="#노드-스트림" class="headerlink" title="노드 스트림"></a>노드 스트림</h2><h3 id="InputStream과-Reader"><a href="#InputStream과-Reader" class="headerlink" title="InputStream과 Reader"></a>InputStream과 Reader</h3><ul>
+<li><p>InputSTream의 주요 메소드 (byte 단위)</p>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int read()</code></td>
+<td>byte 하나를 읽어서 int로 반환. 읽을 값이 없으면 -1</td>
+</tr>
+<tr>
+<td><code>int read(byte b[])</code></td>
+<td>데이터를 읽어 b를 채우고, 읽은 바이트 수를 반환</td>
+</tr>
+<tr>
+<td><code>int read(byte b[], int offset, int len)</code></td>
+<td>최대 len개의 바이트를 읽어 b의 offset 위치부터 채운다.</td>
+</tr>
+<tr>
+<td><code>void close()</code></td>
+<td>스트림을 종료하고 자원을 반납</td>
+</tr>
+<tr>
+<td><code>int available()</code></td>
+<td>읽을 수 있는 데이터의 크기를 반납</td>
+</tr>
+<tr>
+<td><code>long skip(long n)</code></td>
+<td>스트림에서 n만큼 건너 뛴다.</td>
+</tr>
+<tr>
+<td><code>void mark(int readLimit)</code></td>
+<td>reset()으로 돌아갈 위치를 표시한다. readLimit은 돌릴 수 있는 최대 바이트 수</td>
+</tr>
+<tr>
+<td><code>void reset()</code></td>
+<td>mark()가 호출된 지점으로 돌아간다.</td>
+</tr>
+<tr>
+<td><code>boolean markSupported()</code></td>
+<td>mark, reset 메소드의 지원 여부를 반환</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (InputStream input = System.in) &#123;</span><br><span class="line">  <span class="keyword">int</span> read = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> ((read = input.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">    System.out.printf(<span class="string">&quot;Integer: %d\nCharacter: %c\n&quot;</span>, read, read);</span><br><span class="line">  &#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reader의 주요 메소드 (char 단위)</p>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int read()</code></td>
+<td>char 하나를 읽어서 int로 반환. 읽을 값이 없으면 -1</td>
+</tr>
+<tr>
+<td><code>int read(char cbuf[])</code></td>
+<td>데이터를 읽어 cbuf를 채우고, 읽은 char 수를 반환</td>
+</tr>
+<tr>
+<td><code>int read(char cbuf[], int off, int len)</code></td>
+<td>최대 len개의 char를 읽어 cbuf의 offset 위치부터 채운다.</td>
+</tr>
+<tr>
+<td><code>int read(java.nio.CharBuffer target)</code></td>
+<td>NIO target에 데이터를 저장한다.</td>
+</tr>
+<tr>
+<td><code>void close()</code></td>
+<td>스트림을 종료하고 자원을 반납</td>
+</tr>
+<tr>
+<td><code>int available()</code></td>
+<td>읽을 수 있는 데이터의 크기를 반납</td>
+</tr>
+<tr>
+<td><code>long skip(long n)</code></td>
+<td>스트림에서 n만큼 건너 뛴다.</td>
+</tr>
+<tr>
+<td><code>void mark(int readAheadLimit)</code></td>
+<td>reset()으로 돌아갈 위치를 표시한다. readLimit은 돌릴 수 있는 최대 바이트 수</td>
+</tr>
+<tr>
+<td><code>void reset()</code></td>
+<td>mark()가 호출된 지점으로 돌아간다.</td>
+</tr>
+<tr>
+<td><code>boolean markSupported()</code></td>
+<td>mark, reset 메소드의 지원 여부를 반환</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="OutputStream과-Writer"><a href="#OutputStream과-Writer" class="headerlink" title="OutputStream과 Writer"></a>OutputStream과 Writer</h3><ul>
+<li><p>OutputStream의 주요 메소드 (byte 단위)</p>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>void write(int b)</code></td>
+<td>b 내용을 byte로 출력</td>
+</tr>
+<tr>
+<td><code>void write(byte b[])</code></td>
+<td>b를 문자열로 변환하여 출력</td>
+</tr>
+<tr>
+<td><code>void write(byte b[], int off, int len)</code></td>
+<td>b의 off부터 (off + len - 1)만큼을 문자열로 변환하여 출력</td>
+</tr>
+<tr>
+<td><code>void close()</code></td>
+<td>스트림을 종료하고 자원을 반납. <code>close()</code> 내부적으로 <code>flush()</code> 호출</td>
+</tr>
+<tr>
+<td><code>void flush()</code></td>
+<td>버퍼 스트림에서 버퍼의 내용을 출력하고 비운다.</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>Writer의 주요 메소드 (char 단위)</p>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>void write(int c)</code></td>
+<td>c 내용을 char로 출력</td>
+</tr>
+<tr>
+<td><code>void write(char cbuf[])</code></td>
+<td>cbuf를 문자열로 변환하여 출력</td>
+</tr>
+<tr>
+<td><code>void write(char cbuf[], int off, int len)</code></td>
+<td>cbuf의 off부터 (off + len - 1)만큼을 문자열로 변환하여 출력</td>
+</tr>
+<tr>
+<td><code>void write(String str)</code></td>
+<td>str을 출력한다.</td>
+</tr>
+<tr>
+<td><code>void write(String str, int off, int len)</code></td>
+<td>str의 off부터 (off + len - 1)만큼을 출력</td>
+</tr>
+<tr>
+<td><code>Writer append(CharSequence csq)</code></td>
+<td>csq를 출력하고 Writer 반환</td>
+</tr>
+<tr>
+<td><code>Writer append(CharSequence csq, int start, int end)</code></td>
+<td>csq의 start부터 end까지를 출력하고 Writer 반환</td>
+</tr>
+<tr>
+<td><code>Writer append(char c)</code></td>
+<td>c를 출력하고 Writer 반환</td>
+</tr>
+<tr>
+<td><code>void close()</code></td>
+<td>스트림을 종료하고 자원을 반납. <code>close()</code> 내부적으로 <code>flush()</code> 호출</td>
+</tr>
+<tr>
+<td><code>void flush()</code></td>
+<td>버퍼 스트림에서 버퍼의 내용을 출력하고 비운다.</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="다양한-입출력-처리"><a href="#다양한-입출력-처리" class="headerlink" title="다양한 입출력 처리"></a>다양한 입출력 처리</h3><ul>
+<li><p>메모리 기반의 입/출력</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>[] memory = <span class="string">&quot;메모리 입출력 테스트&quot;</span>.toCharArray();</span><br><span class="line"><span class="keyword">char</span>[] buffer = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> read = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span> (CharArrayReader reader = <span class="keyword">new</span> CharArrayReader(memory);</span><br><span class="line">     CharArrayWriter writer = newCharArrayWriter();) &#123;</span><br><span class="line">  <span class="keyword">while</span> ((read = reader.read(buffer) &gt; <span class="number">0</span>)) &#123;</span><br><span class="line">    wrtier.write(buffer, <span class="number">0</span>, read);</span><br><span class="line">  &#125;</span><br><span class="line">  System.out.println(Arrays.toString(writer.toCharArray()));</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>파일 기반의 입출력</p>
+<ul>
+<li><p>생성자 및 생성/삭제 메소드</p>
+<table>
+<thead>
+<tr>
+<th>생성자 및 메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>File(String pathname)</code></td>
+<td>pathname에 해당하는 파일 생성. 기본 경로는 애플리케이션의 시작 경로</td>
+</tr>
+<tr>
+<td><code>File(String parent, String child)</code></td>
+<td>parent 경로 아래 child 파일 생성</td>
+</tr>
+<tr>
+<td><code>File(File parent, String child)</code></td>
+<td>parent 경로 아래 child 파일 생성</td>
+</tr>
+<tr>
+<td><code>File(URI uri)</code></td>
+<td>file로 시작하는 URI 객체를 이용해 파일 생성</td>
+</tr>
+<tr>
+<td><code>boolean createNewFile()</code></td>
+<td>새로운 파일을 생성</td>
+</tr>
+<tr>
+<td><code>boolean mkdir()</code></td>
+<td>새로운 디렉토리를 생성</td>
+</tr>
+<tr>
+<td><code>boolean mkdirs()</code></td>
+<td>경로상의 모든 디렉토리를 생성</td>
+</tr>
+<tr>
+<td><code>boolean delete()</code></td>
+<td>파일/디렉토리 삭제</td>
+</tr>
+<tr>
+<td><code>void deleteOnExit()</code></td>
+<td>애플리케이션 종료시 자동으로 삭제</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">String filePath = <span class="string">&quot;D:&quot;</span> + File.separator + <span class="string">&quot;Temp&quot;</span> + File.separator + <span class="string">&quot;MyTemp&quot;</span>;</span><br><span class="line">  </span><br><span class="line">File fileOne = <span class="keyword">new</span> File(filePath);</span><br><span class="line">fileOne.mkdir();</span><br><span class="line"></span><br><span class="line">File fileTwo = <span class="keyword">new</span> File(filePath, <span class="string">&quot;file2.txt&quot;</span>);</span><br><span class="line">fileTwo.createNewFile();</span><br><span class="line"></span><br><span class="line">File fileThree = <span class="keyword">new</span> File(fileOne, <span class="string">&quot;file3.txt&quot;</span>);</span><br><span class="line">fileThree.createNewFile();</span><br><span class="line"></span><br><span class="line">File fileFour = <span class="keyword">new</span> File(<span class="keyword">new</span> URI(<span class="string">&quot;file:///d:/Temp/MyTemp/file4.txt&quot;</span>));</span><br><span class="line">fileFour.createNewFile();</span><br><span class="line">fileFour.deleteOnExit();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>File 클래스의 주요 메소드</p>
+<ul>
+<li><code>getName()</code>, <code>getParent()</code>, <code>getParentFile()</code>, <code>getPath()</code></li>
+<li><code>isAbsolute()</code>, <code>getAbsolutePath()</code>, <code>getCanonicalPath()</code>, <code>toURI()</code></li>
+<li><code>canRead()</code>, <code>canWrite()</code></li>
+<li><code>isDirectory()</code>, <code>isFile()</code></li>
+<li><code>length()</code>, <code>list()</code>, <code>listFiles()</code>, <code>lastModified()</code>, <code>renameTo()</code></li>
+</ul>
+</li>
+<li><p>FileInputStream, FileOutputStream</p>
+<ul>
+<li>파일명이나 File 객체를 이용하여 입출력 스트림 생성 가능</li>
+<li>FileOutputStream에서 <code>boolean append</code>를 true로 하면 기존 파일에 이어서 쓴다.</li>
+</ul>
+</li>
+<li><p>FileReader, FileWriter</p>
+<ul>
+<li>파일명이나 File 객체를 이용하여 입출력 Reader 생성 가능</li>
+<li>FileWriter에서 <code>boolean append</code>를 true로 하면 기존 파일에 이어서 쓴다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="보조-스트림"><a href="#보조-스트림" class="headerlink" title="보조 스트림"></a>보조 스트림</h2><h3 id="보조-스트림의-특징"><a href="#보조-스트림의-특징" class="headerlink" title="보조 스트림의 특징"></a>보조 스트림의 특징</h3><ul>
+<li>스트림에 부가적인 기능 제공</li>
+<li>노드(데이터 소스/목적지)와 직접 연결되지 않고, 다른 스트림과 연결</li>
+<li>Stream Chaining: 스트림을 여러개 연결하여 사용</li>
+</ul>
+<h3 id="보조-스트림의-종류"><a href="#보조-스트림의-종류" class="headerlink" title="보조 스트림의 종류"></a>보조 스트림의 종류</h3><table>
+<thead>
+<tr>
+<th>보조 스트림</th>
+<th>기능</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>InputStreamReader</code></td>
+<td>byte 스트림을 char 스트림으로 변환</td>
+</tr>
+<tr>
+<td><code>OutputStreamWriter</code></td>
+<td>byte 스트림을 char 스트림으로 변환</td>
+</tr>
+<tr>
+<td><code>BufferedReader</code></td>
+<td>버퍼링을 통해 스트림 속도 향상</td>
+</tr>
+<tr>
+<td><code>BufferedWriter</code></td>
+<td>버퍼링을 통해 스트림 속도 향상</td>
+</tr>
+<tr>
+<td><code>BufferedInputStream</code></td>
+<td>버퍼링을 통해 스트림 속도 향상</td>
+</tr>
+<tr>
+<td><code>BufferedOutputStream</code></td>
+<td>버퍼링을 통해 스트림 속도 향상</td>
+</tr>
+<tr>
+<td><code>DataInputStream</code></td>
+<td>기본 데이터형 전송</td>
+</tr>
+<tr>
+<td><code>DataOutputStream</code></td>
+<td>기본 데이터형 전송</td>
+</tr>
+<tr>
+<td><code>ObjectInputStream</code></td>
+<td>객체 전송</td>
+</tr>
+<tr>
+<td><code>ObjectOuputStream</code></td>
+<td>객체 전송</td>
+</tr>
+<tr>
+<td><code>PrintWriter</code></td>
+<td>문자열 표현으로 출력</td>
+</tr>
+<tr>
+<td><code>PrintStream</code></td>
+<td>문자열 표현으로 출력</td>
+</tr>
+</tbody></table>
+<h3 id="스트림-자료형-변경"><a href="#스트림-자료형-변경" class="headerlink" title="스트림 자료형 변경"></a>스트림 자료형 변경</h3><ul>
+<li><p>캐릭터셋: <code>utf-8</code>, <code>ms949</code>, <code>euc-kr</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">InputStreamReader readerOne = <span class="keyword">new</span> InputStreamReader(System.in);</span><br><span class="line">InputStreamReader readerTwo = <span class="keyword">new</span> InputStreamReader(System.in, <span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">OutputStreamWriter writerOne = <span class="keyword">new</span> OutputStreamWriter(System.out);</span><br><span class="line">OutputStreamWriter writerTwo = <span class="keyword">new</span> OutputStreamWriter(System.out, <span class="string">&quot;ms949&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="버퍼를-이용한-스트림"><a href="#버퍼를-이용한-스트림" class="headerlink" title="버퍼를 이용한 스트림"></a>버퍼를 이용한 스트림</h3><ul>
+<li><p>기본 버퍼 크기: 8192 bytes</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">copyStream</span><span class="params">(InputStream input, OutputStream output)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">  <span class="keyword">byte</span> [] buff = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">  <span class="keyword">int</span> read = -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> ((read = input.read(buff) &gt; <span class="number">0</span>)) &#123;</span><br><span class="line">    output.write(buff, <span class="number">0</span>, read);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  File src = <span class="keyword">new</span> File(<span class="string">&quot;C:/Windows/explorer.exe&quot;</span>);</span><br><span class="line">  File dst = <span class="keyword">new</span> File(<span class="string">&quot;C:/temp/explorer.exe&quot;</span>);</span><br><span class="line">  <span class="keyword">try</span> (FileInputStream in = <span class="keyword">new</span> FileInputStream(src);</span><br><span class="line">       FileOutputStream out = <span class="keyword">new</span> FileOutputStream(target);</span><br><span class="line">       BufferedInputStream buffIn = <span class="keyword">new</span> BufferedInputStream(in);</span><br><span class="line">       BufferedOutputStream buffOut = <span class="keyword">new</span> BufferedOutputStream(out);) &#123;</span><br><span class="line">    <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line">    copyStream(in, out);</span><br><span class="line">    System.out.println(System.nanoTime() - start);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line">    copyStream(bin, bout);</span><br><span class="line">    System.out.println(System.nanoTime() - start);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>BufferedReader는</code> <code>readLine()</code> 메소드를 사용할 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">File src = <span class="keyword">new</span> File(<span class="string">&quot;./src.txt&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> (BufferedReader buffReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(src));) &#123;</span><br><span class="line">  String line = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">    System.out.println(line);</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">  e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="기본-데이터형-전송-스트림"><a href="#기본-데이터형-전송-스트림" class="headerlink" title="기본 데이터형 전송 스트림"></a>기본 데이터형 전송 스트림</h3><ul>
+<li><p>byte, char 외에 다른 기본 데이터형도 전송 가능한 스트림</p>
+<ul>
+<li>읽은 후에는 자료형을 알 수 없으므로 쓴 순서대로 읽어야 함</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>클래스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DataInputStream</code></td>
+<td><code>boolean readBoolean()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>byte readByte()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>short readShort()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>int readInt()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>long readLong()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>float readFloat()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>double readDouble()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>char readChar()</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>String readUTF()</code></td>
+</tr>
+<tr>
+<td><code>DataOutputStream</code></td>
+<td><code>void writeBoolean(bool v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeByte(byte v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeShort(short v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeInt(int v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeLong(long v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeFloat(float v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeDouble(double v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeChar(char v)</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>void writeUTF(String v)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">File src = <span class="keyword">new</span> File(<span class="string">&quot;c:/Temp/data.dat&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> (DataOutputStream out = <span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(src))) &#123;</span><br><span class="line">  out.writeUTF(<span class="string">&quot;김패캠&quot;</span>);</span><br><span class="line">  out.writeInt(<span class="number">15</span>);</span><br><span class="line">  out.writeFloat(<span class="number">14.23</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> (DataInputStream in = <span class="keyword">new</span> DataInputStream(<span class="keyword">new</span> FileInputStream(src))) &#123;</span><br><span class="line">  String string = in.readUTF();</span><br><span class="line">  <span class="keyword">int</span> integer = in.readInt();</span><br><span class="line">  <span class="keyword">float</span> floatNum = in.readFloat();</span><br><span class="line">  System.out.println(string + <span class="string">&quot; &quot;</span> + integer + <span class="string">&quot; &quot;</span> + floatNum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="객체-저장을-위한-스트림"><a href="#객체-저장을-위한-스트림" class="headerlink" title="객체 저장을 위한 스트림"></a>객체 저장을 위한 스트림</h3><ul>
+<li><p>일반적인 참조형 객체를 저장하기 위한 스트림</p>
+</li>
+<li><p>직렬화(Serialization)와 역직렬화(Deserialization) 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123; <span class="comment">// has-a 관계의 모든 클래스가 Serializable이어야 함</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>; <span class="comment">// 객체의 버전 관리</span></span><br><span class="line"></span><br><span class="line">  String userName;</span><br><span class="line">  <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">transient</span> String passWord;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> userName + <span class="string">&quot; &quot;</span> + id + <span class="string">&quot; &quot;</span> + passWord;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FooTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String [] args)</span> </span>&#123;</span><br><span class="line">    File dst = <span class="keyword">new</span> File(<span class="string">&quot;C:/Temp/obj.data&quot;</span>);</span><br><span class="line">    Foo foo = <span class="keyword">new</span> Foo();</span><br><span class="line">    foo.userName = <span class="string">&quot;김사탕&quot;</span>;</span><br><span class="line">    foo.id = <span class="number">142</span>;</span><br><span class="line">    foo.passWord = <span class="string">&quot;qwer1234&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> (ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(dst));</span><br><span class="line">        ObjectInputStream in = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(dst));) &#123;</span><br><span class="line">      out.writeObject(foo);</span><br><span class="line">      Object read = in.readobject();</span><br><span class="line">      <span class="keyword">if</span> (read != <span class="keyword">null</span> &amp;&amp; read <span class="keyword">instanceof</span> Foo) &#123;</span><br><span class="line">        Foo readFoo = (Foo)read;</span><br><span class="line">        System.out.println(readFoo);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException | ClassNotFoundException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>부모 클래스가 Serializable이 아닌 경우 자식 클래스에서 직접 처리</p>
+<ul>
+<li>writeObject(), readObject()를 자식 클래스에서 직접 구현</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParentFoo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> memVarOne;</span><br><span class="line">  <span class="keyword">double</span> memVarTwo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChildFoo</span> <span class="keyword">extends</span> <span class="title">ParentFoo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(ObjectOutputStream out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    out.writeInt(memVarOne);</span><br><span class="line">    out.writeDouble(memVarTwo);</span><br><span class="line">    out.defaultWriteObject();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(ObjectInputStream in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    memVarOne = in.readInt();</span><br><span class="line">    memVarTwo = in.readDouble();</span><br><span class="line">    in.defaultReadObject();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/07/Java-Advanced07-IO/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/09/28/Java-Advanced06-java-lang/"
                             aria-label=": Java-Advanced06-java.lang"
                         >
@@ -2148,89 +2648,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/12/OOP-Advanced03-Enumeration/"
-                            aria-label=": OOP-Advanced03(Enumeration)"
-                        >
-                            OOP-Advanced03(Enumeration)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-12T22:36:33+09:00">
-	
-		    Aug 12, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="열거형-Enumeration"><a href="#열거형-Enumeration" class="headerlink" title="열거형 (Enumeration)"></a>열거형 (Enumeration)</h1><h2 id="열거형이란"><a href="#열거형이란" class="headerlink" title="열거형이란"></a>열거형이란</h2><ul>
-<li>몇가지 한정된 상수로 표현될 수 있는 자료형을 구현</li>
-<li><code>enum</code> 키워드를 이용하며, 내부적으로는 <code>java.lang.Enum</code> 클래스를 상속</li>
-</ul>
-<h2 id="열거형의-특징"><a href="#열거형의-특징" class="headerlink" title="열거형의 특징"></a>열거형의 특징</h2><ul>
-<li>접근 제한자는 <code>public</code>과 <code>default</code>만 사용 가능</li>
-<li>다른 클래스를 상속받을 수 없으나, 인터페이스 구현은 가능</li>
-<li>열거형 타입에는 열거형 상수와 null 값을 할당할 수 있음</li>
-</ul>
-<h2 id="열거형의-구현"><a href="#열거형의-구현" class="headerlink" title="열거형의 구현"></a>열거형의 구현</h2><ul>
-<li><p>일반적인 열거형의 구현</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Job &#123;</span><br><span class="line">    STUDENT, MARKETING, DEVELOPER, CHIEF_EXECUTIONAL_OFFICER;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Job job = Job.STUDENT;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (job == Job.CHIEF_EXECUTIONAL_OFFICER) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;사장님, 안녕하세요?&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (job) &#123;</span><br><span class="line">            <span class="keyword">case</span> STUDENT: <span class="comment">// case에서는 &#x27;Job.&#x27; 을 쓰지 않는다.</span></span><br><span class="line">                System.out.println(<span class="string">&quot;You will be a great one.&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MARKETING:</span><br><span class="line">                System.out.println(<span class="string">&quot;You make things sold.&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> DEVELOPER:</span><br><span class="line">                System.out.println(<span class="string">&quot;You usually don&#x27;t go home.&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CHIEF_EXECUTIONAL_OFFICER:</span><br><span class="line">                System.out.println(<span class="string">&quot;You choose your company&#x27;s fate.&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                System.out.println(<span class="string">&quot;I don&#x27;t recognize what you do.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>클래스 내부에서 열거형 구현</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> MyEnum &#123;</span><br><span class="line">        ONE, TWO;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(Foo.MyEnum.ONE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>열거형에 메소드 구현</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Symbol &#123;</span><br><span class="line">    ONE, TWO, THREE, FOUR;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Symbol <span class="title">nextSymbol</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.equals(ONE)) &#123;</span><br><span class="line">            <span class="keyword">return</span> TWO;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.equals(TWO)) &#123;</span><br><span class="line">            <span class="keyword">return</span> THREE;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.equals(THREE)) &#123;</span><br><span class="line">            <span class="keyword">return</span> FOUR;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> ONE;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Symbol sym = Symbol.ONE; <span class="comment">// ONE</span></span><br><span class="line">        Symbol nextSym = sym.nextSymbol(); <span class="comment">// TWO</span></span><br><span class="line">        nextSym = nextSym.nextSymbol(); <span class="comment">// THREE</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>열거형 생성자를 이용한 enum 상수 초기화</p>
-<ul>
-<li>열거형의 생성자는 항상 <code>private</code>이며 생략 가능</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Family &#123;</span><br><span class="line">    FATHER(<span class="string">&quot;아버지&quot;</span>), MOTHER(<span class="string">&quot;어머니&quot;</span>), SON(<span class="string">&quot;아들&quot;</span>), DAUGHTER(<span class="string">&quot;딸&quot;</span>); <span class="comment">// 생성자 호출</span></span><br><span class="line">    <span class="keyword">private</span> String koreanWord;</span><br><span class="line"></span><br><span class="line">    Family(String koreanWord) &#123; <span class="comment">// private 생성자</span></span><br><span class="line">        <span class="keyword">this</span>.koreanWord = koreanWord;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getKoreanWord</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> koreanWord;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setKoreanWord</span><span class="params">(String koreanWord)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.koreanWord = koreanWord;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Family fam = Family.SON;</span><br><span class="line">        System.out.println(fam.koreanWord) <span class="comment">// 아들</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/12/OOP-Advanced03-Enumeration/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -2246,7 +2663,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 1 of 3</li>
+        <li class="pagination-number">page 1 of 4</li>
     </ul>
 </div>
 
