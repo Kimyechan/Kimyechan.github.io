@@ -1,0 +1,867 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Java Server Developer">
+    <title>Java-Advanced09-Annotation - Java Server Developer</title>
+    <meta name="author" content="Yechan Kim">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"애노테이션 (Annotations)애노테이션이란\n애노테이션의 사전적인 의미는 주석\nJVM, 컴파일러, 프레임워크 등에게 전달하는 메타데이터로 사용됨\n\n기본 애노테이션\n\n\n애노테이션\n설명\n비고\n\n\n\n@Override\n상속하여 오버라이드된 메소드\n\n\n\n@Deprecated\n앞으로 사라질 예정임을 표기\n\n\n\n@SuppressWarnings\n컴파일러에게 특정 경고 메세지를 무시하도록 한다.\neg. @SuppressWarnings(“unused”)\n\n\n@FunctionalInterface\n함수형 인터페이스임을 표기 (Lambda)\n\n\n\n애노테이션의 구성 요소\n애노테이션의 작성\n추상 메소드와 유사한 형태로 구현\n\n\n\n12345@Target(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;) // 메타 애노테이션@Retention(RetentionPolicy.SOURCE)                                     // 메타 애노테이션public @interface SuppressWarnings &#123;                                   // 애노테이션 선언    String [] value();                                                 // 애노테이션 속성&#125;\n\n\n애노테이션의 사용\nkey=value 형태로 애노테이션에 속성의 값 전달\n\n\n\n12345@SuppressWarnings(value = &#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;) // 키 = 값 배열@SuppressWarnings(value = &quot;unused&quot;)               // 값이 하나인 경우 배열 생략 가능@SuppressWarnings(&#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;)         // 속성이 value 하나인 경우 키 생략 가능@CustomAnnotation(key1 = &quot;value1&quot;, key2 = &#123;&quot;value2&quot;, &quot;value3&quot;&#125;) // 속성이 여러개인 경우 키를 여러개 사용\n\n\nTarget 설정\n\n애노테이션을 사용할 수 있는 대상을 설정\n\nElementType 열거형 상수 사용\n\n\n\nElementType\n범위\n\n\n\nTYPE\n클래스, 인터페이스, 애노테이션, 열거형\n\n\nFIELD\n필드(멤버 변수), 열거형 상수\n\n\nMETHOD\n메소드\n\n\nPARAMETER\n메소드의 파라미터\n\n\nCONSTRUCTOR\n생성자\n\n\nLOCAL_VARIABLE\n로컬 변수\n\n\nANNOTATION_TYPE\n애노테이션\n\n\nPACKAGE\n패키지\n\n\n\n\n\nRetention 설정\n\n애노테이션 정보를 언제까지 유지할 것인지 설정\n\nRetentionPolicy 열거형 상수 사용\n\nreflection: java.lang.reflect API\n\n\n\nRetentionPolicy\n범위\n\n\n\nSOURCE\n컴파일러가 사용. 빌드된 .class 파일에는 포함되지 않음\n\n\nCLASS\n.class 파일에 포함되나, VM이 사용하지 않으며 reflection에 정보를 포함하지 않음\n\n\nRUNTIME\n.class에 포함, VM에서 인식, reflection에 정보를 포함\n\n\n\n\n\n\n사용자 정의 애노테이션\n사용자 정의 애노테이션 구현\n123456@Retention(RUNTIME)@Target(FIELD)public @interface CustomAnnotation &#123;    String value();    String valueTwo() default &quot;기본값&quot;;&#125;\n\n사용자 정의 애노테이션 사용\n12345678910class CustomAnnotationUsage &#123;    @CustomAnnotation(&quot;game&quot;)    String gameName = &quot;여러분의 틱택토&quot;;    @CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;localhost&quot;)    String serverIP;    @CustomAnnotation(&quot;game&quot;)    String gameMode = &quot;AI vs. AI&quot;;    @CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;8888&quot;)    String serverPort;&#125;\n\nReflection을 이용하여 애노테이션에 할당된 값 사용\n123456789101112131415161718192021222324class CustomAnnotationTest &#123;  public static void main(String[] args) throws Exception &#123;      CustomAnnotationUsage obj = new CustomAnnotationUsage();      Map&lt;String, Object&gt; gameProp = new HashMap&lt;&gt;();      Map&lt;String, Object&gt; serverProp = new HashMap&lt;&gt;();      Field[] fields = CustomAnnotationUsage.class.getDeclaredFields();      for (Field field: fields) &#123;          CustomAnnotation annotation = field.getDeclaredAnnotation(CustomAnnotation.class);          if (field.get(obj) == null) &#123;              field.set(obj, annotation.valueTwo());          &#125;          if (annotation.value().equals(&quot;game&quot;)) &#123;              gameProp.put(field.getName(), field.get(obj));          &#125; else &#123;              serverProp.put(field.getName(), field.get(obj));          &#125;      &#125;      System.out.println(gameProp);      System.out.println(serverProp);    &#125;&#125;\n\n\n","dateCreated":"2020-10-13T21:25:52+09:00","dateModified":"2020-10-13T21:26:29+09:00","datePublished":"2020-10-13T21:25:52+09:00","description":"","headline":"Java-Advanced09-Annotation","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/","keywords":"Java"}</script>
+    <meta name="description" content="애노테이션 (Annotations)애노테이션이란 애노테이션의 사전적인 의미는 주석 JVM, 컴파일러, 프레임워크 등에게 전달하는 메타데이터로 사용됨  기본 애노테이션   애노테이션 설명 비고    @Override 상속하여 오버라이드된 메소드    @Deprecated 앞으로 사라질 예정임을 표기    @SuppressWarnings 컴파일러에게 특정 경고">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Java-Advanced09-Annotation">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/index.html">
+<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="애노테이션 (Annotations)애노테이션이란 애노테이션의 사전적인 의미는 주석 JVM, 컴파일러, 프레임워크 등에게 전달하는 메타데이터로 사용됨  기본 애노테이션   애노테이션 설명 비고    @Override 상속하여 오버라이드된 메소드    @Deprecated 앞으로 사라질 예정임을 표기    @SuppressWarnings 컴파일러에게 특정 경고">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-13T12:25:52.000Z">
+<meta property="article:modified_time" content="2020-10-13T12:26:29.987Z">
+<meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Java Server Developer
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="http://stackoverflow.com/users"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Stack Overflow"
+                        >
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://plus.google.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Google +"
+                        >
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://www.linkedin.com/profile/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="LinkedIn"
+                        >
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Java-Advanced09-Annotation
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-10-13T21:25:52+09:00">
+	
+		    Oct 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="애노테이션-Annotations"><a href="#애노테이션-Annotations" class="headerlink" title="애노테이션 (Annotations)"></a>애노테이션 (Annotations)</h1><h2 id="애노테이션이란"><a href="#애노테이션이란" class="headerlink" title="애노테이션이란"></a>애노테이션이란</h2><ul>
+<li>애노테이션의 사전적인 의미는 <em>주석</em></li>
+<li>JVM, 컴파일러, 프레임워크 등에게 전달하는 메타데이터로 사용됨</li>
+</ul>
+<h2 id="기본-애노테이션"><a href="#기본-애노테이션" class="headerlink" title="기본 애노테이션"></a>기본 애노테이션</h2><table>
+<thead>
+<tr>
+<th>애노테이션</th>
+<th>설명</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Override</td>
+<td>상속하여 오버라이드된 메소드</td>
+<td></td>
+</tr>
+<tr>
+<td>@Deprecated</td>
+<td>앞으로 사라질 예정임을 표기</td>
+<td></td>
+</tr>
+<tr>
+<td>@SuppressWarnings</td>
+<td>컴파일러에게 특정 경고 메세지를 무시하도록 한다.</td>
+<td>eg. @SuppressWarnings(“unused”)</td>
+</tr>
+<tr>
+<td>@FunctionalInterface</td>
+<td>함수형 인터페이스임을 표기 (Lambda)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="애노테이션의-구성-요소"><a href="#애노테이션의-구성-요소" class="headerlink" title="애노테이션의 구성 요소"></a>애노테이션의 구성 요소</h2><ul>
+<li>애노테이션의 작성<ul>
+<li>추상 메소드와 유사한 형태로 구현</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span> <span class="comment">// 메타 애노테이션</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.SOURCE)</span>                                     <span class="comment">// 메타 애노테이션</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;                                   <span class="comment">// 애노테이션 선언</span></span><br><span class="line">    String [] value();                                                 <span class="comment">// 애노테이션 속성</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>애노테이션의 사용<ul>
+<li>key=value 형태로 애노테이션에 속성의 값 전달</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(value = &#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;)</span> <span class="comment">// 키 = 값 배열</span></span><br><span class="line"><span class="meta">@SuppressWarnings(value = &quot;unused&quot;)</span>               <span class="comment">// 값이 하나인 경우 배열 생략 가능</span></span><br><span class="line"><span class="meta">@SuppressWarnings(&#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;)</span>         <span class="comment">// 속성이 value 하나인 경우 키 생략 가능</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@CustomAnnotation(key1 = &quot;value1&quot;, key2 = &#123;&quot;value2&quot;, &quot;value3&quot;&#125;)</span> <span class="comment">// 속성이 여러개인 경우 키를 여러개 사용</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Target 설정</p>
+<ul>
+<li><p>애노테이션을 사용할 수 있는 대상을 설정</p>
+</li>
+<li><p>ElementType 열거형 상수 사용</p>
+<table>
+<thead>
+<tr>
+<th><code>ElementType</code></th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TYPE</code></td>
+<td>클래스, 인터페이스, 애노테이션, 열거형</td>
+</tr>
+<tr>
+<td><code>FIELD</code></td>
+<td>필드(멤버 변수), 열거형 상수</td>
+</tr>
+<tr>
+<td><code>METHOD</code></td>
+<td>메소드</td>
+</tr>
+<tr>
+<td><code>PARAMETER</code></td>
+<td>메소드의 파라미터</td>
+</tr>
+<tr>
+<td><code>CONSTRUCTOR</code></td>
+<td>생성자</td>
+</tr>
+<tr>
+<td><code>LOCAL_VARIABLE</code></td>
+<td>로컬 변수</td>
+</tr>
+<tr>
+<td><code>ANNOTATION_TYPE</code></td>
+<td>애노테이션</td>
+</tr>
+<tr>
+<td><code>PACKAGE</code></td>
+<td>패키지</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>Retention 설정</p>
+<ul>
+<li><p>애노테이션 정보를 언제까지 유지할 것인지 설정</p>
+</li>
+<li><p>RetentionPolicy 열거형 상수 사용</p>
+</li>
+<li><p>reflection: java.lang.reflect API</p>
+<table>
+<thead>
+<tr>
+<th><code>RetentionPolicy</code></th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SOURCE</code></td>
+<td>컴파일러가 사용. 빌드된 .class 파일에는 포함되지 않음</td>
+</tr>
+<tr>
+<td><code>CLASS</code></td>
+<td>.class 파일에 포함되나, VM이 사용하지 않으며 reflection에 정보를 포함하지 않음</td>
+</tr>
+<tr>
+<td><code>RUNTIME</code></td>
+<td>.class에 포함, VM에서 인식, reflection에 정보를 포함</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="사용자-정의-애노테이션"><a href="#사용자-정의-애노테이션" class="headerlink" title="사용자 정의 애노테이션"></a>사용자 정의 애노테이션</h2><ul>
+<li><p>사용자 정의 애노테이션 구현</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">valueTwo</span><span class="params">()</span> <span class="keyword">default</span> &quot;기본값&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>사용자 정의 애노테이션 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomAnnotationUsage</span> </span>&#123;</span><br><span class="line">    <span class="meta">@CustomAnnotation(&quot;game&quot;)</span></span><br><span class="line">    String gameName = <span class="string">&quot;여러분의 틱택토&quot;</span>;</span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;localhost&quot;)</span></span><br><span class="line">    String serverIP;</span><br><span class="line">    <span class="meta">@CustomAnnotation(&quot;game&quot;)</span></span><br><span class="line">    String gameMode = <span class="string">&quot;AI vs. AI&quot;</span>;</span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;8888&quot;)</span></span><br><span class="line">    String serverPort;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reflection을 이용하여 애노테이션에 할당된 값 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomAnnotationTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      CustomAnnotationUsage obj = <span class="keyword">new</span> CustomAnnotationUsage();</span><br><span class="line">      Map&lt;String, Object&gt; gameProp = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">      Map&lt;String, Object&gt; serverProp = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">      Field[] fields = CustomAnnotationUsage.class.getDeclaredFields();</span><br><span class="line">      <span class="keyword">for</span> (Field field: fields) &#123;</span><br><span class="line">          CustomAnnotation annotation = field.getDeclaredAnnotation(CustomAnnotation.class);</span><br><span class="line">          <span class="keyword">if</span> (field.get(obj) == <span class="keyword">null</span>) &#123;</span><br><span class="line">              field.set(obj, annotation.valueTwo());</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (annotation.value().equals(<span class="string">&quot;game&quot;</span>)) &#123;</span><br><span class="line">              gameProp.put(field.getName(), field.get(obj));</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              serverProp.put(field.getName(), field.get(obj));</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      System.out.println(gameProp);</span><br><span class="line">      System.out.println(serverProp);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/13/Java-SWEngineering01-DesignPattern/"
+                    data-tooltip="Java-SWEngineering01-DesignPattern"
+                    aria-label="PREVIOUS: Java-SWEngineering01-DesignPattern"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/08/Java-advanced08-JCF/"
+                    data-tooltip="Java-advanced08-JCF"
+                    aria-label="NEXT: Java-advanced08-JCF"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Yechan Kim. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/13/Java-SWEngineering01-DesignPattern/"
+                    data-tooltip="Java-SWEngineering01-DesignPattern"
+                    aria-label="PREVIOUS: Java-SWEngineering01-DesignPattern"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/08/Java-advanced08-JCF/"
+                    data-tooltip="Java-advanced08-JCF"
+                    aria-label="NEXT: Java-advanced08-JCF"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2020/10/13/Java-Advanced09-Annotation/';
+              
+            this.page.identifier = '2020/10/13/Java-Advanced09-Annotation/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
