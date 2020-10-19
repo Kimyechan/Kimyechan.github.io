@@ -326,6 +326,323 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-03-InputOutput/"
+                            aria-label=": JavaBasic-03(InputOutput)"
+                        >
+                            JavaBasic-03(InputOutput)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:26:20+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="자료의-입출력-Inputs-and-Outputs"><a href="#자료의-입출력-Inputs-and-Outputs" class="headerlink" title="자료의 입출력 (Inputs and Outputs)"></a>자료의 입출력 (Inputs and Outputs)</h1><h2 id="출력-메소드"><a href="#출력-메소드" class="headerlink" title="출력 메소드"></a>출력 메소드</h2><ul>
+<li>포맷 문자열을 이용한 문자열/기본형 출력</li>
+<li>객체를 직접 출력</li>
+</ul>
+<h3 id="PrintStream의-출력-메소드"><a href="#PrintStream의-출력-메소드" class="headerlink" title="PrintStream의 출력 메소드"></a>PrintStream의 출력 메소드</h3><table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>print()</td>
+<td><code>public void print(Object obj)</code></td>
+<td>obj를 스트림으로 출력한다.</td>
+</tr>
+<tr>
+<td>println()</td>
+<td><code>public void println(Object x)</code></td>
+<td>x를 스트림으로 출력하고 줄바꿈한다.</td>
+</tr>
+<tr>
+<td>printf()</td>
+<td><code>public PrintStream printf(String format, Object ... args)</code></td>
+<td>Format 맞추어 args를 출력한다.</td>
+</tr>
+</tbody></table>
+<h3 id="포맷-문자열-지시자"><a href="#포맷-문자열-지시자" class="headerlink" title="포맷 문자열 지시자"></a>포맷 문자열 지시자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%b</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>decimal integer</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>octal</td>
+</tr>
+<tr>
+<td>%x, %X</td>
+<td>hexadecimal</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>decial float</td>
+</tr>
+<tr>
+<td>%e, %E</td>
+<td>exponent</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>character</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>string</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>newline</td>
+</tr>
+</tbody></table>
+<h3 id="지시자-자릿수-표현"><a href="#지시자-자릿수-표현" class="headerlink" title="지시자 자릿수 표현"></a>지시자 자릿수 표현</h3><table>
+<thead>
+<tr>
+<th>표현</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%nd</td>
+<td>최소 n칸을 사용하고 숫자를 오른쪽 정렬</td>
+</tr>
+<tr>
+<td>%-nd</td>
+<td>최소 n칸을 사용하고 숫자를 왼쪽 정렬</td>
+</tr>
+<tr>
+<td>%0nd</td>
+<td>최소 n칸을 사용하고 빈칸은 0으로 채움</td>
+</tr>
+<tr>
+<td>%n.mf</td>
+<td>최소 n칸을 사용하고 소수점 이하 m자리까지 표현</td>
+</tr>
+</tbody></table>
+<h3 id="시간을-출력하는-포맷-문자"><a href="#시간을-출력하는-포맷-문자" class="headerlink" title="시간을 출력하는 포맷 문자"></a>시간을 출력하는 포맷 문자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%tH</td>
+<td>24시간 표기법의 시간</td>
+<td>22</td>
+</tr>
+<tr>
+<td>%tl</td>
+<td>12시간 표기법의 시간</td>
+<td>08</td>
+</tr>
+<tr>
+<td>%tM</td>
+<td>분</td>
+<td>59</td>
+</tr>
+<tr>
+<td>%tS</td>
+<td>초</td>
+<td>60</td>
+</tr>
+<tr>
+<td>%tp</td>
+<td>오전/오후</td>
+<td>AM</td>
+</tr>
+<tr>
+<td>%tT</td>
+<td>%tH:%tM:%tS</td>
+<td>23:11:06</td>
+</tr>
+<tr>
+<td>%tR</td>
+<td>%tH:%tM</td>
+<td>16:42</td>
+</tr>
+<tr>
+<td>%tr</td>
+<td>%tl:%tM:%tS %tp</td>
+<td>04:15:55 PM</td>
+</tr>
+</tbody></table>
+<h3 id="날짜를-출력하는-포맷-문자"><a href="#날짜를-출력하는-포맷-문자" class="headerlink" title="날짜를 출력하는 포맷 문자"></a>날짜를 출력하는 포맷 문자</h3><table>
+<thead>
+<tr>
+<th>지시자</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%tB</td>
+<td>월</td>
+<td>March</td>
+</tr>
+<tr>
+<td>%tb</td>
+<td>축약형 월</td>
+<td>Mar</td>
+</tr>
+<tr>
+<td>%tm</td>
+<td>월</td>
+<td>03</td>
+</tr>
+<tr>
+<td>%tA</td>
+<td>요일</td>
+<td>Monday</td>
+</tr>
+<tr>
+<td>%ta</td>
+<td>축약형 요일</td>
+<td>Mon</td>
+</tr>
+<tr>
+<td>%tY</td>
+<td>년도</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>%ty</td>
+<td>축약형 년도</td>
+<td>20</td>
+</tr>
+<tr>
+<td>%td</td>
+<td>일</td>
+<td>09</td>
+</tr>
+<tr>
+<td>%te</td>
+<td>일</td>
+<td>9</td>
+</tr>
+<tr>
+<td>%tZ</td>
+<td>Time Zone</td>
+<td>KST</td>
+</tr>
+<tr>
+<td>%tD</td>
+<td>%tm/%td/%ty</td>
+<td>02/24/89</td>
+</tr>
+<tr>
+<td>%tF</td>
+<td>%tY-%tm-%td</td>
+<td>1989-02-24</td>
+</tr>
+<tr>
+<td>%tc</td>
+<td>%ta %tb %td %tT %tZ %tY</td>
+<td>Sun Feb 24 07:20:15 KST 1989</td>
+</tr>
+</tbody></table>
+<h2 id="입력-메소드"><a href="#입력-메소드" class="headerlink" title="입력 메소드"></a>입력 메소드</h2><ul>
+<li><p>Scanner 클래스를 이용하여 입력받을 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Scanner 클래스의 주요 메소드</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>next()</td>
+<td><code>public String next()</code></td>
+<td>공백을 기준으로 한 단어씩 입력받는다.</td>
+</tr>
+<tr>
+<td>nextLine()</td>
+<td><code>public String nextLine()</code></td>
+<td>한 줄 전체를 입력받는다.</td>
+</tr>
+<tr>
+<td>nextInt()</td>
+<td><code>public int nextInt()</code></td>
+<td><code>int</code> 값을 입력받는다.</td>
+</tr>
+<tr>
+<td>nextDouble()</td>
+<td><code>public double nextDouble()</code></td>
+<td><code>double</code> 값을 입력 받는다.</td>
+</tr>
+<tr>
+<td>close()</td>
+<td><code>public void close()</code></td>
+<td>입력 스트림을 종료한다.</td>
+</tr>
+</tbody></table>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-03-InputOutput/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/10/JavaBasic-02-DataType/"
                             aria-label=": JavaBasic-02(DataType)"
                         >
