@@ -6,23 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>음계 - Java Server Developer</title>
+    <title>키로거 - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 2920 :  문제 링크\n\n문제 유형 : 배열, 구현\n\n설명\n\n오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정\n\n한 문자라도 내림차순이면 ascending False\n 한 문자라도 오름차순이면 descending False\n\n둘 다 False이면 mixed\n\n\n\n\n\n풀이  1234567891011121314151617a = list(map(int, input().split())ascending = Truedescending = Truefor i in range(1, 8):  if a[i] &gt; a[i-1]:    descending = False  elif a[i] &lt; a[i-1]:    ascending = Falseif ascending:  print(&#x27;ascending&#x27;)elif descending:  print(&#x27;descending&#x27;)else:  print(&#x27;mixed)\n\n\n","dateCreated":"2020-10-20T19:56:02+09:00","dateModified":"2020-10-20T20:27:23+09:00","datePublished":"2020-10-20T19:56:02+09:00","description":"","headline":"음계","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/","keywords":"Algorithm"}</script>
-    <meta name="description" content="백준 2920 :  문제 링크  문제 유형 : 배열, 구현  설명  오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정  한 문자라도 내림차순이면 ascending False  한 문자라도 오름차순이면 descending False  둘 다 False이면 mixed      풀이  12345678910111213141">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 5397: 문제링크\n\n문제유형 : \n\n설명\n\n스택을 두 개 생성하고, 스택 두 개의 중앙을 커서라고 생각한다.\n\n문자 입력: 왼쪽 스택에 삽입\n\n‘-‘ 입력 : 왼쪽 스택에서 삭제\n\n‘&lt;’ 입력 : 왼쪽 스택에서 오른쪽 스택으로 이동\n\n‘&gt;’ 입력 : 오른쪽 스택에서 왼쪽 스택으로 이동\n\n\n\n\n\n풀이\n  1234567891011121314151617181920test_case = int(input())for _ in range(test_case):    left_stack = []    right_stack = []    data = input()    for i in data:        if i == &#x27;-&#x27;:            if left_stack:                left_stack.pop()        elif i == &#x27;&lt;&#x27;:            if left_stack:                right_stack.append(left_stack.pop())        elif i == &#x27;&gt;&#x27;:            if right_stack:                left_stack.append(right_stack.pop())        else:            left_stack.append(i)left_stack.extend(reversed(right_stack))print(&#x27;&#x27;.join(left_stack))\n\n","dateCreated":"2020-10-20T21:32:55+09:00","dateModified":"2020-10-20T21:48:12+09:00","datePublished":"2020-10-20T21:32:55+09:00","description":"","headline":"키로거","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/","keywords":"Algorithm, Greedy, Queue"}</script>
+    <meta name="description" content="백준 5397: 문제링크  문제유형 :   설명  스택을 두 개 생성하고, 스택 두 개의 중앙을 커서라고 생각한다.  문자 입력: 왼쪽 스택에 삽입  ‘-‘ 입력 : 왼쪽 스택에서 삭제  ‘&lt;’ 입력 : 왼쪽 스택에서 오른쪽 스택으로 이동  ‘&gt;’ 입력 : 오른쪽 스택에서 왼쪽 스택으로 이동      풀이   12345678910111213141">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="음계">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/index.html">
+<meta property="og:title" content="키로거">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="백준 2920 :  문제 링크  문제 유형 : 배열, 구현  설명  오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정  한 문자라도 내림차순이면 ascending False  한 문자라도 오름차순이면 descending False  둘 다 False이면 mixed      풀이  12345678910111213141">
+<meta property="og:description" content="백준 5397: 문제링크  문제유형 :   설명  스택을 두 개 생성하고, 스택 두 개의 중앙을 커서라고 생각한다.  문자 입력: 왼쪽 스택에 삽입  ‘-‘ 입력 : 왼쪽 스택에서 삭제  ‘&lt;’ 입력 : 왼쪽 스택에서 오른쪽 스택으로 이동  ‘&gt;’ 입력 : 오른쪽 스택에서 왼쪽 스택으로 이동      풀이   12345678910111213141">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-20T10:56:02.000Z">
-<meta property="article:modified_time" content="2020-10-20T11:27:23.497Z">
+<meta property="article:published_time" content="2020-10-20T12:32:55.000Z">
+<meta property="article:modified_time" content="2020-10-20T12:48:12.076Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Greedy">
+<meta property="article:tag" content="Queue">
 <meta name="twitter:card" content="summary">
     
     
@@ -328,12 +330,12 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            음계
+            키로거
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-20T19:56:02+09:00">
+    <time datetime="2020-10-20T21:32:55+09:00">
 	
 		    Oct 20, 2020
     	
@@ -341,7 +343,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
 
 
     
@@ -353,25 +355,28 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>백준 2920 :  <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2920">문제 링크</a></p>
+            <p>백준 5397: <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/5397">문제링크</a></p>
 <ul>
-<li><p>문제 유형 : 배열, 구현</p>
+<li><p>문제유형 : </p>
 </li>
 <li><p>설명</p>
 <ol>
-<li><p>오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정</p>
+<li><p>스택을 두 개 생성하고, 스택 두 개의 중앙을 커서라고 생각한다.</p>
 </li>
-<li><p>한 문자라도 내림차순이면 ascending False</p>
-<p> 한 문자라도 오름차순이면 descending False</p>
+<li><p>문자 입력: 왼쪽 스택에 삽입</p>
 </li>
-<li><p>둘 다 False이면 mixed</p>
+<li><p>‘-‘ 입력 : 왼쪽 스택에서 삭제</p>
+</li>
+<li><p>‘&lt;’ 입력 : 왼쪽 스택에서 오른쪽 스택으로 이동</p>
+</li>
+<li><p>‘&gt;’ 입력 : 오른쪽 스택에서 왼쪽 스택으로 이동</p>
 </li>
 </ol>
 </li>
 </ul>
 <ul>
-<li>풀이  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = list(map(int, input().split())</span><br><span class="line"></span><br><span class="line">ascending = <span class="literal">True</span></span><br><span class="line">descending = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">8</span>):</span><br><span class="line">  <span class="keyword">if</span> a[i] &gt; a[i<span class="number">-1</span>]:</span><br><span class="line">    descending = <span class="literal">False</span></span><br><span class="line">  <span class="keyword">elif</span> a[i] &lt; a[i<span class="number">-1</span>]:</span><br><span class="line">    ascending = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ascending:</span><br><span class="line">  print(<span class="string">&#x27;ascending&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> descending:</span><br><span class="line">  print(<span class="string">&#x27;descending&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  print(<span class="string">&#x27;mixed)</span></span><br></pre></td></tr></table></figure>
-</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    left_stack = []</span><br><span class="line">    right_stack = []</span><br><span class="line">    data = input()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> left_stack:</span><br><span class="line">                left_stack.pop()</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">&#x27;&lt;&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> left_stack:</span><br><span class="line">                right_stack.append(left_stack.pop())</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">&#x27;&gt;&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span> right_stack:</span><br><span class="line">                left_stack.append(right_stack.pop())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            left_stack.append(i)</span><br><span class="line">left_stack.extend(reversed(right_stack))</span><br><span class="line">print(<span class="string">&#x27;&#x27;</span>.join(left_stack))</span><br></pre></td></tr></table></figure></li>
 </ul>
 
             
@@ -384,7 +389,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Greedy/" rel="tag">Greedy</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Queue/" rel="tag">Queue</a>
 
             </div>
         
@@ -394,14 +399,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/20/%EB%B8%94%EB%9E%99%EC%9E%AD/"
-                    data-tooltip="블랙잭"
-                    aria-label="PREVIOUS: 블랙잭"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -411,9 +413,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/20/DML-SELECT/"
-                    data-tooltip="DML SELECT"
-                    aria-label="NEXT: DML SELECT"
+                    href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/"
+                    data-tooltip="프린터 큐"
+                    aria-label="NEXT: 프린터 큐"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -438,7 +440,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -451,7 +453,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -464,7 +466,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -523,14 +525,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/20/%EB%B8%94%EB%9E%99%EC%9E%AD/"
-                    data-tooltip="블랙잭"
-                    aria-label="PREVIOUS: 블랙잭"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -540,9 +539,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/20/DML-SELECT/"
-                    data-tooltip="DML SELECT"
-                    aria-label="NEXT: DML SELECT"
+                    href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/"
+                    data-tooltip="프린터 큐"
+                    aria-label="NEXT: 프린터 큐"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -567,7 +566,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -580,7 +579,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -593,7 +592,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -637,7 +636,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -650,7 +649,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -663,7 +662,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -724,9 +723,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/20/%EC%9D%8C%EA%B3%84/';
+            this.page.url = 'https://kimyechan.github.io/2020/10/20/%ED%82%A4%EB%A1%9C%EA%B1%B0/';
               
-            this.page.identifier = '2020/10/20/음계/';
+            this.page.identifier = '2020/10/20/키로거/';
               
           };
           (function() {
