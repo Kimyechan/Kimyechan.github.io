@@ -326,6 +326,188 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/09/17/Java-advanced03-InnerClass/"
+                            aria-label=": Java-advanced03-InnerClass"
+                        >
+                            Java-advanced03-InnerClass
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-09-17T19:43:15+09:00">
+	
+		    Sep 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="내부-클래스-Inner-Classes"><a href="#내부-클래스-Inner-Classes" class="headerlink" title="내부 클래스 (Inner Classes)"></a>내부 클래스 (Inner Classes)</h1><h2 id="내부-클래스란"><a href="#내부-클래스란" class="headerlink" title="내부 클래스란"></a>내부 클래스란</h2><ul>
+<li>클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름</li>
+<li><code>HAS-A</code> 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용</li>
+</ul>
+<h2 id="내부-클래스의-종류"><a href="#내부-클래스의-종류" class="headerlink" title="내부 클래스의 종류"></a>내부 클래스의 종류</h2><ul>
+<li>클래스 영역에 선언<ul>
+<li>인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능</li>
+<li>클래스 내부 클래스: static이 붙은 정적인 내부 클래스</li>
+</ul>
+</li>
+<li>로컬 영역에 선언<ul>
+<li>로컬 내부 클래스: 선언된 영역의 Scope 내에서 사용 가능</li>
+<li>익명 내부 클래스: 객체를 일회성으로 생성하기 위한 이름이 없는 클래스</li>
+</ul>
+</li>
+</ul>
+<h2 id="다양한-내부-클래스"><a href="#다양한-내부-클래스" class="headerlink" title="다양한 내부 클래스"></a>다양한 내부 클래스</h2><h3 id="인스턴스-내부-클래스-Instance-Inner-Class"><a href="#인스턴스-내부-클래스-Instance-Inner-Class" class="headerlink" title="인스턴스 내부 클래스 (Instance Inner Class)"></a>인스턴스 내부 클래스 (Instance Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드 없이 선언된 클래스</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>외부 클래스 객체를 통해서만 생성 가능</p>
+</li>
+<li><p>static 멤버 변수는 사용할 수 없으나, <code>static final</code>은 사용 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerMemberVar = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//static int staticMemberVar = 1;</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONSTANT_VAR = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(innerMemberVar);</span><br><span class="line">            System.out.println(outerMemberVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> outerMemberVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      IstanceInner obj = <span class="keyword">new</span> InstanceInner();</span><br><span class="line">      obj.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>외부 클래스의 멤버 변수와 이름이 겹치는 경우 <code>this</code> 활용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span>;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);<span class="comment">// 0</span></span><br><span class="line">            System.out.println(<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 1</span></span><br><span class="line">            System.out.println(Outer.<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 2</span></span><br><span class="line">            System.out.println(Outer.y); <span class="comment">// 3 static variable</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.new InstanceInner();</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="클래스-내부-클래스-Class-Inner-Class"><a href="#클래스-내부-클래스-Class-Inner-Class" class="headerlink" title="클래스 내부 클래스 (Class Inner Class)"></a>클래스 내부 클래스 (Class Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드와 함께 선언된 내부 클래스</p>
+</li>
+<li><p>외부 클래스 객체가 없어도 생성 가능</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>static 멤버 변수를 가질 수 있음</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerVar = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> staticInnerVar = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">            System.out.println(outer.outerVar);</span><br><span class="line">            System.out.println(innerVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> outerVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="로컬-내부-클래스-Local-Inner-Class"><a href="#로컬-내부-클래스-Local-Inner-Class" class="headerlink" title="로컬 내부 클래스 (Local Inner Class)"></a>로컬 내부 클래스 (Local Inner Class)</h3><ul>
+<li><p>클래스 영역이 아닌 로컬 영역에서 선언된 클래스</p>
+<ul>
+<li>메소드, 생성자, 초기화 블록의 내부</li>
+</ul>
+</li>
+<li><p>정적 변수는 가질 수 없으나, static final 변수는 가질 수 있음</p>
+</li>
+<li><p>로컬 영역의 변수 다음과 같은 사항을 따름</p>
+<ul>
+<li>Java1.7: final로 선언된 변수에만 접근 가능</li>
+<li>Java1.8: 모든 변수에 접근 가능하나, final로 간주되어 새로운 값 할당 불가</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>; <span class="comment">// 메소드 호출 스택</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">LocalInner</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LocalInner inner = <span class="keyword">new</span> LocalInner(); <span class="comment">// 힙 영역</span></span><br><span class="line">    inner.innerMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="익명의-내부-클래스-Anonymous-Inner-Class"><a href="#익명의-내부-클래스-Anonymous-Inner-Class" class="headerlink" title="익명의 내부 클래스 (Anonymous Inner Class)"></a>익명의 내부 클래스 (Anonymous Inner Class)</h3><ul>
+<li><p>로컬 내부 클래스와 동일하나, 이름이 없어 선언 즉시 한 번 사용 가능</p>
+</li>
+<li><p>추상 클래스나 인터페이스의 구현에 많이 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnonymousInnerClassTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useFoo</span><span class="params">(IFoo foo)</span> </span>&#123;</span><br><span class="line">        foo.<span class="keyword">do</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        useFoo(<span class="keyword">new</span> IFoo() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Do!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/09/17/Java-advanced03-InnerClass/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/08/18/HTML-1/"
+                            aria-label=": HTML 1"
+                        >
+                            HTML 1
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-18T13:22:27+09:00">
+	
+		    Aug 18, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><p>hyper text markup language</p>
+<p>html5 부터 xml을 포함 엄격한 문법</p>
+<p>XHTML 2.0 실패를 인정하며 WHATWG의 표준안을 수용하여 HTML5를 만듬</p>
+<h2 id="HTML4-01-XHTML1-0-과-HTML5와-의-차이점"><a href="#HTML4-01-XHTML1-0-과-HTML5와-의-차이점" class="headerlink" title="HTML4.01, XHTML1.0 과 HTML5와 의 차이점"></a>HTML4.01, XHTML1.0 과 HTML5와 의 차이점</h2><hr>
+<ul>
+<li>Block/Inline 구분하지 않게 됨</li>
+</ul>
+<h2 id="HTML의-콘텐츠-모델"><a href="#HTML의-콘텐츠-모델" class="headerlink" title="HTML의 콘텐츠 모델"></a>HTML의 콘텐츠 모델</h2>
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/18/HTML-1/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/14/Java-Advanced01-ExceptionHanding/"
                             aria-label=": Java-Advanced01-ExceptionHanding"
                         >
@@ -1185,247 +1367,6 @@
                         <p>
                             <a
                                 href="/2020/08/11/OOP-7-Polymorphism/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/11/OOP-6-Modifier/"
-                            aria-label=": OOP-6(Modifier)"
-                        >
-                            OOP-6(Modifier)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-11T20:58:16+09:00">
-	
-		    Aug 11, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP/">OOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="제어자-Modifier"><a href="#제어자-Modifier" class="headerlink" title="제어자 (Modifier)"></a>제어자 (Modifier)</h1><h2 id="제어자란"><a href="#제어자란" class="headerlink" title="제어자란"></a>제어자란</h2><ul>
-<li>클래스, 변수, 메소드에 부가 기능을 부여하는 키워드</li>
-<li>접근 제어자 (Access modifiers)<ul>
-<li>접근할 수 있는 범위를 정하는 키워드</li>
-<li><code>public</code>, <code>protected</code>, <code>(default = package)</code>, <code>private</code></li>
-</ul>
-</li>
-<li>그 외 제어자 (Other modifiers)<ul>
-<li>특별한 기능을 부여하는 제어자</li>
-<li><code>static</code>, <code>final</code>, <code>abstract</code>, <code>synchronized</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="제어자의-기능"><a href="#제어자의-기능" class="headerlink" title="제어자의 기능"></a>제어자의 기능</h2><h3 id="접근-제어자"><a href="#접근-제어자" class="headerlink" title="접근 제어자"></a>접근 제어자</h3><ul>
-<li><p>접근 가능한 범위를 정해, 데이터 은닉/보호 (Encapsulation) 기능을 추가한다.</p>
-</li>
-<li><p>접근 제어자별 접근 범위</p>
-<table>
-<thead>
-<tr>
-<th>제어자</th>
-<th align="center">같은 클래스</th>
-<th align="center">같은 패키지</th>
-<th align="center">다른 패키지에 속한 자식 클래스</th>
-<th align="center">전체</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-</tr>
-<tr>
-<td><code>protected</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><code>default</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><code>private</code></td>
-<td align="center">O</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-</li>
-<li><p><code>private</code> 또는 <code>protected</code> 변수에 접근하기 위해 getter와 setter 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">public</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> y = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="comment">// setter</span></span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123; <span class="comment">// setter</span></span><br><span class="line">        <span class="keyword">if</span> (y &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.y = y;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getX</span><span class="params">()</span> </span>&#123; <span class="comment">// getter</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getY</span><span class="params">()</span> </span>&#123; <span class="comment">// getter</span></span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="그-외의-제어자"><a href="#그-외의-제어자" class="headerlink" title="그 외의 제어자"></a>그 외의 제어자</h3><ul>
-<li><p><code>final</code></p>
-<ul>
-<li><p>더 이상 바뀔 수 없음을 의미</p>
-</li>
-<li><p>클래스, 메소드, 변수에 사용할 수 있음</p>
-<ul>
-<li><p>클래스: 더 이상 상속이 불가능해진다.</p>
-</li>
-<li><p>메소드: 자식 클래스에서 오버라이드할 수 없다.</p>
-</li>
-<li><p>변수: 변수의 값이 초기화 이후에 변하지 않는다.</p>
-<ul>
-<li>생성자에서 초기화가 이루어지는 것을 <code>blank final</code> 변수라 한다.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> x = <span class="number">0</span>; <span class="comment">// final variable</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> y; <span class="comment">// blank finial variable</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.y = y; <span class="comment">// blank final variable initialization</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>static</code></p>
-<ul>
-<li>클래스 변수, 클래스 메소드 등을 선언하기 위해 사용</li>
-</ul>
-</li>
-<li><p><code>abstract</code></p>
-<ul>
-<li>추상 클래스에서 사용</li>
-</ul>
-</li>
-<li><p><code>synchronized</code></p>
-<ul>
-<li>동시성 프로그래밍에 사용</li>
-</ul>
-</li>
-</ul>
-<h2 id="싱글톤-패턴-Singletone"><a href="#싱글톤-패턴-Singletone" class="headerlink" title="싱글톤 패턴 (Singletone)"></a>싱글톤 패턴 (Singletone)</h2><ul>
-<li><p>객체가 단 하나만 존재할 수 있는 클래스</p>
-</li>
-<li><p><code>private</code> 생성자를 이용한다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingletonClass</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SingletoneClass instance = <span class="keyword">new</span> SingletonClass();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SingletonClass</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonClass <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/11/OOP-6-Modifier/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/11/OOP-5-Package/"
-                            aria-label=": OOP-5(Package)"
-                        >
-                            OOP-5(Package)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-11T20:57:55+09:00">
-	
-		    Aug 11, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP/">OOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="패키지와-임포트-Packages-and-Imports"><a href="#패키지와-임포트-Packages-and-Imports" class="headerlink" title="패키지와 임포트 (Packages and Imports)"></a>패키지와 임포트 (Packages and Imports)</h1><h2 id="패키지-Packages"><a href="#패키지-Packages" class="headerlink" title="패키지 (Packages)"></a>패키지 (Packages)</h2><ul>
-<li>Java에서 소스 코드를 관리하는 방식</li>
-<li>물리적으로 디렉토리로 구분된 파일을 .으로 계층적으로 구분</li>
-<li>패키지 이름을 짓는 규칙: <code>package 소속.프로젝트.용도</code><br>ex) <code>package com.google.dev.utils</code><br>ex) <code>package com.fastcampus.catcare.service</code></li>
-</ul>
-<h2 id="임포트-Imports"><a href="#임포트-Imports" class="headerlink" title="임포트 (Imports)"></a>임포트 (Imports)</h2><ul>
-<li><p>다른 패키지에 선언된 클래스를 사용하기 위한 키워드</p>
-</li>
-<li><p>패키지에 속한 모든 클래스를 import (하위 패키지는 포함하지 않음)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.example.project.utils.*;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>패키지에 속한 특정 클래스를 import</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fastcampus.dogcare.service.WebAPI;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>클래스의 이름이 겹치는 경우, 패키지명을 포함하여 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        List list = <span class="keyword">new</span> List();</span><br><span class="line">        java.awt.List list2 = <span class="keyword">new</span> java.awt.List();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>static 멤버는 static import하여 클래스를 생략하고 사용 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.Math.random;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticImport</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        out.println(random());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/11/OOP-5-Package/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

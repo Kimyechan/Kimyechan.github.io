@@ -6,18 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Category: DATABASE - Java Server Developer</title>
+    <title>DML SELECT - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{}</script>
-    <meta property="og:type" content="blog">
-<meta property="og:title" content="Java Server Developer">
-<meta property="og:url" content="https://kimyechan.github.io/categories/DATABASE/index.html">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"SELECT정의 : 데이터를 검색할때 사용되는 문법SELECT FROM\n기본 포멧\n    SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;  \n\n전체 컬럼 데이터 조회\n  12sql&gt; SELECT *FROM world.country\n\n\n\n\n\ncode, name 세개의 컬럼 데이터 조회\n  1sql&gt; SELECT code, name FROM world.country\n\n데이터 베이스 선택 : FROM 절에 world. 을 사용할 필요가 없다.\n  12sql&gt; USE world;sql&gt; SELECT * FROM country\n\nalias : 컬럼의 이름을 변경할수 있습니다.\n  1sql&gt; SELECT code as country_code, name as country_name FROM country\n\n데이터 베이스, 테이블, 컬럼 리스트 확인\n  123sql&gt; SHOW DATABASES;sql&gt; SHOW TABLES;sql&gt; DESC city;\n\n\n\nWHERE특정 조건을 주어 데이터를 검색하는데 사용되는 문법\n\n비교연산 - 인구가 1억이 넘는 국가를 출력\n  1SELECT * FROM country WHERE Population &gt;&#x3D; 100000000\n\n논리 연산 : AND, OR - 인구가 7000만에서 1억인 국가를 출력\n  12SELECT * FROM countryWHERE Population &gt;&#x3D; 70000000 AND Population &lt;&#x3D; 100000000\n\n범위 연산 : BETWEEN\n\n인구가 7000만에서 1억인 국가를 출력\n  12SELECT * FROM countryWHERE Population BETWEEN 70000000 AND 100000000\n\n아시아와 아프리카 대륙의 국가 데이터를 출력\n  12SELECT * FROM countryWHERE Continent &#x3D; &quot;Asia&quot; OR Continent &#x3D; &quot;Africa&quot;\n\n\n\n특정 조건을 포함 : IN, NOT IN\n\n아시아와 아프리카 대륙의 국가 데이터를 출력\n  12SELECT * FROM countryWHERE Continent IN (&quot;Asia&quot;, &quot;Africa&quot;)\n\n아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력\n  12SELECT * FROM countryWHERE Continent NOT IN (&quot;Asia&quot;, &quot;Africa&quot;)\n\n아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력 (논리연산 사용)\n  12SELECT * FROM countryWHERE Continent !&#x3D; &quot;Asia&quot; AND Continent !&#x3D; &quot;Africa&quot;\n\n\n\n특정 문자열이 포함된 데이터 출력 : LIKE\n\n정부형태에 Republic이 포함된 데이터 출력  12SELECT * FROM countryWHERE GovernmentForm LIKE &quot;%Republic%&quot;\n\n\n\n\n\nORDER BY특정 컬럼의 값으로 데이터 정렬에 사용되는 문법\n\n오름차순 인구순으로 국가의 리스트를 출력 (ASC는 생략이 가능)\n  1SELECT * FROM country ORDER BY population ASC\n\n내림차수 인구순으로 국가의 리스트를 출력\n  1SELECT * FROM country ORDER BY population DESC\n\n국가 코드를 알파벳 순으로 정렬하고 같은 국가 코드를 가지면 인구순으로 내림차순으로 정렬\n  1SELECT * FROM city ORDER BY CountryCode ASC, Population DESC\n\n\n\nLIMITLIMIT은 조회하는 데이터의 수를 제한할수 있습니다.\n\n인구가 많은 상위 5개 국가 데이터를 출력\n  1SELECT * FROM country ORDER BY population DESC LIMIT 5\n\n인구가 많은 상위 6위 ~ 8위의 3개 국가 데이터를 출력\n  1SELECT * FROM country ORDER BY population DESC LIMIT 5, 3\n\n\n\nGRUOP BY, HAVINGGROUP BY는 여러개의 동일한 데이터를 가지는 특정 컬럼을 합쳐주는 역할을 하는 명령입니다. \nSQL에는 아래와 같은 그룹함수가 있습니다.COUNT, MAX, MIN, AVG, VAR_SAMP, STDDEV\n\nCOUNT\n\ncity 테이블의 CountryCode를 묶고 각 코드마다 몇개의 데이터가 있는지 확인   12sql&gt; SELECT CountryCode, COUNT(CountryCode) FROM cityGROUP BY CountryCode\ncountrylanguage 테이블에서 전체 언어가 몇개 있는지 구하시오.\nDISTINCT 중복을 제거해주는 문법12sql &gt; SELECT COUNT(DISTINCT(Language)) as language_countFROM countrylanguage\n\n\n\n\nMAX\n\n대륙별 인구수와 GNP 최대 값을 조회  12345678        sql&gt; SELECT continent, MAX(Population) as Population, MAX(GNP) as GNP        FROM country GROUP BY continent        &#96;&#96;&#96;    - MIN    - 대륙별 인구수와 GNP 최소 값을 조회 (GNP와 인구수가 0이 아닌 데이터 중에서)        &#96;&#96;&#96;         sql&gt; SELECT continent, MIN(Population) as Population, MIN(GNP) as GNP FROM country        WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent\n\n\nSUM\n\n대륙별 총 인구수와 총 GNP  123sql&gt; SELECT continent, SUM(Population) as Population, SUM(GNP) as GNPFROM countryWHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent\n\n\nAVG\n\n대륙별 평균 인구수와 평균 GNP 결과를 인구수로 내림차순 정렬  1234sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNPFROM countryWHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continentORDER BY Population DESC\n\n\nHAVING\n  GROUP BY에서 반환되는 결과에 조건을 줄수 있습니다. \n\n대륙별 전체인구를 구하고 5억이상인 대륙만 조회\n  123sql&gt; SELECT continent, SUM(Population) as Population FROM countryGROUP BY continentHAVING Population &gt; 500000000\n\n대륙별 평균 인구수, 평균 GNP, 1인당 GNP한 결과를 1인당 GNP가 0.01 이상인 데이터를 조회하고 1인당 GNP를 내림차순으로 정렬\n  12345sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNP, AVG(GNP) &#x2F; AVG(Population) * 1000 as AVGFROM countryWHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continentHAVING AVG &gt; 0.01ORDER BY AVG DESC\n\n\n\nWITH ROLLUP\n\n고객과 스탭별 매출과 고객별 매출의 총합을 출력  12sql&gt; SELECT customer_id, staff_id, SUM(amount) as amount FROM paymentGROUP BY customer_id, staff_id WITH ROLLUP\n\n\n\n","dateCreated":"2020-10-20T18:49:12+09:00","dateModified":"2020-10-20T19:25:23+09:00","datePublished":"2020-10-20T18:49:12+09:00","description":"","headline":"DML SELECT","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/20/DML-SELECT/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/20/DML-SELECT/","keywords":"DATABASE, MYSQL, DML"}</script>
+    <meta name="description" content="SELECT정의 : 데이터를 검색할때 사용되는 문법SELECT FROM 기본 포멧     SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;    전체 컬럼 데이터 조회   12sql&gt; SELECT *FROM world.country      code, n">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="DML SELECT">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/20/DML-SELECT/index.html">
 <meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="SELECT정의 : 데이터를 검색할때 사용되는 문법SELECT FROM 기본 포멧     SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;    전체 컬럼 데이터 조회   12sql&gt; SELECT *FROM world.country      code, n">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-20T09:49:12.000Z">
+<meta property="article:modified_time" content="2020-10-20T10:25:23.681Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="DATABASE">
+<meta property="article:tag" content="MYSQL">
+<meta property="article:tag" content="DML">
 <meta name="twitter:card" content="summary">
     
     
@@ -46,6 +53,8 @@
     
 
     
+        
+    
 </head>
 
     <body>
@@ -55,7 +64,7 @@
 
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -82,7 +91,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
         
         
@@ -310,30 +319,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="5"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    <section class="postShorten-group main-content-wrap">
+<article class="post">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/DML-SELECT/"
-                            aria-label=": DML SELECT"
-                        >
-                            DML SELECT
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            DML SELECT
+        </h1>
+    
+    
+        <div class="post-meta">
     <time datetime="2020-10-20T18:49:12+09:00">
 	
 		    Oct 20, 2020
@@ -348,10 +349,13 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h1><h2 id="정의-데이터를-검색할때-사용되는-문법"><a href="#정의-데이터를-검색할때-사용되는-문법" class="headerlink" title="정의 : 데이터를 검색할때 사용되는 문법"></a>정의 : 데이터를 검색할때 사용되는 문법</h2><h2 id="SELECT-FROM"><a href="#SELECT-FROM" class="headerlink" title="SELECT FROM"></a>SELECT FROM</h2><ul>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h1><h2 id="정의-데이터를-검색할때-사용되는-문법"><a href="#정의-데이터를-검색할때-사용되는-문법" class="headerlink" title="정의 : 데이터를 검색할때 사용되는 문법"></a>정의 : 데이터를 검색할때 사용되는 문법</h2><h2 id="SELECT-FROM"><a href="#SELECT-FROM" class="headerlink" title="SELECT FROM"></a>SELECT FROM</h2><ul>
 <li><p>기본 포멧</p>
 <p>  <code>  SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;  </code></p>
 </li>
@@ -483,174 +487,135 @@
 </li>
 </ul>
 
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/DML-SELECT/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
+
+
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/19/Way-to-use-MYSQL-at-AWS/"
-                            aria-label=": Way to use MYSQL at AWS"
-                        >
-                            Way to use MYSQL at AWS
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-19T15:16:41+09:00">
-	
-		    Oct 19, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>
-
-
-    
-</div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DATABASE/" rel="tag">DATABASE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/DML/" rel="tag">DML</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MYSQL/" rel="tag">MYSQL</a>
 
             </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="MYSQL-설치-AWS에서-작업"><a href="#MYSQL-설치-AWS에서-작업" class="headerlink" title="MYSQL 설치 (AWS에서 작업)"></a>MYSQL 설치 (AWS에서 작업)</h1><ol>
-<li><p>AWS EC2 인스턴스에 Ubuntu OS에 MySQL 5.7.x 버전 설치</p>
-</li>
-<li><p>EC2 인스턴스 생성</p>
-<ul>
-<li>t2.micro</li>
-<li>Ubuntu 18.04 버전</li>
-<li>보안그룹에서 3306 포트 추가</li>
-</ul>
-</li>
-<li><p>EC2 인스턴스에 접속</p>
-</li>
-<li><p>pem 파일 400 권한으로 변경   </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i (PEM File location) ubuntu@(AWS Public IP)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>apt-get 업데이트 </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update -y </span><br><span class="line">$ sudo apt-get upgrade -y </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL Server 설치  </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y mysql-server mysql-client</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL secure 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql_secure_installation </span><br><span class="line">Would you like to setup VALIDATE PASSWORD plugin? N</span><br><span class="line">New password: rada</span><br><span class="line">Re-enter new password: rada Remove anonymous users? Y</span><br><span class="line">Disallow root login remotely? N</span><br><span class="line">Remove test database and access to it? Reload privilege tables now? Y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL 패스워드 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITHmysql_native_password BY &#39;rada&#39;;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; exit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>설정한 패스워드를 입력하여 접속</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p  </span><br><span class="line">Enter password: rada</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>외부접속 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>bind-address를 127.0.0.1을 0.0.0.0 으로 변경</p>
-<p>  <code>  bind-address = 0.0.0.0 (모든 IP에서 접속가능)  </code></p>
-</li>
-</ul>
-</li>
-<li><p>외부접속 패스워드 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all privileges on *.* to root@&#39;%&#39; identified by &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>서버 시작 종료 상태 확인</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start mysql.service</span><br><span class="line">$ sudo systemctl stop mysql.service</span><br><span class="line">$ sudo systemctl restart mysql.service</span><br><span class="line">$ sudo systemctl status mysql.service</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>설정 후 서버 재시작으로 설정 내용 적용</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart mysql.service</span><br></pre></td></tr></table></figure></li>
-<li><p>password 변경 : rada로 패스워드를 변경하는 경우</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
-<br>
-
-</li>
-</ol>
-<h1 id="샘플-데이터-추가-Local에서-작업"><a href="#샘플-데이터-추가-Local에서-작업" class="headerlink" title="샘플 데이터 추가 (Local에서 작업)"></a>샘플 데이터 추가 (Local에서 작업)</h1><ul>
-<li><p>World, Sakila 데이터 베이스 추가</p>
-<p>  아래의 링크에서 world와 sakila 데이터 베이스 다운로드</p>
-<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/index-other.html">https://dev.mysql.com/doc/index-other.html</a></p>
-</li>
-</ul>
-<ol>
-<li><p>서버로 sql 파일을 전송</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp -i ~&#x2F;.ssh&#x2F;rada.pem ~&#x2F;Desktop&#x2F;sql&#x2F;* ubuntu@15.164.231.87:~&#x2F;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>데이터 베이스 생성</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p</span><br><span class="line">sql&gt; create database world;</span><br><span class="line">sql&gt; create database sakila;</span><br><span class="line">sql&gt; create database employees;</span><br><span class="line">sql&gt; quit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>데이터 베이스에 데이터 추가</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p world &lt; world.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-schema.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-data.sql</span><br><span class="line">$ mysql -u root -p employees &lt; employees.sql</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="Mysql-Workbench-사용법"><a href="#Mysql-Workbench-사용법" class="headerlink" title="Mysql Workbench 사용법"></a>Mysql Workbench 사용법</h1><ul>
-<li><p>Mysql Management Tool Workbench 다운로드 및 설치 </p>
-<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/workbench/">https://dev.mysql.com/downloads/workbench/</a></p>
-</li>
-<li><p>Workbench를 이용한 접속</p>
-<p>  IP : AWS Public IP </p>
-<p>  Port : 3306</p>
-</li>
-</ul>
-
-                    
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
                         
-
-
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
                     
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/20/DATABASE-MYSQL02-MODELING/"
+                    data-tooltip="DATABASE MYSQL02 MODELING"
+                    aria-label="NEXT: DATABASE MYSQL02 MODELING"
+                >
                     
-                        <p>
-                            <a
-                                href="/2020/10/19/Way-to-use-MYSQL-at-AWS/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
             
-        </div>
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
 
 
 
@@ -661,6 +626,161 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/20/DATABASE-MYSQL02-MODELING/"
+                    data-tooltip="DATABASE MYSQL02 MODELING"
+                    aria-label="NEXT: DATABASE MYSQL02 MODELING"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/20/DML-SELECT/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
             
         </div>
         
@@ -707,6 +827,25 @@
 
 <!--SCRIPTS END-->
 
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2020/10/20/DML-SELECT/';
+              
+            this.page.identifier = '2020/10/20/DML-SELECT/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
 
 
 
