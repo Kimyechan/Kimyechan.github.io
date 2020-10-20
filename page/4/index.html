@@ -325,6 +325,96 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-06-Loops/"
+                            aria-label=": JavaBasic-06(Loops)"
+                        >
+                            JavaBasic-06(Loops)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:27:31+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="반복문-Loops"><a href="#반복문-Loops" class="headerlink" title="반복문 (Loops)"></a>반복문 (Loops)</h1><h2 id="반복문의-일반적인-구성"><a href="#반복문의-일반적인-구성" class="headerlink" title="반복문의 일반적인 구성"></a>반복문의 일반적인 구성</h2><ul>
+<li>초기화 (Initialization)</li>
+<li>조건식 (Conditional Expression)</li>
+<li>실행문 (Execution Statement)</li>
+<li>증감식 (Increment and Decrement Statement)</li>
+</ul>
+<h2 id="다양한-반복문"><a href="#다양한-반복문" class="headerlink" title="다양한 반복문"></a>다양한 반복문</h2><h3 id="for-문"><a href="#for-문" class="headerlink" title="for 문"></a>for 문</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(초기화; 조건식; 증감식) &#123;</span><br><span class="line">  <span class="comment">// 실행문</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="while-문"><a href="#while-문" class="headerlink" title="while 문"></a>while 문</h3><ul>
+<li>while 문의 경우 실행문이 한번도 실행되지 않을 수도 있다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 초기화</span></span><br><span class="line"><span class="keyword">while</span>(조건식) &#123;</span><br><span class="line">  <span class="comment">// 실행문</span></span><br><span class="line">  <span class="comment">// 증감식</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="do-while-문"><a href="#do-while-문" class="headerlink" title="do ~ while 문"></a>do ~ while 문</h3><ul>
+<li>do ~ while 문의 경우 실행문은 무조건 한번 이상 실행된다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//초기화</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="comment">//실행문</span></span><br><span class="line">  <span class="comment">//증감식</span></span><br><span class="line">&#125; <span class="keyword">while</span>(조건식)</span><br></pre></td></tr></table></figure>
+
+<h2 id="반복문-제어"><a href="#반복문-제어" class="headerlink" title="반복문 제어"></a>반복문 제어</h2><h3 id="break-문"><a href="#break-문" class="headerlink" title="break 문"></a>break 문</h3><ul>
+<li>반복문을 곧바로 종료한다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (조건식) &#123;</span><br><span class="line">  <span class="keyword">if</span> (종료조건) &#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//실행문</span></span><br><span class="line">  <span class="comment">//증감식</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="continue-문"><a href="#continue-문" class="headerlink" title="continue 문"></a>continue 문</h3><ul>
+<li>반복문을 곧바로 다음 반복으로 건너 뛴다.</li>
+<li>while 문의 경우 증감식이 실행되지 않을 수 있다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (조건식) &#123;</span><br><span class="line">  <span class="keyword">if</span> (제어조건) &#123;</span><br><span class="line">    <span class="comment">//증감식</span></span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//실행문</span></span><br><span class="line">  <span class="comment">//증감식</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="label"><a href="#label" class="headerlink" title="label"></a>label</h3><ul>
+<li>중첩 반복문에서 어떤 반복문을 제어할지 결정</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">loop1: <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">   loop2: <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10</span>; j++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (j == <span class="number">3</span>) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="comment">// break loop1;</span></span><br><span class="line">      <span class="comment">// break loop2;</span></span><br><span class="line">      <span class="comment">// continue;</span></span><br><span class="line">      <span class="comment">// continue loop1;</span></span><br><span class="line">      <span class="comment">// continue loop2;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-06-Loops/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/10/JavaBasic-05-Conditional/"
                             aria-label=": JavaBasic-05(Conditional)"
                         >

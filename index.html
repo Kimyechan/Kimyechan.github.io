@@ -325,6 +325,83 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/20/%EC%9D%8C%EA%B3%84/"
+                            aria-label=": 음계"
+                        >
+                            음계
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-20T19:56:02+09:00">
+	
+		    Oct 20, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2920 :  <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2920">문제 링크</a></p>
+<ul>
+<li><p>문제 유형 : 배열, 구현</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정</p>
+</li>
+<li><p>한 문자라도 내림차순이면 ascending False</p>
+<p> 한 문자라도 오름차순이면 descending False</p>
+</li>
+<li><p>둘 다 False이면 mixed</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>풀이  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = list(map(int, input().split())</span><br><span class="line"></span><br><span class="line">ascending = <span class="literal">True</span></span><br><span class="line">descending = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">8</span>):</span><br><span class="line">  <span class="keyword">if</span> a[i] &gt; a[i<span class="number">-1</span>]:</span><br><span class="line">    descending = <span class="literal">False</span></span><br><span class="line">  <span class="keyword">elif</span> a[i] &lt; a[i<span class="number">-1</span>]:</span><br><span class="line">    ascending = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ascending:</span><br><span class="line">  print(<span class="string">&#x27;ascending&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> descending:</span><br><span class="line">  print(<span class="string">&#x27;descending&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  print(<span class="string">&#x27;mixed)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/20/%EC%9D%8C%EA%B3%84/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/20/DML-SELECT/"
                             aria-label=": DML SELECT"
                         >
@@ -2822,394 +2899,6 @@
                         <p>
                             <a
                                 href="/2020/09/24/Java-Advanced05-StreamAPI/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/09/22/Java-Advanced04-LambdaExpression/"
-                            aria-label=": Java-Advanced04-LambdaExpression"
-                        >
-                            Java-Advanced04-LambdaExpression
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-09-22T22:03:44+09:00">
-	
-		    Sep 22, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="람다식-Lambda-Expression"><a href="#람다식-Lambda-Expression" class="headerlink" title="람다식 (Lambda Expression)"></a>람다식 (Lambda Expression)</h1><h2 id="람다식이란"><a href="#람다식이란" class="headerlink" title="람다식이란"></a>람다식이란</h2><ul>
-<li>Java 1.8에서 추가된 함수형 프로그래밍 기법</li>
-<li>객체지향 프로그래밍과 다르게, 비즈니스 로직만을 빠르게 구현하는 특징</li>
-<li>객체지향 언어인 Java에서 메소드를 함수처럼 사용하는 형식</li>
-</ul>
-<h2 id="람다식의-예"><a href="#람다식의-예" class="headerlink" title="람다식의 예"></a>람다식의 예</h2><h3 id="배열의-정렬"><a href="#배열의-정렬" class="headerlink" title="배열의 정렬"></a>배열의 정렬</h3><ul>
-<li><p>기본 정렬 방식을 이용한 정렬</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String [] strings = &#123;<span class="string">&quot;fast&quot;</span>, <span class="string">&quot;campus&quot;</span>, <span class="string">&quot;java&quot;</span>, <span class="string">&quot;backend&quot;</span>, <span class="string">&quot;school&quot;</span>&#125;;</span><br><span class="line">System.out.println(Arrays.toString(strings));</span><br><span class="line">Arrays.sort(strings);</span><br><span class="line">System.out.println(Arrays.toString(strings));</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>익명 내부 클래스를 이용한 정렬 방식 변경</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123; <span class="comment">// 객체를 생성하여 전달</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>; <span class="comment">// 내림차순</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>람다식을 이용한 정렬 방식의 변경</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, (o1, o2) -&gt; &#123;<span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>;&#125;);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;String&gt; comp = (o1, o2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Arrays.sort(strings, comp);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>함수형 인터페이스 (Functional Interface)</p>
-<ul>
-<li><p>추상 메소드가 단 하나 존재하는지 검사</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="람다식의-형식"><a href="#람다식의-형식" class="headerlink" title="람다식의 형식"></a>람다식의 형식</h2>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(String x) -&gt; &#123; System.out.println(x); &#125;</span><br><span class="line"></span><br><span class="line">(x) -&gt; &#123; System.out.println(x); &#125;</span><br><span class="line"></span><br><span class="line">x -&gt; System.out.println(x)</span><br><span class="line"></span><br><span class="line">() -&gt; System.out.println(<span class="string">&quot;x&quot;</span>);  <span class="comment">// () 생략 불가능</span></span><br><span class="line"></span><br><span class="line">(x) -&gt; &#123;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(x) -&gt; <span class="string">&quot;x: &quot;</span> + x</span><br><span class="line"></span><br><span class="line"><span class="comment">// x -&gt; &quot;x :&quot; + x               // () 생략 불가능</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="람다식의-변수-참조"><a href="#람다식의-변수-참조" class="headerlink" title="람다식의 변수 참조"></a>람다식의 변수 참조</h2><ul>
-<li><p>익명 내부 클래스와 동일한 규칙으로 변수 참조</p>
-</li>
-<li><p>문법적으로 this의 사용법만 다름</p>
-<ul>
-<li>익명의 내부 클래스와 달리 외부 클래스를 참조</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FunctionalInterface</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">functionalMethod</span><span class="params">(FunctionalInterface obj)</span> </span>&#123;</span><br><span class="line">        System.out.println(obj.method());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        functionalMethod(()-&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;this: &quot;</span> + <span class="keyword">this</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;OuterClass.this: &quot;</span> + Main.<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Lambda expression used.&quot;</span></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        functionalMethod(<span class="keyword">new</span> FunctionalInterface() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function">String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;this: &quot;</span> + <span class="keyword">this</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;OuterClass.this: &quot;</span> + Main.<span class="keyword">this</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;Anonymous inner class used.&quot;</span></span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="표준-함수형-인터페이스"><a href="#표준-함수형-인터페이스" class="headerlink" title="표준 함수형 인터페이스"></a>표준 함수형 인터페이스</h2><ul>
-<li>자주 사용되는 함수형 인터페이스를 정의해 둔 API</li>
-<li>Consumer, Supplier, Function, Operation, Predicate 계열이 있다.</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>계열</th>
-<th>입력</th>
-<th>출력</th>
-<th>메소드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Consumer</td>
-<td>O</td>
-<td>X</td>
-<td><code>void accept(T)</code></td>
-<td>입력을 소비</td>
-</tr>
-<tr>
-<td>Supplier</td>
-<td>X</td>
-<td>O</td>
-<td><code>T get()</code></td>
-<td>출력을 공급</td>
-</tr>
-<tr>
-<td>Function</td>
-<td>O</td>
-<td>O</td>
-<td><code>T apply(R)</code></td>
-<td>입력 -&gt; 출력 함수 매핑</td>
-</tr>
-<tr>
-<td>Operation</td>
-<td>O</td>
-<td>O</td>
-<td><code>T apply(T)</code></td>
-<td>입력을 연산하여 동일 타입의 출력으로 리턴</td>
-</tr>
-<tr>
-<td>Predicate</td>
-<td>O</td>
-<td><code>boolean</code></td>
-<td><code>boolean test(T)</code></td>
-<td>입력을 판단</td>
-</tr>
-</tbody></table>
-<h3 id="표준-함수형-인터페이스의-종류"><a href="#표준-함수형-인터페이스의-종류" class="headerlink" title="표준 함수형 인터페이스의 종류"></a>표준 함수형 인터페이스의 종류</h3><h4 id="Consumer-계열"><a href="#Consumer-계열" class="headerlink" title="Consumer 계열"></a>Consumer 계열</h4><table>
-<thead>
-<tr>
-<th>인터페이스</th>
-<th>메소드</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Consumer&lt;T&gt;</code></td>
-<td><code>void accept(T t)</code></td>
-</tr>
-<tr>
-<td><code>BiConsumer&lt;T, U&gt;</code></td>
-<td><code>void accept(T t, U u)</code></td>
-</tr>
-<tr>
-<td><code>IntConsumer</code></td>
-<td><code>void accept(int value)</code></td>
-</tr>
-<tr>
-<td><code>LongConsumer</code></td>
-<td><code>void accept(long value)</code></td>
-</tr>
-<tr>
-<td><code>DoubleConsumer</code></td>
-<td><code>void accept(double value)</code></td>
-</tr>
-<tr>
-<td><code>ObjIntConsumer&lt;T&gt;</code></td>
-<td><code>void accept(T t, int value)</code></td>
-</tr>
-<tr>
-<td><code>ObjLongConsumer&lt;T&gt;</code></td>
-<td><code>void accept(T t, long value)</code></td>
-</tr>
-<tr>
-<td><code>ObjDoubleConsumer&lt;T&gt;</code></td>
-<td><code>void accept(T t, double value)</code></td>
-</tr>
-</tbody></table>
-<h4 id="Supplier-계열"><a href="#Supplier-계열" class="headerlink" title="Supplier 계열"></a>Supplier 계열</h4><table>
-<thead>
-<tr>
-<th>인터페이스</th>
-<th>메소드</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Supplier&lt;T&gt;</code></td>
-<td><code>T get()</code></td>
-</tr>
-<tr>
-<td><code>BooleanSupplier</code></td>
-<td><code>boolean getAsBoolean()</code></td>
-</tr>
-<tr>
-<td><code>IntSupplier</code></td>
-<td><code>int getAsInt()</code></td>
-</tr>
-<tr>
-<td><code>LongSupplier</code></td>
-<td><code>long getAsLong()</code></td>
-</tr>
-<tr>
-<td><code>DoubleSupplier</code></td>
-<td><code>double getAsDouble()</code></td>
-</tr>
-</tbody></table>
-<h4 id="Function-계열"><a href="#Function-계열" class="headerlink" title="Function 계열"></a>Function 계열</h4><table>
-<thead>
-<tr>
-<th>인터페이스</th>
-<th>메소드</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Function&lt;T, R&gt;</code></td>
-<td><code>R apply(T t)</code></td>
-</tr>
-<tr>
-<td><code>BiFunction&lt;T, U, R&gt;</code></td>
-<td><code>R apply(T t, U u)</code></td>
-</tr>
-<tr>
-<td><code>PFunction&lt;R&gt;</code></td>
-<td><code>R apply(p value)</code></td>
-</tr>
-<tr>
-<td><code>PtoQFunction</code></td>
-<td><code>q applyAsQ(p value)</code></td>
-</tr>
-<tr>
-<td><code>ToPFunction&lt;T&gt;</code></td>
-<td><code>p applyAsP(T t)</code></td>
-</tr>
-<tr>
-<td><code>ToPBiFunction&lt;T, U&gt;</code></td>
-<td><code>p applyAsP(T t, U u)</code></td>
-</tr>
-</tbody></table>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">P, Q : Int, Long, Double</span><br><span class="line">p, q : int, long, double</span><br></pre></td></tr></table></figure>
-
-<h4 id="Operator-계열"><a href="#Operator-계열" class="headerlink" title="Operator 계열"></a>Operator 계열</h4><table>
-<thead>
-<tr>
-<th>인터페이스</th>
-<th>메소드</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>UnaryOperator&lt;T&gt;</code></td>
-<td><code>T apply(T t)</code></td>
-</tr>
-<tr>
-<td><code>BinaryOperator&lt;T&gt;</code></td>
-<td><code>T apply(T t1, T t2)</code></td>
-</tr>
-<tr>
-<td><code>IntUnaryOperator</code></td>
-<td><code>int applyAsInt(int value)</code></td>
-</tr>
-<tr>
-<td><code>LongUnaryOperator</code></td>
-<td><code>long applyAsLong(long value)</code></td>
-</tr>
-<tr>
-<td><code>DoubleUnaryOperator</code></td>
-<td><code>double applyAsDouble(double value)</code></td>
-</tr>
-<tr>
-<td><code>IntBinaryOperator</code></td>
-<td><code>int applyAsInt(int value1, int value2)</code></td>
-</tr>
-<tr>
-<td><code>LongBinaryOperator</code></td>
-<td><code>long applyAsLong(long value, long value2)</code></td>
-</tr>
-<tr>
-<td><code>DoubleBinaryOperator</code></td>
-<td><code>double applyAsDouble(double value, double value2)</code></td>
-</tr>
-</tbody></table>
-<h4 id="Predicate-계열"><a href="#Predicate-계열" class="headerlink" title="Predicate 계열"></a>Predicate 계열</h4><table>
-<thead>
-<tr>
-<th>인터페이스</th>
-<th>메소드</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Predicate&lt;T&gt;</code></td>
-<td><code>boolean test(T t)</code></td>
-</tr>
-<tr>
-<td><code>BiPredicate&lt;T, U&gt;</code></td>
-<td><code>boolean test(T t, U u)</code></td>
-</tr>
-<tr>
-<td><code>IntPredicate</code></td>
-<td><code>boolean test(int value)</code></td>
-</tr>
-<tr>
-<td><code>LongPredicate</code></td>
-<td><code>boolean test(long value)</code></td>
-</tr>
-<tr>
-<td><code>DoublePredicate</code></td>
-<td><code>boolean test(double value)</code></td>
-</tr>
-</tbody></table>
-<h3 id="표준-함수형-인터페이스의-메소드"><a href="#표준-함수형-인터페이스의-메소드" class="headerlink" title="표준 함수형 인터페이스의 메소드"></a>표준 함수형 인터페이스의 메소드</h3><h4 id="andThen-compose"><a href="#andThen-compose" class="headerlink" title="andThen(), compose()"></a>andThen(), compose()</h4><ul>
-<li><p>두 개 이상의 함수형 인터페이스를 연결하기 위해 사용</p>
-<ul>
-<li><code>A.andThen(B)</code>: A를 먼저 실행하고 B를 실행. Consumer, Function, Operator 계열 지원</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;String, String&gt; funcOne = x -&gt; <span class="string">&quot;str: &quot;</span> + x;</span><br><span class="line">Function&lt;String, String&gt; funcTwo = x -&gt; <span class="string">&quot;&#123;&quot;</span> + x + <span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">Function&lt;String, String&gt; andThen = funcOne.andThen(funcTwo); <span class="comment">// &#123;str: x&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>A.compose(B)</code>: B를 먼저 실행하고 A를 실행. Function, Operator 계열 지원</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IntUnaryOperator multTwo = x -&gt; x * <span class="number">2</span>;</span><br><span class="line">IntUnaryOperator addTen = x -&gt; x + <span class="number">10</span>;</span><br><span class="line">IntUnaryOperator multTwo.compose(addTen); <span class="comment">// (x + 10) * 2</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="and-or-negate-isEqual"><a href="#and-or-negate-isEqual" class="headerlink" title="and(), or(), negate(), isEqual()"></a>and(), or(), negate(), isEqual()</h4><ul>
-<li><p>Predicate 계열의 기본 메소드</p>
-<ul>
-<li>and(), or(), negate()</li>
-<li>각각 &amp;&amp;, ||, !의 동작을 한다.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DoublePredicate predOne = x -&gt; x &gt; <span class="number">0.5</span>;</span><br><span class="line">DoublePredicate predTwo = x -&gt; x &lt; <span class="number">0.0</span>;</span><br><span class="line">DoublePredicate predThree = predOne.or(predTwo);</span><br><span class="line">DoublePredicate predFour = predThree.negate();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Predicate 계열의 클래스 메소드</p>
-<ul>
-<li>isEqual()</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;String&gt; isEqualToString = Predicate.isEqual(<span class="string">&quot;String&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="minBy-maxBy"><a href="#minBy-maxBy" class="headerlink" title="minBy(), maxBy()"></a>minBy(), maxBy()</h4><ul>
-<li><p>BinaryOperator 클래스의 클래스 메소드</p>
-<ul>
-<li><code>Comparator&lt;T&gt;</code>를 파라미터로 받아 최소값/최대값을 구하는 <code>BinaryOperator&lt;T&gt;</code>를 리턴</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BinaryOperator&lt;String&gt; minBy = BinaryOperator.minBy((o1, o2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> len(o1) &gt; len(o2) ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">BinaryOperator&lt;Integer&gt; maxBy = BinaryOperator.maxBy((val1, val2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> val1.compareTo(val2);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="람다식에-메소드-생성자-사용"><a href="#람다식에-메소드-생성자-사용" class="headerlink" title="람다식에 메소드/생성자 사용"></a>람다식에 메소드/생성자 사용</h3><ul>
-<li>이미 구현된 메소드가 있는 경우, 다양한 방식으로 람다식을 대체 가능</li>
-</ul>
-<h4 id="ClassName-instanceMethod"><a href="#ClassName-instanceMethod" class="headerlink" title="ClassName::instanceMethod"></a>ClassName::instanceMethod</h4><ul>
-<li><p>첫번째 파라미터를 객체로, 두번째 파라미터를 메소드 입력으로 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] strings = &#123; <span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;C&quot;</span> &#125;;</span><br><span class="line">Arrays.sort(strings, String::compareTo);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="ClassName-classMethod"><a href="#ClassName-classMethod" class="headerlink" title="ClassName::classMethod"></a>ClassName::classMethod</h4><ul>
-<li><p>클래스 메소드의 입력으로 모든 파라미터가 사용됨</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;String, Integer&gt; parser = Integer::parseInt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="instance-instanceMethod"><a href="#instance-instanceMethod" class="headerlink" title="instance::instanceMethod"></a>instance::instanceMethod</h4><ul>
-<li><p>주어진 객체의 메소드를 호출</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="string">&quot;StringA&quot;</span>;</span><br><span class="line">Predicate&lt;String&gt; pred = string::equals;</span><br><span class="line">System.out.println(pred.apply(<span class="string">&quot;StringA&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="ClassName-new"><a href="#ClassName-new" class="headerlink" title="ClassName::new"></a>ClassName::new</h4><ul>
-<li><p>생성자를 이용하여 객체를 생성하는 람다식</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntFunction&lt;String&gt; func = String::<span class="keyword">new</span>;</span><br><span class="line">String string = func.apply(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="ClassName-new-1"><a href="#ClassName-new-1" class="headerlink" title="ClassName[]::new"></a>ClassName[]::new</h4><ul>
-<li><p>배열을 생성하는 람다식</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntFunction&lt;String[]&gt; func = String[]::<span class="keyword">new</span>;</span><br><span class="line">String [] strings = func.apply(<span class="number">100</span>);</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/09/22/Java-Advanced04-LambdaExpression/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
