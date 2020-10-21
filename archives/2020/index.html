@@ -326,6 +326,163 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/21/%EC%86%8C%ED%8A%B8%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C/"
+                            aria-label=": 소트인사이드"
+                        >
+                            소트인사이드
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-21T17:26:56+09:00">
+	
+		    Oct 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1427 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1427">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>9 에서 0 까지 차례대로 내려가면서 확인</p>
+</li>
+<li><p>각 숫자의 개수를 계산해서 출력</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+<ul>
+<li>선택 정렬  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array = input()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">9</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> array:</span><br><span class="line">        <span class="keyword">if</span> int(j) == i:</span><br><span class="line">            print(i, end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/21/%EC%86%8C%ED%8A%B8%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/21/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": 수 정렬하기"
+                        >
+                            수 정렬하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-21T17:12:47+09:00">
+	
+		    Oct 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2750 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2750">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>선택 정렬로 풀이</p>
+</li>
+<li><p>sort함수로도 해결 가능</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<ul>
+<li><p>선택 정렬</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    min_index = i</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, n):</span><br><span class="line">        <span class="keyword">if</span> array[min_index] &gt; array[j]:</span><br><span class="line">            min_index = j</span><br><span class="line">    array[i], array[min_index] = array[min_index], array[i]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>기본 라이브러리</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array.sort()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/21/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/21/%EC%88%98-%EC%B0%BE%EA%B8%B0/"
                             aria-label=": 수 찾기"
                         >
@@ -1016,198 +1173,6 @@
                         <p>
                             <a
                                 href="/2020/10/20/DML-SELECT/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/DATABASE-MYSQL02-MODELING/"
-                            aria-label=": DATABASE MYSQL02 MODELING"
-                        >
-                            DATABASE MYSQL02 MODELING
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T13:13:30+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="데이터-베이스-모델링"><a href="#데이터-베이스-모델링" class="headerlink" title="데이터 베이스 모델링"></a>데이터 베이스 모델링</h1><h2 id="개념적-모델링"><a href="#개념적-모델링" class="headerlink" title="개념적 모델링"></a>개념적 모델링</h2><p>업무분석해서 핵심 데이터의 집합을 정의하는 과정</p>
-<h2 id="논리적-모델링"><a href="#논리적-모델링" class="headerlink" title="논리적 모델링"></a>논리적 모델링</h2><p>개념적 모델링을 상세화 하는 과정</p>
-<h2 id="물리적-모델링"><a href="#물리적-모델링" class="headerlink" title="물리적 모델링"></a>물리적 모델링</h2><p>논리적 모델링을 DBMS에 추가하기 위해 구체화하는 과정</p>
-<p>자료형, 키 값등 설정</p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/DATABASE-MYSQL02-MODELING/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/19/Way-to-use-MYSQL-at-AWS/"
-                            aria-label=": Way to use MYSQL at AWS"
-                        >
-                            Way to use MYSQL at AWS
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-19T15:16:41+09:00">
-	
-		    Oct 19, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="MYSQL-설치-AWS에서-작업"><a href="#MYSQL-설치-AWS에서-작업" class="headerlink" title="MYSQL 설치 (AWS에서 작업)"></a>MYSQL 설치 (AWS에서 작업)</h1><ol>
-<li><p>AWS EC2 인스턴스에 Ubuntu OS에 MySQL 5.7.x 버전 설치</p>
-</li>
-<li><p>EC2 인스턴스 생성</p>
-<ul>
-<li>t2.micro</li>
-<li>Ubuntu 18.04 버전</li>
-<li>보안그룹에서 3306 포트 추가</li>
-</ul>
-</li>
-<li><p>EC2 인스턴스에 접속</p>
-</li>
-<li><p>pem 파일 400 권한으로 변경   </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i (PEM File location) ubuntu@(AWS Public IP)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>apt-get 업데이트 </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update -y </span><br><span class="line">$ sudo apt-get upgrade -y </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL Server 설치  </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y mysql-server mysql-client</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL secure 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql_secure_installation </span><br><span class="line">Would you like to setup VALIDATE PASSWORD plugin? N</span><br><span class="line">New password: rada</span><br><span class="line">Re-enter new password: rada Remove anonymous users? Y</span><br><span class="line">Disallow root login remotely? N</span><br><span class="line">Remove test database and access to it? Reload privilege tables now? Y</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL 패스워드 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITHmysql_native_password BY &#39;rada&#39;;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; exit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>설정한 패스워드를 입력하여 접속</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p  </span><br><span class="line">Enter password: rada</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>외부접속 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>bind-address를 127.0.0.1을 0.0.0.0 으로 변경</p>
-<p>  <code>  bind-address = 0.0.0.0 (모든 IP에서 접속가능)  </code></p>
-</li>
-</ul>
-</li>
-<li><p>외부접속 패스워드 설정</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all privileges on *.* to root@&#39;%&#39; identified by &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>서버 시작 종료 상태 확인</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start mysql.service</span><br><span class="line">$ sudo systemctl stop mysql.service</span><br><span class="line">$ sudo systemctl restart mysql.service</span><br><span class="line">$ sudo systemctl status mysql.service</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>설정 후 서버 재시작으로 설정 내용 적용</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart mysql.service</span><br></pre></td></tr></table></figure></li>
-<li><p>password 변경 : rada로 패스워드를 변경하는 경우</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
-<br>
-
-</li>
-</ol>
-<h1 id="샘플-데이터-추가-Local에서-작업"><a href="#샘플-데이터-추가-Local에서-작업" class="headerlink" title="샘플 데이터 추가 (Local에서 작업)"></a>샘플 데이터 추가 (Local에서 작업)</h1><ul>
-<li><p>World, Sakila 데이터 베이스 추가</p>
-<p>  아래의 링크에서 world와 sakila 데이터 베이스 다운로드</p>
-<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/index-other.html">https://dev.mysql.com/doc/index-other.html</a></p>
-</li>
-</ul>
-<ol>
-<li><p>서버로 sql 파일을 전송</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp -i ~&#x2F;.ssh&#x2F;rada.pem ~&#x2F;Desktop&#x2F;sql&#x2F;* ubuntu@15.164.231.87:~&#x2F;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>데이터 베이스 생성</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p</span><br><span class="line">sql&gt; create database world;</span><br><span class="line">sql&gt; create database sakila;</span><br><span class="line">sql&gt; create database employees;</span><br><span class="line">sql&gt; quit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>데이터 베이스에 데이터 추가</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p world &lt; world.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-schema.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-data.sql</span><br><span class="line">$ mysql -u root -p employees &lt; employees.sql</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="Mysql-Workbench-사용법"><a href="#Mysql-Workbench-사용법" class="headerlink" title="Mysql Workbench 사용법"></a>Mysql Workbench 사용법</h1><ul>
-<li><p>Mysql Management Tool Workbench 다운로드 및 설치 </p>
-<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/workbench/">https://dev.mysql.com/downloads/workbench/</a></p>
-</li>
-<li><p>Workbench를 이용한 접속</p>
-<p>  IP : AWS Public IP </p>
-<p>  Port : 3306</p>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/19/Way-to-use-MYSQL-at-AWS/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
