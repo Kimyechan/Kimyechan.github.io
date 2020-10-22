@@ -325,6 +325,922 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/09/24/Java-Advanced05-StreamAPI/"
+                            aria-label=": Java-Advanced05-StreamAPI"
+                        >
+                            Java-Advanced05-StreamAPI
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-09-24T22:42:52+09:00">
+	
+		    Sep 24, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="스트림-API-Stream-API"><a href="#스트림-API-Stream-API" class="headerlink" title="스트림 API (Stream API)"></a>스트림 API (Stream API)</h1><h2 id="스트림-API란"><a href="#스트림-API란" class="headerlink" title="스트림 API란"></a>스트림 API란</h2><ul>
+<li>Java 8에서 추가된 java.util.stream 패키지</li>
+<li>컬렉션의 요소를 람다식으로 처리할 수 있도록 하는 함수형 프로그래밍 도구</li>
+</ul>
+<h2 id="스트림-API의-특징"><a href="#스트림-API의-특징" class="headerlink" title="스트림 API의 특징"></a>스트림 API의 특징</h2><ul>
+<li>간결한 코드 작성</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JAVA 7</span></span><br><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;fast&quot;</span>, <span class="string">&quot;campus&quot;</span>, <span class="string">&quot;rocks&quot;</span>);</span><br><span class="line">List&lt;String&gt; newList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String s: list) &#123;</span><br><span class="line">    newList.add(s.toUpperCase());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String s: newList) &#123;</span><br><span class="line">    System.out.println(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JAVA 8</span></span><br><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;fast&quot;</span>, <span class="string">&quot;campus&quot;</span>, <span class="string">&quot;rocks&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br><span class="line">stream.map(String::toUpperCase).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>데이터 소스에 대한 공통의 접근 방식 제공</p>
+<ul>
+<li>List, Set, Array 등 다양한 경우에 대해 표준화된 방식으로 데이터 접근 가능</li>
+<li>특히 Stream::sorted() 메소드는 공통된 정렬 방식을 제공</li>
+</ul>
+</li>
+<li><p>중간 처리와 최종 처리를 지원</p>
+<ul>
+<li>Mapping, Filtering, Sorting 등 중간 처리 지원 (여러개 사용 가능)</li>
+<li>Iteration, Count, Average, Summation, Reduce 등 최종 처리 지원 (마지막에 하나 사용 가능)</li>
+</ul>
+</li>
+<li><p>데이터 소스와 처리 결과를 분리</p>
+<ul>
+<li>원본 데이터를 유지하여 처리에 의한 부작용 방지</li>
+<li>처리 결과를 새로운 컬렉션으로 저장 가능</li>
+</ul>
+</li>
+</ul>
+<h2 id="스트림-API를-이용한-자료-처리"><a href="#스트림-API를-이용한-자료-처리" class="headerlink" title="스트림 API를 이용한 자료 처리"></a>스트림 API를 이용한 자료 처리</h2><h3 id="스트림-API의-종류"><a href="#스트림-API의-종류" class="headerlink" title="스트림 API의 종류"></a>스트림 API의 종류</h3><table>
+<thead>
+<tr>
+<th>종류</th>
+<th>처리 대상</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Stream&lt;T&gt;</code></td>
+<td>일반적인 객체를 처리</td>
+</tr>
+<tr>
+<td><code>IntStream</code></td>
+<td>기본 자료형 <code>int</code>를 처리</td>
+</tr>
+<tr>
+<td><code>LongStream</code></td>
+<td>기본 자료형 <code>long</code>을 처리</td>
+</tr>
+<tr>
+<td><code>DoubleStream</code></td>
+<td>기본 자료형 <code>double</code>을 처리</td>
+</tr>
+</tbody></table>
+<h3 id="스트림-객체-생성-메소드"><a href="#스트림-객체-생성-메소드" class="headerlink" title="스트림 객체 생성 메소드"></a>스트림 객체 생성 메소드</h3><ul>
+<li><p>데이터 소스로부터 스트림 생성</p>
+<table>
+<thead>
+<tr>
+<th>데이터 소스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Collection</code></td>
+<td><code>default Stream&lt;E&gt; stream()</code></td>
+</tr>
+<tr>
+<td><code>Collection</code></td>
+<td><code>default Stream&lt;E&gt; parallelStream()</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static &lt;T&gt; Stream&lt;T&gt; stream(T[] array)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static &lt;T&gt; Stream&lt;T&gt; of(T ... values)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static IntStream stream(int[] array)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static IntStream of(int ... values)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static LongStream stream(long[] array)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static LongStream of(long ... values)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static DoubleStream stream(double[] array)</code></td>
+</tr>
+<tr>
+<td><code>Arrays</code></td>
+<td><code>public static DoubleStream of(double ... values)</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>정수 범위와 java.util.Random으로부터 생성</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int</code>형 범위</td>
+<td><code>public static IntStream range(int startInclusive, int endExclusive)</code></td>
+</tr>
+<tr>
+<td><code>int</code>형 범위</td>
+<td><code>public static IntStream rangeClosed(int startInclusive, int endInclusive)</code></td>
+</tr>
+<tr>
+<td><code>long</code>형 범위</td>
+<td><code>public static LongStream range(long startInclusive, long endExclusive)</code></td>
+</tr>
+<tr>
+<td><code>long</code>형 범위</td>
+<td><code>public static LongStream rangeClosed(long startInclusive, long endInclusive)</code></td>
+</tr>
+<tr>
+<td>Random <em>p</em>형 값</td>
+<td><code>public PStream ps()</code></td>
+</tr>
+<tr>
+<td>Random <em>p</em>형 값</td>
+<td><code>public PStream ps(long streamSize)</code></td>
+</tr>
+<tr>
+<td>Random <em>p</em>형 값</td>
+<td><code>public PStream ps(long streamSize, p origin, p bound)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">IntStream integers = IntStream.range(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">integers.forEach(System.out::println);</span><br><span class="line"></span><br><span class="line">Random random = <span class="keyword">new</span> Random();</span><br><span class="line">LongStream longs = random.longs(<span class="number">100</span>, <span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">System.out.println(longs.average().getAsDouble());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="중간-처리-메소드"><a href="#중간-처리-메소드" class="headerlink" title="중간 처리 메소드"></a>중간 처리 메소드</h3><table>
+<thead>
+<tr>
+<th>동작</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>필터링</td>
+<td>dinstict(), filter()</td>
+</tr>
+<tr>
+<td>자르기</td>
+<td>skip(), limit()</td>
+</tr>
+<tr>
+<td>정렬</td>
+<td>sorted()</td>
+</tr>
+<tr>
+<td>매핑</td>
+<td>flatMap(), flatMapToP(), map(), mapToP(), asDoubleStream(), asLongStream()</td>
+</tr>
+<tr>
+<td>조회</td>
+<td>peek()</td>
+</tr>
+</tbody></table>
+<h4 id="필터링"><a href="#필터링" class="headerlink" title="필터링"></a>필터링</h4><p>필터링은 스트림의 일부 요소를 제거하는 역할을 한다.</p>
+<ul>
+<li><code>Stream&lt;T&gt; distict()</code> : 스트림 요소의 중복을 제거한 스트림을 반환</li>
+<li><code>Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</code> : Predicate에서 true에 해당하는 요소만으로 구성된 스트림을 반환</li>
+</ul>
+<h4 id="자르기"><a href="#자르기" class="headerlink" title="자르기"></a>자르기</h4><p>자르기는 스트림의 일부 요소를 한번에 생략한다.</p>
+<ul>
+<li><code>Stream&lt;T&gt; limit(long maxSize)</code> : 최대 maxSize까지 구성된 스트림을 반환</li>
+<li><code>Stream&lt;T&gt; skip(long n)</code> : 스트림의 상위 n개 요소를 생략한 스트림을 반환</li>
+</ul>
+<h4 id="정렬"><a href="#정렬" class="headerlink" title="정렬"></a>정렬</h4><p>스트림 요소의 <code>compareTo()</code> 또는 입력받은 <code>Comparator</code>를 이용해 정렬</p>
+<ul>
+<li><code>Stream&lt;T&gt; sorted()</code> : Comparable 객체를 정렬한 스트림 반환</li>
+<li><code>Stream&lt;T&gt; sorted(Comparator&lt;? super T&gt; comparator)</code> : Comparator를 이용하여 정렬된 스트림 반환<ul>
+<li>Comparator의 정적 메소드와 기본 메소드<ul>
+<li>정적 메소드: naturalOrder(), reverseOrder(), comparing(), comparingP(), nullsFirst(), nullsLast()</li>
+<li>기본 메소드: reversed(), thenComparing(), thenComparingP()</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="매핑"><a href="#매핑" class="headerlink" title="매핑"></a>매핑</h4><p>Function 인터페이스를 이용해 요소의 값을 변환한다.</p>
+<ul>
+<li><p>map 계열</p>
+<ul>
+<li><code>&lt;R&gt; Stream&lt;R&gt; map(Function&lt;? super T, ? extends R&gt; mapper)</code> : 기존 스트림의 T 타입 요소를 R 타입으로 변환하여 새로운 스트림 반환</li>
+<li><code>PStream mapToP(ToPFunction&lt;? super T&gt; mapper)</code> : R이 기본형 타입으로 제한된 map()</li>
+</ul>
+</li>
+<li><p>flatMap 계열</p>
+<ul>
+<li><code>&lt;R&gt; Stream&lt;R&gt; flatMap(Function&lt;? super T, ? extends Stream&lt;? extends R&gt;&gt; mapper)</code> : 스트림의 T 타입 요소가 n개의 R 타입 요소로 매핑된 새로운 스트림을 반환</li>
+<li><code>PStream flatMapToP(Function&lt;? super T, ? extends PStream&gt; mapper)</code> : R이 기본형 타입으로 제한된 flatMap()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;java&quot;</span>, <span class="string">&quot;backend&quot;</span>, <span class="string">&quot;best&quot;</span>, <span class="string">&quot;course&quot;</span>);</span><br><span class="line">System.out.println(list.stream().flatMap(data -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> Arrays.stream(data.split(<span class="string">&quot;&quot;</span>));</span><br><span class="line">&#125;).distinct().count());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="조회"><a href="#조회" class="headerlink" title="조회"></a>조회</h4><p>스트림 처리 과정에 영향을 미치지 않으며, 중간 결과를 확인할 수 있으며 입력받은 스트림과 동일한 스트림을 반환한다.</p>
+<ul>
+<li><p><code>Stream&lt;T&gt; peek(Consumer&lt;? super T&gt; action)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;java&quot;</span>, <span class="string">&quot;backend&quot;</span>, <span class="string">&quot;best&quot;</span>, <span class="string">&quot;course&quot;</span>);</span><br><span class="line">System.out.println(list.stream().flatMap(data -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> Arrays.stream(data.split(<span class="string">&quot;&quot;</span>));</span><br><span class="line">&#125;).peek(s -&gt; System.out.println(<span class="string">&quot;flatMap:&quot;</span> + s))</span><br><span class="line">  .distinct().peek(s -&gt; System.out.println(<span class="string">&quot;distinct:&quot;</span> + s))</span><br><span class="line">  .count());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="최종-처리-메소드"><a href="#최종-처리-메소드" class="headerlink" title="최종 처리 메소드"></a>최종 처리 메소드</h3><table>
+<thead>
+<tr>
+<th>동작</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>매칭</td>
+<td>allMatch(), anyMatch(), noneMatch()</td>
+</tr>
+<tr>
+<td>수집</td>
+<td>collect()</td>
+</tr>
+<tr>
+<td>루핑</td>
+<td>forEach()</td>
+</tr>
+<tr>
+<td>집계</td>
+<td>count(), max(), min(), average(), sum(), reduce()</td>
+</tr>
+<tr>
+<td>조사</td>
+<td>findFirst(), findAny()</td>
+</tr>
+</tbody></table>
+<h4 id="매칭"><a href="#매칭" class="headerlink" title="매칭"></a>매칭</h4><p>Predicate 계열을 이용해 스트림 요소들이 특정 조건에 만족하는지 조사하는 메소드</p>
+<ul>
+<li><code>boolean allMatch(Predicate&lt;? super T&gt; predicate)</code> : 스트림의 모든 요소가 Predicate를 만족하면 true를 반환</li>
+<li><code>boolean anyMatch(Predicate&lt;? super T&gt; predicate)</code> : 스트림의 요소 중 하나라도 Predicate를 만족하면 true를 반환</li>
+<li><code>boolean noneMatch(Predicate&lt;? super T&gt; predicate)</code> : 스트림의 요소 중 하나라도 Predicate를 만족하지 않으면 true를 반환</li>
+</ul>
+<h4 id="집계"><a href="#집계" class="headerlink" title="집계"></a>집계</h4><ul>
+<li><p>기본 집계 메소드</p>
+<ul>
+<li>기본형 스트림의 통계 : count(), sum(), average(), min(), max()</li>
+<li>T 타입 스트림의 통계 : count(), min(), max() (min, max의 경우 <code>Comparator</code> 필요)</li>
+</ul>
+</li>
+<li><p>reduce() 메소드</p>
+<ul>
+<li><code>Optional&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator)</code> : accumulator를 수행하고 <code>Optional&lt;T&gt;</code> 타입 반환</li>
+<li><code>T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</code> : identity를 초기값으로 하여, accumulator를 이용해 집계 연산</li>
+<li><code>&lt;U&gt; U reduce(U identity, BiFunction&lt;U, ? super T, U&gt; accumulator, BinaryOperator&lt;U&gt; combiner)</code> : combiner를 이용해 병렬 스트림 결합</li>
+</ul>
+</li>
+<li><p><code>java.util.Optional&lt;T&gt;</code></p>
+<ul>
+<li>T 타입 객체의 null 여부에 따라 다르게 동작하는 Wrapper 클래스</li>
+<li>Optional 클래스의 정적 메소드를 이용해 Optional 객체 생성<ul>
+<li><code>public static &lt;T&gt; Optional&lt;T&gt; of(T value)</code> : value가 null인 경우 NullPointerException을 발생시키는 Wrapping 메소드</li>
+<li><code>public static &lt;T&gt; Optional&lt;T&gt; ofNullable(T value)</code> : value가 null인 경우 empty()의 결과를 리턴하는 Wrapping 메소드</li>
+<li><code>public static &lt;T&gt; Optional&lt;T&gt; empty()</code> : 값이 비어있는 Optional 객체를 리턴</li>
+</ul>
+</li>
+<li>Optional 객체를 처리하는 메소드<ul>
+<li><code>public T get()</code> : Optional의 값을 리턴하며, null일 경우 NullPointerException 발생</li>
+<li><code>public void ifPresent(Consumer&lt;? super T&gt; consumer)</code> : Optional 값이 null이 아닐 경우 consumer를 이용해 소비한다.</li>
+<li><code>public T orElse(T other)</code> : Optional의 값이 null일 경우 other를 반환한다.</li>
+<li><code>public T orElseGet(Supplier&lt;? extends T&gt; other)</code> : Optional의 값이 null일 경우 Supplier를 통해 공급받은 값을 반환한다.</li>
+<li><code>public &lt;X extends Throwable&gt; T orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier) throws X</code> : Optional의 값이 null일 경우 exceptionSupplier에서 공급받은 예외를 throw</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="반복"><a href="#반복" class="headerlink" title="반복"></a>반복</h4><p>forEach() 메소드로 스트림 요소를 순차적으로 <code>Consumer&lt;T&gt;</code>를 이용해 소비</p>
+<ul>
+<li><code>void forEach(Comsumer&lt;? super T&gt; action)</code> : 스트림의 각 요소를 action으로 소비</li>
+</ul>
+<h4 id="조사"><a href="#조사" class="headerlink" title="조사"></a>조사</h4><p>첫번째 요소 또는 아무 요소를 조사하는 최종 처리 메소드. 필터링 등으로 인해 스트림에 요소가 남아있는지 확인할 수 있다.</p>
+<ul>
+<li><code>Optional&lt;T&gt; findFirst()</code> : 스트림의 첫 요소 또는 empty Optional 객체를 반환</li>
+<li><code>Optional&lt;T&gt; findAny()</code> : 스트림의 아무 요소나 가지는 Optional 객체를 반환</li>
+</ul>
+<h4 id="수집"><a href="#수집" class="headerlink" title="수집"></a>수집</h4><p>필요한 요소를 수집하여 새로운 Collection으로 구성하여 반환하는 메소드</p>
+<ul>
+<li><p>collect() 메소드</p>
+<ul>
+<li><p><code>&lt;R, A&gt; R collect(Collector&lt;? super T, A, R&gt; collector)</code> : collector를 이용해 새로운 Collection R에 담아 반환</p>
+<ul>
+<li>Collectors의 정적 메소드: <code>toList()</code>, <code>toSet()</code>, <code>toCollection()</code>, <code>toMap()</code>, <code>toConcurrentMap()</code></li>
+</ul>
+</li>
+<li><p><code>&lt;R, A&gt; R collect(Supplier&lt;R&gt; supplier, BiConsumer&lt;R, ? super T&gt; accumulator, BiConsumer&lt;R, R&gt; combiner)</code> : supplier를 통해 공급된 컨테이너 R에 accumulator를 이용해 T값을 저장. 병렬처리 스트림에 사용될 경우 combiner를 이용해 스레드별 컨테이너 R을 통합</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">String[] array = &#123;<span class="string">&quot;Java&quot;</span>, <span class="string">&quot;Is&quot;</span>, <span class="string">&quot;Fun&quot;</span>, <span class="string">&quot;Isn&#x27;t&quot;</span>, <span class="string">&quot;It&quot;</span>, <span class="string">&quot;?&quot;</span>&#125;;</span><br><span class="line">List&lt;String&gt; list = Arrays.stream(array)</span><br><span class="line">        .filter(s -&gt; s.length() &gt;= <span class="number">3</span>)</span><br><span class="line">        .collect(Collectors.toList()); <span class="comment">// ArrayList</span></span><br><span class="line">        <span class="comment">// .collect(Collectors.toCollection(LinkedList::new))</span></span><br><span class="line">System.out.println(list.getClass().getName() + <span class="string">&quot;:&quot;</span> + list);</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">Set&lt;String&gt; set = Arrays.stream(array)</span><br><span class="line">        .filter(s -&gt; s.length() &gt;= <span class="number">3</span>)</span><br><span class="line">        .collect(Collectors.toSet()); <span class="comment">// HashSet</span></span><br><span class="line">        <span class="comment">// .collect(Collectors.toCollection(HashSet::new))</span></span><br><span class="line">System.out.println(set.getClass().getName() + <span class="string">&quot;:&quot;</span> + set);</span><br><span class="line"></span><br><span class="line">Map&lt;String, Integer&gt; map = Arrays.stream(array)</span><br><span class="line">        .filter(s -&gt; s.length() &gt;= <span class="number">3</span>)</span><br><span class="line">        .collect(Collectors.toMap(s -&gt; s, String::length)); <span class="comment">// HashMap</span></span><br><span class="line">        <span class="comment">// .collect(Collectors.toCollection(s -&gt; s, String::length, (oldVal, newVal) -&gt; newVal, TreeMap::new))</span></span><br><span class="line">System.out.println(map.getClass().getName() + map);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Collectors의 정적 메소드를 이용한 그룹화와 분리</p>
+<ul>
+<li><code>public static &lt;T, K&gt; Collector&lt;T, ?, Map&lt;K, List&lt;T&gt;&gt;&gt; groupingBy(Function&lt;? super T, ? extends K&gt; classifier)</code> : classifier를 key값으로, 해당하는 값의 목록을 List인 value로 가지는 Map으로 스트림을 수집하는 Collector를 반환<ul>
+<li><code>public static &lt;T, K, A, D&gt; Collector&lt;T, ?, Map&lt;K, D&gt;&gt; groupingBy(Function&lt;? super T, ? extends K&gt; classifier, Collector&lt;? super T, A, D&gt; downstream)</code> : List 대신 downstream collector로 수집</li>
+</ul>
+</li>
+<li><code>public static &lt;T&gt; Collector&lt;T, ?, Map&lt;Boolean, List&lt;T&gt;&gt;&gt; partitioningBy(Predicate&lt;? super T&gt; predicate)</code> : predicate 결과를 key로, 해당하는 값의 목록을 List value로 가지는 Map으로 스트림을 수집하는 Collector를 반환<ul>
+<li><code>public static &lt;T, A, D&gt; Collector&lt;T, ?, Map&lt;Boolean, D&gt;&gt; partitioningBy(Predicate&lt;? super T&gt; predicate, Collector&lt;? super T, A, D&gt; downstream))</code> : List 대신 downstream collector로 수집</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String[] array = &#123;<span class="string">&quot;Java&quot;</span>, <span class="string">&quot;Is&quot;</span>, <span class="string">&quot;Fun&quot;</span>, <span class="string">&quot;Isn&#x27;t&quot;</span>, <span class="string">&quot;It&quot;</span>, <span class="string">&quot;?&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">Map&lt;Character, List&lt;String&gt;&gt; map1 = Arrays.stream(array)</span><br><span class="line">        .collect(Collectors.groupingBy(s -&gt; s.charAt(<span class="number">0</span>)));</span><br><span class="line">System.out.println(map1);</span><br><span class="line"></span><br><span class="line">Map&lt;Boolean, List&lt;String&gt;&gt; map2 = Arrays.stream(array)</span><br><span class="line">        .collect(Collectors.partitioningBy(s -&gt; s.length() &gt;= <span class="number">3</span>));</span><br><span class="line">System.out.println(map2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>집계를 위한 Collector</p>
+<ul>
+<li>Downstream collector로 집계를 위한 Collector를 사용할 경우 유용하다.</li>
+<li><code>counting()</code>, <code>summingP()</code>, <code>averagingP()</code>, <code>maxBy()</code>, <code>minBy()</code>, <code>reducing()</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String[] array = &#123;<span class="string">&quot;Java&quot;</span>, <span class="string">&quot;Is&quot;</span>, <span class="string">&quot;Fun&quot;</span>, <span class="string">&quot;Isn&#x27;t&quot;</span>, <span class="string">&quot;It&quot;</span>, <span class="string">&quot;?&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">Map&lt;Character, Long&gt; map = Arrays.stream(array)</span><br><span class="line">        .collect(Collectors.groupingBy(s -&gt; s.charAt(<span class="number">0</span>),</span><br><span class="line">                                       Collectors.counting()));</span><br><span class="line">System.out.println(map);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="병렬-스트림"><a href="#병렬-스트림" class="headerlink" title="병렬 스트림"></a>병렬 스트림</h3><ul>
+<li><p>병렬 스트림의 생성</p>
+<ul>
+<li>stream() 대신 parallelStream()으로 변경</li>
+<li>stream 생성 후 parallel()으로 병렬화</li>
+</ul>
+</li>
+<li><p>combiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합</p>
+<ul>
+<li><code>BiConsumer&lt;T, K&gt; combiner</code> : T 객체에 K 객체를 결합</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/09/24/Java-Advanced05-StreamAPI/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/09/22/Java-Advanced04-LambdaExpression/"
+                            aria-label=": Java-Advanced04-LambdaExpression"
+                        >
+                            Java-Advanced04-LambdaExpression
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-09-22T22:03:44+09:00">
+	
+		    Sep 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="람다식-Lambda-Expression"><a href="#람다식-Lambda-Expression" class="headerlink" title="람다식 (Lambda Expression)"></a>람다식 (Lambda Expression)</h1><h2 id="람다식이란"><a href="#람다식이란" class="headerlink" title="람다식이란"></a>람다식이란</h2><ul>
+<li>Java 1.8에서 추가된 함수형 프로그래밍 기법</li>
+<li>객체지향 프로그래밍과 다르게, 비즈니스 로직만을 빠르게 구현하는 특징</li>
+<li>객체지향 언어인 Java에서 메소드를 함수처럼 사용하는 형식</li>
+</ul>
+<h2 id="람다식의-예"><a href="#람다식의-예" class="headerlink" title="람다식의 예"></a>람다식의 예</h2><h3 id="배열의-정렬"><a href="#배열의-정렬" class="headerlink" title="배열의 정렬"></a>배열의 정렬</h3><ul>
+<li><p>기본 정렬 방식을 이용한 정렬</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String [] strings = &#123;<span class="string">&quot;fast&quot;</span>, <span class="string">&quot;campus&quot;</span>, <span class="string">&quot;java&quot;</span>, <span class="string">&quot;backend&quot;</span>, <span class="string">&quot;school&quot;</span>&#125;;</span><br><span class="line">System.out.println(Arrays.toString(strings));</span><br><span class="line">Arrays.sort(strings);</span><br><span class="line">System.out.println(Arrays.toString(strings));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>익명 내부 클래스를 이용한 정렬 방식 변경</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123; <span class="comment">// 객체를 생성하여 전달</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>; <span class="comment">// 내림차순</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>람다식을 이용한 정렬 방식의 변경</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, (o1, o2) -&gt; &#123;<span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>;&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;String&gt; comp = (o1, o2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> o1.compareTo(o2) * -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Arrays.sort(strings, comp);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>함수형 인터페이스 (Functional Interface)</p>
+<ul>
+<li><p>추상 메소드가 단 하나 존재하는지 검사</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T o1, T o2)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="람다식의-형식"><a href="#람다식의-형식" class="headerlink" title="람다식의 형식"></a>람다식의 형식</h2>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(String x) -&gt; &#123; System.out.println(x); &#125;</span><br><span class="line"></span><br><span class="line">(x) -&gt; &#123; System.out.println(x); &#125;</span><br><span class="line"></span><br><span class="line">x -&gt; System.out.println(x)</span><br><span class="line"></span><br><span class="line">() -&gt; System.out.println(<span class="string">&quot;x&quot;</span>);  <span class="comment">// () 생략 불가능</span></span><br><span class="line"></span><br><span class="line">(x) -&gt; &#123;</span><br><span class="line">    System.out.println(x);</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(x) -&gt; <span class="string">&quot;x: &quot;</span> + x</span><br><span class="line"></span><br><span class="line"><span class="comment">// x -&gt; &quot;x :&quot; + x               // () 생략 불가능</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="람다식의-변수-참조"><a href="#람다식의-변수-참조" class="headerlink" title="람다식의 변수 참조"></a>람다식의 변수 참조</h2><ul>
+<li><p>익명 내부 클래스와 동일한 규칙으로 변수 참조</p>
+</li>
+<li><p>문법적으로 this의 사용법만 다름</p>
+<ul>
+<li>익명의 내부 클래스와 달리 외부 클래스를 참조</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FunctionalInterface</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">functionalMethod</span><span class="params">(FunctionalInterface obj)</span> </span>&#123;</span><br><span class="line">        System.out.println(obj.method());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        functionalMethod(()-&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;this: &quot;</span> + <span class="keyword">this</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;OuterClass.this: &quot;</span> + Main.<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Lambda expression used.&quot;</span></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        functionalMethod(<span class="keyword">new</span> FunctionalInterface() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function">String <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;this: &quot;</span> + <span class="keyword">this</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;OuterClass.this: &quot;</span> + Main.<span class="keyword">this</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;Anonymous inner class used.&quot;</span></span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="표준-함수형-인터페이스"><a href="#표준-함수형-인터페이스" class="headerlink" title="표준 함수형 인터페이스"></a>표준 함수형 인터페이스</h2><ul>
+<li>자주 사용되는 함수형 인터페이스를 정의해 둔 API</li>
+<li>Consumer, Supplier, Function, Operation, Predicate 계열이 있다.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>계열</th>
+<th>입력</th>
+<th>출력</th>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Consumer</td>
+<td>O</td>
+<td>X</td>
+<td><code>void accept(T)</code></td>
+<td>입력을 소비</td>
+</tr>
+<tr>
+<td>Supplier</td>
+<td>X</td>
+<td>O</td>
+<td><code>T get()</code></td>
+<td>출력을 공급</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>O</td>
+<td>O</td>
+<td><code>T apply(R)</code></td>
+<td>입력 -&gt; 출력 함수 매핑</td>
+</tr>
+<tr>
+<td>Operation</td>
+<td>O</td>
+<td>O</td>
+<td><code>T apply(T)</code></td>
+<td>입력을 연산하여 동일 타입의 출력으로 리턴</td>
+</tr>
+<tr>
+<td>Predicate</td>
+<td>O</td>
+<td><code>boolean</code></td>
+<td><code>boolean test(T)</code></td>
+<td>입력을 판단</td>
+</tr>
+</tbody></table>
+<h3 id="표준-함수형-인터페이스의-종류"><a href="#표준-함수형-인터페이스의-종류" class="headerlink" title="표준 함수형 인터페이스의 종류"></a>표준 함수형 인터페이스의 종류</h3><h4 id="Consumer-계열"><a href="#Consumer-계열" class="headerlink" title="Consumer 계열"></a>Consumer 계열</h4><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Consumer&lt;T&gt;</code></td>
+<td><code>void accept(T t)</code></td>
+</tr>
+<tr>
+<td><code>BiConsumer&lt;T, U&gt;</code></td>
+<td><code>void accept(T t, U u)</code></td>
+</tr>
+<tr>
+<td><code>IntConsumer</code></td>
+<td><code>void accept(int value)</code></td>
+</tr>
+<tr>
+<td><code>LongConsumer</code></td>
+<td><code>void accept(long value)</code></td>
+</tr>
+<tr>
+<td><code>DoubleConsumer</code></td>
+<td><code>void accept(double value)</code></td>
+</tr>
+<tr>
+<td><code>ObjIntConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, int value)</code></td>
+</tr>
+<tr>
+<td><code>ObjLongConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, long value)</code></td>
+</tr>
+<tr>
+<td><code>ObjDoubleConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, double value)</code></td>
+</tr>
+</tbody></table>
+<h4 id="Supplier-계열"><a href="#Supplier-계열" class="headerlink" title="Supplier 계열"></a>Supplier 계열</h4><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Supplier&lt;T&gt;</code></td>
+<td><code>T get()</code></td>
+</tr>
+<tr>
+<td><code>BooleanSupplier</code></td>
+<td><code>boolean getAsBoolean()</code></td>
+</tr>
+<tr>
+<td><code>IntSupplier</code></td>
+<td><code>int getAsInt()</code></td>
+</tr>
+<tr>
+<td><code>LongSupplier</code></td>
+<td><code>long getAsLong()</code></td>
+</tr>
+<tr>
+<td><code>DoubleSupplier</code></td>
+<td><code>double getAsDouble()</code></td>
+</tr>
+</tbody></table>
+<h4 id="Function-계열"><a href="#Function-계열" class="headerlink" title="Function 계열"></a>Function 계열</h4><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Function&lt;T, R&gt;</code></td>
+<td><code>R apply(T t)</code></td>
+</tr>
+<tr>
+<td><code>BiFunction&lt;T, U, R&gt;</code></td>
+<td><code>R apply(T t, U u)</code></td>
+</tr>
+<tr>
+<td><code>PFunction&lt;R&gt;</code></td>
+<td><code>R apply(p value)</code></td>
+</tr>
+<tr>
+<td><code>PtoQFunction</code></td>
+<td><code>q applyAsQ(p value)</code></td>
+</tr>
+<tr>
+<td><code>ToPFunction&lt;T&gt;</code></td>
+<td><code>p applyAsP(T t)</code></td>
+</tr>
+<tr>
+<td><code>ToPBiFunction&lt;T, U&gt;</code></td>
+<td><code>p applyAsP(T t, U u)</code></td>
+</tr>
+</tbody></table>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">P, Q : Int, Long, Double</span><br><span class="line">p, q : int, long, double</span><br></pre></td></tr></table></figure>
+
+<h4 id="Operator-계열"><a href="#Operator-계열" class="headerlink" title="Operator 계열"></a>Operator 계열</h4><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>UnaryOperator&lt;T&gt;</code></td>
+<td><code>T apply(T t)</code></td>
+</tr>
+<tr>
+<td><code>BinaryOperator&lt;T&gt;</code></td>
+<td><code>T apply(T t1, T t2)</code></td>
+</tr>
+<tr>
+<td><code>IntUnaryOperator</code></td>
+<td><code>int applyAsInt(int value)</code></td>
+</tr>
+<tr>
+<td><code>LongUnaryOperator</code></td>
+<td><code>long applyAsLong(long value)</code></td>
+</tr>
+<tr>
+<td><code>DoubleUnaryOperator</code></td>
+<td><code>double applyAsDouble(double value)</code></td>
+</tr>
+<tr>
+<td><code>IntBinaryOperator</code></td>
+<td><code>int applyAsInt(int value1, int value2)</code></td>
+</tr>
+<tr>
+<td><code>LongBinaryOperator</code></td>
+<td><code>long applyAsLong(long value, long value2)</code></td>
+</tr>
+<tr>
+<td><code>DoubleBinaryOperator</code></td>
+<td><code>double applyAsDouble(double value, double value2)</code></td>
+</tr>
+</tbody></table>
+<h4 id="Predicate-계열"><a href="#Predicate-계열" class="headerlink" title="Predicate 계열"></a>Predicate 계열</h4><table>
+<thead>
+<tr>
+<th>인터페이스</th>
+<th>메소드</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>boolean test(T t)</code></td>
+</tr>
+<tr>
+<td><code>BiPredicate&lt;T, U&gt;</code></td>
+<td><code>boolean test(T t, U u)</code></td>
+</tr>
+<tr>
+<td><code>IntPredicate</code></td>
+<td><code>boolean test(int value)</code></td>
+</tr>
+<tr>
+<td><code>LongPredicate</code></td>
+<td><code>boolean test(long value)</code></td>
+</tr>
+<tr>
+<td><code>DoublePredicate</code></td>
+<td><code>boolean test(double value)</code></td>
+</tr>
+</tbody></table>
+<h3 id="표준-함수형-인터페이스의-메소드"><a href="#표준-함수형-인터페이스의-메소드" class="headerlink" title="표준 함수형 인터페이스의 메소드"></a>표준 함수형 인터페이스의 메소드</h3><h4 id="andThen-compose"><a href="#andThen-compose" class="headerlink" title="andThen(), compose()"></a>andThen(), compose()</h4><ul>
+<li><p>두 개 이상의 함수형 인터페이스를 연결하기 위해 사용</p>
+<ul>
+<li><code>A.andThen(B)</code>: A를 먼저 실행하고 B를 실행. Consumer, Function, Operator 계열 지원</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;String, String&gt; funcOne = x -&gt; <span class="string">&quot;str: &quot;</span> + x;</span><br><span class="line">Function&lt;String, String&gt; funcTwo = x -&gt; <span class="string">&quot;&#123;&quot;</span> + x + <span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">Function&lt;String, String&gt; andThen = funcOne.andThen(funcTwo); <span class="comment">// &#123;str: x&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>A.compose(B)</code>: B를 먼저 실행하고 A를 실행. Function, Operator 계열 지원</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IntUnaryOperator multTwo = x -&gt; x * <span class="number">2</span>;</span><br><span class="line">IntUnaryOperator addTen = x -&gt; x + <span class="number">10</span>;</span><br><span class="line">IntUnaryOperator multTwo.compose(addTen); <span class="comment">// (x + 10) * 2</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="and-or-negate-isEqual"><a href="#and-or-negate-isEqual" class="headerlink" title="and(), or(), negate(), isEqual()"></a>and(), or(), negate(), isEqual()</h4><ul>
+<li><p>Predicate 계열의 기본 메소드</p>
+<ul>
+<li>and(), or(), negate()</li>
+<li>각각 &amp;&amp;, ||, !의 동작을 한다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DoublePredicate predOne = x -&gt; x &gt; <span class="number">0.5</span>;</span><br><span class="line">DoublePredicate predTwo = x -&gt; x &lt; <span class="number">0.0</span>;</span><br><span class="line">DoublePredicate predThree = predOne.or(predTwo);</span><br><span class="line">DoublePredicate predFour = predThree.negate();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Predicate 계열의 클래스 메소드</p>
+<ul>
+<li>isEqual()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;String&gt; isEqualToString = Predicate.isEqual(<span class="string">&quot;String&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="minBy-maxBy"><a href="#minBy-maxBy" class="headerlink" title="minBy(), maxBy()"></a>minBy(), maxBy()</h4><ul>
+<li><p>BinaryOperator 클래스의 클래스 메소드</p>
+<ul>
+<li><code>Comparator&lt;T&gt;</code>를 파라미터로 받아 최소값/최대값을 구하는 <code>BinaryOperator&lt;T&gt;</code>를 리턴</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BinaryOperator&lt;String&gt; minBy = BinaryOperator.minBy((o1, o2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> len(o1) &gt; len(o2) ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">BinaryOperator&lt;Integer&gt; maxBy = BinaryOperator.maxBy((val1, val2) -&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> val1.compareTo(val2);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="람다식에-메소드-생성자-사용"><a href="#람다식에-메소드-생성자-사용" class="headerlink" title="람다식에 메소드/생성자 사용"></a>람다식에 메소드/생성자 사용</h3><ul>
+<li>이미 구현된 메소드가 있는 경우, 다양한 방식으로 람다식을 대체 가능</li>
+</ul>
+<h4 id="ClassName-instanceMethod"><a href="#ClassName-instanceMethod" class="headerlink" title="ClassName::instanceMethod"></a>ClassName::instanceMethod</h4><ul>
+<li><p>첫번째 파라미터를 객체로, 두번째 파라미터를 메소드 입력으로 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] strings = &#123; <span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;C&quot;</span> &#125;;</span><br><span class="line">Arrays.sort(strings, String::compareTo);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="ClassName-classMethod"><a href="#ClassName-classMethod" class="headerlink" title="ClassName::classMethod"></a>ClassName::classMethod</h4><ul>
+<li><p>클래스 메소드의 입력으로 모든 파라미터가 사용됨</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;String, Integer&gt; parser = Integer::parseInt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="instance-instanceMethod"><a href="#instance-instanceMethod" class="headerlink" title="instance::instanceMethod"></a>instance::instanceMethod</h4><ul>
+<li><p>주어진 객체의 메소드를 호출</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="string">&quot;StringA&quot;</span>;</span><br><span class="line">Predicate&lt;String&gt; pred = string::equals;</span><br><span class="line">System.out.println(pred.apply(<span class="string">&quot;StringA&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="ClassName-new"><a href="#ClassName-new" class="headerlink" title="ClassName::new"></a>ClassName::new</h4><ul>
+<li><p>생성자를 이용하여 객체를 생성하는 람다식</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntFunction&lt;String&gt; func = String::<span class="keyword">new</span>;</span><br><span class="line">String string = func.apply(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="ClassName-new-1"><a href="#ClassName-new-1" class="headerlink" title="ClassName[]::new"></a>ClassName[]::new</h4><ul>
+<li><p>배열을 생성하는 람다식</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntFunction&lt;String[]&gt; func = String[]::<span class="keyword">new</span>;</span><br><span class="line">String [] strings = func.apply(<span class="number">100</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/09/22/Java-Advanced04-LambdaExpression/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/09/17/Java-advanced03-InnerClass/"
+                            aria-label=": Java-advanced03-InnerClass"
+                        >
+                            Java-advanced03-InnerClass
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-09-17T19:43:15+09:00">
+	
+		    Sep 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="내부-클래스-Inner-Classes"><a href="#내부-클래스-Inner-Classes" class="headerlink" title="내부 클래스 (Inner Classes)"></a>내부 클래스 (Inner Classes)</h1><h2 id="내부-클래스란"><a href="#내부-클래스란" class="headerlink" title="내부 클래스란"></a>내부 클래스란</h2><ul>
+<li>클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름</li>
+<li><code>HAS-A</code> 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용</li>
+</ul>
+<h2 id="내부-클래스의-종류"><a href="#내부-클래스의-종류" class="headerlink" title="내부 클래스의 종류"></a>내부 클래스의 종류</h2><ul>
+<li>클래스 영역에 선언<ul>
+<li>인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능</li>
+<li>클래스 내부 클래스: static이 붙은 정적인 내부 클래스</li>
+</ul>
+</li>
+<li>로컬 영역에 선언<ul>
+<li>로컬 내부 클래스: 선언된 영역의 Scope 내에서 사용 가능</li>
+<li>익명 내부 클래스: 객체를 일회성으로 생성하기 위한 이름이 없는 클래스</li>
+</ul>
+</li>
+</ul>
+<h2 id="다양한-내부-클래스"><a href="#다양한-내부-클래스" class="headerlink" title="다양한 내부 클래스"></a>다양한 내부 클래스</h2><h3 id="인스턴스-내부-클래스-Instance-Inner-Class"><a href="#인스턴스-내부-클래스-Instance-Inner-Class" class="headerlink" title="인스턴스 내부 클래스 (Instance Inner Class)"></a>인스턴스 내부 클래스 (Instance Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드 없이 선언된 클래스</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>외부 클래스 객체를 통해서만 생성 가능</p>
+</li>
+<li><p>static 멤버 변수는 사용할 수 없으나, <code>static final</code>은 사용 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerMemberVar = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//static int staticMemberVar = 1;</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONSTANT_VAR = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(innerMemberVar);</span><br><span class="line">            System.out.println(outerMemberVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> outerMemberVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      IstanceInner obj = <span class="keyword">new</span> InstanceInner();</span><br><span class="line">      obj.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>외부 클래스의 멤버 변수와 이름이 겹치는 경우 <code>this</code> 활용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span>;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);<span class="comment">// 0</span></span><br><span class="line">            System.out.println(<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 1</span></span><br><span class="line">            System.out.println(Outer.<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 2</span></span><br><span class="line">            System.out.println(Outer.y); <span class="comment">// 3 static variable</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.new InstanceInner();</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="클래스-내부-클래스-Class-Inner-Class"><a href="#클래스-내부-클래스-Class-Inner-Class" class="headerlink" title="클래스 내부 클래스 (Class Inner Class)"></a>클래스 내부 클래스 (Class Inner Class)</h3><ul>
+<li><p>클래스 영역에 <code>static</code> 키워드와 함께 선언된 내부 클래스</p>
+</li>
+<li><p>외부 클래스 객체가 없어도 생성 가능</p>
+</li>
+<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
+</li>
+<li><p>static 멤버 변수를 가질 수 있음</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerVar = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> staticInnerVar = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">            System.out.println(outer.outerVar);</span><br><span class="line">            System.out.println(innerVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> outerVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="로컬-내부-클래스-Local-Inner-Class"><a href="#로컬-내부-클래스-Local-Inner-Class" class="headerlink" title="로컬 내부 클래스 (Local Inner Class)"></a>로컬 내부 클래스 (Local Inner Class)</h3><ul>
+<li><p>클래스 영역이 아닌 로컬 영역에서 선언된 클래스</p>
+<ul>
+<li>메소드, 생성자, 초기화 블록의 내부</li>
+</ul>
+</li>
+<li><p>정적 변수는 가질 수 없으나, static final 변수는 가질 수 있음</p>
+</li>
+<li><p>로컬 영역의 변수 다음과 같은 사항을 따름</p>
+<ul>
+<li>Java1.7: final로 선언된 변수에만 접근 가능</li>
+<li>Java1.8: 모든 변수에 접근 가능하나, final로 간주되어 새로운 값 할당 불가</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>; <span class="comment">// 메소드 호출 스택</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">LocalInner</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LocalInner inner = <span class="keyword">new</span> LocalInner(); <span class="comment">// 힙 영역</span></span><br><span class="line">    inner.innerMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="익명의-내부-클래스-Anonymous-Inner-Class"><a href="#익명의-내부-클래스-Anonymous-Inner-Class" class="headerlink" title="익명의 내부 클래스 (Anonymous Inner Class)"></a>익명의 내부 클래스 (Anonymous Inner Class)</h3><ul>
+<li><p>로컬 내부 클래스와 동일하나, 이름이 없어 선언 즉시 한 번 사용 가능</p>
+</li>
+<li><p>추상 클래스나 인터페이스의 구현에 많이 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnonymousInnerClassTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useFoo</span><span class="params">(IFoo foo)</span> </span>&#123;</span><br><span class="line">        foo.<span class="keyword">do</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        useFoo(<span class="keyword">new</span> IFoo() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Do!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/09/17/Java-advanced03-InnerClass/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/18/HTML-1/"
                             aria-label=": HTML 1"
                         >
@@ -1095,316 +2011,6 @@
                         <p>
                             <a
                                 href="/2020/08/12/OOP-Advanced02-Interface/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/12/OOP-Advanced01-Abstract-Class/"
-                            aria-label=": OOP-Advanced01(Abstract Class)"
-                        >
-                            OOP-Advanced01(Abstract Class)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-12T22:35:27+09:00">
-	
-		    Aug 12, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="추상-클래스-Abstract-Class"><a href="#추상-클래스-Abstract-Class" class="headerlink" title="추상 클래스 (Abstract Class)"></a>추상 클래스 (Abstract Class)</h1><h2 id="추상-클래스란"><a href="#추상-클래스란" class="headerlink" title="추상 클래스란"></a>추상 클래스란</h2><ul>
-<li>일부 메소드가 구현되지 않고 선언만 되어 있는 클래스<ul>
-<li>자식 클래스에서 반드시 구현해야 하는 메소드를 <code>abstract</code>로 선언</li>
-<li>필요한 모든 클래스가 구현될 수 있도록 강제</li>
-</ul>
-</li>
-</ul>
-<h2 id="추상-클래스의-선언"><a href="#추상-클래스의-선언" class="headerlink" title="추상 클래스의 선언"></a>추상 클래스의 선언</h2><ul>
-<li><p><code>abstract</code> 키워드를 이용해 클래스를 선언</p>
-</li>
-<li><p><code>abstract</code> 키워드를 이용해 메소드를 선언</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/12/OOP-Advanced01-Abstract-Class/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/11/OOP-7-Polymorphism/"
-                            aria-label=": OOP-7(Polymorphism)"
-                        >
-                            OOP-7(Polymorphism)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-11T20:58:34+09:00">
-	
-		    Aug 11, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP/">OOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="다형성-Polymorphism"><a href="#다형성-Polymorphism" class="headerlink" title="다형성 (Polymorphism)"></a>다형성 (Polymorphism)</h1><h2 id="다형성의-다양한-특징"><a href="#다형성의-다양한-특징" class="headerlink" title="다형성의 다양한 특징"></a>다형성의 다양한 특징</h2><ul>
-<li><p>부모 클래스 타입으로 자식 클래스 객체를 참조하는 특징</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Bar bar = <span class="keyword">new</span> Bar();</span><br><span class="line"></span><br><span class="line">        Foo foo = (Foo)bar;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>부모 클래스로 자식 클래스를 참조한 경우, 자식 클래스의 메소드는 사용할 수 없다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Bar bar = <span class="keyword">new</span> Bar();</span><br><span class="line">        Foo foo = (Foo)bar;</span><br><span class="line"></span><br><span class="line">        foo.methodA(); <span class="comment">// works</span></span><br><span class="line">        <span class="comment">// foo.methodB(); // error</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>자식 클래스로 부모 클래스를 참조하려 하면 java.lan.ClassCastException 오류 발생</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Foo foo = <span class="keyword">new</span> Foo();</span><br><span class="line">        Bar bar;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// bar = (Bar)foo; // error</span></span><br><span class="line">        <span class="keyword">if</span> (foo <span class="keyword">instanceof</span> Bar) &#123; <span class="comment">// returns false</span></span><br><span class="line">            bar = (Bar)foo;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>멤버 변수 재정의는 선언된 객체의 타입을 따른다.</p>
-</li>
-<li><p>메소드 오버라이딩은 메모리상의 객체의 타입을 따른다. (가상 메소드 호출; Virtual method call)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String x = <span class="string">&quot;Super&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Super&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String x = <span class="string">&quot;Sub&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Sub&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Bar bar = <span class="keyword">new</span> Bar();</span><br><span class="line">        Foo foo = (Foo)bar;</span><br><span class="line"></span><br><span class="line">        System.out.println(bar.x); <span class="comment">// Sub</span></span><br><span class="line">        bar.methodA(); <span class="comment">// Sub</span></span><br><span class="line"></span><br><span class="line">        System.out.println(foo.x); <span class="comment">// Super</span></span><br><span class="line">        foo.methodA(); <span class="comment">// Sub</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>공변 반환 타입 (Covariant return type)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Foo <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bar <span class="title">getInstance</span><span class="params">()</span> </span>&#123; <span class="comment">// Foo 대신 Bar로 리턴 가능</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/11/OOP-7-Polymorphism/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/11/OOP-6-Modifier/"
-                            aria-label=": OOP-6(Modifier)"
-                        >
-                            OOP-6(Modifier)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-11T20:58:16+09:00">
-	
-		    Aug 11, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP/">OOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="제어자-Modifier"><a href="#제어자-Modifier" class="headerlink" title="제어자 (Modifier)"></a>제어자 (Modifier)</h1><h2 id="제어자란"><a href="#제어자란" class="headerlink" title="제어자란"></a>제어자란</h2><ul>
-<li>클래스, 변수, 메소드에 부가 기능을 부여하는 키워드</li>
-<li>접근 제어자 (Access modifiers)<ul>
-<li>접근할 수 있는 범위를 정하는 키워드</li>
-<li><code>public</code>, <code>protected</code>, <code>(default = package)</code>, <code>private</code></li>
-</ul>
-</li>
-<li>그 외 제어자 (Other modifiers)<ul>
-<li>특별한 기능을 부여하는 제어자</li>
-<li><code>static</code>, <code>final</code>, <code>abstract</code>, <code>synchronized</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="제어자의-기능"><a href="#제어자의-기능" class="headerlink" title="제어자의 기능"></a>제어자의 기능</h2><h3 id="접근-제어자"><a href="#접근-제어자" class="headerlink" title="접근 제어자"></a>접근 제어자</h3><ul>
-<li><p>접근 가능한 범위를 정해, 데이터 은닉/보호 (Encapsulation) 기능을 추가한다.</p>
-</li>
-<li><p>접근 제어자별 접근 범위</p>
-<table>
-<thead>
-<tr>
-<th>제어자</th>
-<th align="center">같은 클래스</th>
-<th align="center">같은 패키지</th>
-<th align="center">다른 패키지에 속한 자식 클래스</th>
-<th align="center">전체</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-</tr>
-<tr>
-<td><code>protected</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><code>default</code></td>
-<td align="center">O</td>
-<td align="center">O</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><code>private</code></td>
-<td align="center">O</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-</li>
-<li><p><code>private</code> 또는 <code>protected</code> 변수에 접근하기 위해 getter와 setter 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">public</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> y = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="comment">// setter</span></span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setY</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123; <span class="comment">// setter</span></span><br><span class="line">        <span class="keyword">if</span> (y &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.y = y;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getX</span><span class="params">()</span> </span>&#123; <span class="comment">// getter</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getY</span><span class="params">()</span> </span>&#123; <span class="comment">// getter</span></span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="그-외의-제어자"><a href="#그-외의-제어자" class="headerlink" title="그 외의 제어자"></a>그 외의 제어자</h3><ul>
-<li><p><code>final</code></p>
-<ul>
-<li><p>더 이상 바뀔 수 없음을 의미</p>
-</li>
-<li><p>클래스, 메소드, 변수에 사용할 수 있음</p>
-<ul>
-<li><p>클래스: 더 이상 상속이 불가능해진다.</p>
-</li>
-<li><p>메소드: 자식 클래스에서 오버라이드할 수 없다.</p>
-</li>
-<li><p>변수: 변수의 값이 초기화 이후에 변하지 않는다.</p>
-<ul>
-<li>생성자에서 초기화가 이루어지는 것을 <code>blank final</code> 변수라 한다.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> x = <span class="number">0</span>; <span class="comment">// final variable</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> y; <span class="comment">// blank finial variable</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(<span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.y = y; <span class="comment">// blank final variable initialization</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>static</code></p>
-<ul>
-<li>클래스 변수, 클래스 메소드 등을 선언하기 위해 사용</li>
-</ul>
-</li>
-<li><p><code>abstract</code></p>
-<ul>
-<li>추상 클래스에서 사용</li>
-</ul>
-</li>
-<li><p><code>synchronized</code></p>
-<ul>
-<li>동시성 프로그래밍에 사용</li>
-</ul>
-</li>
-</ul>
-<h2 id="싱글톤-패턴-Singletone"><a href="#싱글톤-패턴-Singletone" class="headerlink" title="싱글톤 패턴 (Singletone)"></a>싱글톤 패턴 (Singletone)</h2><ul>
-<li><p>객체가 단 하나만 존재할 수 있는 클래스</p>
-</li>
-<li><p><code>private</code> 생성자를 이용한다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingletonClass</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> SingletoneClass instance = <span class="keyword">new</span> SingletonClass();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">SingletonClass</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonClass <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/11/OOP-6-Modifier/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
