@@ -6,24 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>수 정렬하기3 - Java Server Developer</title>
+    <title>Z - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 10989 : 문제링크\n\n문제유형 : 정렬\n\n설명\n\n데이터의 개수가 최대 10000000개\n\n계수 정렬 사용\n\n배열의 인덱스를 특정한 데이의 값으로 여기는 방식\n\n배열의 크기는 데이터의 범위를 포함할 수 있도록 설정\n\n데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴\n\n\n\n\n\n풀이\n  12345678910111213import sysn = int(sys.stdin.readline())array = [0] * 10001for i in range(n):    data = int(sys.stdin.readline())    array[data] += 1for i in range(10001):    if array[i] != 0:    for j in range(array[i]):        print(i)\n\n\n","dateCreated":"2020-10-22T21:28:13+09:00","dateModified":"2020-10-23T13:55:54+09:00","datePublished":"2020-10-22T21:28:13+09:00","description":"","headline":"수 정렬하기3","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/","keywords":"Algorithm, Sorting"}</script>
-    <meta name="description" content="백준 10989 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 최대 10000000개  계수 정렬 사용  배열의 인덱스를 특정한 데이의 값으로 여기는 방식  배열의 크기는 데이터의 범위를 포함할 수 있도록 설정  데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴      풀이   12345678910111213import sysn &#x3D; in">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 1074 : 문제링크\n\n문제유형 : 재귀\n\n설명\n\n2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결\n\nN = 2일때 까지 분할\n\n\n\n풀이\n  123456789101112131415161718192021222324252627def solve(n, x, y): global result    if n == 2:        if x == X and y == Y:            print(result)            return        result += 1        if x == X and y + 1 == Y:            print(result)            return        result += 1        if x + 1 == X and y == Y:            print(result)            return        result += 1        if x + 1 == X and y + 1 == Y:            print(result)            return        result += 1        return        solve(n / 2, x, y)        solve(n / 2, x, y + n / 2)        solve(n / 2, x + n / 2, y)        solve(n / 2, x + n / 2, y + n / 2)result = 0N, X, Y = map(int, input().split(&#x27; &#x27;)) solve(2 ** N, 0, 0)\n\n","dateCreated":"2020-10-23T10:36:59+09:00","dateModified":"2020-10-23T19:22:16+09:00","datePublished":"2020-10-23T10:36:59+09:00","description":"","headline":"Z","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/23/Z/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/23/Z/"}</script>
+    <meta name="description" content="백준 1074 : 문제링크  문제유형 : 재귀  설명  2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결  N &#x3D; 2일때 까지 분할    풀이   123456789101112131415161718192021222324252627def solve(n, x, y): global result    if n &#x3D;&#x3D; 2:        if x &#x3D;&#x3D;">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="수 정렬하기3">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/index.html">
+<meta property="og:title" content="Z">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/23/Z/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="백준 10989 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 최대 10000000개  계수 정렬 사용  배열의 인덱스를 특정한 데이의 값으로 여기는 방식  배열의 크기는 데이터의 범위를 포함할 수 있도록 설정  데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴      풀이   12345678910111213import sysn &#x3D; in">
+<meta property="og:description" content="백준 1074 : 문제링크  문제유형 : 재귀  설명  2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결  N &#x3D; 2일때 까지 분할    풀이   123456789101112131415161718192021222324252627def solve(n, x, y): global result    if n &#x3D;&#x3D; 2:        if x &#x3D;&#x3D;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-22T12:28:13.000Z">
-<meta property="article:modified_time" content="2020-10-23T04:55:54.797Z">
+<meta property="article:published_time" content="2020-10-23T01:36:59.000Z">
+<meta property="article:modified_time" content="2020-10-23T10:22:16.128Z">
 <meta property="article:author" content="Yechan Kim">
-<meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="Sorting">
 <meta name="twitter:card" content="summary">
     
     
@@ -329,22 +327,16 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            수 정렬하기3
+            Z
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-22T21:28:13+09:00">
+    <time datetime="2020-10-23T10:36:59+09:00">
 	
-		    Oct 22, 2020
+		    Oct 23, 2020
     	
     </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
     
 </div>
 
@@ -354,29 +346,20 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>백준 10989 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10989">문제링크</a></p>
+            <p>백준 1074 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1074">문제링크</a></p>
 <ul>
-<li><p>문제유형 : 정렬</p>
+<li><p>문제유형 : 재귀</p>
 </li>
 <li><p>설명</p>
-<ul>
-<li><p>데이터의 개수가 최대 10000000개</p>
+<ol>
+<li><p>2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결</p>
 </li>
-<li><p>계수 정렬 사용</p>
-<ul>
-<li><p>배열의 인덱스를 특정한 데이의 값으로 여기는 방식</p>
+<li><p>N = 2일때 까지 분할</p>
 </li>
-<li><p>배열의 크기는 데이터의 범위를 포함할 수 있도록 설정</p>
-</li>
-<li><p>데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴</p>
-</li>
-</ul>
-</li>
-</ul>
+</ol>
 </li>
 <li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line">array = [<span class="number">0</span>] * <span class="number">10001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(sys.stdin.readline())</span><br><span class="line">    array[data] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    <span class="keyword">if</span> array[i] != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(array[i]):</span><br><span class="line">        print(i)</span><br></pre></td></tr></table></figure>
-</li>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>(<span class="params">n, x, y</span>):</span> <span class="keyword">global</span> result</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        solve(n / <span class="number">2</span>, x, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x, y + n / <span class="number">2</span>)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y + n / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">N, X, Y = map(int, input().split(<span class="string">&#x27; &#x27;</span>)) </span><br><span class="line">solve(<span class="number">2</span> ** N, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure></li>
 </ul>
 
             
@@ -385,13 +368,6 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
-        
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">TAGGED IN</span><br/>
-                
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Sorting/" rel="tag">Sorting</a>
-
-            </div>
         
         
             <div class="post-actions-wrap">
@@ -402,9 +378,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
-                    data-tooltip="피보나치 수"
-                    aria-label="PREVIOUS: 피보나치 수"
+                    href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                    data-tooltip="0 만들기"
+                    aria-label="PREVIOUS: 0 만들기"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -416,9 +392,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                    data-tooltip="좌표 정렬하기"
-                    aria-label="NEXT: 좌표 정렬하기"
+                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
+                    data-tooltip="피보나치 수"
+                    aria-label="NEXT: 피보나치 수"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -443,7 +419,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -456,7 +432,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -469,7 +445,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -531,9 +507,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
-                    data-tooltip="피보나치 수"
-                    aria-label="PREVIOUS: 피보나치 수"
+                    href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                    data-tooltip="0 만들기"
+                    aria-label="PREVIOUS: 0 만들기"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -545,9 +521,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                    data-tooltip="좌표 정렬하기"
-                    aria-label="NEXT: 좌표 정렬하기"
+                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
+                    data-tooltip="피보나치 수"
+                    aria-label="NEXT: 피보나치 수"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -572,7 +548,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -585,7 +561,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -598,7 +574,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/Z/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -642,7 +618,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/Z/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -655,7 +631,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/Z/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -668,7 +644,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/Z/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -729,9 +705,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/';
+            this.page.url = 'https://kimyechan.github.io/2020/10/23/Z/';
               
-            this.page.identifier = '2020/10/22/수-정렬하기3/';
+            this.page.identifier = '2020/10/23/Z/';
               
           };
           (function() {

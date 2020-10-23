@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>수 정렬하기3 - Java Server Developer</title>
+    <title>수 정렬하기2 - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 10989 : 문제링크\n\n문제유형 : 정렬\n\n설명\n\n데이터의 개수가 최대 10000000개\n\n계수 정렬 사용\n\n배열의 인덱스를 특정한 데이의 값으로 여기는 방식\n\n배열의 크기는 데이터의 범위를 포함할 수 있도록 설정\n\n데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴\n\n\n\n\n\n풀이\n  12345678910111213import sysn = int(sys.stdin.readline())array = [0] * 10001for i in range(n):    data = int(sys.stdin.readline())    array[data] += 1for i in range(10001):    if array[i] != 0:    for j in range(array[i]):        print(i)\n\n\n","dateCreated":"2020-10-22T21:28:13+09:00","dateModified":"2020-10-23T13:55:54+09:00","datePublished":"2020-10-22T21:28:13+09:00","description":"","headline":"수 정렬하기3","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/","keywords":"Algorithm, Sorting"}</script>
-    <meta name="description" content="백준 10989 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 최대 10000000개  계수 정렬 사용  배열의 인덱스를 특정한 데이의 값으로 여기는 방식  배열의 크기는 데이터의 범위를 포함할 수 있도록 설정  데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴      풀이   12345678910111213import sysn &#x3D; in">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 2751 : 문제링크\n\n문제유형 : 정렬\n\n설명\n\n데이터의 개수가 1000000개\n\nNlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬\n\n기본 정렬 알고리즘으로 해결가능\n\n\n\n풀이\n\n병합 정렬\n12345678910111213141516171819202122232425262728293031323334353637def merge_sort(array):    if len(array) &lt;= 1:        return array    mid = len(array) // 2    left = merge_sort(array[:mid])    right = merge_sort(array[mid:])    i, j, k = 0, 0, 0    while i &lt; len(left) and j &lt; len(right):        if left[i] &lt; left[j]:            array[k] = left[i]            i + = 1        else:            array[k] = right[j]            j += 1        k += 1    if i == len(left):        while j &lt; len(right):            array[k] = right[j]            j += 1            k += 1    elif j == len(right):        while i &lt; len(left):            array[k] = left[i]            i += 1            k += 1    return arrayn = int(input())array = []for _ in range(n):    array.append(int(input()))array = merge_sort(array)for data in array:    print(data)\n\n정렬 라이브러리\n1234567n = int(input())array = []for _ in range(n):    array.append(int(input()))array = sorted(array)\n\n\n\n\n","dateCreated":"2020-10-23T18:22:26+09:00","dateModified":"2020-10-23T19:15:50+09:00","datePublished":"2020-10-23T18:22:26+09:00","description":"","headline":"수 정렬하기2","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/","keywords":"Algorithm, Sorting"}</script>
+    <meta name="description" content="백준 2751 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 1000000개  NlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬  기본 정렬 알고리즘으로 해결가능    풀이  병합 정렬 12345678910111213141516171819202122232425262728293031323334353637def merge_s">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="수 정렬하기3">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/index.html">
+<meta property="og:title" content="수 정렬하기2">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="백준 10989 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 최대 10000000개  계수 정렬 사용  배열의 인덱스를 특정한 데이의 값으로 여기는 방식  배열의 크기는 데이터의 범위를 포함할 수 있도록 설정  데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴      풀이   12345678910111213import sysn &#x3D; in">
+<meta property="og:description" content="백준 2751 : 문제링크  문제유형 : 정렬  설명  데이터의 개수가 1000000개  NlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬  기본 정렬 알고리즘으로 해결가능    풀이  병합 정렬 12345678910111213141516171819202122232425262728293031323334353637def merge_s">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-22T12:28:13.000Z">
-<meta property="article:modified_time" content="2020-10-23T04:55:54.797Z">
+<meta property="article:published_time" content="2020-10-23T09:22:26.000Z">
+<meta property="article:modified_time" content="2020-10-23T10:15:50.896Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="Sorting">
@@ -329,14 +329,14 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            수 정렬하기3
+            수 정렬하기2
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-22T21:28:13+09:00">
+    <time datetime="2020-10-23T18:22:26+09:00">
 	
-		    Oct 22, 2020
+		    Oct 23, 2020
     	
     </time>
     
@@ -354,28 +354,29 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>백준 10989 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10989">문제링크</a></p>
+            <p>백준 2751 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2751">문제링크</a></p>
 <ul>
 <li><p>문제유형 : 정렬</p>
 </li>
 <li><p>설명</p>
 <ul>
-<li><p>데이터의 개수가 최대 10000000개</p>
+<li><p>데이터의 개수가 1000000개</p>
 </li>
-<li><p>계수 정렬 사용</p>
-<ul>
-<li><p>배열의 인덱스를 특정한 데이의 값으로 여기는 방식</p>
+<li><p>NlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬</p>
 </li>
-<li><p>배열의 크기는 데이터의 범위를 포함할 수 있도록 설정</p>
-</li>
-<li><p>데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴</p>
-</li>
-</ul>
+<li><p>기본 정렬 알고리즘으로 해결가능</p>
 </li>
 </ul>
 </li>
 <li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line">array = [<span class="number">0</span>] * <span class="number">10001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(sys.stdin.readline())</span><br><span class="line">    array[data] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    <span class="keyword">if</span> array[i] != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(array[i]):</span><br><span class="line">        print(i)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>병합 정렬</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span>(<span class="params">array</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    mid = len(array) // <span class="number">2</span></span><br><span class="line">    left = merge_sort(array[:mid])</span><br><span class="line">    right = merge_sort(array[mid:])</span><br><span class="line">    i, j, k = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">        <span class="keyword">if</span> left[i] &lt; left[j]:</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i + = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> i == len(left):</span><br><span class="line">        <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> j == len(right):</span><br><span class="line">        <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = merge_sort(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> array:</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>정렬 라이브러리</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -402,9 +403,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
-                    data-tooltip="피보나치 수"
-                    aria-label="PREVIOUS: 피보나치 수"
+                    href="/2020/10/23/K%EB%B2%88%EC%A7%B8-%EC%88%98/"
+                    data-tooltip="K번째 수"
+                    aria-label="PREVIOUS: K번째 수"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -416,9 +417,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                    data-tooltip="좌표 정렬하기"
-                    aria-label="NEXT: 좌표 정렬하기"
+                    href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                    data-tooltip="0 만들기"
+                    aria-label="NEXT: 0 만들기"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -443,7 +444,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -456,7 +457,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -469,7 +470,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -531,9 +532,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
-                    data-tooltip="피보나치 수"
-                    aria-label="PREVIOUS: 피보나치 수"
+                    href="/2020/10/23/K%EB%B2%88%EC%A7%B8-%EC%88%98/"
+                    data-tooltip="K번째 수"
+                    aria-label="PREVIOUS: K번째 수"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -545,9 +546,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                    data-tooltip="좌표 정렬하기"
-                    aria-label="NEXT: 좌표 정렬하기"
+                    href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                    data-tooltip="0 만들기"
+                    aria-label="NEXT: 0 만들기"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -572,7 +573,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -585,7 +586,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -598,7 +599,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -642,7 +643,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -655,7 +656,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -668,7 +669,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -729,9 +730,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/';
+            this.page.url = 'https://kimyechan.github.io/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/';
               
-            this.page.identifier = '2020/10/22/수-정렬하기3/';
+            this.page.identifier = '2020/10/23/수-정렬하기2/';
               
           };
           (function() {
