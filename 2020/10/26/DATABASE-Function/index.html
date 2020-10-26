@@ -6,22 +6,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>DATABASE-Constraint - Java Server Developer</title>
+    <title>DATABASE-Function - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.\n\nNOT NULL\n  NULL 값 (비어있는 값)을 저장할수 없습니다.\n\nUNIQUE\n  같은 값을 저장할수 없습니다.\n\nPRIMARY KEY\n\nNOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.\n\n그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. \n\n하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.\n\n\n\nAUTO_INCREMENT\n  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합  니다.\n\nFOREIGN KEY\n  다른 테이블과 연결되는 값이 저장됩니다.\n\n테이블 수정으로 FK 설정\n  1234alter table moneyadd constraint fk_userforeign key (user_id)       # money의 user_idreferences user (user_id);  # user의 user_id\n테이블 생성시 FK 설정\n  123456create table money(    money_id int primary key auto_increment,    income int,     user_id int,    foreign key (user_id) references user(user_id));\n\n\nON DELETE, ON UPDATE 설정\n\n참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)\n\nCASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제\n\nSET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정\n\n\n\nDEFAULT\n  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.\n  1234567   create table money(money_id int primary key auto_increment,   income int,    user_id int,   foreign key (user_id) references user(user_id)   on update cascade on delete set null   );\n\n","dateCreated":"2020-10-26T19:35:11+09:00","dateModified":"2020-10-26T19:44:45+09:00","datePublished":"2020-10-26T19:35:11+09:00","description":"","headline":"DATABASE-Constraint","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"}</script>
-    <meta name="description" content="Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.  NOT NULL   NULL 값 (비어있는 값)을 저장할수 없습니다.  UNIQUE   같은 값을 저장할수 없습니다.  PRIMARY KEY  NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.  그러므로 컬럼에 비어 있는 값과 동일한">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Functions\nCEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.\n\nCEIL\n  CEIL는 실수 데이터를 올림 할 때 사용합니다.\n\n12.345를 올림하여 정수로 나타냄\n  1SELECT CEIL(12.345)\n\n국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄\n  12SELECT CountryCode, Language, Percentage, CEIL(Percentage)FROM countrylanguage\n\nROUND\n  ROUND는 실수데이터를 반올림 할 때 사용합니다.\n\n12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 반올림\n  1SELECT ROUND(12.345, 2)\n\n국가별 언어 사용 비율을 소수 첫번째자리에서 반올림하여 정수로 나타냄\n  12SELECT CountryCode, Language, Percentage, ROUND(Percentage, 0)FROM countrylanguage\n\n\n\nTRUNCATE\n  TRUNCATE는 실수 데이터를 버림 할 때 사용합니다.\n\n12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 버림\n  1SELECT TRUNCATE(12.345, 2)\n\n국가별 언어 사용 비율을 소수 첫번째자리에서 버림하여 정수로 나타냄\n  12SELECT CountryCode, Language, Percentage, TRUNCATE(Percentage, 0)FROM countrylanguage\n  123SELECT CountryCode, Language, Percentage, ROUND(Percentage, 0),TRUNCATE(Percentage, 0)FROM countrylanguage\n\n\n\n\n\nDATE_FORMAT\n  DATE_FORMAT은 날짜 데이터에 대한 포멧을 바꿔줍니다.\n  https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html\n\nsakila 데이터 베이스에서 월별 총 수입  123SELECT DATE_FORMAT(payment_date, &quot;%Y-%m&quot;) AS monthly, SUM(amount) AS amountFROM paymentGROUP BY monthly\n\n\n\n\n\n조건문 IF, IFNULL, CASE\nSQL에서도 다른 언어에서 처럼 조건문 사용이 가능합니다. IF, CASE 에 대해서 설명합니다.\n\nIF(조건, 참, 거짓)\n\n\n- 도시의 인구가 100만이 넘으면 &quot;big city&quot; 그렇지 않으면 &quot;small city&quot;를 출력하는 city_scale 컬럼을 추가\n    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;, population, &lt;span class=&quot;keyword&quot;&gt;IF&lt;/span&gt;(population &amp;gt; &lt;span class=&quot;number&quot;&gt;1000000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;big city&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;small city&amp;quot;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; city_scale&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; city&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;\n\nIFNULL(참, 거짓)\n\n독립년도가 없는 데이터는 0으로 출력  12SELECT IndepYear, IFNULL(IndepYear, 0) as IndepYearFROM country\n\n\n\nCASE\n  1234CASE WHEN (조건1) THEN (출력1)WHEN (조건2) THEN (출력2)END AS (컬럼명)\n\n\n나라별로 인구가 10억 이상, 1억 이상, 1억 이하인 컬럼을 추가하여 출력  1234567SELECT name, population,CASEWHEN population &gt; 1000000000 THEN &quot;upper 1 bilion&quot;WHEN population &gt; 100000000 THEN &quot;upper 100 milion&quot;ELSE &quot;below 100 milion&quot;END AS resultFROM country\n\n\n\n","dateCreated":"2020-10-26T20:05:50+09:00","dateModified":"2020-10-26T20:28:42+09:00","datePublished":"2020-10-26T20:05:50+09:00","description":"","headline":"DATABASE-Function","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/26/DATABASE-Function/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/26/DATABASE-Function/","keywords":"DATABASE"}</script>
+    <meta name="description" content="Functions CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.  CEIL   CEIL는 실수 데이터를 올림 할 때 사용합니다.  12.345를 올림하여 정수로 나타냄   1SELECT CEIL(12.345)  국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄   12SELECT CountryCode,">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="DATABASE-Constraint">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/index.html">
+<meta property="og:title" content="DATABASE-Function">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/26/DATABASE-Function/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.  NOT NULL   NULL 값 (비어있는 값)을 저장할수 없습니다.  UNIQUE   같은 값을 저장할수 없습니다.  PRIMARY KEY  NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.  그러므로 컬럼에 비어 있는 값과 동일한">
+<meta property="og:description" content="Functions CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.  CEIL   CEIL는 실수 데이터를 올림 할 때 사용합니다.  12.345를 올림하여 정수로 나타냄   1SELECT CEIL(12.345)  국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄   12SELECT CountryCode,">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-26T10:35:11.000Z">
-<meta property="article:modified_time" content="2020-10-26T10:44:45.532Z">
+<meta property="article:published_time" content="2020-10-26T11:05:50.000Z">
+<meta property="article:modified_time" content="2020-10-26T11:28:42.861Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="DATABASE">
 <meta name="twitter:card" content="summary">
     
     
@@ -327,16 +328,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            DATABASE-Constraint
+            DATABASE-Function
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-26T19:35:11+09:00">
+    <time datetime="2020-10-26T20:05:50+09:00">
 	
 		    Oct 26, 2020
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>
+
+
     
 </div>
 
@@ -346,49 +353,75 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
+            <h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><ul>
+<li><p>CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.</p>
 <ul>
-<li><p>NOT NULL</p>
-<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+<li><p>CEIL</p>
+<p>  CEIL는 실수 데이터를 올림 할 때 사용합니다.</p>
 </li>
-<li><p>UNIQUE</p>
-<p>  같은 값을 저장할수 없습니다.</p>
+<li><p>12.345를 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CEIL</span>(<span class="number">12.345</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>PRIMARY KEY</p>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">CEIL</span>(Percentage)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ROUND</p>
+<p>  ROUND는 실수데이터를 반올림 할 때 사용합니다.</p>
 <ul>
-<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 반올림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
-</li>
-<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 반올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>AUTO_INCREMENT</p>
-<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
-</li>
-<li><p>FOREIGN KEY</p>
-<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
+<li><p>TRUNCATE</p>
+<p>  TRUNCATE는 실수 데이터를 버림 할 때 사용합니다.</p>
 <ul>
-<li><p>테이블 수정으로 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
-<li><p>테이블 생성시 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 버림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRUNCATE</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ON DELETE, ON UPDATE 설정</p>
-<ul>
-<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
-</li>
-<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
-</li>
-<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 버림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>),</span><br><span class="line"><span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>DEFAULT</p>
-<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">   income <span class="built_in">int</span>, </span><br><span class="line">   user_id <span class="built_in">int</span>,</span><br><span class="line">   <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">   <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">   );</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>DATE_FORMAT</p>
+<p>  DATE_FORMAT은 날짜 데이터에 대한 포멧을 바꿔줍니다.</p>
+<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html</a></p>
+<ul>
+<li>sakila 데이터 베이스에서 월별 총 수입  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATE_FORMAT</span>(payment_date, <span class="string">&quot;%Y-%m&quot;</span>) <span class="keyword">AS</span> monthly, <span class="keyword">SUM</span>(amount) <span class="keyword">AS</span> amount</span><br><span class="line"><span class="keyword">FROM</span> payment</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> monthly</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="조건문-IF-IFNULL-CASE"><a href="#조건문-IF-IFNULL-CASE" class="headerlink" title="조건문 IF, IFNULL, CASE"></a>조건문 IF, IFNULL, CASE</h2><ul>
+<li><p>SQL에서도 다른 언어에서 처럼 조건문 사용이 가능합니다. IF, CASE 에 대해서 설명합니다.</p>
+</li>
+<li><p>IF(조건, 참, 거짓)</p>
+</li>
+</ul>
+<pre><code>- 도시의 인구가 100만이 넘으면 &quot;big city&quot; 그렇지 않으면 &quot;small city&quot;를 출력하는 city_scale 컬럼을 추가
+    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;, population, &lt;span class=&quot;keyword&quot;&gt;IF&lt;/span&gt;(population &amp;gt; &lt;span class=&quot;number&quot;&gt;1000000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;big city&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;small city&amp;quot;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; city_scale&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; city&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+<ul>
+<li><p>IFNULL(참, 거짓)</p>
+<ul>
+<li>독립년도가 없는 데이터는 0으로 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IndepYear, <span class="keyword">IFNULL</span>(IndepYear, <span class="number">0</span>) <span class="keyword">as</span> IndepYear</span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>CASE</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CASE </span><br><span class="line">WHEN (조건1) THEN (출력1)</span><br><span class="line">WHEN (조건2) THEN (출력2)</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> (컬럼명)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>나라별로 인구가 10억 이상, 1억 이상, 1억 이하인 컬럼을 추가하여 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, population,</span><br><span class="line"><span class="keyword">CASE</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">1000000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 1 bilion&quot;</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">100000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 100 milion&quot;</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">&quot;below 100 milion&quot;</span></span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> <span class="keyword">result</span></span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
 </ul>
 
             
@@ -397,6 +430,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DATABASE/" rel="tag">DATABASE</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">
@@ -407,9 +447,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
-                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
-                    aria-label="PREVIOUS: DATABASE-DML-INSERT UPDATE DELETE"
+                    href="/2020/10/26/DATABASE-JOIN-UNION/"
+                    data-tooltip="DATABASE-JOIN UNION"
+                    aria-label="PREVIOUS: DATABASE-JOIN UNION"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -421,9 +461,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DATA-TYPE/"
-                    data-tooltip="DATABASE-DATA TYPE"
-                    aria-label="NEXT: DATABASE-DATA TYPE"
+                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
+                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
+                    aria-label="NEXT: DATABASE-DML-INSERT UPDATE DELETE"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -448,7 +488,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -461,7 +501,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -474,7 +514,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -536,9 +576,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
-                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
-                    aria-label="PREVIOUS: DATABASE-DML-INSERT UPDATE DELETE"
+                    href="/2020/10/26/DATABASE-JOIN-UNION/"
+                    data-tooltip="DATABASE-JOIN UNION"
+                    aria-label="PREVIOUS: DATABASE-JOIN UNION"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -550,9 +590,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DATA-TYPE/"
-                    data-tooltip="DATABASE-DATA TYPE"
-                    aria-label="NEXT: DATABASE-DATA TYPE"
+                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
+                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
+                    aria-label="NEXT: DATABASE-DML-INSERT UPDATE DELETE"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -577,7 +617,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -590,7 +630,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -603,7 +643,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -647,7 +687,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -660,7 +700,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -673,7 +713,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Function/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -734,9 +774,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/';
+            this.page.url = 'https://kimyechan.github.io/2020/10/26/DATABASE-Function/';
               
-            this.page.identifier = '2020/10/26/DATABASE-Constraint/';
+            this.page.identifier = '2020/10/26/DATABASE-Function/';
               
           };
           (function() {

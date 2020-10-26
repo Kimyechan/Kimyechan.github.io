@@ -6,22 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>DATABASE-Constraint - Java Server Developer</title>
+    <title>DATABASE-DML-INSERT UPDATE DELETE - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.\n\nNOT NULL\n  NULL 값 (비어있는 값)을 저장할수 없습니다.\n\nUNIQUE\n  같은 값을 저장할수 없습니다.\n\nPRIMARY KEY\n\nNOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.\n\n그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. \n\n하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.\n\n\n\nAUTO_INCREMENT\n  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합  니다.\n\nFOREIGN KEY\n  다른 테이블과 연결되는 값이 저장됩니다.\n\n테이블 수정으로 FK 설정\n  1234alter table moneyadd constraint fk_userforeign key (user_id)       # money의 user_idreferences user (user_id);  # user의 user_id\n테이블 생성시 FK 설정\n  123456create table money(    money_id int primary key auto_increment,    income int,     user_id int,    foreign key (user_id) references user(user_id));\n\n\nON DELETE, ON UPDATE 설정\n\n참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)\n\nCASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제\n\nSET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정\n\n\n\nDEFAULT\n  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.\n  1234567   create table money(money_id int primary key auto_increment,   income int,    user_id int,   foreign key (user_id) references user(user_id)   on update cascade on delete set null   );\n\n","dateCreated":"2020-10-26T19:35:11+09:00","dateModified":"2020-10-26T19:44:45+09:00","datePublished":"2020-10-26T19:35:11+09:00","description":"","headline":"DATABASE-Constraint","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"}</script>
-    <meta name="description" content="Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.  NOT NULL   NULL 값 (비어있는 값)을 저장할수 없습니다.  UNIQUE   같은 값을 저장할수 없습니다.  PRIMARY KEY  NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.  그러므로 컬럼에 비어 있는 값과 동일한">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"INSERT\n테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.\n  12INSERT INTO &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)VALUES(&lt;value_1&gt;, &lt;value_2&gt;, ...)\n\ntest 데이터 베이스 선택\n  1sql&gt; USE test;\n\nuser1 테이블에 user_id, name, email, age, rdate를 입력\n  1234567INSERT INTO user1(user_id, name, email, age, rdate)VALUES (1, &quot;jin&quot;, &quot;pdj@gmail.com&quot;, 30, now()),(2, &quot;peter&quot;, &quot;peter@daum.net&quot;, 33, &#x27;2017-02-20&#x27;),(3, &quot;alice&quot;, &quot;alice@naver.com&quot;, 23, &#x27;2018-01-05&#x27;),(4, &quot;po&quot;, &quot;po@gmail.com&quot;, 43, &#x27;2002-09-16&#x27;),(5, &quot;andy&quot;, &quot;andy@gmail.com&quot;, 17, &#x27;2016-04-28&#x27;),(6, &quot;jin&quot;, &quot;jin1224@gmail.com&quot;, 33, &#x27;2013-09-02&#x27;);\n\ncity_2 테이블 생성\n  123456CREATE TABLE city_2 (    Name VARCHAR(50),    CountryCode CHAR(3),    District VARCHAR(50),    Population INT)\n\nselect 절에서 나온 결과데이터를 Insert\n  1234INSERT INTO city_2SELECT Name, CountryCode, District, PopulationFROM cityWHERE Population &gt; 8000000;\n\n\n\nUPDATE SET\n업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.\n\n123UPDATE &lt;table_name&gt;SET &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;WHERE &lt;condition&gt;\n\n\njin 이름을 가지고 있는 사람의 나이를 20, 이메일을 &#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;으로 변경  123sql&gt; UPDATE user1SET age=20, email=&quot;pdj@daum.net&quot;WHERE name=&quot;jin&quot;\n\n\n\nDELETE, DROP, TRUNCATE\n조건을 설정하여 데이터를 삭제할수 있습니다.\n\n12DELETE FROM &lt;table_name&gt;WHERE &lt;condition&gt;\n\n\n2016-01-01 이전 데이터 삭제 (DML)\n  12sql&gt; DELETE FROM user1WHERE rdate &lt; &quot;2016-01-01&quot;\n\n테이블 구조를 남기고 모든 데이터를 삭제 (DLL)\n  1sql&gt; TRUNCATE FROM user1\n테이블 전체를 모두 삭제 (DLL)\n  1sql&gt; DROP FROM user1\n\n\n","dateCreated":"2020-10-26T20:00:15+09:00","dateModified":"2020-10-26T20:28:49+09:00","datePublished":"2020-10-26T20:00:15+09:00","description":"","headline":"DATABASE-DML-INSERT UPDATE DELETE","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/","keywords":"DATABASE, DML"}</script>
+    <meta name="description" content="INSERT 테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.   12INSERT INTO &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)VALUES(&lt;value_1&gt;, &lt;value_2&gt;, ...">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="DATABASE-Constraint">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/index.html">
+<meta property="og:title" content="DATABASE-DML-INSERT UPDATE DELETE">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="Constraint : 제약조건데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.  NOT NULL   NULL 값 (비어있는 값)을 저장할수 없습니다.  UNIQUE   같은 값을 저장할수 없습니다.  PRIMARY KEY  NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.  그러므로 컬럼에 비어 있는 값과 동일한">
+<meta property="og:description" content="INSERT 테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.   12INSERT INTO &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)VALUES(&lt;value_1&gt;, &lt;value_2&gt;, ...">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-26T10:35:11.000Z">
-<meta property="article:modified_time" content="2020-10-26T10:44:45.532Z">
+<meta property="article:published_time" content="2020-10-26T11:00:15.000Z">
+<meta property="article:modified_time" content="2020-10-26T11:28:49.908Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="DATABASE">
+<meta property="article:tag" content="DML">
 <meta name="twitter:card" content="summary">
     
     
@@ -327,16 +329,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            DATABASE-Constraint
+            DATABASE-DML-INSERT UPDATE DELETE
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-26T19:35:11+09:00">
+    <time datetime="2020-10-26T20:00:15+09:00">
 	
 		    Oct 26, 2020
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
     
 </div>
 
@@ -346,49 +354,48 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
-<ul>
-<li><p>NOT NULL</p>
-<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+            <h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><ul>
+<li><p>테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)</span><br><span class="line"><span class="keyword">VALUES</span>(&lt;value_1&gt;, &lt;value_2&gt;, ...)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>UNIQUE</p>
-<p>  같은 값을 저장할수 없습니다.</p>
+<li><p>test 데이터 베이스 선택</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE test;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>PRIMARY KEY</p>
-<ul>
-<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+<li><p>user1 테이블에 user_id, name, email, age, rdate를 입력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user1(user_id, <span class="keyword">name</span>, email, age, rdate)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;pdj@gmail.com&quot;</span>, <span class="number">30</span>, <span class="keyword">now</span>()),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&quot;peter&quot;</span>, <span class="string">&quot;peter@daum.net&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2017-02-20&#x27;</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">&quot;alice&quot;</span>, <span class="string">&quot;alice@naver.com&quot;</span>, <span class="number">23</span>, <span class="string">&#x27;2018-01-05&#x27;</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">&quot;po&quot;</span>, <span class="string">&quot;po@gmail.com&quot;</span>, <span class="number">43</span>, <span class="string">&#x27;2002-09-16&#x27;</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">&quot;andy&quot;</span>, <span class="string">&quot;andy@gmail.com&quot;</span>, <span class="number">17</span>, <span class="string">&#x27;2016-04-28&#x27;</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;jin1224@gmail.com&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2013-09-02&#x27;</span>);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
+<li><p>city_2 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city_2 (</span><br><span class="line">    <span class="keyword">Name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    CountryCode <span class="built_in">CHAR</span>(<span class="number">3</span>),</span><br><span class="line">    District <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    Population <span class="built_in">INT</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
-</li>
-</ul>
-</li>
-<li><p>AUTO_INCREMENT</p>
-<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
-</li>
-<li><p>FOREIGN KEY</p>
-<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
-<ul>
-<li><p>테이블 수정으로 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
-<li><p>테이블 생성시 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>ON DELETE, ON UPDATE 설정</p>
-<ul>
-<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
-</li>
-<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
-</li>
-<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+<li><p>select 절에서 나온 결과데이터를 Insert</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> city_2</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span>, CountryCode, District, Population</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">WHERE</span> Population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
+<h1 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h1><ul>
+<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">SET</span> &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>jin 이름을 가지고 있는 사람의 나이를 20, 이메일을 <a href="mailto:&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;">&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;</a>으로 변경  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; UPDATE user1</span><br><span class="line"><span class="keyword">SET</span> age=<span class="number">20</span>, email=<span class="string">&quot;pdj@daum.net&quot;</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">&quot;jin&quot;</span></span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>DEFAULT</p>
-<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">   income <span class="built_in">int</span>, </span><br><span class="line">   user_id <span class="built_in">int</span>,</span><br><span class="line">   <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">   <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">   );</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="DELETE-DROP-TRUNCATE"><a href="#DELETE-DROP-TRUNCATE" class="headerlink" title="DELETE, DROP, TRUNCATE"></a>DELETE, DROP, TRUNCATE</h1><ul>
+<li>조건을 설정하여 데이터를 삭제할수 있습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>2016-01-01 이전 데이터 삭제 (DML)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DELETE FROM user1</span><br><span class="line">WHERE rdate &lt; &quot;2016-01-01&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 구조를 남기고 모든 데이터를 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; TRUNCATE FROM user1</span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 전체를 모두 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DROP FROM user1</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
             
@@ -397,6 +404,13 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DATABASE/" rel="tag">DATABASE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/DML/" rel="tag">DML</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">
@@ -407,9 +421,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
-                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
-                    aria-label="PREVIOUS: DATABASE-DML-INSERT UPDATE DELETE"
+                    href="/2020/10/26/DATABASE-Function/"
+                    data-tooltip="DATABASE-Function"
+                    aria-label="PREVIOUS: DATABASE-Function"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -421,9 +435,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DATA-TYPE/"
-                    data-tooltip="DATABASE-DATA TYPE"
-                    aria-label="NEXT: DATABASE-DATA TYPE"
+                    href="/2020/10/26/DATABASE-Constraint/"
+                    data-tooltip="DATABASE-Constraint"
+                    aria-label="NEXT: DATABASE-Constraint"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -448,7 +462,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -461,7 +475,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -474,7 +488,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -536,9 +550,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
-                    data-tooltip="DATABASE-DML-INSERT UPDATE DELETE"
-                    aria-label="PREVIOUS: DATABASE-DML-INSERT UPDATE DELETE"
+                    href="/2020/10/26/DATABASE-Function/"
+                    data-tooltip="DATABASE-Function"
+                    aria-label="PREVIOUS: DATABASE-Function"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -550,9 +564,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/26/DATABASE-DATA-TYPE/"
-                    data-tooltip="DATABASE-DATA TYPE"
-                    aria-label="NEXT: DATABASE-DATA TYPE"
+                    href="/2020/10/26/DATABASE-Constraint/"
+                    data-tooltip="DATABASE-Constraint"
+                    aria-label="NEXT: DATABASE-Constraint"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -577,7 +591,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -590,7 +604,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -603,7 +617,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -647,7 +661,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -660,7 +674,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -673,7 +687,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -734,9 +748,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/26/DATABASE-Constraint/';
+            this.page.url = 'https://kimyechan.github.io/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/';
               
-            this.page.identifier = '2020/10/26/DATABASE-Constraint/';
+            this.page.identifier = '2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/';
               
           };
           (function() {

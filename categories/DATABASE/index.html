@@ -326,7 +326,636 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/10/20/DML-SELECT/"
+                            href="/2020/10/26/DATABASE-JOIN-UNION/"
+                            aria-label=": DATABASE-JOIN UNION"
+                        >
+                            DATABASE-JOIN UNION
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:17:58+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h1><ul>
+<li><p>JOIN은 여러개의 테이블에서 데이터를 모아서 보여줄 때 사용됩니다. </p>
+</li>
+<li><p>JOIN에는 INNER JOIN, LEFT JOIN, RIGHT JOIN이 있습니다.</p>
+</li>
+</ul>
+<h2 id="MAKE-TEST-TABLE-amp-DATA"><a href="#MAKE-TEST-TABLE-amp-DATA" class="headerlink" title="MAKE TEST TABLE &amp; DATA"></a>MAKE TEST TABLE &amp; DATA</h2><ul>
+<li>create table &amp; data  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span> (</span><br><span class="line">user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (user_id)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> addr (</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">addr <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(<span class="keyword">name</span>)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;jin&quot;</span>),</span><br><span class="line">(<span class="string">&quot;po&quot;</span>),</span><br><span class="line">(<span class="string">&quot;alice&quot;</span>),</span><br><span class="line">(<span class="string">&quot;petter&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> addr(addr, user_id)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;seoul&quot;</span>, <span class="number">1</span>),</span><br><span class="line">(<span class="string">&quot;pusan&quot;</span>, <span class="number">2</span>),</span><br><span class="line">(<span class="string">&quot;deajeon&quot;</span>, <span class="number">3</span>),</span><br><span class="line">(<span class="string">&quot;deagu&quot;</span>, <span class="number">5</span>),</span><br><span class="line">(<span class="string">&quot;seoul&quot;</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h2><ul>
+<li><p>두 테이블 사이에 공통된 값이 없는 row는 출력하지 않는다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>world 데이터베이스에서 도시이름과 국가이름을 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">JOIN</span> country</span><br><span class="line"><span class="keyword">ON</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아래와 같이 사용할수도 있다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city, country</span><br><span class="line"><span class="keyword">WHERE</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="LEFT-JOIN"><a href="#LEFT-JOIN" class="headerlink" title="LEFT JOIN"></a>LEFT JOIN</h2><ul>
+<li><p>왼쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="RIGHT-JOIN"><a href="#RIGHT-JOIN" class="headerlink" title="RIGHT JOIN"></a>RIGHT JOIN</h2><ul>
+<li><p>오른쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="JOIN과-DISDINCT의-사용"><a href="#JOIN과-DISDINCT의-사용" class="headerlink" title="JOIN과 DISDINCT의 사용"></a>JOIN과 DISDINCT의 사용</h3><ul>
+<li><p>지역과 대륙별 사용하는 언어 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>대륙과 지역별 사용하는 언어의 수 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sub1.region, sub1.continent, <span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="keyword">count</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br><span class="line">) <span class="keyword">AS</span> sub1</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> sub1.region, sub1.continent</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="테이블-세개-조인하기"><a href="#테이블-세개-조인하기" class="headerlink" title="테이블 세개 조인하기"></a>테이블 세개 조인하기</h3><ul>
+<li>국가별, 도시별, 언어의 사용율  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> city</span><br><span class="line"><span class="keyword">ON</span> country.code = city.countrycode</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> country.code = countrylanguage.countrycode</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country, city, countrylanguage</span><br><span class="line"><span class="keyword">WHERE</span> country.code = city.countrycode <span class="keyword">and</span> country.code = countrylanguage.countrycode</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h1><blockquote>
+<p>UNION은 SELECT 문의 결과 데이터를 하나로 합쳐서 출력합니다. </p>
+</blockquote>
+<blockquote>
+<p>컬럼의 갯수와 타입, 순서가 같아야 합니다.</p>
+</blockquote>
+<blockquote>
+<p>UNION은 자동으로 distinct를 하여 중복을 제거해 줍니다. </p>
+</blockquote>
+<blockquote>
+<p>중복제거를 안하고 컬럼 데이터를 합치고 싶으면 UNION ALL을 사용합니다.</p>
+</blockquote>
+<blockquote>
+<p>또한 UNION을 이용하면 Full Outer Join을 구현할수 있습니다.</p>
+</blockquote>
+<ul>
+<li><p>UNION</p>
+<ul>
+<li>user 테이블의 name 컬럼과 addr 테이블의 addr 컬럼의 데이터를 하나로 함쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>UNION ALL</p>
+<ul>
+<li>중복데이터를 제거하지 않고 결과 데이터 합쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>FULL OUTER JOIN</p>
+<ul>
+<li>union을 이용하여 full outer join 구현  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-JOIN-UNION/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Function/"
+                            aria-label=": DATABASE-Function"
+                        >
+                            DATABASE-Function
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:05:50+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><ul>
+<li><p>CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.</p>
+<ul>
+<li><p>CEIL</p>
+<p>  CEIL는 실수 데이터를 올림 할 때 사용합니다.</p>
+</li>
+<li><p>12.345를 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CEIL</span>(<span class="number">12.345</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">CEIL</span>(Percentage)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ROUND</p>
+<p>  ROUND는 실수데이터를 반올림 할 때 사용합니다.</p>
+<ul>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 반올림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 반올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>TRUNCATE</p>
+<p>  TRUNCATE는 실수 데이터를 버림 할 때 사용합니다.</p>
+<ul>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 버림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRUNCATE</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 버림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>),</span><br><span class="line"><span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>DATE_FORMAT</p>
+<p>  DATE_FORMAT은 날짜 데이터에 대한 포멧을 바꿔줍니다.</p>
+<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html</a></p>
+<ul>
+<li>sakila 데이터 베이스에서 월별 총 수입  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATE_FORMAT</span>(payment_date, <span class="string">&quot;%Y-%m&quot;</span>) <span class="keyword">AS</span> monthly, <span class="keyword">SUM</span>(amount) <span class="keyword">AS</span> amount</span><br><span class="line"><span class="keyword">FROM</span> payment</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> monthly</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="조건문-IF-IFNULL-CASE"><a href="#조건문-IF-IFNULL-CASE" class="headerlink" title="조건문 IF, IFNULL, CASE"></a>조건문 IF, IFNULL, CASE</h2><ul>
+<li><p>SQL에서도 다른 언어에서 처럼 조건문 사용이 가능합니다. IF, CASE 에 대해서 설명합니다.</p>
+</li>
+<li><p>IF(조건, 참, 거짓)</p>
+</li>
+</ul>
+<pre><code>- 도시의 인구가 100만이 넘으면 &quot;big city&quot; 그렇지 않으면 &quot;small city&quot;를 출력하는 city_scale 컬럼을 추가
+    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;, population, &lt;span class=&quot;keyword&quot;&gt;IF&lt;/span&gt;(population &amp;gt; &lt;span class=&quot;number&quot;&gt;1000000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;big city&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;small city&amp;quot;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; city_scale&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; city&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+<ul>
+<li><p>IFNULL(참, 거짓)</p>
+<ul>
+<li>독립년도가 없는 데이터는 0으로 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IndepYear, <span class="keyword">IFNULL</span>(IndepYear, <span class="number">0</span>) <span class="keyword">as</span> IndepYear</span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>CASE</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CASE </span><br><span class="line">WHEN (조건1) THEN (출력1)</span><br><span class="line">WHEN (조건2) THEN (출력2)</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> (컬럼명)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>나라별로 인구가 10억 이상, 1억 이상, 1억 이하인 컬럼을 추가하여 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, population,</span><br><span class="line"><span class="keyword">CASE</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">1000000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 1 bilion&quot;</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">100000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 100 milion&quot;</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">&quot;below 100 milion&quot;</span></span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> <span class="keyword">result</span></span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Function/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
+                            aria-label=": DATABASE-DML-INSERT UPDATE DELETE"
+                        >
+                            DATABASE-DML-INSERT UPDATE DELETE
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:00:15+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><ul>
+<li><p>테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)</span><br><span class="line"><span class="keyword">VALUES</span>(&lt;value_1&gt;, &lt;value_2&gt;, ...)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test 데이터 베이스 선택</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE test;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>user1 테이블에 user_id, name, email, age, rdate를 입력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user1(user_id, <span class="keyword">name</span>, email, age, rdate)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;pdj@gmail.com&quot;</span>, <span class="number">30</span>, <span class="keyword">now</span>()),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&quot;peter&quot;</span>, <span class="string">&quot;peter@daum.net&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2017-02-20&#x27;</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">&quot;alice&quot;</span>, <span class="string">&quot;alice@naver.com&quot;</span>, <span class="number">23</span>, <span class="string">&#x27;2018-01-05&#x27;</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">&quot;po&quot;</span>, <span class="string">&quot;po@gmail.com&quot;</span>, <span class="number">43</span>, <span class="string">&#x27;2002-09-16&#x27;</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">&quot;andy&quot;</span>, <span class="string">&quot;andy@gmail.com&quot;</span>, <span class="number">17</span>, <span class="string">&#x27;2016-04-28&#x27;</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;jin1224@gmail.com&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2013-09-02&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>city_2 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city_2 (</span><br><span class="line">    <span class="keyword">Name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    CountryCode <span class="built_in">CHAR</span>(<span class="number">3</span>),</span><br><span class="line">    District <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    Population <span class="built_in">INT</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>select 절에서 나온 결과데이터를 Insert</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> city_2</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span>, CountryCode, District, Population</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">WHERE</span> Population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h1><ul>
+<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">SET</span> &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>jin 이름을 가지고 있는 사람의 나이를 20, 이메일을 <a href="mailto:&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;">&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;</a>으로 변경  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; UPDATE user1</span><br><span class="line"><span class="keyword">SET</span> age=<span class="number">20</span>, email=<span class="string">&quot;pdj@daum.net&quot;</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">&quot;jin&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="DELETE-DROP-TRUNCATE"><a href="#DELETE-DROP-TRUNCATE" class="headerlink" title="DELETE, DROP, TRUNCATE"></a>DELETE, DROP, TRUNCATE</h1><ul>
+<li>조건을 설정하여 데이터를 삭제할수 있습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>2016-01-01 이전 데이터 삭제 (DML)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DELETE FROM user1</span><br><span class="line">WHERE rdate &lt; &quot;2016-01-01&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 구조를 남기고 모든 데이터를 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; TRUNCATE FROM user1</span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 전체를 모두 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DROP FROM user1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DATA-TYPE/"
+                            aria-label=": DATABASE-DATA TYPE"
+                        >
+                            DATABASE-DATA TYPE
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T18:56:21+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="DATA-TYPE"><a href="#DATA-TYPE" class="headerlink" title="DATA TYPE"></a>DATA TYPE</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 데이터 타입을 가집니다.</p>
+<p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/data-types.html">https://dev.mysql.com/doc/refman/5.7/en/data-types.html</a></p>
+<h2 id="Numberic"><a href="#Numberic" class="headerlink" title="Numberic"></a>Numberic</h2><p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/numeric-types.html">https://dev.mysql.com/doc/refman/5.7/en/numeric-types.html</a></p>
+<ul>
+<li><p>정수 타입 ( integer types )</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97161412-20b82c80-17c1-11eb-9632-c4615066adee.png" alt="스크린샷 2020-10-26 오후 7 05 55"></p>
+</li>
+<li><p>실수 (floating-point types)</p>
+<p>  소수점을 나타내기 위한 데이터 타입으로 아래의 두가지 데이터 타입이 있습니다. </p>
+<p>  두가지의 데이터 타입은 데이터 저장공간의 차이가 있습니다.</p>
+<p>  FLOAT (4byte), DOUBLE (8byte)</p>
+<p>  또한 아래와 같이 고정 소수점 타입으로도 사용이 가능합니다.</p>
+<p>  FLOAT(M,D), DOUBLE(M,D)</p>
+</li>
+</ul>
+<h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html</a></p>
+<ul>
+<li><p>DATE</p>
+<p>  DATE는 날짜를 저장하는 데이터 타입이며, 기본 포멧은 “년-월-일” 입니다.</p>
+</li>
+<li><p>DATETIME</p>
+<p>  DATETIME은 날짜와 시간을 저장하는 데이터 타입이며, 기본 포멧은 “년-월-일 시:분:초” 입니다.</p>
+</li>
+<li><p>TIMESTAME</p>
+<p>  TIMESTAME는 날짜와 시간을 저장하는 데이터 타입이며, </p>
+<p>  DATETIME과 다른점은 날짜를 입력하지 않으면 현재 날짜와 시간을 자동으로 저장할수 있는 특징이 있습니다.</p>
+</li>
+<li><p>TIME</p>
+<p>  TIME은 시간을 저장하는 데이터 타입이며, 기본 포멧은 “시:분:초” 입니다.</p>
+</li>
+<li><p>YEAR</p>
+<p>  YEAR는 연도를 저장할수 있는 데이터 타입입니다.</p>
+<p>  YEAR(2)는 2자리의 연도를 저장할수 있으며 YEAR(4)는 4자리의 연도를 저장할수 있습니다.</p>
+</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>reference<br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/string-types.html">https://dev.mysql.com/doc/refman/5.7/en/string-types.html</a></p>
+<ul>
+<li><p>CHAR &amp; VARCHAR</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97161621-6d9c0300-17c1-11eb-97a6-b3f406e9ba71.png" alt="스크린샷 2020-10-26 오후 7 06 06"></p>
+</li>
+</ul>
+<ul>
+<li><p>TEXT</p>
+<p>  CHAR와 VARCHAR는 대체로 크기가 작은 문자열을 저장할때 사용되며 크기가 큰 문자열을 저장할 때는 TEXT를 사용합니다.</p>
+<p>  TEXT의 타입에 따라서 아래와 같이 크기를 가집니다.</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97161349-08e0a880-17c1-11eb-9107-745027320a23.png" alt="스크린샷 2020-10-26 오후 7 06 14"></p>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DATA-TYPE/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DDL/"
+                            aria-label=": DATABASE-DDL"
+                        >
+                            DATABASE-DDL
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T18:34:02+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="CREATE-USE-ALTER-DROP"><a href="#CREATE-USE-ALTER-DROP" class="headerlink" title="CREATE USE ALTER DROP"></a>CREATE USE ALTER DROP</h1><h2 id="USE"><a href="#USE" class="headerlink" title="USE"></a>USE</h2><ul>
+<li><p>test 데이터 베이스 선택</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> <span class="keyword">test</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>현재 데이터 베이스 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATABASE</span>()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="CREATE"><a href="#CREATE" class="headerlink" title="CREATE"></a>CREATE</h2><ul>
+<li><p>데이터 베이스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> &lt;database_name&gt;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test 데이터 베이스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">test</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &lt;table_name&gt; (</span><br><span class="line">    column_name_1 column_data_type_1 column_constraint_1,</span><br><span class="line">    column_name_2 column_data_type_2 column_constraint_2,</span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>제약조건이 없는 user1 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user1(</span><br><span class="line">    user_id <span class="built_in">INT</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">Varchar</span>(<span class="number">20</span>),</span><br><span class="line">    email <span class="built_in">Varchar</span>(<span class="number">30</span>),</span><br><span class="line">    age <span class="built_in">INT</span>(<span class="number">3</span>),</span><br><span class="line">    rdate <span class="built_in">DATE</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>제약조건이 있는 user2 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user2(</span><br><span class="line">    user_id <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">Varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    email <span class="built_in">Varchar</span>(<span class="number">30</span>) <span class="keyword">UNIQUE</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    age <span class="built_in">INT</span>(<span class="number">3</span>) <span class="keyword">DEFAULT</span> <span class="string">&#x27;30&#x27;</span>,</span><br><span class="line">    rdate <span class="built_in">TIMESTAMP</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h2><h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><ul>
+<li><p>사용중인 데이터베이스의 인코딩 방식 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">&quot;character_set_database&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test 데이터 베이스의 문자열 인코딩을 utf8으로 변경</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = <span class="keyword">ascii</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>사용중인 데이터베이스의 인코딩 방식 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">&quot;character_set_database&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><ul>
+<li><p>ALTER를 이용하여 Table의 컬럼을 추가하거나 삭제하거나 수정할수 있습니다.</p>
+</li>
+<li><p>ADD</p>
+<ul>
+<li><p>user2 테이블에 TEXT 데이터 타입을 갖는 tmp 컬럼을 추가</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">ADD</span> tmp <span class="built_in">TEXT</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>MODIFY</p>
+<ul>
+<li><p>user2 테이블에 INT 데이터 타입을 갖는 tmp 컬럼으로 수정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> tmp <span class="built_in">INT</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>DROP</p>
+<ul>
+<li><p>user2 테이블의 tmp 컬럼을 삭제</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">DROP</span> tmp</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DROP"><a href="#DROP" class="headerlink" title="DROP"></a>DROP</h2><ul>
+<li><p>DATABASE</p>
+<ul>
+<li><p>tmp 데이터 베이스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> tmp;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASES</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tmp 데이터 베이스 삭제</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">DATABASE</span> tmp;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASES</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>TABLE</p>
+<ul>
+<li><p>tmp 데이터 베이스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> tmp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tmp 데이터 베이스 선택</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> tmp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tmp 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tmp( <span class="keyword">id</span> <span class="built_in">INT</span> );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tmp 테이블 삭제</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> tmp;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DDL/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/20/DATABASE-DML-SELECT/"
                             aria-label=": DML SELECT"
                         >
                             DML SELECT
@@ -342,7 +971,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/DML/">DML</a>
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
 
 
     
@@ -491,7 +1120,7 @@
                     
                         <p>
                             <a
-                                href="/2020/10/20/DML-SELECT/#post-footer"
+                                href="/2020/10/20/DATABASE-DML-SELECT/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
