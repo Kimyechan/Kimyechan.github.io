@@ -325,6 +325,101 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Constraint/"
+                            aria-label=": DATABASE-Constraint"
+                        >
+                            DATABASE-Constraint
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T19:35:11+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
+<ul>
+<li><p>NOT NULL</p>
+<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+</li>
+<li><p>UNIQUE</p>
+<p>  같은 값을 저장할수 없습니다.</p>
+</li>
+<li><p>PRIMARY KEY</p>
+<ul>
+<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+</li>
+<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
+</li>
+<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li><p>AUTO_INCREMENT</p>
+<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
+</li>
+<li><p>FOREIGN KEY</p>
+<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
+<ul>
+<li><p>테이블 수정으로 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 생성시 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>ON DELETE, ON UPDATE 설정</p>
+<ul>
+<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
+</li>
+<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
+</li>
+<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+</li>
+</ul>
+</li>
+<li><p>DEFAULT</p>
+<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">   income <span class="built_in">int</span>, </span><br><span class="line">   user_id <span class="built_in">int</span>,</span><br><span class="line">   <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">   <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">   );</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Constraint/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-DATA-TYPE/"
                             aria-label=": DATABASE-DATA TYPE"
                         >
@@ -445,40 +540,40 @@
                 <div class="postShorten-content">
                     <h1 id="CREATE-USE-ALTER-DROP"><a href="#CREATE-USE-ALTER-DROP" class="headerlink" title="CREATE USE ALTER DROP"></a>CREATE USE ALTER DROP</h1><h2 id="USE"><a href="#USE" class="headerlink" title="USE"></a>USE</h2><ul>
 <li><p>test 데이터 베이스 선택</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE test;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> <span class="keyword">test</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>현재 데이터 베이스 확인</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DATABASE()</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATABASE</span>()</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h2 id="CREATE"><a href="#CREATE" class="headerlink" title="CREATE"></a>CREATE</h2><ul>
 <li><p>데이터 베이스 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE &lt;database_name&gt;;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> &lt;database_name&gt;;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>test 데이터 베이스 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE test;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">test</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>테이블 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &lt;table_name&gt; (</span><br><span class="line">    column_name_1 column_data_type_1 column_constraint_1,</span><br><span class="line">    column_name_2 column_data_type_2 column_constraint_2,</span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &lt;table_name&gt; (</span><br><span class="line">    column_name_1 column_data_type_1 column_constraint_1,</span><br><span class="line">    column_name_2 column_data_type_2 column_constraint_2,</span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>제약조건이 없는 user1 테이블 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE user1(</span><br><span class="line">    user_id INT,</span><br><span class="line">    name Varchar(20),</span><br><span class="line">    email Varchar(30),</span><br><span class="line">    age INT(3),</span><br><span class="line">    rdate DATE</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user1(</span><br><span class="line">    user_id <span class="built_in">INT</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">Varchar</span>(<span class="number">20</span>),</span><br><span class="line">    email <span class="built_in">Varchar</span>(<span class="number">30</span>),</span><br><span class="line">    age <span class="built_in">INT</span>(<span class="number">3</span>),</span><br><span class="line">    rdate <span class="built_in">DATE</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>제약조건이 있는 user2 테이블 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE user2(</span><br><span class="line">    user_id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">    name Varchar(20) NOT NULL,</span><br><span class="line">    email Varchar(30) UNIQUE NOT NULL,</span><br><span class="line">    age INT(3) DEFAULT &#39;30&#39;,</span><br><span class="line">    rdate TIMESTAMP</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user2(</span><br><span class="line">    user_id <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">Varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    email <span class="built_in">Varchar</span>(<span class="number">30</span>) <span class="keyword">UNIQUE</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    age <span class="built_in">INT</span>(<span class="number">3</span>) <span class="keyword">DEFAULT</span> <span class="string">&#x27;30&#x27;</span>,</span><br><span class="line">    rdate <span class="built_in">TIMESTAMP</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h2 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h2><h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><ul>
 <li><p>사용중인 데이터베이스의 인코딩 방식 확인</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &quot;character_set_database&quot;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">&quot;character_set_database&quot;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>test 데이터 베이스의 문자열 인코딩을 utf8으로 변경</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE world CHARACTER SET &#x3D; ascii</span><br><span class="line">ALTER DATABASE world CHARACTER SET &#x3D; utf8</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = <span class="keyword">ascii</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>사용중인 데이터베이스의 인코딩 방식 확인</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &quot;character_set_database&quot;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">&quot;character_set_database&quot;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -488,21 +583,21 @@
 <li><p>ADD</p>
 <ul>
 <li><p>user2 테이블에 TEXT 데이터 타입을 갖는 tmp 컬럼을 추가</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE user2 ADD tmp TEXT</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">ADD</span> tmp <span class="built_in">TEXT</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>MODIFY</p>
 <ul>
 <li><p>user2 테이블에 INT 데이터 타입을 갖는 tmp 컬럼으로 수정</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE user2 MODIFY COLUMN tmp INT</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> tmp <span class="built_in">INT</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>DROP</p>
 <ul>
 <li><p>user2 테이블의 tmp 컬럼을 삭제</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE user2 DROP tmp</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> user2 <span class="keyword">DROP</span> tmp</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -512,26 +607,26 @@
 <li><p>DATABASE</p>
 <ul>
 <li><p>tmp 데이터 베이스 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE tmp;</span><br><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> tmp;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASES</span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>tmp 데이터 베이스 삭제</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE tmp;</span><br><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">DATABASE</span> tmp;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASES</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>TABLE</p>
 <ul>
 <li><p>tmp 데이터 베이스 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE tmp;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> tmp;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>tmp 데이터 베이스 선택</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE tmp;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> tmp;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>tmp 테이블 생성</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tmp( id INT );</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tmp( <span class="keyword">id</span> <span class="built_in">INT</span> );</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>tmp 테이블 삭제</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE tmp;</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> tmp;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -1088,83 +1183,6 @@
                         <p>
                             <a
                                 href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
-                            aria-label=": 0 만들기"
-                        >
-                            0 만들기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T11:00:54+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 7490 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/7490">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 재귀</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>자연수 N의 범위(3 &lt;= N &lt;= 9)가 한정적이므로 완전 탐색으로 문제 해결</p>
-</li>
-<li><p>수의 리스트와 연산자의 리스트로 분리하여 모든 경우의 수를 해결</p>
-</li>
-<li><p>가능한 모든 경우를 고려하여 연산자 리스트를 만들 때 재귀를 사용</p>
-</li>
-<li><p>파이썬 eval() 함수를 이용하여 문자열 형태의 표현식을 계산한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recursion</span>(<span class="params">array, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) == n:</span><br><span class="line">        operators_list.append(copy.deepcopy(array))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    array.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    resursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    operators_list = []</span><br><span class="line">    n = int(input())</span><br><span class="line">    recursive([], n<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    integers = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> operators <span class="keyword">in</span> operators_list:</span><br><span class="line">        string = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">            string += str(integers[i]) + operators[i]</span><br><span class="line">        string += str(integers[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">if</span> eval(string.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>)) == <span class="number">0</span>:</span><br><span class="line">            print(string)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
