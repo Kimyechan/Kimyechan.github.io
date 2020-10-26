@@ -326,6 +326,384 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": 좌표 정렬하기"
+                        >
+                            좌표 정렬하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-22T21:20:09+09:00">
+	
+		    Oct 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 11650 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11650">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>튜플로 두 개의 데이터를 묶어서 저장</p>
+</li>
+<li><p>파이썬 기본 정렬 알고리즘은 튜플의 인덱스 순서대로 오름차순 정렬한다.</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split)</span><br><span class="line">    arrray.append((x, y))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i[<span class="number">0</span>], i[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/22/%EB%82%98%EC%9D%B4%EC%88%9C-%EC%A0%95%EB%A0%AC/"
+                            aria-label=": 나이순 정렬"
+                        >
+                            나이순 정렬
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-22T21:13:20+09:00">
+	
+		    Oct 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 10814 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10814">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>튜플로 두 개의 데이터를 묶어서 저장</p>
+</li>
+<li><p>sorted 함수로 정렬, lambda로 첫번째 정렬 기준값을 정함</p>
+</li>
+<li><p>튜플로 저장하면 첫번째 정렬 기준값이 동일할 때 다음 값으로 자동 정렬</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    input_data = input().split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    array.append((int(input_data[<span class="number">0</span>])), input_data[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">array = sorted(array, key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i[<span class="number">0</span>], i[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/22/%EB%82%98%EC%9D%B4%EC%88%9C-%EC%A0%95%EB%A0%AC/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/21/%EC%86%8C%ED%8A%B8%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C/"
+                            aria-label=": 소트인사이드"
+                        >
+                            소트인사이드
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-21T17:26:56+09:00">
+	
+		    Oct 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1427 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1427">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>9 에서 0 까지 차례대로 내려가면서 확인</p>
+</li>
+<li><p>각 숫자의 개수를 계산해서 출력</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+<ul>
+<li>선택 정렬  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array = input()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">9</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> array:</span><br><span class="line">        <span class="keyword">if</span> int(j) == i:</span><br><span class="line">            print(i, end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/21/%EC%86%8C%ED%8A%B8%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/21/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": 수 정렬하기"
+                        >
+                            수 정렬하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-21T17:12:47+09:00">
+	
+		    Oct 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2750 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2750">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>선택 정렬로 풀이</p>
+</li>
+<li><p>sort함수로도 해결 가능</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<ul>
+<li><p>선택 정렬</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    min_index = i</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, n):</span><br><span class="line">        <span class="keyword">if</span> array[min_index] &gt; array[j]:</span><br><span class="line">            min_index = j</span><br><span class="line">    array[i], array[min_index] = array[min_index], array[i]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>기본 라이브러리</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array.sort()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/21/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/21/%EC%88%98-%EC%B0%BE%EA%B8%B0/"
+                            aria-label=": 수 찾기"
+                        >
+                            수 찾기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-21T16:00:50+09:00">
+	
+		    Oct 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Hash/">Hash</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 4195 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/4195">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 해시, 배열, 구현</p>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>python에서 dictionary 자료형으로 HASH 구현가능</p>
+</li>
+<li><p>Union Find 알고리즘 이용</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> parent[x] == x:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p = find(parent[x])</span><br><span class="line">        parent[x] = p</span><br><span class="line">        <span class="keyword">return</span> parent[x]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    x = find(x)</span><br><span class="line">    y = find(y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> x != y</span><br><span class="line">        parent[y] = x</span><br><span class="line">        number[x] += number[y]</span><br><span class="line"></span><br><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    parent = dict()</span><br><span class="line">    number = dict()</span><br><span class="line"></span><br><span class="line">    f = int(input())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(f):</span><br><span class="line">        x, y = input().split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> parent:</span><br><span class="line">            parent[x] = x</span><br><span class="line">            number[x] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> y <span class="keyword">not</span> <span class="keyword">in</span> parent:</span><br><span class="line">            parent[y] = y</span><br><span class="line">            number[y] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        union(x, y)</span><br><span class="line"></span><br><span class="line">        print(number[find(x)])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/21/%EC%88%98-%EC%B0%BE%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/21/SHA-256/"
                             aria-label=": SHA-256"
                         >
@@ -691,83 +1069,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%EC%9D%8C%EA%B3%84/"
-                            aria-label=": 음계"
-                        >
-                            음계
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T19:56:02+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2920 :  <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2920">문제 링크</a></p>
-<ul>
-<li><p>문제 유형 : 배열, 구현</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정</p>
-</li>
-<li><p>한 문자라도 내림차순이면 ascending False</p>
-<p> 한 문자라도 오름차순이면 descending False</p>
-</li>
-<li><p>둘 다 False이면 mixed</p>
-</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li>풀이  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = list(map(int, input().split())</span><br><span class="line"></span><br><span class="line">ascending = <span class="literal">True</span></span><br><span class="line">descending = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">8</span>):</span><br><span class="line">  <span class="keyword">if</span> a[i] &gt; a[i<span class="number">-1</span>]:</span><br><span class="line">    descending = <span class="literal">False</span></span><br><span class="line">  <span class="keyword">elif</span> a[i] &lt; a[i<span class="number">-1</span>]:</span><br><span class="line">    ascending = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ascending:</span><br><span class="line">  print(<span class="string">&#x27;ascending&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> descending:</span><br><span class="line">  print(<span class="string">&#x27;descending&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  print(<span class="string">&#x27;mixed)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%EC%9D%8C%EA%B3%84/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -783,7 +1084,18 @@
           </li>
         
         
-        <li class="pagination-number">page 2 of 2</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/categories/Algorithm/page/3/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 2 of 3</li>
     </ul>
 </div>
 
