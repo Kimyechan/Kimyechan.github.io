@@ -326,6 +326,107 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Constraint/"
+                            aria-label=": DATABASE-Constraint"
+                        >
+                            DATABASE-Constraint
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T19:35:11+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
+<ul>
+<li><p>NOT NULL</p>
+<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+</li>
+<li><p>UNIQUE</p>
+<p>  같은 값을 저장할수 없습니다.</p>
+</li>
+<li><p>PRIMARY KEY</p>
+<ul>
+<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+</li>
+<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
+</li>
+<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li><p>AUTO_INCREMENT</p>
+<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
+</li>
+<li><p>FOREIGN KEY</p>
+<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
+<ul>
+<li><p>테이블 수정으로 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 생성시 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>ON DELETE, ON UPDATE 설정</p>
+<ul>
+<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
+</li>
+<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
+</li>
+<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+</li>
+</ul>
+</li>
+<li><p>DEFAULT</p>
+<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">    <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Constraint/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-DATA-TYPE/"
                             aria-label=": DATABASE-DATA TYPE"
                         >
@@ -359,11 +460,25 @@
 <p>  <img src="https://user-images.githubusercontent.com/12459864/97161412-20b82c80-17c1-11eb-9632-c4615066adee.png" alt="스크린샷 2020-10-26 오후 7 05 55"></p>
 </li>
 <li><p>실수 (floating-point types)</p>
-<p>  소수점을 나타내기 위한 데이터 타입으로 아래의 두가지 데이터 타입이 있습니다. </p>
-<p>  두가지의 데이터 타입은 데이터 저장공간의 차이가 있습니다.</p>
-<p>  FLOAT (4byte), DOUBLE (8byte)</p>
-<p>  또한 아래와 같이 고정 소수점 타입으로도 사용이 가능합니다.</p>
-<p>  FLOAT(M,D), DOUBLE(M,D)</p>
+<blockquote>
+<p>소수점을 나타내기 위한 데이터 타입으로 아래의 두가지 데이터 타입이 있습니다. </p>
+</blockquote>
+<blockquote>
+<p>두가지의 데이터 타입은 데이터 저장공간의 차이가 있습니다.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>FLOAT (4byte), DOUBLE (8byte)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>또한 아래와 같이 고정 소수점 타입으로도 사용이 가능합니다.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>FLOAT(M,D), DOUBLE(M,D)</p>
+</blockquote>
+</blockquote>
 </li>
 </ul>
 <h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html</a></p>
@@ -394,9 +509,13 @@
 </ul>
 <ul>
 <li><p>TEXT</p>
-<p>  CHAR와 VARCHAR는 대체로 크기가 작은 문자열을 저장할때 사용되며 크기가 큰 문자열을 저장할 때는 TEXT를 사용합니다.</p>
-<p>  TEXT의 타입에 따라서 아래와 같이 크기를 가집니다.</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/97161349-08e0a880-17c1-11eb-9107-745027320a23.png" alt="스크린샷 2020-10-26 오후 7 06 14"></p>
+<ul>
+<li><p>CHAR와 VARCHAR는 대체로 크기가 작은 문자열을 저장할때 사용되며 크기가 큰 문자열을 저장할 때는 TEXT를 사용합니다.</p>
+</li>
+<li><p>TEXT의 타입에 따라서 아래와 같이 크기를 가집니다.</p>
+<p><img src="https://user-images.githubusercontent.com/12459864/97161349-08e0a880-17c1-11eb-9107-745027320a23.png" alt="스크린샷 2020-10-26 오후 7 06 14"></p>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -489,9 +608,6 @@
 </li>
 <li><p>test 데이터 베이스의 문자열 인코딩을 utf8으로 변경</p>
   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = <span class="keyword">ascii</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> world <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>사용중인 데이터베이스의 인코딩 방식 확인</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">&quot;character_set_database&quot;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
