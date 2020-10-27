@@ -326,6 +326,107 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Constraint/"
+                            aria-label=": DATABASE-Constraint"
+                        >
+                            DATABASE-Constraint
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T19:35:11+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
+<ul>
+<li><p>NOT NULL</p>
+<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+</li>
+<li><p>UNIQUE</p>
+<p>  같은 값을 저장할수 없습니다.</p>
+</li>
+<li><p>PRIMARY KEY</p>
+<ul>
+<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+</li>
+<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
+</li>
+<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li><p>AUTO_INCREMENT</p>
+<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
+</li>
+<li><p>FOREIGN KEY</p>
+<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
+<ul>
+<li><p>테이블 수정으로 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 생성시 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>ON DELETE, ON UPDATE 설정</p>
+<ul>
+<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
+</li>
+<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
+</li>
+<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+</li>
+</ul>
+</li>
+<li><p>DEFAULT</p>
+<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">    <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Constraint/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-DATA-TYPE/"
                             aria-label=": DATABASE-DATA TYPE"
                         >
@@ -1116,83 +1217,6 @@
                         <p>
                             <a
                                 href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
-                            aria-label=": 0 만들기"
-                        >
-                            0 만들기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T11:00:54+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 7490 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/7490">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 재귀</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>자연수 N의 범위(3 &lt;= N &lt;= 9)가 한정적이므로 완전 탐색으로 문제 해결</p>
-</li>
-<li><p>수의 리스트와 연산자의 리스트로 분리하여 모든 경우의 수를 해결</p>
-</li>
-<li><p>가능한 모든 경우를 고려하여 연산자 리스트를 만들 때 재귀를 사용</p>
-</li>
-<li><p>파이썬 eval() 함수를 이용하여 문자열 형태의 표현식을 계산한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recursion</span>(<span class="params">array, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) == n:</span><br><span class="line">        operators_list.append(copy.deepcopy(array))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    array.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    resursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    operators_list = []</span><br><span class="line">    n = int(input())</span><br><span class="line">    recursive([], n<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    integers = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> operators <span class="keyword">in</span> operators_list:</span><br><span class="line">        string = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">            string += str(integers[i]) + operators[i]</span><br><span class="line">        string += str(integers[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">if</span> eval(string.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>)) == <span class="number">0</span>:</span><br><span class="line">            print(string)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
