@@ -326,6 +326,140 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/"
+                            aria-label=": DATABASE-VIEW INDEX TRIGGER"
+                        >
+                            DATABASE-VIEW INDEX TRIGGER
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-27T20:22:15+09:00">
+	
+		    Oct 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="VIEW"><a href="#VIEW" class="headerlink" title="VIEW"></a>VIEW</h1><h2 id="Explain"><a href="#Explain" class="headerlink" title="Explain"></a>Explain</h2><ul>
+<li><p>가상 테이블로 일부분만 데이터로 보고자 할때 사용합니다. </p>
+</li>
+<li><p>실제 데이터를 저장하고 있지는 않습니다. </p>
+</li>
+<li><p>한마디로 특정 컬럼의 데이터를 보여주는 역할만 합니다. </p>
+</li>
+<li><p>뷰를 사용함으로 쿼리를 더 단순하게 만들수 있습니다. </p>
+</li>
+<li><p>한번 생성된 뷰는 수정이 불가능 하며 인덱스설정이 불가능 합니다.</p>
+</li>
+</ul>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> &lt;뷰이름&gt; <span class="keyword">AS</span> (<span class="keyword">QUERY</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><ul>
+<li><p>국가코드와 국가이름이 있는 뷰 </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> code_name <span class="keyword">AS</span></span><br><span class="line"><span class="keyword">SELECT</span> code, <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>city 테이블에 국가 이름 추가</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">JOIN</span> code_name</span><br><span class="line"><span class="keyword">ON</span> city.countrycode = code_name.code</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h1 id="INDEX"><a href="#INDEX" class="headerlink" title="INDEX"></a>INDEX</h1><h2 id="Explain-1"><a href="#Explain-1" class="headerlink" title="Explain"></a>Explain</h2><ul>
+<li><p>정의 : 테이블에서 데이터를 검색할때 빠르게 찾을수 있도록 해주는 기능입니다.</p>
+</li>
+<li><p>장점 : 검색속도가 빨라짐</p>
+</li>
+<li><p>단점 : 저장공간을 10% 정도 더 많이 차지 INSERT, DELETE, UPDATE 할때 속도가 느려짐</p>
+</li>
+<li><p>사용법 : SELECT시 WHERE 절에 들어가는 컬럼을 Index로 설정하면 좋다.</p>
+</li>
+<li><p>내부 작동 원리 (B-Tree)</p>
+<ul>
+<li>루트노드와 리프노드의 계층적 구조로 루트노드를 이용하여 리프노드에서의 데이터를 빠르게 찾을수 있는 자료구조 알고리즘.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Syntax-1"><a href="#Syntax-1" class="headerlink" title="Syntax"></a>Syntax</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> &lt;인덱스 이름&gt; <span class="keyword">AS</span> &lt;테이블 이름(필드 이름)&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h2><ul>
+<li><p>employees 데이터 베이스에서 실행</p>
+</li>
+<li><p>실행계획을 확인하여 인덱스를 사용하는지 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPLAIN</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> salaries</span><br><span class="line"><span class="keyword">WHERE</span> from_date &lt; <span class="string">&quot;1986-01-01&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPLAIN</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> salaries</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">to_date</span> &lt; <span class="string">&quot;1986-01-01&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>인덱스 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">INDEX</span> <span class="keyword">FROM</span> salaries;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>인덱스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> fdate</span><br><span class="line"><span class="keyword">ON</span> salaries (from_date)</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> tdate</span><br><span class="line"><span class="keyword">ON</span> salaries (<span class="keyword">to_date</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>여러개의 컬럼을 가지는 인덱스 생성도 가능</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> ftdate</span><br><span class="line"><span class="keyword">ON</span> salaries (from_date, <span class="keyword">to_date</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>인덱스 삭제</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">INDEX</span> fdate</span><br><span class="line"><span class="keyword">ON</span> salaries</span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">INDEX</span> tdate</span><br><span class="line"><span class="keyword">ON</span> salaries</span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">INDEX</span> ftdate</span><br><span class="line"><span class="keyword">ON</span> salaries</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>여러개의 컬럼을 조건으로 WHERE절에 사용하는 경우 인덱스 확인</p>
+</li>
+<li><p>인덱스가 하나의 컬럼에 있을때 보다 둘다 있을때가 더 빠름</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPLAIN</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> salaries</span><br><span class="line"><span class="keyword">WHERE</span> from_date &lt; <span class="string">&quot;1986-01-01&quot;</span> <span class="keyword">AND</span> <span class="keyword">to_date</span> &lt; <span class="string">&quot;1986-01-01&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h1 id="TRIGGER"><a href="#TRIGGER" class="headerlink" title="TRIGGER"></a>TRIGGER</h1><blockquote>
+<p>정의 : 특정 테이블을 감시하고 있다가 설정된 조건의 쿼리가 실행되면 미리 지정한 쿼리가 자동으로 실행되도록하는 방법</p>
+</blockquote>
+<h2 id="Syntax-2"><a href="#Syntax-2" class="headerlink" title="Syntax"></a>Syntax</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> &#123;<span class="keyword">trigger</span> <span class="keyword">name</span>&#125;</span><br><span class="line">&#123;<span class="keyword">before</span> | <span class="keyword">after</span>&#125; &#123;<span class="keyword">insert</span> | <span class="keyword">update</span> |<span class="keyword">delete</span>&#125;</span><br><span class="line"><span class="keyword">on</span> &lt;<span class="keyword">table</span> <span class="keyword">name</span>&gt; <span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    &lt;excute <span class="keyword">query</span>&gt;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Example-2"><a href="#Example-2" class="headerlink" title="Example"></a>Example</h2><ul>
+<li><p>database 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> data1 (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    msg <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> data_backup (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    msg <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Trigger 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> <span class="keyword">backup</span></span><br><span class="line"><span class="keyword">before</span> <span class="keyword">delete</span> <span class="keyword">on</span> data1</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span> </span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> data_backup(<span class="keyword">id</span>, msg)</span><br><span class="line">    <span class="keyword">values</span>(old.id, old.msg);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-Constraint/"
                             aria-label=": DATABASE-Constraint"
                         >

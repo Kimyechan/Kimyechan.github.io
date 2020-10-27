@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"VIEWExplain\n가상 테이블로 일부분만 데이터로 보고자 할때 사용합니다. \n\n실제 데이터를 저장하고 있지는 않습니다. \n\n한마디로 특정 컬럼의 데이터를 보여주는 역할만 합니다. \n\n뷰를 사용함으로 쿼리를 더 단순하게 만들수 있습니다. \n\n한번 생성된 뷰는 수정이 불가능 하며 인덱스설정이 불가능 합니다.\n\n\nSyntax1CREATE VIEW &lt;뷰이름&gt; AS (QUERY)\n\nExample\n국가코드와 국가이름이 있는 뷰 \n  123CREATE VIEW code_name ASSELECT code, nameFROM country\n\ncity 테이블에 국가 이름 추가\n  1234SELECT *FROM cityJOIN code_nameON city.countrycode = code_name.code\n\n\n\nINDEXExplain\n정의 : 테이블에서 데이터를 검색할때 빠르게 찾을수 있도록 해주는 기능입니다.\n\n장점 : 검색속도가 빨라짐\n\n단점 : 저장공간을 10% 정도 더 많이 차지 INSERT, DELETE, UPDATE 할때 속도가 느려짐\n\n사용법 : SELECT시 WHERE 절에 들어가는 컬럼을 Index로 설정하면 좋다.\n\n내부 작동 원리 (B-Tree)\n\n루트노드와 리프노드의 계층적 구조로 루트노드를 이용하여 리프노드에서의 데이터를 빠르게 찾을수 있는 자료구조 알고리즘.\n\n\n\nSyntax1CREATE INDEX &lt;인덱스 이름&gt; AS &lt;테이블 이름(필드 이름)&gt;\n\nExample\nemployees 데이터 베이스에서 실행\n\n실행계획을 확인하여 인덱스를 사용하는지 확인\n  123456789EXPLAINSELECT *FROM salariesWHERE from_date &lt; &quot;1986-01-01&quot;EXPLAINSELECT *FROM salariesWHERE to_date &lt; &quot;1986-01-01&quot;\n\n인덱스 확인\n  1SHOW INDEX FROM salaries;\n\n인덱스 생성\n  12345CREATE INDEX fdateON salaries (from_date)CREATE INDEX tdateON salaries (to_date)\n\n여러개의 컬럼을 가지는 인덱스 생성도 가능\n  12CREATE INDEX ftdateON salaries (from_date, to_date)\n\n인덱스 삭제\n  12345678DROP INDEX fdateON salariesDROP INDEX tdateON salariesDROP INDEX ftdateON salaries\n\n여러개의 컬럼을 조건으로 WHERE절에 사용하는 경우 인덱스 확인\n\n인덱스가 하나의 컬럼에 있을때 보다 둘다 있을때가 더 빠름\n  1234EXPLAINSELECT *FROM salariesWHERE from_date &lt; &quot;1986-01-01&quot; AND to_date &lt; &quot;1986-01-01&quot;\n\n\n\nTRIGGER\n정의 : 특정 테이블을 감시하고 있다가 설정된 조건의 쿼리가 실행되면 미리 지정한 쿼리가 자동으로 실행되도록하는 방법\n\nSyntax123456create trigger &#123;trigger name&#125;&#123;before | after&#125; &#123;insert | update |delete&#125;on &lt;table name&gt; for each rowbegin    &lt;excute query&gt;end\n\nExample\ndatabase 생성\n  123456789create table data1 (    id varchar(20),    msg varchar(50) not null);create table data_backup (    id varchar(20),    msg varchar(50) not null);\n\nTrigger 생성\n  1234567create trigger backupbefore delete on data1for each row begin    insert into data_backup(id, msg)    values(old.id, old.msg);end\n\n","dateCreated":"2020-10-27T20:22:15+09:00","dateModified":"2020-10-27T21:11:03+09:00","datePublished":"2020-10-27T20:22:15+09:00","description":"","headline":"DATABASE-VIEW INDEX TRIGGER","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"VIEWExplain\n가상 테이블로 일부분만 데이터로 보고자 할때 사용합니다. \n\n실제 데이터를 저장하고 있지는 않습니다. \n\n한마디로 특정 컬럼의 데이터를 보여주는 역할만 합니다. \n\n뷰를 사용함으로 쿼리를 더 단순하게 만들수 있습니다. \n\n한번 생성된 뷰는 수정이 불가능 하며 인덱스설정이 불가능 합니다.\n\n\nSyntax1CREATE VIEW &lt;뷰이름&gt; AS (QUERY)\n\nExample\n국가코드와 국가이름이 있는 뷰 \n  123CREATE VIEW code_name ASSELECT code, nameFROM country\n\ncity 테이블에 국가 이름 추가\n  1234SELECT *FROM cityJOIN code_nameON city.countrycode = code_name.code\n\n\n\nINDEXExplain\n정의 : 테이블에서 데이터를 검색할때 빠르게 찾을수 있도록 해주는 기능입니다.\n\n장점 : 검색속도가 빨라짐\n\n단점 : 저장공간을 10% 정도 더 많이 차지 INSERT, DELETE, UPDATE 할때 속도가 느려짐\n\n사용법 : SELECT시 WHERE 절에 들어가는 컬럼을 Index로 설정하면 좋다.\n\n내부 작동 원리 (B-Tree)\n\n루트노드와 리프노드의 계층적 구조로 루트노드를 이용하여 리프노드에서의 데이터를 빠르게 찾을수 있는 자료구조 알고리즘.\n\n\n\nSyntax1CREATE INDEX &lt;인덱스 이름&gt; AS &lt;테이블 이름(필드 이름)&gt;\n\nExample\nemployees 데이터 베이스에서 실행\n\n실행계획을 확인하여 인덱스를 사용하는지 확인\n  123456789EXPLAINSELECT *FROM salariesWHERE from_date &lt; &quot;1986-01-01&quot;EXPLAINSELECT *FROM salariesWHERE to_date &lt; &quot;1986-01-01&quot;\n\n인덱스 확인\n  1SHOW INDEX FROM salaries;\n\n인덱스 생성\n  12345CREATE INDEX fdateON salaries (from_date)CREATE INDEX tdateON salaries (to_date)\n\n여러개의 컬럼을 가지는 인덱스 생성도 가능\n  12CREATE INDEX ftdateON salaries (from_date, to_date)\n\n인덱스 삭제\n  12345678DROP INDEX fdateON salariesDROP INDEX tdateON salariesDROP INDEX ftdateON salaries\n\n여러개의 컬럼을 조건으로 WHERE절에 사용하는 경우 인덱스 확인\n\n인덱스가 하나의 컬럼에 있을때 보다 둘다 있을때가 더 빠름\n  1234EXPLAINSELECT *FROM salariesWHERE from_date &lt; &quot;1986-01-01&quot; AND to_date &lt; &quot;1986-01-01&quot;\n\n\n\nTRIGGER\n정의 : 특정 테이블을 감시하고 있다가 설정된 조건의 쿼리가 실행되면 미리 지정한 쿼리가 자동으로 실행되도록하는 방법\n\nSyntax123456create trigger &#123;trigger name&#125;&#123;before | after&#125; &#123;insert | update |delete&#125;on &lt;table name&gt; for each rowbegin    &lt;excute query&gt;end\n\nExample\ndatabase 생성\n  123456789create table data1 (    id varchar(20),    msg varchar(50) not null);create table data_backup (    id varchar(20),    msg varchar(50) not null);\n\nTrigger 생성\n  1234567create trigger backupbefore delete on data1for each row begin    insert into data_backup(id, msg)    values(old.id, old.msg);end\n\n","dateCreated":"2020-10-27T20:22:15+09:00","dateModified":"2020-10-27T21:32:27+09:00","datePublished":"2020-10-27T20:22:15+09:00","description":"","headline":"DATABASE-VIEW INDEX TRIGGER","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/27/DATABASE-VIEW-INDEX-TRIGGER/","keywords":"DATABASE, DDL"}</script>
     <meta name="description" content="VIEWExplain 가상 테이블로 일부분만 데이터로 보고자 할때 사용합니다.   실제 데이터를 저장하고 있지는 않습니다.   한마디로 특정 컬럼의 데이터를 보여주는 역할만 합니다.   뷰를 사용함으로 쿼리를 더 단순하게 만들수 있습니다.   한번 생성된 뷰는 수정이 불가능 하며 인덱스설정이 불가능 합니다.   Syntax1CREATE VIEW &lt;뷰이">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="DATABASE-VIEW INDEX TRIGGER">
@@ -20,8 +20,10 @@
 <meta property="og:description" content="VIEWExplain 가상 테이블로 일부분만 데이터로 보고자 할때 사용합니다.   실제 데이터를 저장하고 있지는 않습니다.   한마디로 특정 컬럼의 데이터를 보여주는 역할만 합니다.   뷰를 사용함으로 쿼리를 더 단순하게 만들수 있습니다.   한번 생성된 뷰는 수정이 불가능 하며 인덱스설정이 불가능 합니다.   Syntax1CREATE VIEW &lt;뷰이">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-27T11:22:15.000Z">
-<meta property="article:modified_time" content="2020-10-27T12:11:03.889Z">
+<meta property="article:modified_time" content="2020-10-27T12:32:27.909Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="DATABASE">
+<meta property="article:tag" content="DDL">
 <meta name="twitter:card" content="summary">
     
     
@@ -338,6 +340,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DDL/">DDL</a>
+
+
+    
 </div>
 
     
@@ -431,17 +439,27 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DATABASE/" rel="tag">DATABASE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/DDL/" rel="tag">DDL</a>
+
+            </div>
+        
         
             <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                    data-tooltip="Algorithm-카드 정렬하기"
+                    aria-label="PREVIOUS: Algorithm-카드 정렬하기"
+                >
+                    
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -563,11 +581,14 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                    data-tooltip="Algorithm-카드 정렬하기"
+                    aria-label="PREVIOUS: Algorithm-카드 정렬하기"
+                >
+                    
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>

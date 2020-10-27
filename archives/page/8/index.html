@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Tag: Heap - Java Server Developer</title>
+    <title>Archives - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
@@ -14,7 +14,7 @@
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
 <meta property="og:title" content="Java Server Developer">
-<meta property="og:url" content="https://kimyechan.github.io/tags/Heap/index.html">
+<meta property="og:url" content="https://kimyechan.github.io/archives/page/8/index.html">
 <meta property="og:site_name" content="Java Server Developer">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
@@ -326,54 +326,38 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                            aria-label=": Algorithm-카드 정렬하기"
+                            href="/2020/08/07/hello-world/"
+                            aria-label=": Hello World"
                         >
-                            Algorithm-카드 정렬하기
+                            Hello World
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-10-27T21:31:51+09:00">
+    <time datetime="2020-08-07T16:12:20+09:00">
 	
-		    Oct 27, 2020
+		    Aug 07, 2020
     	
     </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
     
 </div>
 
             </div>
             
                 <div class="postShorten-content">
-                    <p>백준 1715 : <a href="acmicpc.net/problem/1715">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-<li>힙</li>
-<li>그리디</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>가장 작은 숫자의 카드 묶음을 먼저 합쳤을 때 최소값</li>
-<li>heap을 사용해서 작은 값 두개를 pop한다</li>
-<li>추출한 두 개의 값을 합해서 결과에 더한다</li>
-<li>합한 값을 다시 heap에 push한다</li>
-<li>heap에 값이 한 개 남았을 때 종료한다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">heap = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(input())</span><br><span class="line">    heaq.heappush(heapq, data)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> len(heap) != <span class="number">1</span>:</span><br><span class="line">    one = heapq.heappop(heap)</span><br><span class="line">    two = heapq.heappop(heap)</span><br><span class="line">    sum_value = one + two</span><br><span class="line">    result += sum_value</span><br><span class="line">    heapq.heappush(heap, sum_value)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+                    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
                     
                         
@@ -383,7 +367,7 @@
                     
                         <p>
                             <a
-                                href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                href="/2020/08/07/hello-world/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
@@ -400,12 +384,24 @@
     <div class="pagination-bar">
     <ul class="pagination">
         
+          <li class="pagination-prev">
+            <a
+                class="btn btn--default btn--small"
+                href="/archives/page/7/"
+                aria-label="NEWER POSTS"
+            >
+              <i class="fa fa-angle-left text-base icon-mr"></i>
+              <span>NEWER POSTS</span>
+            </a>
+          </li>
         
-        <li class="pagination-number">page 1 of 1</li>
+        
+        <li class="pagination-number">page 8 of 8</li>
     </ul>
 </div>
 
 </section>
+
 
 
                 <footer id="footer" class="main-content-wrap">
