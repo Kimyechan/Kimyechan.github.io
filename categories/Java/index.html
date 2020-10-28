@@ -326,6 +326,279 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/28/Java-Advanced10-Multi-Thread/"
+                            aria-label=": Java-Advanced10-Multi Thread"
+                        >
+                            Java-Advanced10-Multi Thread
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-28T19:23:05+09:00">
+	
+		    Oct 28, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Multi-Thread-Programming"><a href="#Multi-Thread-Programming" class="headerlink" title="Multi-Thread Programming"></a>Multi-Thread Programming</h1><h2 id="Process-and-Thread"><a href="#Process-and-Thread" class="headerlink" title="Process and Thread"></a>Process and Thread</h2><ul>
+<li>Process: OS로부터 메모리를 할당받아 실행중인 프로그램</li>
+<li>Thread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.</li>
+</ul>
+<h2 id="멀티스레드-프로그래밍의-장단점"><a href="#멀티스레드-프로그래밍의-장단점" class="headerlink" title="멀티스레드 프로그래밍의 장단점"></a>멀티스레드 프로그래밍의 장단점</h2><ul>
+<li>장점<ul>
+<li>여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상</li>
+<li>시간이 걸리는 동작을 분리하여 프로그램의 응답성 향상</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>Context Switching 오버헤드 발생</li>
+<li>스레드 제어의 어려움</li>
+</ul>
+</li>
+</ul>
+<h2 id="스레드-구현"><a href="#스레드-구현" class="headerlink" title="스레드 구현"></a>스레드 구현</h2><ul>
+<li><p>스레드 생성 방법</p>
+<ol>
+<li><p>익명함수</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread threadOne = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello Thread!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>람다식</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread threadTwo = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Hello Again, Thread!&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Thread Class 상속</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello Again Again, Thread!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Thread threadThree = <span class="keyword">new</span> MyThread();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>스레드 실행</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Thread threadOne = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Thread threadTwo = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">threadOne.start();</span><br><span class="line">threadTwo.start();</span><br><span class="line">System.out.println(<span class="string">&quot;Done!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><code>Thread 객체는 일회성이기 때문에 여러 번 start()메소드를 호출 할 수 없다</code></p>
+<br>
+
+</li>
+</ul>
+<h2 id="스레드의-상태-및-제어"><a href="#스레드의-상태-및-제어" class="headerlink" title="스레드의 상태 및 제어"></a>스레드의 상태 및 제어</h2><ul>
+<li><p>스레드의 상태</p>
+<ul>
+<li><p>getState() 메소드로 스레드의 상태를 확인할 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>열거형 상수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NEW</code></td>
+<td><code>start()</code> 메소드가 아직 호출되지 않음</td>
+</tr>
+<tr>
+<td><code>RUNNABLE</code></td>
+<td>JVM에 의해 실행 가능한 상태</td>
+</tr>
+<tr>
+<td><code>BLOCKED</code></td>
+<td>객체가 블락된 상태</td>
+</tr>
+<tr>
+<td><code>WAITING</code></td>
+<td><code>sleep()</code>, <code>wait()</code>, <code>join()</code> 등에 의해 무한히 대기 중인 상태</td>
+</tr>
+<tr>
+<td><code>TIMED_WAITING</code></td>
+<td><code>sleep()</code>, <code>wait()</code>, <code>join()</code> 등에 의해 정해진 시간 동안 대기 중인 상태</td>
+</tr>
+<tr>
+<td><code>TERMINATE</code></td>
+<td><code>run()</code> 메소드가 종료된 상태</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>스레드의 우선순위 제어</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> MIN_PRIORITY = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> NORM_PRIORITY = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX_PRIORITY = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>void setPriority(int newPriority)</code></td>
+<td>새로운 우선순위로 설정한다.</td>
+</tr>
+<tr>
+<td><code>int getPriority()</code></td>
+<td>우선순위를 반환한다.</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>sleep()</code>을 이용한 제어</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Thread.sleep(<span class="number">1000</span>); <span class="comment">// ms</span></span><br><span class="line">Thread.sleep(<span class="number">100</span>, <span class="number">200</span>); <span class="comment">// ms + ns</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>join()</code>을 이용한 스레드 조인</p>
+<ul>
+<li><p>스레드 동작을 동기화하기 위해 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Thread t1 = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">&quot;A&quot;</span>));</span><br><span class="line">Thread t2 = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">&quot;B&quot;</span>));</span><br><span class="line"></span><br><span class="line">t1.start(); <span class="comment">// t1 thread start</span></span><br><span class="line"></span><br><span class="line">t1.join(); <span class="comment">// t1 thread 종료시 까지 다른 thread 대기</span></span><br><span class="line"></span><br><span class="line">t2.start(); <span class="comment">// t2 thread start</span></span><br><span class="line"></span><br><span class="line">t2.join(<span class="number">100</span>); <span class="comment">// 100ms 기다린 후에도 t2가 종료되지 않으면 다른 쓰레드 시작 </span></span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">&quot;C&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>interrupt()</code>를 이용한 대기 중지</p>
+<ul>
+<li>기존 동작을 방해하고 반응을 강제하는 메소드<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Thread tSleep = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Interrupted&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">tSleep.start();</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tSleep.interrupt();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>yield()</code>를 이용한 상태 제어</p>
+<ul>
+<li><code>sleep()</code>과 달리 곧바로 <code>RUNNABLE</code> 상태로 변경</li>
+<li>다른 쓰레드에게 양보하고 바로 실행 대기</li>
+<li>테스트용으로 쓰임 -&gt; 쓰레드의 동작이 명확하지 않음(바로 양보하지 않는다)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;2&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>스레드의 종료</p>
+<ul>
+<li>run() 메소드의 종료</li>
+<li><code>stop()</code> 메소드 호출 (deprecated)</li>
+</ul>
+</li>
+</ul>
+<h2 id="데몬-스레드"><a href="#데몬-스레드" class="headerlink" title="데몬 스레드"></a>데몬 스레드</h2><ul>
+<li><p>정의 : 다른 스레드가 종료될 경우 함께 종료되는 보조 스레드</p>
+</li>
+<li><p>활용법</p>
+<ul>
+<li>보통 대기하며 동작하는 무한 루프로 구현</li>
+<li>일정 시간 마다 동작</li>
+<li>interrupt에 의해서 동작</li>
+</ul>
+</li>
+<li><p><code>setDaemon()</code> 메소드로 데몬 스레드로 설정</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DaemonThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DaemonThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;Daemon Thread Run&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="데이터-공유와-동기화"><a href="#데이터-공유와-동기화" class="headerlink" title="데이터 공유와 동기화"></a>데이터 공유와 동기화</h2><ul>
+<li><p>스레드간 데이터 공유 시 신뢰성에 문제가 발생할 수 있음</p>
+<p>  <code>결과는 1000000이 나오지 않는다 -&gt; count값이 동기화되지 않았기 때문</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Counter counter = <span class="keyword">new</span> Counter();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">1000</span>; j++) &#123;</span><br><span class="line">                    counter.count = counter.count + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(counter.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>synchronized</code> 키워드 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 공유 데이터 사용</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(sharedObj) &#123;</span><br><span class="line">        <span class="comment">// 공유 데이터 사용</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Example</p>
+<ul>
+<li><p>this 객체의 Intrinsic Lock을 이용한 구현</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">increaseCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ++count; <span class="comment">// 읽고, 수정하고, 쓰는 작업</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>메소드에 synchronized 키워드 사용</p>
+<ul>
+<li>synchronized 키워드가 사용된 메소드를 호출하기 위해서는 해당 객체를 소유해야만 호출이 가능. 소유하지 못하면 Blocking<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increaseCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ++count; <span class="comment">// 읽고, 수정하고, 쓰는 작업</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>wait()</code>, <code>notify()</code>, <code>notifyAll()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WorkObject</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;ThreadA의 methodA() 작업 실행&quot;</span>);</span><br><span class="line">          notify(); <span class="comment">// 일시정지 상태에 있는 ThreadB를 실행 대기상태로 만듬 </span></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              wait(); <span class="comment">// ThreadA를 일시 정지 상태로 만듬 </span></span><br><span class="line">          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;ThreadB의 methodB() 작업 실행&quot;</span>);</span><br><span class="line">          notify(); <span class="comment">// 일시정지 상태에 있는 ThreadA를 실행 대기상태로 만듬</span></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              wait(); <span class="comment">// ThreadB를 일시 정지 상태로 만듬</span></span><br><span class="line">          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="keyword">private</span> WorkObject workObject;</span><br><span class="line"></span><br><span class="line">      ThreadA(WorkObject workObject) &#123;</span><br><span class="line">          <span class="keyword">this</span>.workObject = workObject;</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">              workObject.methodA(); <span class="comment">// 공유객체의 methodA를 반복적으로 호출 </span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">      <span class="keyword">private</span> WorkObject workObject;</span><br><span class="line"></span><br><span class="line">      ThreadB(WorkObject workObject) &#123;</span><br><span class="line">          <span class="keyword">this</span>.workObject = workObject;</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">              workObject.methodB(); <span class="comment">// 공유객체의 methodA를 반복적으로 호출 </span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">          WorkObject sharedObject = <span class="keyword">new</span> WorkObject();</span><br><span class="line">          </span><br><span class="line">          ThreadA threadA = <span class="keyword">new</span> ThreadA(sharedObject);</span><br><span class="line">          ThreadB threadB = <span class="keyword">new</span> ThreadB(sharedObject);</span><br><span class="line">          </span><br><span class="line">          threadA.start();</span><br><span class="line">          threadB.start();</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="세마포어"><a href="#세마포어" class="headerlink" title="세마포어"></a>세마포어</h2><ul>
+<li><p>사전적 의미 : 횟대(깃발)</p>
+</li>
+<li><p>n개의 깃발을 놓고, 여러 스레드가 경쟁하도록 하는 sync 기법</p>
+</li>
+<li><p>n = 1이면, BinarySemaphore라고 하며, Lock과 유사하게 동작</p>
+</li>
+<li><p>메소드</p>
+<ul>
+<li>release(int permits) : permits만큼의 자원 개수 반환</li>
+<li>acquire(int permits) : permits만큼의 자원 사용 (Blocking O)</li>
+<li>tryAcquire(long timeout, TimeUnit unit) : unit단위의 timeout이후 자원을 얻지 못하면 false, 얻으면 true (Blocking X)</li>
+<li>acquireUninterruptibly() : 자원을 얻지못해도 interrupt 발생 X</li>
+</ul>
+</li>
+<li><p>Example</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Semaphore sem = <span class="keyword">new</span> Semaphore(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        sem.release(<span class="number">10</span>);</span><br><span class="line">        sem.tryAcquire();</span><br><span class="line">        System.out.println(sem.availablePermits());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123; <span class="comment">// Blocking으로 동작</span></span><br><span class="line">            sem.acquire(<span class="number">12</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sem.acquireUninterruptibly(); <span class="comment">// interrupt에 반응하지 않음</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(sem.tryAcquire(<span class="number">100</span>, TimeUnit.MILLISECONDS)); <span class="comment">// Blocking 하지 않고, 실패하면 false</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        sem.release();</span><br><span class="line"></span><br><span class="line">        System.out.println(sem.availablePermits());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Dining Philosopher (식사하는 철학자)</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Philosopher</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Fork left;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Fork right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Philosopher</span><span class="params">(<span class="keyword">int</span> id, Fork left, Fork right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.left = left;</span><br><span class="line">        <span class="keyword">this</span>.right = right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                left.acquire();</span><br><span class="line">                System.out.println(id + <span class="string">&quot;: left taken&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(!right.tryAcquire(<span class="number">1000</span>, TimeUnit.MILLISECONDS))&#123;</span><br><span class="line">                    left.release();</span><br><span class="line">                    Thread.yield();</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(id + <span class="string">&quot;: right taken&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">                System.out.println(id + <span class="string">&quot;is eating&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            left.release();</span><br><span class="line">            right.release();</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fork</span> <span class="keyword">extends</span> <span class="title">Semaphore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fork</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Philosopher[] phils = <span class="keyword">new</span> Philosopher[<span class="number">5</span>];</span><br><span class="line">        Fork[] forks = <span class="keyword">new</span> Fork[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            forks[i] = <span class="keyword">new</span> Fork();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            phils[i] = <span class="keyword">new</span> Philosopher(i, forks[i], forks[(i+<span class="number">1</span>) % <span class="number">5</span>]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        phils[<span class="number">4</span>] = <span class="keyword">new</span> Philosopher(<span class="number">4</span>, forks[<span class="number">0</span>], forks[<span class="number">4</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">            phils[i].start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="JCF와-Thread"><a href="#JCF와-Thread" class="headerlink" title="JCF와 Thread"></a>JCF와 Thread</h1><ul>
+<li><p>Vector VS List</p>
+<ul>
+<li>List   <ul>
+<li>메소드들이 Synchronized 되지 않음</li>
+<li>속도는 빠르다.</li>
+</ul>
+</li>
+<li>Vector <ul>
+<li>메소드들이 Synchronized 되어 있음</li>
+<li>속도는 느리다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>List를 Synchronized 되게 하는 방법</p>
+<ul>
+<li>Collections의 synchronizedList() 사용  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/28/Java-Advanced10-Multi-Thread/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/13/Java-SWEngineering01-DesignPattern/"
                             aria-label=": Java-SWEngineering01-DesignPattern"
                         >
@@ -3131,113 +3404,6 @@
                         <p>
                             <a
                                 href="/2020/08/14/Java-Advanced01-ExceptionHanding/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/14/OOP-Advanced05-ClassDiagram/"
-                            aria-label=": OOP-Advanced06-ClassDiagram"
-                        >
-                            OOP-Advanced06-ClassDiagram
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-14T19:31:33+09:00">
-	
-		    Aug 14, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="클래스-다이어그램"><a href="#클래스-다이어그램" class="headerlink" title="클래스 다이어그램"></a>클래스 다이어그램</h1><h2 id="Class-Diagram"><a href="#Class-Diagram" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
-<li>클래스의 구성요소 및 클래스 간의 관계를 묘사하는 다이어그램</li>
-<li>시간에 따라 변하지 않는 정적인 시스템 구조를 표현</li>
-</ul>
-<h2 id="클래스-다이어그램의-목적"><a href="#클래스-다이어그램의-목적" class="headerlink" title="클래스 다이어그램의 목적"></a>클래스 다이어그램의 목적</h2><ul>
-<li>문제 해결을 위한 도메인 구조를 표현</li>
-</ul>
-<h2 id="Unified-Modeling-Language-UML"><a href="#Unified-Modeling-Language-UML" class="headerlink" title="Unified Modeling Language (UML)"></a>Unified Modeling Language (UML)</h2><ul>
-<li>표준화된 모델링 표기 체계</li>
-<li>클래스를 구현하기 전에 설계하는 단계에서 사용<ul>
-<li>클래스 이름, 파라미터, 리턴 타입 등</li>
-</ul>
-</li>
-</ul>
-<h2 id="IDEA에서-UML-작성하기-Plant-UML"><a href="#IDEA에서-UML-작성하기-Plant-UML" class="headerlink" title="IDEA에서 UML 작성하기 (Plant UML)"></a>IDEA에서 UML 작성하기 (Plant UML)</h2><ul>
-<li><p>Plant UML 플러그인 설치</p>
-</li>
-<li><p>Graphviz 설치 <a target="_blank" rel="noopener" href="https://graphviz.org/download/">https://graphviz.org/download/</a></p>
-</li>
-<li><p>Plant UML의 문법</p>
-<ul>
-<li><p>클래스, 추상클래스, 인터페이스</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface IFoo &#123;</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract class Bar</span><br><span class="line"></span><br><span class="line">class Foo &#123;</span><br><span class="line">    int [] array;</span><br><span class="line">    int add(int x, int y);</span><br><span class="line">    setArray(int [] array);</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>가시성 (Visibility)</p>
-<ul>
-<li>public : +</li>
-<li>protected : #</li>
-<li>default : ~</li>
-<li>private : -</li>
-</ul>
-</li>
-<li><p>클래스 간의 관계</p>
-<ul>
-<li>Extension <code>&lt;|-</code></li>
-<li>Aggregation <code>o--</code></li>
-<li>Composition <code>*--</code></li>
-</ul>
-</li>
-<li><p>타이틀</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title 클래스 다이어그램 제목</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>노트</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">note left of Foo</span><br><span class="line">  노트 &lt;b&gt;내용&lt;&#x2F;b&gt; 작성</span><br><span class="line">end note</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="IDEA에서-UML-자동-생성"><a href="#IDEA에서-UML-자동-생성" class="headerlink" title="IDEA에서 UML 자동 생성"></a>IDEA에서 UML 자동 생성</h2><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/idea/class-diagram.html">https://www.jetbrains.com/help/idea/class-diagram.html</a></p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/14/OOP-Advanced05-ClassDiagram/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

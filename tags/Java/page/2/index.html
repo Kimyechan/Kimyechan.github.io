@@ -326,6 +326,113 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/08/14/OOP-Advanced05-ClassDiagram/"
+                            aria-label=": OOP-Advanced06-ClassDiagram"
+                        >
+                            OOP-Advanced06-ClassDiagram
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-14T19:31:33+09:00">
+	
+		    Aug 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="클래스-다이어그램"><a href="#클래스-다이어그램" class="headerlink" title="클래스 다이어그램"></a>클래스 다이어그램</h1><h2 id="Class-Diagram"><a href="#Class-Diagram" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>클래스의 구성요소 및 클래스 간의 관계를 묘사하는 다이어그램</li>
+<li>시간에 따라 변하지 않는 정적인 시스템 구조를 표현</li>
+</ul>
+<h2 id="클래스-다이어그램의-목적"><a href="#클래스-다이어그램의-목적" class="headerlink" title="클래스 다이어그램의 목적"></a>클래스 다이어그램의 목적</h2><ul>
+<li>문제 해결을 위한 도메인 구조를 표현</li>
+</ul>
+<h2 id="Unified-Modeling-Language-UML"><a href="#Unified-Modeling-Language-UML" class="headerlink" title="Unified Modeling Language (UML)"></a>Unified Modeling Language (UML)</h2><ul>
+<li>표준화된 모델링 표기 체계</li>
+<li>클래스를 구현하기 전에 설계하는 단계에서 사용<ul>
+<li>클래스 이름, 파라미터, 리턴 타입 등</li>
+</ul>
+</li>
+</ul>
+<h2 id="IDEA에서-UML-작성하기-Plant-UML"><a href="#IDEA에서-UML-작성하기-Plant-UML" class="headerlink" title="IDEA에서 UML 작성하기 (Plant UML)"></a>IDEA에서 UML 작성하기 (Plant UML)</h2><ul>
+<li><p>Plant UML 플러그인 설치</p>
+</li>
+<li><p>Graphviz 설치 <a target="_blank" rel="noopener" href="https://graphviz.org/download/">https://graphviz.org/download/</a></p>
+</li>
+<li><p>Plant UML의 문법</p>
+<ul>
+<li><p>클래스, 추상클래스, 인터페이스</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface IFoo &#123;</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract class Bar</span><br><span class="line"></span><br><span class="line">class Foo &#123;</span><br><span class="line">    int [] array;</span><br><span class="line">    int add(int x, int y);</span><br><span class="line">    setArray(int [] array);</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>가시성 (Visibility)</p>
+<ul>
+<li>public : +</li>
+<li>protected : #</li>
+<li>default : ~</li>
+<li>private : -</li>
+</ul>
+</li>
+<li><p>클래스 간의 관계</p>
+<ul>
+<li>Extension <code>&lt;|-</code></li>
+<li>Aggregation <code>o--</code></li>
+<li>Composition <code>*--</code></li>
+</ul>
+</li>
+<li><p>타이틀</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title 클래스 다이어그램 제목</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>노트</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">note left of Foo</span><br><span class="line">  노트 &lt;b&gt;내용&lt;&#x2F;b&gt; 작성</span><br><span class="line">end note</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="IDEA에서-UML-자동-생성"><a href="#IDEA에서-UML-자동-생성" class="headerlink" title="IDEA에서 UML 자동 생성"></a>IDEA에서 UML 자동 생성</h2><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/idea/class-diagram.html">https://www.jetbrains.com/help/idea/class-diagram.html</a></p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/14/OOP-Advanced05-ClassDiagram/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/13/Java-Advanced02-WrapperClass/"
                             aria-label=": Java-Advanced02(WrapperClass)"
                         >
@@ -1249,69 +1356,6 @@
                         <p>
                             <a
                                 href="/2020/08/11/OOP-4-Inheritance/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/11/OOP-3-JavaDoc/"
-                            aria-label=": OOP-3(JavaDoc)"
-                        >
-                            OOP-3(JavaDoc)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-11T20:57:19+09:00">
-	
-		    Aug 11, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP/">OOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="JavaDoc-주석"><a href="#JavaDoc-주석" class="headerlink" title="JavaDoc 주석"></a>JavaDoc 주석</h1><h2 id="JavaDoc-주석이란"><a href="#JavaDoc-주석이란" class="headerlink" title="JavaDoc 주석이란"></a>JavaDoc 주석이란</h2><ul>
-<li>Java 클래스 및 패키지를 문서화 하기 위한 주석</li>
-<li>클래스의 용도와 사용법 등을 설명하는 규칙</li>
-<li>자동으로 JavaDoc 문서를 생성할 수 있음</li>
-</ul>
-<h2 id="JavaDoc-작성-방법"><a href="#JavaDoc-작성-방법" class="headerlink" title="JavaDoc 작성 방법"></a>JavaDoc 작성 방법</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Class description</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Author Name</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for a member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> memberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Comments for another member variable</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> secondMemberVar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructor description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x description for parameter x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y description for parameter y</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.memberVar = x;</span><br><span class="line">        <span class="keyword">this</span>.secondMemberVar = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A member method description</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string description for parameter string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> description for the return value</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ClassA</span><span class="params">(String string)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/11/OOP-3-JavaDoc/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
