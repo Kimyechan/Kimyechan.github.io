@@ -325,6 +325,297 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-02-DataType/"
+                            aria-label=": JavaBasic-02(DataType)"
+                        >
+                            JavaBasic-02(DataType)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:25:44+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="자료형-Data-Type"><a href="#자료형-Data-Type" class="headerlink" title="자료형 (Data Type)"></a>자료형 (Data Type)</h1><h2 id="자료형이란"><a href="#자료형이란" class="headerlink" title="자료형이란"></a>자료형이란</h2><ul>
+<li><p>변수의 종류, 타입</p>
+</li>
+<li><p>기본형 (Primitive Type)</p>
+<ul>
+<li><p>값을 변수에 직접 저장하는 자료형</p>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>자료형</th>
+<th>크기 (byte)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>문자</td>
+<td><code>char</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>정수</td>
+<td><code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code></td>
+<td>1, 2, 4, 8</td>
+</tr>
+<tr>
+<td>실수</td>
+<td><code>float</code>, <code>double</code></td>
+<td>4, 8</td>
+</tr>
+<tr>
+<td>논리</td>
+<td><code>boolean</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>정수형의 값 표현 범위</p>
+<table>
+<thead>
+<tr>
+<th>자료형</th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>byte</code></td>
+<td>-2^7 ~ 2^7 - 1</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>-2^15 ~ 2^15 - 1</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>-2^31 ~ 2^31 - 1</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>-2^63 ~ 2^63 - 1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>실수형의 값 표현 범위</p>
+<table>
+<thead>
+<tr>
+<th>자료형</th>
+<th>범위</th>
+<th>m</th>
+<th>e</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>float</code></td>
+<td>-m * 10^e ~ m * 10^e</td>
+<td>23</td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>-m * 10^e ~ m * 10^e</td>
+<td>52</td>
+<td>11</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>참조형 (Reference Type)</p>
+<ul>
+<li>값을 직접 저장하지 않고, 값이 저장된 주소를 저장<br>ex) <code>Date birthDay = new Date();</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="여러가지-자료형"><a href="#여러가지-자료형" class="headerlink" title="여러가지 자료형"></a>여러가지 자료형</h2><h3 id="정수형"><a href="#정수형" class="headerlink" title="정수형"></a>정수형</h3><ul>
+<li>정수 리터럴<ul>
+<li>진수 표기법<table>
+<thead>
+<tr>
+<th>진수법</th>
+<th>접두어</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10진수(decimal)</td>
+<td>-</td>
+<td><code>32</code></td>
+</tr>
+<tr>
+<td>2진수(binary)</td>
+<td>0b</td>
+<td><code>0b1011</code></td>
+</tr>
+<tr>
+<td>8진수(octal)</td>
+<td>0</td>
+<td><code>0342</code></td>
+</tr>
+<tr>
+<td>16진수(hexadecimal)</td>
+<td>0x</td>
+<td><code>0x4A</code></td>
+</tr>
+</tbody></table>
+</li>
+<li>정수 리터럴은 기본적으로 <code>int</code> 자료형</li>
+<li><code>int</code> 범위를 넘어서는 리터럴의 경우 <code>L</code>을 붙여서 표기<br>ex) <code>long largeValue = 100000000000L;</code></li>
+<li>가독성 향상을 위해 세자리 수 마다 <code>_</code>를 이용해 천단위 표기<br>ex) <code>long largeValue = 100_000_000_000L;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="실수형"><a href="#실수형" class="headerlink" title="실수형"></a>실수형</h3><ul>
+<li>실수 리터럴<ul>
+<li>실수 리터럴은 기본적으로 <code>double</code> 자료형</li>
+<li><code>f</code>를 붙여 <code>float</code> 타입을 표현할 수 있음<br>ex) <code>float value = 14.42f;</code></li>
+<li><code>e</code>를 이용해 지수 표현을 할 수 있음<br>ex) <code>double value = 1.42e3;</code> 1.42 * 10^3 = 1420</li>
+</ul>
+</li>
+</ul>
+<h3 id="문자형"><a href="#문자형" class="headerlink" title="문자형"></a>문자형</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.ascii-code.com/">ASCII 코드</a></p>
+<ul>
+<li>작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨<br>ex) <code>char asciiCharacter = &#39;A&#39;;</code></li>
+<li>ASCII 코드의 특수 문자 입력</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>의미</th>
+<th>표시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tab</td>
+<td><code>\t</code></td>
+</tr>
+<tr>
+<td>backspace</td>
+<td><code>\b</code></td>
+</tr>
+<tr>
+<td>newline</td>
+<td><code>\n</code></td>
+</tr>
+<tr>
+<td>form feed</td>
+<td><code>\f</code></td>
+</tr>
+<tr>
+<td>\</td>
+<td><code>\\</code></td>
+</tr>
+<tr>
+<td>carriage return</td>
+<td><code>\r</code></td>
+</tr>
+<tr>
+<td>‘</td>
+<td><code>\&#39;</code></td>
+</tr>
+<tr>
+<td>“</td>
+<td><code>\&quot;</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://unicode.org/charts/">유니코드 테이블</a></p>
+<ul>
+<li>유니코드는 <code>\u</code> + 16진수로 표현<br>ex) <code>char unicodeCharacter = &#39;\u0041&#39;;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="논리형"><a href="#논리형" class="headerlink" title="논리형"></a>논리형</h3><ul>
+<li><p><code>true</code>, <code>false</code> 두 가지 값만이 허용된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isTrue = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">boolean</span> isFalse = <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="문자열"><a href="#문자열" class="headerlink" title="문자열"></a>문자열</h3><ul>
+<li><p>문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;문자열은 큰따옴표로 묶는다.&quot;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;a&quot;</span> + <span class="string">&quot;b&quot;</span> + <span class="string">&quot;c&quot;</span>;</span><br><span class="line">String s2 = <span class="number">1</span> + <span class="string">&quot;1&quot;</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="형변환-Type-Casting"><a href="#형변환-Type-Casting" class="headerlink" title="형변환 (Type Casting)"></a>형변환 (Type Casting)</h3><h4 id="형변환-연산자"><a href="#형변환-연산자" class="headerlink" title="형변환 연산자"></a>형변환 연산자</h4><ul>
+<li>형변환 연산자는 ()로 변수 앞에 입력한다.<br>ex) <code>int value = (int)10.8;</code> -&gt; value = 10</li>
+</ul>
+<h4 id="업캐스팅-Upcasting"><a href="#업캐스팅-Upcasting" class="headerlink" title="업캐스팅 (Upcasting)"></a>업캐스팅 (Upcasting)</h4><ul>
+<li><p>값의 범위가 더 큰 자료형으로 변환하는 경우</p>
+<ul>
+<li><p>묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = (<span class="keyword">int</span>)x;</span><br><span class="line"><span class="keyword">int</span> z = x;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="다운캐스팅-Downcasting"><a href="#다운캐스팅-Downcasting" class="headerlink" title="다운캐스팅 (Downcasting)"></a>다운캐스팅 (Downcasting)</h4><ul>
+<li><p>값의 범위가 더 작은 자료형으로 변환하는 경우</p>
+<ul>
+<li><p>명시적인 방법으로만 캐스팅 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1024</span>;</span><br><span class="line"><span class="comment">// byte y = x;</span></span><br><span class="line"><span class="keyword">byte</span> z = (<span class="keyword">byte</span>)x;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> x = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">float</span> y = x;</span><br><span class="line"><span class="comment">// long z = y;</span></span><br><span class="line"><span class="keyword">long</span> z = (<span class="keyword">long</span>)y;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-02-DataType/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/10/JavaBasic-01-Variable/"
                             aria-label=": JavaBasic-01(Variable)"
                         >
