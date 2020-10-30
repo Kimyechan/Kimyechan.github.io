@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Multi-Thread ProgrammingProcess and Thread\nProcess: OS로부터 메모리를 할당받아 실행중인 프로그램\nThread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.\n\n멀티스레드 프로그래밍의 장단점\n장점\n여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상\n시간이 걸리는 동작을 분리하여 프로그램의 응답성 향상\n\n\n단점\nContext Switching 오버헤드 발생\n스레드 제어의 어려움\n\n\n\n스레드 구현\n스레드 생성 방법\n\n익명함수\n 12345Thread threadOne = new Thread(new Runnable() &#123;    public void run() &#123;        System.out.println(&quot;Hello Thread!&quot;);    &#125;&#125;);\n람다식\n 123Thread threadTwo = new Thread(() -&gt; &#123;    System.out.println(&quot;Hello Again, Thread!&quot;);&#125;);\n\nThread Class 상속\n 123456class MyThread extends Thread &#123;    public void run() &#123;        System.out.println(&quot;Hello Again Again, Thread!&quot;);    &#125;&#125;Thread threadThree = new MyThread();\n\n\n\n스레드 실행\n123456789101112131415Thread threadOne = new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 10; i++) &#123;        System.out.print(&quot;1&quot;);    &#125;&#125;);Thread threadTwo = new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 10; i++) &#123;        System.out.print(&quot;2&quot;);    &#125;&#125;);threadOne.start();threadTwo.start();System.out.println(&quot;Done!&quot;);\nThread 객체는 일회성이기 때문에 여러 번 start()메소드를 호출 할 수 없다\n\n\n\n\n스레드의 상태 및 제어\n스레드의 상태\n\ngetState() 메소드로 스레드의 상태를 확인할 수 있다.\n\n\n\n열거형 상수\n설명\n\n\n\nNEW\nstart() 메소드가 아직 호출되지 않음\n\n\nRUNNABLE\nJVM에 의해 실행 가능한 상태\n\n\nBLOCKED\n객체가 블락된 상태\n\n\nWAITING\nsleep(), wait(), join() 등에 의해 무한히 대기 중인 상태\n\n\nTIMED_WAITING\nsleep(), wait(), join() 등에 의해 정해진 시간 동안 대기 중인 상태\n\n\nTERMINATE\nrun() 메소드가 종료된 상태\n\n\n\n\n\n스레드의 우선순위 제어\n123public final static int MIN_PRIORITY = 1;public final static int NORM_PRIORITY = 5;public final static int MAX_PRIORITY = 10;\n\n\n\n\n메소드\n설명\n\n\n\nvoid setPriority(int newPriority)\n새로운 우선순위로 설정한다.\n\n\nint getPriority()\n우선순위를 반환한다.\n\n\n\nsleep()을 이용한 제어\n12Thread.sleep(1000); // msThread.sleep(100, 200); // ms + ns\n\njoin()을 이용한 스레드 조인\n\n스레드 동작을 동기화하기 위해 사용\n123456789101112Thread t1 = new Thread(() -&gt; System.out.println(&quot;A&quot;));Thread t2 = new Thread(() -&gt; System.out.println(&quot;B&quot;));t1.start(); // t1 thread startt1.join(); // t1 thread 종료시 까지 다른 thread 대기t2.start(); // t2 thread startt2.join(100); // 100ms 기다린 후에도 t2가 종료되지 않으면 다른 쓰레드 시작 System.out.println(&quot;C&quot;);\n\n\n\ninterrupt()를 이용한 대기 중지\n\n기존 동작을 방해하고 반응을 강제하는 메소드1234567891011121314151617Thread tSleep = new Thread(() -&gt; &#123;    try &#123;        Thread.sleep(1000);    &#125; catch (InterruptedException e) &#123;        System.out.println(&quot;Interrupted&quot;);    &#125;&#125;);tSleep.start();try &#123;    Thread.sleep(500);&#125; catch (InterruptedException e) &#123;    e.printStackTrace();&#125;tSleep.interrupt();\n\n\n\nyield()를 이용한 상태 제어\n\nsleep()과 달리 곧바로 RUNNABLE 상태로 변경\n다른 쓰레드에게 양보하고 바로 실행 대기\n테스트용으로 쓰임 -&gt; 쓰레드의 동작이 명확하지 않음(바로 양보하지 않는다)12345678910111213141516171819new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 20; i++) &#123;        if (i % 2 == 0) &#123;            System.out.print(&quot;1&quot;);        &#125; else &#123;            Thread.yield();        &#125;    &#125;&#125;).start();new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 20; i++) &#123;        if (i % 2 == 0) &#123;            System.out.print(&quot;2&quot;);        &#125; else &#123;            Thread.yield();        &#125;    &#125;&#125;).start();\n\n\n\n스레드의 종료\n\nrun() 메소드의 종료\nstop() 메소드 호출 (deprecated)\n\n\n\n데몬 스레드\n정의 : 다른 스레드가 종료될 경우 함께 종료되는 보조 스레드\n\n활용법\n\n보통 대기하며 동작하는 무한 루프로 구현\n일정 시간 마다 동작\ninterrupt에 의해서 동작\n\n\nsetDaemon() 메소드로 데몬 스레드로 설정\n1234567891011121314151617class DaemonThread extends Thread &#123;    public DaemonThread() &#123;        this.setDaemon(true);    &#125;    @Override    public void run() &#123;        while (true) &#123;            try &#123;                Thread.sleep(1000);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            System.out.println(&quot;Daemon Thread Run&quot;);        &#125;    &#125;&#125;\n\n\n\n데이터 공유와 동기화\n스레드간 데이터 공유 시 신뢰성에 문제가 발생할 수 있음\n  결과는 1000000이 나오지 않는다 -&gt; count값이 동기화되지 않았기 때문\n  123456789101112131415161718192021222324class Counter &#123;        int count = 0;&#125;public class Main &#123;    public static void main(String args[])&#123;        Counter counter = new Counter();        for (int i = 0; i &lt; 1000; i++) &#123;            new Thread(() -&gt; &#123;                for (int j = 0; j &lt; 1000; j++) &#123;                    counter.count = counter.count + 1;                &#125;            &#125;).start();        &#125;        try &#123;            Thread.sleep(1000);        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        System.out.println(counter.count);    &#125;&#125;\n\nsynchronized 키워드 사용\n123synchronized void method() &#123;    // 공유 데이터 사용&#125;\n\n12345void method() &#123;    synchronized(sharedObj) &#123;        // 공유 데이터 사용    &#125;&#125;\n\nExample\n\nthis 객체의 Intrinsic Lock을 이용한 구현\n  123456789101112class Counter &#123;    private int count = 0;    public int increaseCount() &#123;        synchronized (this) &#123;            return ++count; // 읽고, 수정하고, 쓰는 작업        &#125;    &#125;    public int getCount() &#123;        return count;    &#125;&#125;\n\n메소드에 synchronized 키워드 사용\n\nsynchronized 키워드가 사용된 메소드를 호출하기 위해서는 해당 객체를 소유해야만 호출이 가능. 소유하지 못하면 Blocking12345678910class Counter &#123;    private int count = 0;    public synchronized int increaseCount() &#123;        return ++count; // 읽고, 수정하고, 쓰는 작업    &#125;    public int getCount() &#123;        return count;    &#125;&#125;\n\n\n\n\n\n\nwait(), notify(), notifyAll()\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162class WorkObject &#123;      public synchronized void methodA() &#123;          System.out.println(&quot;ThreadA의 methodA() 작업 실행&quot;);          notify(); // 일시정지 상태에 있는 ThreadB를 실행 대기상태로 만듬           try &#123;              wait(); // ThreadA를 일시 정지 상태로 만듬           &#125; catch (InterruptedException e) &#123;              e.printStackTrace();          &#125;      &#125;        public synchronized void methodB() &#123;          System.out.println(&quot;ThreadB의 methodB() 작업 실행&quot;);          notify(); // 일시정지 상태에 있는 ThreadA를 실행 대기상태로 만듬          try &#123;              wait(); // ThreadB를 일시 정지 상태로 만듬          &#125; catch (InterruptedException e) &#123;              e.printStackTrace();          &#125;      &#125;  &#125;    class ThreadA extends Thread &#123;      private WorkObject workObject;      ThreadA(WorkObject workObject) &#123;          this.workObject = workObject;      &#125;            public void run() &#123;          for(int i=0; i&lt;10; i++) &#123;              workObject.methodA(); // 공유객체의 methodA를 반복적으로 호출           &#125;      &#125;  &#125;  class ThreadB extends Thread&#123;      private WorkObject workObject;      ThreadB(WorkObject workObject) &#123;          this.workObject = workObject;      &#125;            public void run() &#123;          for(int i=0; i&lt;10; i++) &#123;              workObject.methodB(); // 공유객체의 methodA를 반복적으로 호출           &#125;      &#125;  &#125;  class Main &#123;      public static void main(String[] args) &#123;          WorkObject sharedObject = new WorkObject();                    ThreadA threadA = new ThreadA(sharedObject);          ThreadB threadB = new ThreadB(sharedObject);                    threadA.start();          threadB.start();      &#125;&#125;\n\n\n\n세마포어\n사전적 의미 : 횟대(깃발)\n\nn개의 깃발을 놓고, 여러 스레드가 경쟁하도록 하는 sync 기법\n\nn = 1이면, BinarySemaphore라고 하며, Lock과 유사하게 동작\n\n메소드\n\nrelease(int permits) : permits만큼의 자원 개수 반환\nacquire(int permits) : permits만큼의 자원 사용 (Blocking O)\ntryAcquire(long timeout, TimeUnit unit) : unit단위의 timeout이후 자원을 얻지 못하면 false, 얻으면 true (Blocking X)\nacquireUninterruptibly() : 자원을 얻지못해도 interrupt 발생 X\n\n\nExample\n  12345678910111213141516171819202122232425public class Main &#123;    public static void main(String[] args) &#123;        Semaphore sem = new Semaphore(1);        sem.release(10);        sem.tryAcquire();        System.out.println(sem.availablePermits());        try &#123; // Blocking으로 동작            sem.acquire(12);        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        sem.acquireUninterruptibly(); // interrupt에 반응하지 않음        try &#123;            System.out.println(sem.tryAcquire(100, TimeUnit.MILLISECONDS)); // Blocking 하지 않고, 실패하면 false        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        sem.release();        System.out.println(sem.availablePermits());    &#125;&#125;  \n\nDining Philosopher (식사하는 철학자)\n  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071class Philosopher extends Thread &#123;    private final int id;    private final Fork left;    private final Fork right;    public Philosopher(int id, Fork left, Fork right) &#123;        this.id = id;        this.left = left;        this.right = right;    &#125;    @Override    public void run() &#123;        while (true) &#123;            try &#123;                left.acquire();                System.out.println(id + &quot;: left taken&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            try &#123;                if(!right.tryAcquire(1000, TimeUnit.MILLISECONDS))&#123;                    left.release();                    Thread.yield();                    continue;                &#125;                System.out.println(id + &quot;: right taken&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            try &#123;                Thread.sleep(2000);                System.out.println(id + &quot;is eating&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            left.release();            right.release();            Thread.yield();        &#125;    &#125;&#125;class Fork extends Semaphore &#123;    public Fork() &#123;        super(1);    &#125;&#125;public class Main &#123;    public static void main(String[] args) &#123;        Philosopher[] phils = new Philosopher[5];        Fork[] forks = new Fork[5];        for (int i = 0; i &lt; 5; i++) &#123;            forks[i] = new Fork();        &#125;        for (int i = 0; i &lt; 5 - 1; i++) &#123;            phils[i] = new Philosopher(i, forks[i], forks[(i+1) % 5]);        &#125;        phils[4] = new Philosopher(4, forks[0], forks[4]);        for (int i = 0; i &lt; 5; i++)&#123;            phils[i].start();        &#125;    &#125;&#125;\n\n\n\nJCF와 Thread\nVector VS List\n\nList   \n메소드들이 Synchronized 되지 않음\n속도는 빠르다.\n\n\nVector \n메소드들이 Synchronized 되어 있음\n속도는 느리다.\n\n\n\n\nList를 Synchronized 되게 하는 방법\n\nCollections의 synchronizedList() 사용  12List&lt;Integer&gt; list1 = new ArrayList&lt;&gt;();List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);\n\n\n\n\n\n","dateCreated":"2020-10-28T19:23:05+09:00","dateModified":"2020-10-28T20:59:39+09:00","datePublished":"2020-10-28T19:23:05+09:00","description":"","headline":"Java-Advanced10-Multi Thread","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/28/Java-Advanced10-Multi-Thread/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/28/Java-Advanced10-Multi-Thread/","keywords":"Java"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Multi-Thread ProgrammingProcess and Thread\nProcess: OS로부터 메모리를 할당받아 실행중인 프로그램\nThread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.\n\n멀티스레드 프로그래밍의 장단점\n장점\n여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상\n시간이 걸리는 동작을 분리하여 프로그램의 응답성 향상\n\n\n단점\nContext Switching 오버헤드 발생\n스레드 제어의 어려움\n\n\n\n스레드 구현\n스레드 생성 방법\n\n익명함수\n 12345Thread threadOne = new Thread(new Runnable() &#123;    public void run() &#123;        System.out.println(&quot;Hello Thread!&quot;);    &#125;&#125;);\n람다식\n 123Thread threadTwo = new Thread(() -&gt; &#123;    System.out.println(&quot;Hello Again, Thread!&quot;);&#125;);\n\nThread Class 상속\n 123456class MyThread extends Thread &#123;    public void run() &#123;        System.out.println(&quot;Hello Again Again, Thread!&quot;);    &#125;&#125;Thread threadThree = new MyThread();\n\n\n\n스레드 실행\n123456789101112131415Thread threadOne = new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 10; i++) &#123;        System.out.print(&quot;1&quot;);    &#125;&#125;);Thread threadTwo = new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 10; i++) &#123;        System.out.print(&quot;2&quot;);    &#125;&#125;);threadOne.start();threadTwo.start();System.out.println(&quot;Done!&quot;);\nThread 객체는 일회성이기 때문에 여러 번 start()메소드를 호출 할 수 없다\n\n\n\n\n스레드의 상태 및 제어\n스레드의 상태\n\ngetState() 메소드로 스레드의 상태를 확인할 수 있다.\n\n\n\n열거형 상수\n설명\n\n\n\nNEW\nstart() 메소드가 아직 호출되지 않음\n\n\nRUNNABLE\nJVM에 의해 실행 가능한 상태\n\n\nBLOCKED\n객체가 블락된 상태\n\n\nWAITING\nsleep(), wait(), join() 등에 의해 무한히 대기 중인 상태\n\n\nTIMED_WAITING\nsleep(), wait(), join() 등에 의해 정해진 시간 동안 대기 중인 상태\n\n\nTERMINATE\nrun() 메소드가 종료된 상태\n\n\n\n\n\n스레드의 우선순위 제어\n123public final static int MIN_PRIORITY = 1;public final static int NORM_PRIORITY = 5;public final static int MAX_PRIORITY = 10;\n\n\n\n\n메소드\n설명\n\n\n\nvoid setPriority(int newPriority)\n새로운 우선순위로 설정한다.\n\n\nint getPriority()\n우선순위를 반환한다.\n\n\n\nsleep()을 이용한 제어\n12Thread.sleep(1000); // msThread.sleep(100, 200); // ms + ns\n\njoin()을 이용한 스레드 조인\n\n스레드 동작을 동기화하기 위해 사용\n123456789101112Thread t1 = new Thread(() -&gt; System.out.println(&quot;A&quot;));Thread t2 = new Thread(() -&gt; System.out.println(&quot;B&quot;));t1.start(); // t1 thread startt1.join(); // t1 thread 종료시 까지 다른 thread 대기t2.start(); // t2 thread startt2.join(100); // 100ms 기다린 후에도 t2가 종료되지 않으면 다른 쓰레드 시작 System.out.println(&quot;C&quot;);\n\n\n\ninterrupt()를 이용한 대기 중지\n\n기존 동작을 방해하고 반응을 강제하는 메소드1234567891011121314151617Thread tSleep = new Thread(() -&gt; &#123;    try &#123;        Thread.sleep(1000);    &#125; catch (InterruptedException e) &#123;        System.out.println(&quot;Interrupted&quot;);    &#125;&#125;);tSleep.start();try &#123;    Thread.sleep(500);&#125; catch (InterruptedException e) &#123;    e.printStackTrace();&#125;tSleep.interrupt();\n\n\n\nyield()를 이용한 상태 제어\n\nsleep()과 달리 곧바로 RUNNABLE 상태로 변경\n다른 쓰레드에게 양보하고 바로 실행 대기\n테스트용으로 쓰임 -&gt; 쓰레드의 동작이 명확하지 않음(바로 양보하지 않는다)12345678910111213141516171819new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 20; i++) &#123;        if (i % 2 == 0) &#123;            System.out.print(&quot;1&quot;);        &#125; else &#123;            Thread.yield();        &#125;    &#125;&#125;).start();new Thread(() -&gt; &#123;    for (int i = 0; i &lt; 20; i++) &#123;        if (i % 2 == 0) &#123;            System.out.print(&quot;2&quot;);        &#125; else &#123;            Thread.yield();        &#125;    &#125;&#125;).start();\n\n\n\n스레드의 종료\n\nrun() 메소드의 종료\nstop() 메소드 호출 (deprecated)\n\n\n\n데몬 스레드\n정의 : 다른 스레드가 종료될 경우 함께 종료되는 보조 스레드\n\n활용법\n\n보통 대기하며 동작하는 무한 루프로 구현\n일정 시간 마다 동작\ninterrupt에 의해서 동작\n\n\nsetDaemon() 메소드로 데몬 스레드로 설정\n1234567891011121314151617class DaemonThread extends Thread &#123;    public DaemonThread() &#123;        this.setDaemon(true);    &#125;    @Override    public void run() &#123;        while (true) &#123;            try &#123;                Thread.sleep(1000);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            System.out.println(&quot;Daemon Thread Run&quot;);        &#125;    &#125;&#125;\n\n\n\n데이터 공유와 동기화\n스레드간 데이터 공유 시 신뢰성에 문제가 발생할 수 있음\n  결과는 1000000이 나오지 않는다 -&gt; count값이 동기화되지 않았기 때문\n  123456789101112131415161718192021222324class Counter &#123;        int count = 0;&#125;public class Main &#123;    public static void main(String args[])&#123;        Counter counter = new Counter();        for (int i = 0; i &lt; 1000; i++) &#123;            new Thread(() -&gt; &#123;                for (int j = 0; j &lt; 1000; j++) &#123;                    counter.count = counter.count + 1;                &#125;            &#125;).start();        &#125;        try &#123;            Thread.sleep(1000);        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        System.out.println(counter.count);    &#125;&#125;\n\nsynchronized 키워드 사용\n123synchronized void method() &#123;    // 공유 데이터 사용&#125;\n\n12345void method() &#123;    synchronized(sharedObj) &#123;        // 공유 데이터 사용    &#125;&#125;\n\nExample\n\nthis 객체의 Intrinsic Lock을 이용한 구현\n  123456789101112class Counter &#123;    private int count = 0;    public int increaseCount() &#123;        synchronized (this) &#123;            return ++count; // 읽고, 수정하고, 쓰는 작업        &#125;    &#125;    public int getCount() &#123;        return count;    &#125;&#125;\n\n메소드에 synchronized 키워드 사용\n\nsynchronized 키워드가 사용된 메소드를 호출하기 위해서는 해당 객체를 소유해야만 호출이 가능. 소유하지 못하면 Blocking12345678910class Counter &#123;    private int count = 0;    public synchronized int increaseCount() &#123;        return ++count; // 읽고, 수정하고, 쓰는 작업    &#125;    public int getCount() &#123;        return count;    &#125;&#125;\n\n\n\n\n\n\nwait(), notify(), notifyAll()\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162class WorkObject &#123;      public synchronized void methodA() &#123;          System.out.println(&quot;ThreadA의 methodA() 작업 실행&quot;);          notify(); // 일시정지 상태에 있는 ThreadB를 실행 대기상태로 만듬           try &#123;              wait(); // ThreadA를 일시 정지 상태로 만듬           &#125; catch (InterruptedException e) &#123;              e.printStackTrace();          &#125;      &#125;        public synchronized void methodB() &#123;          System.out.println(&quot;ThreadB의 methodB() 작업 실행&quot;);          notify(); // 일시정지 상태에 있는 ThreadA를 실행 대기상태로 만듬          try &#123;              wait(); // ThreadB를 일시 정지 상태로 만듬          &#125; catch (InterruptedException e) &#123;              e.printStackTrace();          &#125;      &#125;  &#125;    class ThreadA extends Thread &#123;      private WorkObject workObject;      ThreadA(WorkObject workObject) &#123;          this.workObject = workObject;      &#125;            public void run() &#123;          for(int i=0; i&lt;10; i++) &#123;              workObject.methodA(); // 공유객체의 methodA를 반복적으로 호출           &#125;      &#125;  &#125;  class ThreadB extends Thread&#123;      private WorkObject workObject;      ThreadB(WorkObject workObject) &#123;          this.workObject = workObject;      &#125;            public void run() &#123;          for(int i=0; i&lt;10; i++) &#123;              workObject.methodB(); // 공유객체의 methodA를 반복적으로 호출           &#125;      &#125;  &#125;  class Main &#123;      public static void main(String[] args) &#123;          WorkObject sharedObject = new WorkObject();                    ThreadA threadA = new ThreadA(sharedObject);          ThreadB threadB = new ThreadB(sharedObject);                    threadA.start();          threadB.start();      &#125;&#125;\n\n\n\n세마포어\n사전적 의미 : 횟대(깃발)\n\nn개의 깃발을 놓고, 여러 스레드가 경쟁하도록 하는 sync 기법\n\nn = 1이면, BinarySemaphore라고 하며, Lock과 유사하게 동작\n\n메소드\n\nrelease(int permits) : permits만큼의 자원 개수 반환\nacquire(int permits) : permits만큼의 자원 사용 (Blocking O)\ntryAcquire(long timeout, TimeUnit unit) : unit단위의 timeout이후 자원을 얻지 못하면 false, 얻으면 true (Blocking X)\nacquireUninterruptibly() : 자원을 얻지못해도 interrupt 발생 X\n\n\nExample\n  12345678910111213141516171819202122232425public class Main &#123;    public static void main(String[] args) &#123;        Semaphore sem = new Semaphore(1);        sem.release(10);        sem.tryAcquire();        System.out.println(sem.availablePermits());        try &#123; // Blocking으로 동작            sem.acquire(12);        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        sem.acquireUninterruptibly(); // interrupt에 반응하지 않음        try &#123;            System.out.println(sem.tryAcquire(100, TimeUnit.MILLISECONDS)); // Blocking 하지 않고, 실패하면 false        &#125; catch (InterruptedException e) &#123;            e.printStackTrace();        &#125;        sem.release();        System.out.println(sem.availablePermits());    &#125;&#125;  \n\nDining Philosopher (식사하는 철학자)\n  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071class Philosopher extends Thread &#123;    private final int id;    private final Fork left;    private final Fork right;    public Philosopher(int id, Fork left, Fork right) &#123;        this.id = id;        this.left = left;        this.right = right;    &#125;    @Override    public void run() &#123;        while (true) &#123;            try &#123;                left.acquire();                System.out.println(id + &quot;: left taken&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            try &#123;                if(!right.tryAcquire(1000, TimeUnit.MILLISECONDS))&#123;                    left.release();                    Thread.yield();                    continue;                &#125;                System.out.println(id + &quot;: right taken&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            try &#123;                Thread.sleep(2000);                System.out.println(id + &quot;is eating&quot;);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            left.release();            right.release();            Thread.yield();        &#125;    &#125;&#125;class Fork extends Semaphore &#123;    public Fork() &#123;        super(1);    &#125;&#125;public class Main &#123;    public static void main(String[] args) &#123;        Philosopher[] phils = new Philosopher[5];        Fork[] forks = new Fork[5];        for (int i = 0; i &lt; 5; i++) &#123;            forks[i] = new Fork();        &#125;        for (int i = 0; i &lt; 5 - 1; i++) &#123;            phils[i] = new Philosopher(i, forks[i], forks[(i+1) % 5]);        &#125;        phils[4] = new Philosopher(4, forks[0], forks[4]);        for (int i = 0; i &lt; 5; i++)&#123;            phils[i].start();        &#125;    &#125;&#125;\n\n\n\nJCF와 Thread\nVector VS List\n\nList   \n메소드들이 Synchronized 되지 않음\n속도는 빠르다.\n\n\nVector \n메소드들이 Synchronized 되어 있음\n속도는 느리다.\n\n\n\n\nList를 Synchronized 되게 하는 방법\n\nCollections의 synchronizedList() 사용  12List&lt;Integer&gt; list1 = new ArrayList&lt;&gt;();List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);\nThread Pool\n\n\nThread Pool이란?\n\n미리 생성해 둔 Thread의 집합을 스레드 풀이라고 한다.\n미리 Thread를 생성해 두고, 작업만 Thread에 할당하여 동작\n사용 이유\nThread를 직접 만들어 사용할 경우, Multi-Thread 작업을 계속 할 때, Thread 생성/삭제 오버해드가 크다.\n배치작업 (모아두고 한 번에 처리하는 작업)에 유용하여 많이 사용된다.\n\n\n\n\nThread Pool 생성 \n\nSingle Thread Pool\n  1ExecutorService pool = Executors.newSingleThreadExecutor();\n\nThread가 1개인 ThreadPool 생성(SingleThread)\n실패 시, 새로운 Thread를 생성하지 않음\n\n\nCached Thread Pool\n  1ExecutorService pool = Executors.newCachedThreadPool();\n\n초기 Thread 0개\n코어 Thread 0개 (일하지 않아도 종료시키지 않는 Thread)\n요청 작업보다 Thead가 부족하면 새 스레드 생성\n60초동안 일하지 않는 Thread 제거\n\n\nFixed Thread Pool\n  1ExecutorService pool = Executors.newFixedThreadPool(int nThreads);\n\n최대 Thread nThreads개\n코어 Thread nThreads개\n작업하지 않는 Thread도 제거하지 않고 동작\n\n\nScheduler Thread Pool\n  1ScheduledExecutorService pool = Executors.newScheduledThreadPool(int corePoolSize);\n\n지정된 delay후에 실행하도록함(주기적으로 실행하는 명령을 예약)\n\n\n\n\n작업 생성과 처리 요청\n\n작업 생성\n\nRunnable 구현 클래스\n  123456Runnable task = new Runnable()&#123;    @Override    public void run()&#123;        // 작업 내용    &#125;&#125;\n\nCallable 구현 클래스\n  1234567Callable&lt;T&gt; task = new Callable&lt;T&gt;()&#123;    @Override    public T call() throws Exception&#123;        // 작업 내용        return T;&#125;\n  Runnable run()은 Return 값이 없고, Callable call()은 Return 값이 있음\n\n\n\n처리 요청\n\n매소드 \n\n\n\n리턴 타입\n메소드\n설명\n\n\n\nvoid\nexecute(Runnable command)\nRunnable을 작업 큐에 저장, 작업 처리 결과를 받지 못함\n\n\nFuture&lt;?&gt;\nsubmit(Runnable task)\nRunnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음\n\n\nFuture\nsubmit(Runnable task, V result)\nRunnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음\n\n\nFuture\nsubmit(Callable task)\nCallable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음\n\n\n\nexecute()\n\n작업 처리 결과를 반환하지 않는다.\n\n작업 처리 도중 예외가 발생하면 스레드가 종료되고 해당 스레드는 스레드 풀에서 제거된다. \n\n다른 작업을 처리하기 위해 새로운 스레드를 생성한다.\n\n\n\nsubmit()\n\n작업 처리 결과를 반환한다.\n\n작업 처리 도중 예외가 발생하더라도 스레드는 종료되지 않고 다음 작업을 위해 재사용\n\n스레드의 생성 오버헤드를 방지하기 위해서라도 submit() 을 가급적 사용한다.\n\n\n\n\n\n\n\n\n\nThread Pool 종료\n\nThread Pool에 속한 Thread는 데몬 스레드가 아니다\n\n\n따라서 주 스레드 종료시 강제종료 되지 않기 때문에 main 스레드가 종료되어도 실행상태가 유지된다.\n\n\n어플리케이션을 종료하기 위해서는 스레드 풀을 강제종료시켜야 한다.\n\n\nexcutorService.shutdown()\n  작업큐에 남아있는 작업까지 모두 마무리 후 종료 (오버헤드를 줄이기 위해 일반적으로 많이 사용.)\n\nexcutorService.shoutdownNow()\n  작업큐 작업 잔량 상관없이 강제 종료\n\nexcutorService.awaitTermination(long timeout, TimeUnit unit)\n  모든 작업 처리를 timeout 시간안에 처리하면 true 리턴 ,처리하지 못하면 작업스레드들을 interrupt()시키고 false리턴\n\n\n\n\n","dateCreated":"2020-10-28T19:23:05+09:00","dateModified":"2020-10-30T18:27:21+09:00","datePublished":"2020-10-28T19:23:05+09:00","description":"","headline":"Java-Advanced10-Multi Thread","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/28/Java-Advanced10-Multi-Thread/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/28/Java-Advanced10-Multi-Thread/","keywords":"Java"}</script>
     <meta name="description" content="Multi-Thread ProgrammingProcess and Thread Process: OS로부터 메모리를 할당받아 실행중인 프로그램 Thread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.  멀티스레드 프로그래밍의 장단점 장점 여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상 시간이 걸리는 동작을 분리하여">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Java-Advanced10-Multi Thread">
@@ -20,7 +20,7 @@
 <meta property="og:description" content="Multi-Thread ProgrammingProcess and Thread Process: OS로부터 메모리를 할당받아 실행중인 프로그램 Thread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.  멀티스레드 프로그래밍의 장단점 장점 여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상 시간이 걸리는 동작을 분리하여">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-28T10:23:05.000Z">
-<meta property="article:modified_time" content="2020-10-28T11:59:39.653Z">
+<meta property="article:modified_time" content="2020-10-30T09:27:21.034Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -546,7 +546,7 @@
 
 </li>
 </ul>
-<h1 id="JCF와-Thread"><a href="#JCF와-Thread" class="headerlink" title="JCF와 Thread"></a>JCF와 Thread</h1><ul>
+<h2 id="JCF와-Thread"><a href="#JCF와-Thread" class="headerlink" title="JCF와 Thread"></a>JCF와 Thread</h2><ul>
 <li><p>Vector VS List</p>
 <ul>
 <li>List   <ul>
@@ -564,7 +564,145 @@
 <li><p>List를 Synchronized 되게 하는 방법</p>
 <ul>
 <li>Collections의 synchronizedList() 사용  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);</span><br></pre></td></tr></table></figure>
-
+<h2 id="Thread-Pool"><a href="#Thread-Pool" class="headerlink" title="Thread Pool"></a>Thread Pool</h2></li>
+</ul>
+</li>
+<li><p>Thread Pool이란?</p>
+<ul>
+<li>미리 생성해 둔 Thread의 집합을 스레드 풀이라고 한다.</li>
+<li>미리 Thread를 생성해 두고, 작업만 Thread에 할당하여 동작</li>
+<li>사용 이유<ul>
+<li>Thread를 직접 만들어 사용할 경우, Multi-Thread 작업을 계속 할 때, Thread 생성/삭제 오버해드가 크다.</li>
+<li>배치작업 (모아두고 한 번에 처리하는 작업)에 유용하여 많이 사용된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Thread Pool 생성 </p>
+<ul>
+<li><p>Single Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newSingleThreadExecutor();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Thread가 1개인 ThreadPool 생성(SingleThread)</li>
+<li>실패 시, 새로운 Thread를 생성하지 않음</li>
+</ul>
+</li>
+<li><p>Cached Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newCachedThreadPool();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>초기 Thread 0개</li>
+<li>코어 Thread 0개 (일하지 않아도 종료시키지 않는 Thread)</li>
+<li>요청 작업보다 Thead가 부족하면 새 스레드 생성</li>
+<li>60초동안 일하지 않는 Thread 제거</li>
+</ul>
+</li>
+<li><p>Fixed Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newFixedThreadPool(<span class="keyword">int</span> nThreads);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>최대 Thread nThreads개</li>
+<li>코어 Thread nThreads개</li>
+<li>작업하지 않는 Thread도 제거하지 않고 동작</li>
+</ul>
+</li>
+<li><p>Scheduler Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ScheduledExecutorService pool = Executors.newScheduledThreadPool(<span class="keyword">int</span> corePoolSize);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>지정된 delay후에 실행하도록함(주기적으로 실행하는 명령을 예약)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>작업 생성과 처리 요청</p>
+<ul>
+<li><p>작업 생성</p>
+<ul>
+<li><p>Runnable 구현 클래스</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = <span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 작업 내용</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Callable 구현 클래스</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Callable&lt;T&gt; task = <span class="keyword">new</span> Callable&lt;T&gt;()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 작업 내용</span></span><br><span class="line">        <span class="keyword">return</span> T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>  <code>Runnable run()은 Return 값이 없고, Callable call()은 Return 값이 있음</code></p>
+</li>
+</ul>
+</li>
+<li><p>처리 요청</p>
+<ul>
+<li><p>매소드 </p>
+<table>
+<thead>
+<tr>
+<th>리턴 타입</th>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void</td>
+<td>execute(Runnable command)</td>
+<td>Runnable을 작업 큐에 저장, 작업 처리 결과를 받지 못함</td>
+</tr>
+<tr>
+<td>Future&lt;?&gt;</td>
+<td>submit(Runnable task)</td>
+<td>Runnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+<tr>
+<td>Future</td>
+<td>submit(Runnable task, V result)</td>
+<td>Runnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+<tr>
+<td>Future</td>
+<td>submit(Callable task)</td>
+<td>Callable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>execute()</p>
+<ul>
+<li><p>작업 처리 결과를 반환하지 않는다.</p>
+</li>
+<li><p>작업 처리 도중 예외가 발생하면 스레드가 종료되고 해당 스레드는 스레드 풀에서 제거된다. </p>
+</li>
+<li><p>다른 작업을 처리하기 위해 새로운 스레드를 생성한다.</p>
+</li>
+</ul>
+</li>
+<li><p>submit()</p>
+<ul>
+<li><p>작업 처리 결과를 반환한다.</p>
+</li>
+<li><p>작업 처리 도중 예외가 발생하더라도 스레드는 종료되지 않고 다음 작업을 위해 재사용</p>
+</li>
+<li><p>스레드의 생성 오버헤드를 방지하기 위해서라도 submit() 을 가급적 사용한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Thread Pool 종료</p>
+<blockquote>
+<p>Thread Pool에 속한 Thread는 데몬 스레드가 아니다</p>
+</blockquote>
+<blockquote>
+<p>따라서 주 스레드 종료시 강제종료 되지 않기 때문에 main 스레드가 종료되어도 실행상태가 유지된다.</p>
+</blockquote>
+<blockquote>
+<p>어플리케이션을 종료하기 위해서는 스레드 풀을 강제종료시켜야 한다.</p>
+</blockquote>
+<ul>
+<li><p>excutorService.shutdown()</p>
+<p>  작업큐에 남아있는 작업까지 모두 마무리 후 종료 (오버헤드를 줄이기 위해 일반적으로 많이 사용.)</p>
+</li>
+<li><p>excutorService.shoutdownNow()</p>
+<p>  작업큐 작업 잔량 상관없이 강제 종료</p>
+</li>
+<li><p>excutorService.awaitTermination(long timeout, TimeUnit unit)</p>
+<p>  모든 작업 처리를 timeout 시간안에 처리하면 true 리턴 ,처리하지 못하면 작업스레드들을 interrupt()시키고 false리턴</p>
 </li>
 </ul>
 </li>

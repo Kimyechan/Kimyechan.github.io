@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Java Server Developer">
+    <title>DATABASE-Crontab - Java Server Developer</title>
+    <meta name="author" content="Yechan Kim">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Crontab\n유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.\n\ncrontab basic\n\n스케쥴 설정\n  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.\n  1$ crontab -e\n\n스케쥴 리스트 확인\n  현재 crontab의 스케쥴을 확인할 수 있다.\n  1$ crontab -l\n\n\n\n주기 설정\n  12345vi time.pyimport datetimetoday = datetime.datetime.now()print(str(today))\n\n\n*  *  *  *  * -&gt;분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)\n\n요일에서 0과 7은 일요일\n\n2분 간격으로 실행\n  1*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n매시 10분에 실행\n  110 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n매시 10분과 20분에 실행\n  110,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n매일 5시 10분과 20분에 실행\n  110,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n일요일 5시 10분과 20분에 실행\n  110,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장\n  1*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n\n\n\n\n\ntime zone 변경타임존 변경\n\n\n현재 사용 시간 확인$ timedatectl\n사용하는 파일 심볼릭 링크확인$ ls -l /etc/localtime3\n사용 할수 있는 타임존 확인$ timedatectl list-timezones | grep Asia\n타임존 변경$ sudo timedatectl set-timezone Asia/Seoul\n심볼릭 링크 수정$ sudo unlink /etc/localtime$ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime\n\n\nvim 에디터 인코딩 변경$ vi .vimrc\n\n\nset encoding=utf-8\ncrontab 로그 확인아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.$ grep CRON /var/log/syslog\ncrontab 에러 확인 및 해결에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.\n\n\nMar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,discarding output)\n\n4MTA : Mail Transfer Agent6.1 에러 메시지 확인하는 방법 1\n\n$ sudo apt-get install postfix\n$ cat /var/mail/ubuntu\n\n6.2 에러 메시지 확인하는 방법 2\n\n$ sudo apt install mailutils\n$ mail\n\n6.3 crontab에서 실행되는 python 환경crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.version.py\n\nimport sysprint(sys.version.split(“ “)[0])\n\ncrontab -e\n\n\n\n\npython /home/ubuntu/version.py &gt;&gt; version.txt\n\n\n\n\n\n\n\n\n\n\n56.4 pyenv 환경에 있는 python으로 실행직접 python 경로 입력\n\n\n\n\n\n\n/home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py\n\nversion.txt\n\n\n\n\n\n\n\n\n\n\n\n\n\nPATH 설정PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin\n\n\n\n\n\npython /home/ubuntu/version.py &gt;&gt; version.txt\n\n\n\n\n\n\n\n\n\n\n","dateCreated":"2020-10-29T21:31:52+09:00","dateModified":"2020-10-29T21:43:05+09:00","datePublished":"2020-10-29T21:31:52+09:00","description":"","headline":"DATABASE-Crontab","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"}</script>
+    <meta name="description" content="Crontab 유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.  crontab basic  스케쥴 설정   아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.   1$ crontab -e  스케쥴 리스트 확인   현재">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="DATABASE-Crontab">
+<meta property="og:url" content="https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/index.html">
+<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="Crontab 유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.  crontab basic  스케쥴 설정   아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.   1$ crontab -e  스케쥴 리스트 확인   현재">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-29T12:31:52.000Z">
+<meta property="article:modified_time" content="2020-10-29T12:43:05.973Z">
+<meta property="article:author" content="Yechan Kim">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Java Server Developer
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="http://stackoverflow.com/users"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Stack Overflow"
+                        >
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://plus.google.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Google +"
+                        >
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://www.linkedin.com/profile/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="LinkedIn"
+                        >
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            DATABASE-Crontab
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-10-29T21:31:52+09:00">
+	
+		    Oct 29, 2020
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Crontab"><a href="#Crontab" class="headerlink" title="Crontab"></a>Crontab</h1><ul>
+<li><p>유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.</p>
+</li>
+<li><p>crontab basic</p>
+<ul>
+<li><p>스케쥴 설정</p>
+<p>  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -e</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>스케쥴 리스트 확인</p>
+<p>  현재 crontab의 스케쥴을 확인할 수 있다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -l</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>주기 설정</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
+<ul>
+<li><p>요일에서 0과 7은 일요일</p>
+</li>
+<li><p>2분 간격으로 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>매일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>일요일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>time zone 변경<br>타임존 변경</li>
+</ol>
+<hr>
+<h1 id="현재-사용-시간-확인"><a href="#현재-사용-시간-확인" class="headerlink" title="현재 사용 시간 확인"></a>현재 사용 시간 확인</h1><p>$ timedatectl</p>
+<h1 id="사용하는-파일-심볼릭-링크확인"><a href="#사용하는-파일-심볼릭-링크확인" class="headerlink" title="사용하는 파일 심볼릭 링크확인"></a>사용하는 파일 심볼릭 링크확인</h1><p>$ ls -l /etc/localtime<br>3</p>
+<h1 id="사용-할수-있는-타임존-확인"><a href="#사용-할수-있는-타임존-확인" class="headerlink" title="사용 할수 있는 타임존 확인"></a>사용 할수 있는 타임존 확인</h1><p>$ timedatectl list-timezones | grep Asia</p>
+<h1 id="타임존-변경"><a href="#타임존-변경" class="headerlink" title="타임존 변경"></a>타임존 변경</h1><p>$ sudo timedatectl set-timezone Asia/Seoul</p>
+<h1 id="심볼릭-링크-수정"><a href="#심볼릭-링크-수정" class="headerlink" title="심볼릭 링크 수정"></a>심볼릭 링크 수정</h1><p>$ sudo unlink /etc/localtime<br>$ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
+<hr>
+<ol start="4">
+<li>vim 에디터 인코딩 변경<br>$ vi .vimrc</li>
+</ol>
+<hr>
+<h2 id="set-encoding-utf-8"><a href="#set-encoding-utf-8" class="headerlink" title="set encoding=utf-8"></a>set encoding=utf-8</h2><ol start="5">
+<li>crontab 로그 확인<br>아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.<br>$ grep CRON /var/log/syslog</li>
+<li>crontab 에러 확인 및 해결<br>에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</li>
+</ol>
+<hr>
+<p>Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>discarding output)</p>
+<hr>
+<p>4<br>MTA : Mail Transfer Agent<br>6.1 에러 메시지 확인하는 방법 1</p>
+<ul>
+<li>$ sudo apt-get install postfix</li>
+<li>$ cat /var/mail/ubuntu</li>
+</ul>
+<p>6.2 에러 메시지 확인하는 방법 2</p>
+<ul>
+<li>$ sudo apt install mailutils</li>
+<li>$ mail</li>
+</ul>
+<p>6.3 crontab에서 실행되는 python 환경<br>crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.<br>version.py</p>
+<hr>
+<p>import sys<br>print(sys.version.split(“ “)[0])</p>
+<hr>
+<h2 id="crontab-e"><a href="#crontab-e" class="headerlink" title="crontab -e"></a>crontab -e</h2><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>python /home/ubuntu/version.py &gt;&gt; version.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>5<br>6.4 pyenv 환경에 있는 python으로 실행<br>직접 python 경로 입력</p>
+<hr>
+<ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>/home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py<blockquote>
+<blockquote>
+<p>version.txt</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="PATH-설정"><a href="#PATH-설정" class="headerlink" title="PATH 설정"></a>PATH 설정</h2><p>PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin</p>
+<ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>python /home/ubuntu/version.py &gt;&gt; version.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/30/Java-Advanced11-RegularExpressions/"
+                    data-tooltip="Java-Advanced11-RegularExpressions"
+                    aria-label="PREVIOUS: Java-Advanced11-RegularExpressions"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
+                    data-tooltip="DATABASE-NoSQL(MongoDB)"
+                    aria-label="NEXT: DATABASE-NoSQL(MongoDB)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Yechan Kim. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/30/Java-Advanced11-RegularExpressions/"
+                    data-tooltip="Java-Advanced11-RegularExpressions"
+                    aria-label="PREVIOUS: Java-Advanced11-RegularExpressions"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
+                    data-tooltip="DATABASE-NoSQL(MongoDB)"
+                    aria-label="NEXT: DATABASE-NoSQL(MongoDB)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/';
+              
+            this.page.identifier = '2020/10/29/DATABASE-Crontab/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
