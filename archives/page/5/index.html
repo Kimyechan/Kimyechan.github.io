@@ -326,6 +326,194 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/20/DATABASE-DML-SELECT/"
+                            aria-label=": DATABASE DML SELECT"
+                        >
+                            DATABASE DML SELECT
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-20T18:49:12+09:00">
+	
+		    Oct 20, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h1><h2 id="정의-데이터를-검색할때-사용되는-문법"><a href="#정의-데이터를-검색할때-사용되는-문법" class="headerlink" title="정의 : 데이터를 검색할때 사용되는 문법"></a>정의 : 데이터를 검색할때 사용되는 문법</h2><h2 id="SELECT-FROM"><a href="#SELECT-FROM" class="headerlink" title="SELECT FROM"></a>SELECT FROM</h2><ul>
+<li><p>기본 포멧</p>
+<p>  <code>  SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;  </code></p>
+</li>
+<li><p>전체 컬럼 데이터 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT *</span><br><span class="line">FROM world.country</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>code, name 세개의 컬럼 데이터 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT code, name FROM world.country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스 선택 : FROM 절에 world. 을 사용할 필요가 없다.</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE world;</span><br><span class="line">sql&gt; SELECT * FROM country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>alias : 컬럼의 이름을 변경할수 있습니다.</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT code as country_code, name as country_name FROM country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스, 테이블, 컬럼 리스트 확인</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SHOW DATABASES;</span><br><span class="line">sql&gt; SHOW TABLES;</span><br><span class="line">sql&gt; DESC city;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h2><p>특정 조건을 주어 데이터를 검색하는데 사용되는 문법</p>
+<ul>
+<li><p>비교연산 - 인구가 1억이 넘는 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country WHERE Population &gt;&#x3D; 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>논리 연산 : AND, OR - 인구가 7000만에서 1억인 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Population &gt;&#x3D; 70000000 AND Population &lt;&#x3D; 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>범위 연산 : BETWEEN</p>
+<ul>
+<li><p>인구가 7000만에서 1억인 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Population BETWEEN 70000000 AND 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent &#x3D; &quot;Asia&quot; OR Continent &#x3D; &quot;Africa&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>특정 조건을 포함 : IN, NOT IN</p>
+<ul>
+<li><p>아시아와 아프리카 대륙의 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent IN (&quot;Asia&quot;, &quot;Africa&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent NOT IN (&quot;Asia&quot;, &quot;Africa&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력 (논리연산 사용)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent !&#x3D; &quot;Asia&quot; AND Continent !&#x3D; &quot;Africa&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>특정 문자열이 포함된 데이터 출력 : LIKE</p>
+<ul>
+<li>정부형태에 Republic이 포함된 데이터 출력  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE GovernmentForm LIKE &quot;%Republic%&quot;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ORDER-BY"><a href="#ORDER-BY" class="headerlink" title="ORDER BY"></a>ORDER BY</h2><p>특정 컬럼의 값으로 데이터 정렬에 사용되는 문법</p>
+<ul>
+<li><p>오름차순 인구순으로 국가의 리스트를 출력 (ASC는 생략이 가능)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population ASC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>내림차수 인구순으로 국가의 리스트를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가 코드를 알파벳 순으로 정렬하고 같은 국가 코드를 가지면 인구순으로 내림차순으로 정렬</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM city ORDER BY CountryCode ASC, Population DESC</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="LIMIT"><a href="#LIMIT" class="headerlink" title="LIMIT"></a>LIMIT</h2><p>LIMIT은 조회하는 데이터의 수를 제한할수 있습니다.</p>
+<ul>
+<li><p>인구가 많은 상위 5개 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC LIMIT 5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>인구가 많은 상위 6위 ~ 8위의 3개 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC LIMIT 5, 3</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="GRUOP-BY-HAVING"><a href="#GRUOP-BY-HAVING" class="headerlink" title="GRUOP BY, HAVING"></a>GRUOP BY, HAVING</h2><p>GROUP BY는 여러개의 동일한 데이터를 가지는 특정 컬럼을 합쳐주는 역할을 하는 명령입니다. </p>
+<p>SQL에는 아래와 같은 그룹함수가 있습니다.<br>COUNT, MAX, MIN, AVG, VAR_SAMP, STDDEV</p>
+<ul>
+<li><p>COUNT</p>
+<ul>
+<li>city 테이블의 CountryCode를 묶고 각 코드마다 몇개의 데이터가 있는지 확인   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT CountryCode, COUNT(CountryCode) FROM city</span><br><span class="line">GROUP BY CountryCode</span><br></pre></td></tr></table></figure></li>
+<li>countrylanguage 테이블에서 전체 언어가 몇개 있는지 구하시오.<ul>
+<li>DISTINCT 중복을 제거해주는 문법<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql &gt; SELECT COUNT(DISTINCT(Language)) as language_count</span><br><span class="line">FROM countrylanguage</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MAX</p>
+<ul>
+<li>대륙별 인구수와 GNP 최대 값을 조회  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        sql&gt; SELECT continent, MAX(Population) as Population, MAX(GNP) as GNP</span><br><span class="line">        FROM country GROUP BY continent</span><br><span class="line">        &#96;&#96;&#96;    </span><br><span class="line">- MIN</span><br><span class="line">    - 대륙별 인구수와 GNP 최소 값을 조회 (GNP와 인구수가 0이 아닌 데이터 중에서)</span><br><span class="line">        &#96;&#96;&#96; </span><br><span class="line">        sql&gt; SELECT continent, MIN(Population) as Population, MIN(GNP) as GNP FROM country</span><br><span class="line">        WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>SUM</p>
+<ul>
+<li>대륙별 총 인구수와 총 GNP  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, SUM(Population) as Population, SUM(GNP) as GNP</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>AVG</p>
+<ul>
+<li>대륙별 평균 인구수와 평균 GNP 결과를 인구수로 내림차순 정렬  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNP</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br><span class="line">ORDER BY Population DESC</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>HAVING</p>
+<p>  GROUP BY에서 반환되는 결과에 조건을 줄수 있습니다. </p>
+<ul>
+<li><p>대륙별 전체인구를 구하고 5억이상인 대륙만 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, SUM(Population) as Population FROM country</span><br><span class="line">GROUP BY continent</span><br><span class="line">HAVING Population &gt; 500000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>대륙별 평균 인구수, 평균 GNP, 1인당 GNP한 결과를 1인당 GNP가 0.01 이상인 데이터를 조회하고 1인당 GNP를 내림차순으로 정렬</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNP, AVG(GNP) &#x2F; AVG(Population) * 1000 as AVG</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br><span class="line">HAVING AVG &gt; 0.01</span><br><span class="line">ORDER BY AVG DESC</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>WITH ROLLUP</p>
+<ul>
+<li>고객과 스탭별 매출과 고객별 매출의 총합을 출력  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT customer_id, staff_id, SUM(amount) as amount FROM payment</span><br><span class="line">GROUP BY customer_id, staff_id WITH ROLLUP</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/20/DATABASE-DML-SELECT/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/20/DATABASE-MYSQL02-MODELING/"
                             aria-label=": DATABASE MYSQL02 MODELING"
                         >
@@ -3023,130 +3211,6 @@
                         <p>
                             <a
                                 href="/2020/09/22/Java-Advanced04-LambdaExpression/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/09/17/Java-advanced03-InnerClass/"
-                            aria-label=": Java-advanced03-InnerClass"
-                        >
-                            Java-advanced03-InnerClass
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-09-17T19:43:15+09:00">
-	
-		    Sep 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="내부-클래스-Inner-Classes"><a href="#내부-클래스-Inner-Classes" class="headerlink" title="내부 클래스 (Inner Classes)"></a>내부 클래스 (Inner Classes)</h1><h2 id="내부-클래스란"><a href="#내부-클래스란" class="headerlink" title="내부 클래스란"></a>내부 클래스란</h2><ul>
-<li>클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름</li>
-<li><code>HAS-A</code> 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용</li>
-</ul>
-<h2 id="내부-클래스의-종류"><a href="#내부-클래스의-종류" class="headerlink" title="내부 클래스의 종류"></a>내부 클래스의 종류</h2><ul>
-<li>클래스 영역에 선언<ul>
-<li>인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능</li>
-<li>클래스 내부 클래스: static이 붙은 정적인 내부 클래스</li>
-</ul>
-</li>
-<li>로컬 영역에 선언<ul>
-<li>로컬 내부 클래스: 선언된 영역의 Scope 내에서 사용 가능</li>
-<li>익명 내부 클래스: 객체를 일회성으로 생성하기 위한 이름이 없는 클래스</li>
-</ul>
-</li>
-</ul>
-<h2 id="다양한-내부-클래스"><a href="#다양한-내부-클래스" class="headerlink" title="다양한 내부 클래스"></a>다양한 내부 클래스</h2><h3 id="인스턴스-내부-클래스-Instance-Inner-Class"><a href="#인스턴스-내부-클래스-Instance-Inner-Class" class="headerlink" title="인스턴스 내부 클래스 (Instance Inner Class)"></a>인스턴스 내부 클래스 (Instance Inner Class)</h3><ul>
-<li><p>클래스 영역에 <code>static</code> 키워드 없이 선언된 클래스</p>
-</li>
-<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
-</li>
-<li><p>외부 클래스 객체를 통해서만 생성 가능</p>
-</li>
-<li><p>static 멤버 변수는 사용할 수 없으나, <code>static final</code>은 사용 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerMemberVar = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//static int staticMemberVar = 1;</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONSTANT_VAR = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(innerMemberVar);</span><br><span class="line">            System.out.println(outerMemberVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> outerMemberVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      IstanceInner obj = <span class="keyword">new</span> InstanceInner();</span><br><span class="line">      obj.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>외부 클래스의 멤버 변수와 이름이 겹치는 경우 <code>this</code> 활용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span>;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);<span class="comment">// 0</span></span><br><span class="line">            System.out.println(<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 1</span></span><br><span class="line">            System.out.println(Outer.<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 2</span></span><br><span class="line">            System.out.println(Outer.y); <span class="comment">// 3 static variable</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.new InstanceInner();</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="클래스-내부-클래스-Class-Inner-Class"><a href="#클래스-내부-클래스-Class-Inner-Class" class="headerlink" title="클래스 내부 클래스 (Class Inner Class)"></a>클래스 내부 클래스 (Class Inner Class)</h3><ul>
-<li><p>클래스 영역에 <code>static</code> 키워드와 함께 선언된 내부 클래스</p>
-</li>
-<li><p>외부 클래스 객체가 없어도 생성 가능</p>
-</li>
-<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
-</li>
-<li><p>static 멤버 변수를 가질 수 있음</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerVar = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> staticInnerVar = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">            System.out.println(outer.outerVar);</span><br><span class="line">            System.out.println(innerVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> outerVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="로컬-내부-클래스-Local-Inner-Class"><a href="#로컬-내부-클래스-Local-Inner-Class" class="headerlink" title="로컬 내부 클래스 (Local Inner Class)"></a>로컬 내부 클래스 (Local Inner Class)</h3><ul>
-<li><p>클래스 영역이 아닌 로컬 영역에서 선언된 클래스</p>
-<ul>
-<li>메소드, 생성자, 초기화 블록의 내부</li>
-</ul>
-</li>
-<li><p>정적 변수는 가질 수 없으나, static final 변수는 가질 수 있음</p>
-</li>
-<li><p>로컬 영역의 변수 다음과 같은 사항을 따름</p>
-<ul>
-<li>Java1.7: final로 선언된 변수에만 접근 가능</li>
-<li>Java1.8: 모든 변수에 접근 가능하나, final로 간주되어 새로운 값 할당 불가</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>; <span class="comment">// 메소드 호출 스택</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">LocalInner</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LocalInner inner = <span class="keyword">new</span> LocalInner(); <span class="comment">// 힙 영역</span></span><br><span class="line">    inner.innerMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="익명의-내부-클래스-Anonymous-Inner-Class"><a href="#익명의-내부-클래스-Anonymous-Inner-Class" class="headerlink" title="익명의 내부 클래스 (Anonymous Inner Class)"></a>익명의 내부 클래스 (Anonymous Inner Class)</h3><ul>
-<li><p>로컬 내부 클래스와 동일하나, 이름이 없어 선언 즉시 한 번 사용 가능</p>
-</li>
-<li><p>추상 클래스나 인터페이스의 구현에 많이 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnonymousInnerClassTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useFoo</span><span class="params">(IFoo foo)</span> </span>&#123;</span><br><span class="line">        foo.<span class="keyword">do</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        useFoo(<span class="keyword">new</span> IFoo() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Do!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/09/17/Java-advanced03-InnerClass/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
