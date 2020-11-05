@@ -6,23 +6,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>DATABASE-Crontab - Java Server Developer</title>
+    <title>Algorithm-가장 긴 증가하는 부분 수열 - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Crontab\n유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.\n\ncrontab basic\n\n스케쥴 설정\n  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.\n  1$ crontab -e\n\n스케쥴 리스트 확인\n  현재 crontab의 스케쥴을 확인할 수 있다.\n  1$ crontab -l\n\n\n\n주기 설정\n  12345vi time.pyimport datetimetoday = datetime.datetime.now()print(str(today))\n\n\ncrontab -e 설정\n\n*  *  *  *  * -&gt;분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)\n\n요일에서 0과 7은 일요일\n\n2분 간격으로 실행\n  1*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n매시 10분에 실행\n  110 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n매시 10분과 20분에 실행\n  110,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n매일 5시 10분과 20분에 실행\n  110,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n일요일 5시 10분과 20분에 실행\n  110,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장\n  1*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt\n\n\n\n\ntime zone 변경\n  타임존 변경\n\n현재 사용 시간 확인\n  $ timedatectl\n\n사용하는 파일 심볼릭 링크확인\n  $ ls -l /etc/localtime\n\n사용 할수 있는 타임존 확인\n  $ timedatectl list-timezones | grep Asia\n\n타임존 변경\n  $ sudo timedatectl set-timezone Asia/Seoul\n\n심볼릭 링크 수정\n  $ sudo unlink /etc/localtime\n  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime\n\n\n\nvim 에디터 인코딩 변경\n  $ vi .vimrc\n  set encoding=utf-8\n\ncrontab 로그 확인\n  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.\n  $ grep CRON /var/log/syslog\n\ncrontab 에러 확인 및 해결\n  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.\n  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,  discarding output)\n\n\n- MTA : Mail Transfer Agent\n- 에러 메시지 확인하는 방법 1\n    - $ sudo apt-get install postfix\n    - $ cat /var/mail/ubuntu\n- 에러 메시지 확인하는 방법 2\n    - $ sudo apt install mailutils\n    - $ mail\n- crontab에서 실행되는 python 환경\n\n    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.\n\n        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;\n\n        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\\* \\* \\* \\* \\* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;\n\n- pyenv 환경에 있는 python으로 실행\n\n    -  직접 python 경로 입력\n\n       \\* \\* \\* \\* \\* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt\n\n    - PATH 설정\n\n      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin\n\n      \\* \\* \\* \\* \\* python /home/ubuntu/version.py &gt;&gt; version.txt\n","dateCreated":"2020-10-29T21:31:52+09:00","dateModified":"2020-10-31T00:40:23+09:00","datePublished":"2020-10-29T21:31:52+09:00","description":"","headline":"DATABASE-Crontab","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"}</script>
-    <meta name="description" content="Crontab 유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.  crontab basic  스케쥴 설정   아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.   1$ crontab -e  스케쥴 리스트 확인   현재">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 11053 : 문제링크\n\n문제유형 : \n\n탐색\n\n동적 프로그래밍\n\n\n\n설명\n\n수열의 크기가 N일 때, 기본적으로 동적 프로그래밍 알고리즘으로 O(N^2)으로 해결\n\nD[i]는 array[i]를 마지막 원소로 가지는 부분 수열의 최대 길이\n\n모든 0 &lt;= j &lt; i에 대하여, D[i] = max(D[i], D[j] + 1) if array[j] &lt; array[i]\n\nN = 6 일 때\n  \n\n\n\n풀이\n  12345678910n = int(input())array = list(map, input().split())dp = [1] * nfor i in range(1, n):    for j in range(0, i):        if array[j] &lt; array[i]:            dp[i] = max(dp[i], dp[j] + 1)print(max(dp))\n\n\n","dateCreated":"2020-11-05T21:13:37+09:00","dateModified":"2020-11-05T21:34:44+09:00","datePublished":"2020-11-05T21:13:37+09:00","description":"","headline":"Algorithm-가장 긴 증가하는 부분 수열","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/","keywords":"Algorithm, Dynamic Programming"}</script>
+    <meta name="description" content="백준 11053 : 문제링크  문제유형 :   탐색  동적 프로그래밍    설명  수열의 크기가 N일 때, 기본적으로 동적 프로그래밍 알고리즘으로 O(N^2)으로 해결  D[i]는 array[i]를 마지막 원소로 가지는 부분 수열의 최대 길이  모든 0 &lt;&#x3D; j &lt; i에 대하여, D[i] &#x3D; max(D[i], D[j] + 1) if array[j">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="DATABASE-Crontab">
-<meta property="og:url" content="https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/index.html">
+<meta property="og:title" content="Algorithm-가장 긴 증가하는 부분 수열">
+<meta property="og:url" content="https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="Crontab 유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.  crontab basic  스케쥴 설정   아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.   1$ crontab -e  스케쥴 리스트 확인   현재">
+<meta property="og:description" content="백준 11053 : 문제링크  문제유형 :   탐색  동적 프로그래밍    설명  수열의 크기가 N일 때, 기본적으로 동적 프로그래밍 알고리즘으로 O(N^2)으로 해결  D[i]는 array[i]를 마지막 원소로 가지는 부분 수열의 최대 길이  모든 0 &lt;&#x3D; j &lt; i에 대하여, D[i] &#x3D; max(D[i], D[j] + 1) if array[j">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-29T12:31:52.000Z">
-<meta property="article:modified_time" content="2020-10-30T15:40:23.599Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/98241365-304c2800-1fae-11eb-9e59-90dcfaa59106.png">
+<meta property="article:published_time" content="2020-11-05T12:13:37.000Z">
+<meta property="article:modified_time" content="2020-11-05T12:34:44.381Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Dynamic Programming">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/98241365-304c2800-1fae-11eb-9e59-90dcfaa59106.png">
     
     
         
@@ -327,16 +331,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            DATABASE-Crontab
+            Algorithm-가장 긴 증가하는 부분 수열
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-10-29T21:31:52+09:00">
+    <time datetime="2020-11-05T21:13:37+09:00">
 	
-		    Oct 29, 2020
+		    Nov 05, 2020
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
+
+
     
 </div>
 
@@ -346,110 +356,33 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h1 id="Crontab"><a href="#Crontab" class="headerlink" title="Crontab"></a>Crontab</h1><ul>
-<li><p>유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.</p>
-</li>
-<li><p>crontab basic</p>
+            <p>백준 11053 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11053">문제링크</a></p>
 <ul>
-<li><p>스케쥴 설정</p>
-<p>  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -e</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>스케쥴 리스트 확인</p>
-<p>  현재 crontab의 스케쥴을 확인할 수 있다.</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -l</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>주기 설정</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
-
+<li><p>문제유형 : </p>
 <ul>
-<li><p>crontab -e 설정</p>
+<li><p>탐색</p>
 </li>
-<li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
+<li><p>동적 프로그래밍</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
 <ul>
-<li><p>요일에서 0과 7은 일요일</p>
+<li><p>수열의 크기가 N일 때, 기본적으로 동적 프로그래밍 알고리즘으로 O(N^2)으로 해결</p>
 </li>
-<li><p>2분 간격으로 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-<li><p>매시 10분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-<li><p>매시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+<li><p>D[i]는 array[i]를 마지막 원소로 가지는 부분 수열의 최대 길이</p>
 </li>
-<li><p>매일 5시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+<li><p>모든 0 &lt;= j &lt; i에 대하여, D[i] = max(D[i], D[j] + 1) if array[j] &lt; array[i]</p>
 </li>
-<li><p>일요일 5시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li><p>N = 6 일 때</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/98241365-304c2800-1fae-11eb-9e59-90dcfaa59106.png" alt="스크린샷 2020-11-05 오후 9 30 40"></p>
 </li>
 </ul>
 </li>
-<li><p>time zone 변경</p>
-<p>  타임존 변경</p>
-<ul>
-<li><p>현재 사용 시간 확인</p>
-<p>  $ timedatectl</p>
-</li>
-<li><p>사용하는 파일 심볼릭 링크확인</p>
-<p>  $ ls -l /etc/localtime</p>
-</li>
-<li><p>사용 할수 있는 타임존 확인</p>
-<p>  $ timedatectl list-timezones | grep Asia</p>
-</li>
-<li><p>타임존 변경</p>
-<p>  $ sudo timedatectl set-timezone Asia/Seoul</p>
-</li>
-<li><p>심볼릭 링크 수정</p>
-<p>  $ sudo unlink /etc/localtime</p>
-<p>  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list(map, input().split())</span><br><span class="line">dp = [<span class="number">1</span>] * n</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, i):</span><br><span class="line">        <span class="keyword">if</span> array[j] &lt; array[i]:</span><br><span class="line">            dp[i] = max(dp[i], dp[j] + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(max(dp))</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-<li><p>vim 에디터 인코딩 변경</p>
-<p>  $ vi .vimrc</p>
-<p>  set encoding=utf-8</p>
-</li>
-<li><p>crontab 로그 확인</p>
-<p>  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.</p>
-<p>  $ grep CRON /var/log/syslog</p>
-</li>
-<li><p>crontab 에러 확인 및 해결</p>
-<p>  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</p>
-<p>  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>  discarding output)</p>
-</li>
-</ul>
-<pre><code>- MTA : Mail Transfer Agent
-- 에러 메시지 확인하는 방법 1
-    - $ sudo apt-get install postfix
-    - $ cat /var/mail/ubuntu
-- 에러 메시지 확인하는 방법 2
-    - $ sudo apt install mailutils
-    - $ mail
-- crontab에서 실행되는 python 환경
-
-    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.
-
-        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-
-        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\* \* \* \* \* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-
-- pyenv 환경에 있는 python으로 실행
-
-    -  직접 python 경로 입력
-
-       \* \* \* \* \* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt
-
-    - PATH 설정
-
-      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin
-
-      \* \* \* \* \* python /home/ubuntu/version.py &gt;&gt; version.txt</code></pre>
 
             
 
@@ -458,20 +391,24 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a>
+
+            </div>
+        
         
             <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/30/Java-Advanced11-RegularExpressions/"
-                    data-tooltip="Java-Advanced11-RegularExpressions"
-                    aria-label="PREVIOUS: Java-Advanced11-RegularExpressions"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -481,9 +418,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
-                    data-tooltip="DATABASE-NoSQL(MongoDB)"
-                    aria-label="NEXT: DATABASE-NoSQL(MongoDB)"
+                    href="/2020/11/05/Algorithm-%ED%8F%89%EB%B2%94%ED%95%9C-%EB%B0%B0%EB%82%AD/"
+                    data-tooltip="Algorithm-평범한 배낭"
+                    aria-label="NEXT: Algorithm-평범한 배낭"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -508,7 +445,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -521,7 +458,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -534,7 +471,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -593,14 +530,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/30/Java-Advanced11-RegularExpressions/"
-                    data-tooltip="Java-Advanced11-RegularExpressions"
-                    aria-label="PREVIOUS: Java-Advanced11-RegularExpressions"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -610,9 +544,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
-                    data-tooltip="DATABASE-NoSQL(MongoDB)"
-                    aria-label="NEXT: DATABASE-NoSQL(MongoDB)"
+                    href="/2020/11/05/Algorithm-%ED%8F%89%EB%B2%94%ED%95%9C-%EB%B0%B0%EB%82%AD/"
+                    data-tooltip="Algorithm-평범한 배낭"
+                    aria-label="NEXT: Algorithm-평범한 배낭"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -637,7 +571,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -650,7 +584,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -663,7 +597,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -707,7 +641,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -720,7 +654,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -733,7 +667,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -794,9 +728,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/10/29/DATABASE-Crontab/';
+            this.page.url = 'https://kimyechan.github.io/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/';
               
-            this.page.identifier = '2020/10/29/DATABASE-Crontab/';
+            this.page.identifier = '2020/11/05/Algorithm-가장-긴-증가하는-부분-수열/';
               
           };
           (function() {

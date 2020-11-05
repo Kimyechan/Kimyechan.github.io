@@ -761,6 +761,8 @@
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
 
 <ul>
+<li><p>crontab -e 설정</p>
+</li>
 <li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
 <ul>
 <li><p>요일에서 0과 7은 일요일</p>
@@ -784,98 +786,66 @@
 </li>
 </ul>
 </li>
-</ul>
-<ol start="3">
-<li>time zone 변경<br>타임존 변경</li>
-</ol>
-<hr>
-<h1 id="현재-사용-시간-확인"><a href="#현재-사용-시간-확인" class="headerlink" title="현재 사용 시간 확인"></a>현재 사용 시간 확인</h1><p>$ timedatectl</p>
-<h1 id="사용하는-파일-심볼릭-링크확인"><a href="#사용하는-파일-심볼릭-링크확인" class="headerlink" title="사용하는 파일 심볼릭 링크확인"></a>사용하는 파일 심볼릭 링크확인</h1><p>$ ls -l /etc/localtime<br>3</p>
-<h1 id="사용-할수-있는-타임존-확인"><a href="#사용-할수-있는-타임존-확인" class="headerlink" title="사용 할수 있는 타임존 확인"></a>사용 할수 있는 타임존 확인</h1><p>$ timedatectl list-timezones | grep Asia</p>
-<h1 id="타임존-변경"><a href="#타임존-변경" class="headerlink" title="타임존 변경"></a>타임존 변경</h1><p>$ sudo timedatectl set-timezone Asia/Seoul</p>
-<h1 id="심볼릭-링크-수정"><a href="#심볼릭-링크-수정" class="headerlink" title="심볼릭 링크 수정"></a>심볼릭 링크 수정</h1><p>$ sudo unlink /etc/localtime<br>$ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
-<hr>
-<ol start="4">
-<li>vim 에디터 인코딩 변경<br>$ vi .vimrc</li>
-</ol>
-<hr>
-<h2 id="set-encoding-utf-8"><a href="#set-encoding-utf-8" class="headerlink" title="set encoding=utf-8"></a>set encoding=utf-8</h2><ol start="5">
-<li>crontab 로그 확인<br>아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.<br>$ grep CRON /var/log/syslog</li>
-<li>crontab 에러 확인 및 해결<br>에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</li>
-</ol>
-<hr>
-<p>Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>discarding output)</p>
-<hr>
-<p>4<br>MTA : Mail Transfer Agent<br>6.1 에러 메시지 확인하는 방법 1</p>
+<li><p>time zone 변경</p>
+<p>  타임존 변경</p>
 <ul>
-<li>$ sudo apt-get install postfix</li>
-<li>$ cat /var/mail/ubuntu</li>
-</ul>
-<p>6.2 에러 메시지 확인하는 방법 2</p>
-<ul>
-<li>$ sudo apt install mailutils</li>
-<li>$ mail</li>
-</ul>
-<p>6.3 crontab에서 실행되는 python 환경<br>crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.<br>version.py</p>
-<hr>
-<p>import sys<br>print(sys.version.split(“ “)[0])</p>
-<hr>
-<h2 id="crontab-e"><a href="#crontab-e" class="headerlink" title="crontab -e"></a>crontab -e</h2><ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li>python /home/ubuntu/version.py &gt;&gt; version.txt</li>
-</ul>
+<li><p>현재 사용 시간 확인</p>
+<p>  $ timedatectl</p>
+</li>
+<li><p>사용하는 파일 심볼릭 링크확인</p>
+<p>  $ ls -l /etc/localtime</p>
+</li>
+<li><p>사용 할수 있는 타임존 확인</p>
+<p>  $ timedatectl list-timezones | grep Asia</p>
+</li>
+<li><p>타임존 변경</p>
+<p>  $ sudo timedatectl set-timezone Asia/Seoul</p>
+</li>
+<li><p>심볼릭 링크 수정</p>
+<p>  $ sudo unlink /etc/localtime</p>
+<p>  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
 </li>
 </ul>
 </li>
-</ul>
+<li><p>vim 에디터 인코딩 변경</p>
+<p>  $ vi .vimrc</p>
+<p>  set encoding=utf-8</p>
+</li>
+<li><p>crontab 로그 확인</p>
+<p>  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.</p>
+<p>  $ grep CRON /var/log/syslog</p>
+</li>
+<li><p>crontab 에러 확인 및 해결</p>
+<p>  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</p>
+<p>  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>  discarding output)</p>
 </li>
 </ul>
-</li>
-</ul>
-<hr>
-<p>5<br>6.4 pyenv 환경에 있는 python으로 실행<br>직접 python 경로 입력</p>
-<hr>
-<ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li>/home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py<blockquote>
-<blockquote>
-<p>version.txt</p>
-</blockquote>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="PATH-설정"><a href="#PATH-설정" class="headerlink" title="PATH 설정"></a>PATH 설정</h2><p>PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin</p>
-<ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li><ul>
-<li>python /home/ubuntu/version.py &gt;&gt; version.txt</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
+<pre><code>- MTA : Mail Transfer Agent
+- 에러 메시지 확인하는 방법 1
+    - $ sudo apt-get install postfix
+    - $ cat /var/mail/ubuntu
+- 에러 메시지 확인하는 방법 2
+    - $ sudo apt install mailutils
+    - $ mail
+- crontab에서 실행되는 python 환경
+
+    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\* \* \* \* \* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+- pyenv 환경에 있는 python으로 실행
+
+    -  직접 python 경로 입력
+
+       \* \* \* \* \* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt
+
+    - PATH 설정
+
+      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin
+
+      \* \* \* \* \* python /home/ubuntu/version.py &gt;&gt; version.txt</code></pre>
 
                     
                         
