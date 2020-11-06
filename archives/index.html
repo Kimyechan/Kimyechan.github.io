@@ -326,6 +326,163 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/"
+                            aria-label=": Algorithm-가장 높은 탑 쌓기"
+                        >
+                            Algorithm-가장 높은 탑 쌓기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-06T21:18:59+09:00">
+	
+		    Nov 06, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                            aria-label=": Algorithm-기타리스트"
+                        >
+                            Algorithm-기타리스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-06T20:49:30+09:00">
+	
+		    Nov 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2655 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2655">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>동적 프로그래밍</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>곡의 개수가 N, 볼륨의 최댓값은 M이므로 동적프로그래밍을 이용하여 시간 복잡도 O(NM)</p>
+</li>
+<li><p>핵심 아이디어: 모든 볼륨에 대하여 연주 가능 여부 계산</p>
+</li>
+<li><p>D[i][j+1] =&gt; i번째 노래일 때 j 크기의 볼륨으로 연주 가능한지 여부</p>
+</li>
+<li><p>노래를 순서대로 확인, 매 번 모든 크기의 볼륨을 검사</p>
+</li>
+<li><p>D[i][j - V[i]] = True if D[i-1][j] = True</p>
+</li>
+<li><p>D[i][j + V[i]] = True if D[i-1][j] = True</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/98364040-63a4ba80-2073-11eb-870e-3099a816f906.png" alt="스크린샷 2020-11-06 오후 9 02 20"></p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<pre><code class="python">    n, s, m = map(int, input().split())
+    array = list(map(int, input().split()))
+
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    dp[0][s] = 1
+
+    for i in range(1, n + 1):
+        for j in range(m + 1):
+            if dp[i - 1][j] == 0:
+                continue
+            if j - array[i - 1] &gt;= 0:
+                dp[i][j - array[i - 1]] = 1
+            if j + array[i - 1] &lt;= m:
+                dp[i][j + array[i - 1]] = 1
+
+    result = -1
+    for i in range(m, -1, -1):
+        if dp[n][i] == 1:
+            result = i
+            break
+
+    print(result)</code></pre>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/06/Algorithm-LCS/"
                             aria-label=": Algorithm-LCS"
                         >
@@ -1854,168 +2011,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/"
-                            aria-label=": Algorithm-문제집"
-                        >
-                            Algorithm-문제집
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-27T23:02:22+09:00">
-	
-		    Oct 27, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1766 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1766">문제링크</a></p>
-<ul>
-<li><p>문제유형 </p>
-<ul>
-<li>탐색</li>
-<li>힙</li>
-<li>위상정렬</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>위상정렬<ol>
-<li>진입 차수가 0인 정점을 큐에 삽입</li>
-<li>큐에서 원소를 꺼내 해당 원소와 간선을 제거</li>
-<li>제거 이후 진입 차수가 0이 된 정점을 큐에 삽입</li>
-<li>큐가 빌 때까지 2 ~ 3을 반복</li>
-</ol>
-</li>
-<li>위상정렬 사용이유 : 2번 조건 - 먼저 푸는 것이 좋은 문제가 있는 문제는, 먼저 푸는 것이 좋은 문제를 반드시 먼저 풀어야 한다.) </li>
-<li>힙 사용이유 : 3번 조건 - 가능하면 쉬운 문제부터 풀어야 한다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">indegree = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">heap = []</span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    array[x].append(y)</span><br><span class="line">    indegree[y] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> indegree[i] == <span class="number">0</span>:</span><br><span class="line">        heapq.heappush(heap, i)</span><br><span class="line">    </span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> heap:</span><br><span class="line">    data = heapq.heappop(heap)</span><br><span class="line">    result.append(data)</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> array[data]:</span><br><span class="line">        indegree[y] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> indegree[y] == <span class="number">0</span>:</span><br><span class="line">            heapq.heappuh(heap, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result:</span><br><span class="line">    print(i, end = <span class="string">&#x27; &#x27;</span>)</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                            aria-label=": Algorithm-카드 정렬하기"
-                        >
-                            Algorithm-카드 정렬하기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-27T21:31:51+09:00">
-	
-		    Oct 27, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1715 : <a href="acmicpc.net/problem/1715">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-<li>힙</li>
-<li>그리디</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>가장 작은 숫자의 카드 묶음을 먼저 합쳤을 때 최소값</li>
-<li>heap을 사용해서 작은 값 두개를 pop한다</li>
-<li>추출한 두 개의 값을 합해서 결과에 더한다</li>
-<li>합한 값을 다시 heap에 push한다</li>
-<li>heap에 값이 한 개 남았을 때 종료한다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">heap = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(input())</span><br><span class="line">    heaq.heappush(heapq, data)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> len(heap) != <span class="number">1</span>:</span><br><span class="line">    one = heapq.heappop(heap)</span><br><span class="line">    two = heapq.heappop(heap)</span><br><span class="line">    sum_value = one + two</span><br><span class="line">    result += sum_value</span><br><span class="line">    heapq.heappush(heap, sum_value)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -2031,7 +2026,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 1 of 8</li>
+        <li class="pagination-number">page 1 of 9</li>
     </ul>
 </div>
 

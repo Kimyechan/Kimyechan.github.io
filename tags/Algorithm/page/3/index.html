@@ -326,6 +326,79 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": 좌표 정렬하기"
+                        >
+                            좌표 정렬하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-22T21:20:09+09:00">
+	
+		    Oct 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 11650 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11650">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>튜플로 두 개의 데이터를 묶어서 저장</p>
+</li>
+<li><p>파이썬 기본 정렬 알고리즘은 튜플의 인덱스 순서대로 오름차순 정렬한다.</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split)</span><br><span class="line">    arrray.append((x, y))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i[<span class="number">0</span>], i[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/22/%EB%82%98%EC%9D%B4%EC%88%9C-%EC%A0%95%EB%A0%AC/"
                             aria-label=": 나이순 정렬"
                         >
@@ -996,83 +1069,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%EC%9D%8C%EA%B3%84/"
-                            aria-label=": 음계"
-                        >
-                            음계
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T19:56:02+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2920 :  <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2920">문제 링크</a></p>
-<ul>
-<li><p>문제 유형 : 배열, 구현</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정</p>
-</li>
-<li><p>한 문자라도 내림차순이면 ascending False</p>
-<p> 한 문자라도 오름차순이면 descending False</p>
-</li>
-<li><p>둘 다 False이면 mixed</p>
-</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li>풀이  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = list(map(int, input().split())</span><br><span class="line"></span><br><span class="line">ascending = <span class="literal">True</span></span><br><span class="line">descending = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">8</span>):</span><br><span class="line">  <span class="keyword">if</span> a[i] &gt; a[i<span class="number">-1</span>]:</span><br><span class="line">    descending = <span class="literal">False</span></span><br><span class="line">  <span class="keyword">elif</span> a[i] &lt; a[i<span class="number">-1</span>]:</span><br><span class="line">    ascending = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ascending:</span><br><span class="line">  print(<span class="string">&#x27;ascending&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> descending:</span><br><span class="line">  print(<span class="string">&#x27;descending&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  print(<span class="string">&#x27;mixed)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%EC%9D%8C%EA%B3%84/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1088,7 +1084,18 @@
           </li>
         
         
-        <li class="pagination-number">page 3 of 3</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/tags/Algorithm/page/4/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 3 of 4</li>
     </ul>
 </div>
 

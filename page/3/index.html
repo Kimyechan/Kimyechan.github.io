@@ -325,6 +325,230 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Constraint/"
+                            aria-label=": DATABASE-Constraint"
+                        >
+                            DATABASE-Constraint
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T19:35:11+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
+<ul>
+<li><p>NOT NULL</p>
+<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
+</li>
+<li><p>UNIQUE</p>
+<p>  같은 값을 저장할수 없습니다.</p>
+</li>
+<li><p>PRIMARY KEY</p>
+<ul>
+<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
+</li>
+<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
+</li>
+<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li><p>AUTO_INCREMENT</p>
+<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
+</li>
+<li><p>FOREIGN KEY</p>
+<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
+<ul>
+<li><p>테이블 수정으로 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 생성시 FK 설정</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>ON DELETE, ON UPDATE 설정</p>
+<ul>
+<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
+</li>
+<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
+</li>
+<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
+</li>
+</ul>
+</li>
+<li><p>DEFAULT</p>
+<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">    <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Constraint/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DATA-TYPE/"
+                            aria-label=": DATABASE-DATA TYPE"
+                        >
+                            DATABASE-DATA TYPE
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T18:56:21+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DDL/">DDL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="DATA-TYPE"><a href="#DATA-TYPE" class="headerlink" title="DATA TYPE"></a>DATA TYPE</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 데이터 타입을 가집니다.</p>
+<p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/data-types.html">https://dev.mysql.com/doc/refman/5.7/en/data-types.html</a></p>
+<h2 id="Numberic"><a href="#Numberic" class="headerlink" title="Numberic"></a>Numberic</h2><p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/numeric-types.html">https://dev.mysql.com/doc/refman/5.7/en/numeric-types.html</a></p>
+<ul>
+<li><p>정수 타입 ( integer types )</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97161412-20b82c80-17c1-11eb-9632-c4615066adee.png" alt="스크린샷 2020-10-26 오후 7 05 55"></p>
+</li>
+<li><p>실수 (floating-point types)</p>
+<blockquote>
+<p>소수점을 나타내기 위한 데이터 타입으로 아래의 두가지 데이터 타입이 있습니다. </p>
+</blockquote>
+<blockquote>
+<p>두가지의 데이터 타입은 데이터 저장공간의 차이가 있습니다.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>FLOAT (4byte), DOUBLE (8byte)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>또한 아래와 같이 고정 소수점 타입으로도 사용이 가능합니다.</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>FLOAT(M,D), DOUBLE(M,D)</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><p>reference : <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-types.html</a></p>
+<ul>
+<li><p>DATE</p>
+<p>  DATE는 날짜를 저장하는 데이터 타입이며, 기본 포멧은 “년-월-일” 입니다.</p>
+</li>
+<li><p>DATETIME</p>
+<p>  DATETIME은 날짜와 시간을 저장하는 데이터 타입이며, 기본 포멧은 “년-월-일 시:분:초” 입니다.</p>
+</li>
+<li><p>TIMESTAME</p>
+<p>  TIMESTAME는 날짜와 시간을 저장하는 데이터 타입이며, </p>
+<p>  DATETIME과 다른점은 날짜를 입력하지 않으면 현재 날짜와 시간을 자동으로 저장할수 있는 특징이 있습니다.</p>
+</li>
+<li><p>TIME</p>
+<p>  TIME은 시간을 저장하는 데이터 타입이며, 기본 포멧은 “시:분:초” 입니다.</p>
+</li>
+<li><p>YEAR</p>
+<p>  YEAR는 연도를 저장할수 있는 데이터 타입입니다.</p>
+<p>  YEAR(2)는 2자리의 연도를 저장할수 있으며 YEAR(4)는 4자리의 연도를 저장할수 있습니다.</p>
+</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p>reference<br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/string-types.html">https://dev.mysql.com/doc/refman/5.7/en/string-types.html</a></p>
+<ul>
+<li><p>CHAR &amp; VARCHAR</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97161621-6d9c0300-17c1-11eb-97a6-b3f406e9ba71.png" alt="스크린샷 2020-10-26 오후 7 06 06"></p>
+</li>
+</ul>
+<ul>
+<li><p>TEXT</p>
+<ul>
+<li><p>CHAR와 VARCHAR는 대체로 크기가 작은 문자열을 저장할때 사용되며 크기가 큰 문자열을 저장할 때는 TEXT를 사용합니다.</p>
+</li>
+<li><p>TEXT의 타입에 따라서 아래와 같이 크기를 가집니다.</p>
+<p><img src="https://user-images.githubusercontent.com/12459864/97161349-08e0a880-17c1-11eb-9107-745027320a23.png" alt="스크린샷 2020-10-26 오후 7 06 14"></p>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DATA-TYPE/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-DDL/"
                             aria-label=": DATABASE-DDL"
                         >
@@ -1005,149 +1229,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
-                            aria-label=": 0 만들기"
-                        >
-                            0 만들기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T11:00:54+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 7490 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/7490">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 재귀</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>자연수 N의 범위(3 &lt;= N &lt;= 9)가 한정적이므로 완전 탐색으로 문제 해결</p>
-</li>
-<li><p>수의 리스트와 연산자의 리스트로 분리하여 모든 경우의 수를 해결</p>
-</li>
-<li><p>가능한 모든 경우를 고려하여 연산자 리스트를 만들 때 재귀를 사용</p>
-</li>
-<li><p>파이썬 eval() 함수를 이용하여 문자열 형태의 표현식을 계산한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recursion</span>(<span class="params">array, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) == n:</span><br><span class="line">        operators_list.append(copy.deepcopy(array))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    array.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    resursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    operators_list = []</span><br><span class="line">    n = int(input())</span><br><span class="line">    recursive([], n<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    integers = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> operators <span class="keyword">in</span> operators_list:</span><br><span class="line">        string = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">            string += str(integers[i]) + operators[i]</span><br><span class="line">        string += str(integers[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">if</span> eval(string.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>)) == <span class="number">0</span>:</span><br><span class="line">            print(string)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/Z/"
-                            aria-label=": Z"
-                        >
-                            Z
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T10:36:59+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1074 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1074">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 재귀</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결</p>
-</li>
-<li><p>N = 2일때 까지 분할</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>(<span class="params">n, x, y</span>):</span> <span class="keyword">global</span> result</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        solve(n / <span class="number">2</span>, x, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x, y + n / <span class="number">2</span>)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y + n / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">N, X, Y = map(int, input().split(<span class="string">&#x27; &#x27;</span>)) </span><br><span class="line">solve(<span class="number">2</span> ** N, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/Z/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1174,7 +1255,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 3 of 8</li>
+        <li class="pagination-number">page 3 of 9</li>
     </ul>
 </div>
 

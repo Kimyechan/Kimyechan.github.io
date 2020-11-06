@@ -326,6 +326,112 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                            aria-label=": Algorithm-기타리스트"
+                        >
+                            Algorithm-기타리스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-06T20:49:30+09:00">
+	
+		    Nov 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2655 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2655">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>동적 프로그래밍</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>곡의 개수가 N, 볼륨의 최댓값은 M이므로 동적프로그래밍을 이용하여 시간 복잡도 O(NM)</p>
+</li>
+<li><p>핵심 아이디어: 모든 볼륨에 대하여 연주 가능 여부 계산</p>
+</li>
+<li><p>D[i][j+1] =&gt; i번째 노래일 때 j 크기의 볼륨으로 연주 가능한지 여부</p>
+</li>
+<li><p>노래를 순서대로 확인, 매 번 모든 크기의 볼륨을 검사</p>
+</li>
+<li><p>D[i][j - V[i]] = True if D[i-1][j] = True</p>
+</li>
+<li><p>D[i][j + V[i]] = True if D[i-1][j] = True</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/98364040-63a4ba80-2073-11eb-870e-3099a816f906.png" alt="스크린샷 2020-11-06 오후 9 02 20"></p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<pre><code class="python">    n, s, m = map(int, input().split())
+    array = list(map(int, input().split()))
+
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    dp[0][s] = 1
+
+    for i in range(1, n + 1):
+        for j in range(m + 1):
+            if dp[i - 1][j] == 0:
+                continue
+            if j - array[i - 1] &gt;= 0:
+                dp[i][j - array[i - 1]] = 1
+            if j + array[i - 1] &lt;= m:
+                dp[i][j + array[i - 1]] = 1
+
+    result = -1
+    for i in range(m, -1, -1):
+        if dp[n][i] == 1:
+            result = i
+            break
+
+    print(result)</code></pre>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/06/Algorithm-LCS/"
                             aria-label=": Algorithm-LCS"
                         >
@@ -1047,79 +1153,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/"
-                            aria-label=": 성 지키기"
-                        >
-                            성 지키기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T12:18:55+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1236 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1236">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>행 기준, 열 기준 중 더 큰 값을 출력한다.</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(input())</span><br><span class="line"></span><br><span class="line">row = [<span class="number">0</span>] * n</span><br><span class="line">column = [<span class="number">0</span>] * m</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">        <span class="keyword">if</span> array[i][j] == <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">            row[i] = <span class="number">1</span></span><br><span class="line">            column[j] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">row_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">if</span> row[i] == <span class="number">0</span>:</span><br><span class="line">        row_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">column_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="keyword">if</span> column[j] == <span class="number">0</span>:</span><br><span class="line">        column_count +=  <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">print(max(row_count, column_count))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1135,7 +1168,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 1 of 3</li>
+        <li class="pagination-number">page 1 of 4</li>
     </ul>
 </div>
 

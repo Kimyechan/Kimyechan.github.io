@@ -326,6 +326,79 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/"
+                            aria-label=": 성 지키기"
+                        >
+                            성 지키기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T12:18:55+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1236 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1236">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>탐색</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>행 기준, 열 기준 중 더 큰 값을 출력한다.</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(input())</span><br><span class="line"></span><br><span class="line">row = [<span class="number">0</span>] * n</span><br><span class="line">column = [<span class="number">0</span>] * m</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">        <span class="keyword">if</span> array[i][j] == <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">            row[i] = <span class="number">1</span></span><br><span class="line">            column[j] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">row_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">if</span> row[i] == <span class="number">0</span>:</span><br><span class="line">        row_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">column_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="keyword">if</span> column[j] == <span class="number">0</span>:</span><br><span class="line">        column_count +=  <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">print(max(row_count, column_count))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/%ED%8A%B8%EB%A1%9C%ED%94%BC-%EC%A7%84%EC%97%B4/"
                             aria-label=": 트로피 진열"
                         >
@@ -1020,79 +1093,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
-                            aria-label=": 좌표 정렬하기"
-                        >
-                            좌표 정렬하기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-22T21:20:09+09:00">
-	
-		    Oct 22, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 11650 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11650">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 정렬</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>튜플로 두 개의 데이터를 묶어서 저장</p>
-</li>
-<li><p>파이썬 기본 정렬 알고리즘은 튜플의 인덱스 순서대로 오름차순 정렬한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split)</span><br><span class="line">    arrray.append((x, y))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i[<span class="number">0</span>], i[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1119,7 +1119,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 2 of 3</li>
+        <li class="pagination-number">page 2 of 4</li>
     </ul>
 </div>
 
