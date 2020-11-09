@@ -325,6 +325,733 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/20/DATABASE-DML-SELECT/"
+                            aria-label=": DATABASE DML SELECT"
+                        >
+                            DATABASE DML SELECT
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-20T18:49:12+09:00">
+	
+		    Oct 20, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h1><h2 id="정의-데이터를-검색할때-사용되는-문법"><a href="#정의-데이터를-검색할때-사용되는-문법" class="headerlink" title="정의 : 데이터를 검색할때 사용되는 문법"></a>정의 : 데이터를 검색할때 사용되는 문법</h2><h2 id="SELECT-FROM"><a href="#SELECT-FROM" class="headerlink" title="SELECT FROM"></a>SELECT FROM</h2><ul>
+<li><p>기본 포멧</p>
+<p>  <code>  SELECT &lt;column_name_1&gt;, &lt;column_name_2&gt;, ...   FROM &lt;table_name&gt;  </code></p>
+</li>
+<li><p>전체 컬럼 데이터 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT *</span><br><span class="line">FROM world.country</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>code, name 세개의 컬럼 데이터 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT code, name FROM world.country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스 선택 : FROM 절에 world. 을 사용할 필요가 없다.</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE world;</span><br><span class="line">sql&gt; SELECT * FROM country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>alias : 컬럼의 이름을 변경할수 있습니다.</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT code as country_code, name as country_name FROM country</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스, 테이블, 컬럼 리스트 확인</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SHOW DATABASES;</span><br><span class="line">sql&gt; SHOW TABLES;</span><br><span class="line">sql&gt; DESC city;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h2><p>특정 조건을 주어 데이터를 검색하는데 사용되는 문법</p>
+<ul>
+<li><p>비교연산 - 인구가 1억이 넘는 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country WHERE Population &gt;&#x3D; 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>논리 연산 : AND, OR - 인구가 7000만에서 1억인 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Population &gt;&#x3D; 70000000 AND Population &lt;&#x3D; 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>범위 연산 : BETWEEN</p>
+<ul>
+<li><p>인구가 7000만에서 1억인 국가를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Population BETWEEN 70000000 AND 100000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent &#x3D; &quot;Asia&quot; OR Continent &#x3D; &quot;Africa&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>특정 조건을 포함 : IN, NOT IN</p>
+<ul>
+<li><p>아시아와 아프리카 대륙의 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent IN (&quot;Asia&quot;, &quot;Africa&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent NOT IN (&quot;Asia&quot;, &quot;Africa&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아시아와 아프리카 대륙의 국가가 아닌 데이터를 출력 (논리연산 사용)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE Continent !&#x3D; &quot;Asia&quot; AND Continent !&#x3D; &quot;Africa&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>특정 문자열이 포함된 데이터 출력 : LIKE</p>
+<ul>
+<li>정부형태에 Republic이 포함된 데이터 출력  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country</span><br><span class="line">WHERE GovernmentForm LIKE &quot;%Republic%&quot;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ORDER-BY"><a href="#ORDER-BY" class="headerlink" title="ORDER BY"></a>ORDER BY</h2><p>특정 컬럼의 값으로 데이터 정렬에 사용되는 문법</p>
+<ul>
+<li><p>오름차순 인구순으로 국가의 리스트를 출력 (ASC는 생략이 가능)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population ASC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>내림차수 인구순으로 국가의 리스트를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가 코드를 알파벳 순으로 정렬하고 같은 국가 코드를 가지면 인구순으로 내림차순으로 정렬</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM city ORDER BY CountryCode ASC, Population DESC</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="LIMIT"><a href="#LIMIT" class="headerlink" title="LIMIT"></a>LIMIT</h2><p>LIMIT은 조회하는 데이터의 수를 제한할수 있습니다.</p>
+<ul>
+<li><p>인구가 많은 상위 5개 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC LIMIT 5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>인구가 많은 상위 6위 ~ 8위의 3개 국가 데이터를 출력</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM country ORDER BY population DESC LIMIT 5, 3</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="GRUOP-BY-HAVING"><a href="#GRUOP-BY-HAVING" class="headerlink" title="GRUOP BY, HAVING"></a>GRUOP BY, HAVING</h2><p>GROUP BY는 여러개의 동일한 데이터를 가지는 특정 컬럼을 합쳐주는 역할을 하는 명령입니다. </p>
+<p>SQL에는 아래와 같은 그룹함수가 있습니다.<br>COUNT, MAX, MIN, AVG, VAR_SAMP, STDDEV</p>
+<ul>
+<li><p>COUNT</p>
+<ul>
+<li>city 테이블의 CountryCode를 묶고 각 코드마다 몇개의 데이터가 있는지 확인   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT CountryCode, COUNT(CountryCode) FROM city</span><br><span class="line">GROUP BY CountryCode</span><br></pre></td></tr></table></figure></li>
+<li>countrylanguage 테이블에서 전체 언어가 몇개 있는지 구하시오.<ul>
+<li>DISTINCT 중복을 제거해주는 문법<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql &gt; SELECT COUNT(DISTINCT(Language)) as language_count</span><br><span class="line">FROM countrylanguage</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MAX</p>
+<ul>
+<li>대륙별 인구수와 GNP 최대 값을 조회  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        sql&gt; SELECT continent, MAX(Population) as Population, MAX(GNP) as GNP</span><br><span class="line">        FROM country GROUP BY continent</span><br><span class="line">        &#96;&#96;&#96;    </span><br><span class="line">- MIN</span><br><span class="line">    - 대륙별 인구수와 GNP 최소 값을 조회 (GNP와 인구수가 0이 아닌 데이터 중에서)</span><br><span class="line">        &#96;&#96;&#96; </span><br><span class="line">        sql&gt; SELECT continent, MIN(Population) as Population, MIN(GNP) as GNP FROM country</span><br><span class="line">        WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>SUM</p>
+<ul>
+<li>대륙별 총 인구수와 총 GNP  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, SUM(Population) as Population, SUM(GNP) as GNP</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>AVG</p>
+<ul>
+<li>대륙별 평균 인구수와 평균 GNP 결과를 인구수로 내림차순 정렬  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNP</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br><span class="line">ORDER BY Population DESC</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>HAVING</p>
+<p>  GROUP BY에서 반환되는 결과에 조건을 줄수 있습니다. </p>
+<ul>
+<li><p>대륙별 전체인구를 구하고 5억이상인 대륙만 조회</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, SUM(Population) as Population FROM country</span><br><span class="line">GROUP BY continent</span><br><span class="line">HAVING Population &gt; 500000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>대륙별 평균 인구수, 평균 GNP, 1인당 GNP한 결과를 1인당 GNP가 0.01 이상인 데이터를 조회하고 1인당 GNP를 내림차순으로 정렬</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT continent, AVG(Population) as Population, AVG(GNP) as GNP, AVG(GNP) &#x2F; AVG(Population) * 1000 as AVG</span><br><span class="line">FROM country</span><br><span class="line">WHERE GNP !&#x3D; 0 AND Population !&#x3D; 0 GROUP BY continent</span><br><span class="line">HAVING AVG &gt; 0.01</span><br><span class="line">ORDER BY AVG DESC</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>WITH ROLLUP</p>
+<ul>
+<li>고객과 스탭별 매출과 고객별 매출의 총합을 출력  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT customer_id, staff_id, SUM(amount) as amount FROM payment</span><br><span class="line">GROUP BY customer_id, staff_id WITH ROLLUP</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/20/DATABASE-DML-SELECT/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/20/DATABASE-MYSQL02-MODELING/"
+                            aria-label=": DATABASE MYSQL02 MODELING"
+                        >
+                            DATABASE MYSQL02 MODELING
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-20T13:13:30+09:00">
+	
+		    Oct 20, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="데이터-베이스-모델링"><a href="#데이터-베이스-모델링" class="headerlink" title="데이터 베이스 모델링"></a>데이터 베이스 모델링</h1><h2 id="개념적-모델링"><a href="#개념적-모델링" class="headerlink" title="개념적 모델링"></a>개념적 모델링</h2><p>업무분석해서 핵심 데이터의 집합을 정의하는 과정</p>
+<h2 id="논리적-모델링"><a href="#논리적-모델링" class="headerlink" title="논리적 모델링"></a>논리적 모델링</h2><p>개념적 모델링을 상세화 하는 과정</p>
+<h2 id="물리적-모델링"><a href="#물리적-모델링" class="headerlink" title="물리적 모델링"></a>물리적 모델링</h2><p>논리적 모델링을 DBMS에 추가하기 위해 구체화하는 과정</p>
+<p>자료형, 키 값등 설정</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/20/DATABASE-MYSQL02-MODELING/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/19/Way-to-use-MYSQL-at-AWS/"
+                            aria-label=": Way to use MYSQL at AWS"
+                        >
+                            Way to use MYSQL at AWS
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-19T15:16:41+09:00">
+	
+		    Oct 19, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="MYSQL-설치-AWS에서-작업"><a href="#MYSQL-설치-AWS에서-작업" class="headerlink" title="MYSQL 설치 (AWS에서 작업)"></a>MYSQL 설치 (AWS에서 작업)</h1><ol>
+<li><p>AWS EC2 인스턴스에 Ubuntu OS에 MySQL 5.7.x 버전 설치</p>
+</li>
+<li><p>EC2 인스턴스 생성</p>
+<ul>
+<li>t2.micro</li>
+<li>Ubuntu 18.04 버전</li>
+<li>보안그룹에서 3306 포트 추가</li>
+</ul>
+</li>
+<li><p>EC2 인스턴스에 접속</p>
+</li>
+<li><p>pem 파일 400 권한으로 변경   </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i (PEM File location) ubuntu@(AWS Public IP)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>apt-get 업데이트 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update -y </span><br><span class="line">$ sudo apt-get upgrade -y </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL Server 설치  </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y mysql-server mysql-client</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL secure 설정</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql_secure_installation </span><br><span class="line">Would you like to setup VALIDATE PASSWORD plugin? N</span><br><span class="line">New password: rada</span><br><span class="line">Re-enter new password: rada Remove anonymous users? Y</span><br><span class="line">Disallow root login remotely? N</span><br><span class="line">Remove test database and access to it? Reload privilege tables now? Y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL 패스워드 설정</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mysql</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITHmysql_native_password BY &#39;rada&#39;;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br><span class="line">mysql&gt; exit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>설정한 패스워드를 입력하여 접속</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p  </span><br><span class="line">Enter password: rada</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>외부접속 설정</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>bind-address를 127.0.0.1을 0.0.0.0 으로 변경</p>
+<p>  <code>  bind-address = 0.0.0.0 (모든 IP에서 접속가능)  </code></p>
+</li>
+</ul>
+</li>
+<li><p>외부접속 패스워드 설정</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all privileges on *.* to root@&#39;%&#39; identified by &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>서버 시작 종료 상태 확인</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start mysql.service</span><br><span class="line">$ sudo systemctl stop mysql.service</span><br><span class="line">$ sudo systemctl restart mysql.service</span><br><span class="line">$ sudo systemctl status mysql.service</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>설정 후 서버 재시작으로 설정 내용 적용</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart mysql.service</span><br></pre></td></tr></table></figure></li>
+<li><p>password 변경 : rada로 패스워드를 변경하는 경우</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;rada&#39;;</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ol>
+<h1 id="샘플-데이터-추가-Local에서-작업"><a href="#샘플-데이터-추가-Local에서-작업" class="headerlink" title="샘플 데이터 추가 (Local에서 작업)"></a>샘플 데이터 추가 (Local에서 작업)</h1><ul>
+<li><p>World, Sakila 데이터 베이스 추가</p>
+<p>  아래의 링크에서 world와 sakila 데이터 베이스 다운로드</p>
+<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/index-other.html">https://dev.mysql.com/doc/index-other.html</a></p>
+</li>
+</ul>
+<ol>
+<li><p>서버로 sql 파일을 전송</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp -i ~&#x2F;.ssh&#x2F;rada.pem ~&#x2F;Desktop&#x2F;sql&#x2F;* ubuntu@15.164.231.87:~&#x2F;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스 생성</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p</span><br><span class="line">sql&gt; create database world;</span><br><span class="line">sql&gt; create database sakila;</span><br><span class="line">sql&gt; create database employees;</span><br><span class="line">sql&gt; quit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데이터 베이스에 데이터 추가</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p world &lt; world.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-schema.sql</span><br><span class="line">$ mysql -u root -p sakila &lt; sakila-data.sql</span><br><span class="line">$ mysql -u root -p employees &lt; employees.sql</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="Mysql-Workbench-사용법"><a href="#Mysql-Workbench-사용법" class="headerlink" title="Mysql Workbench 사용법"></a>Mysql Workbench 사용법</h1><ul>
+<li><p>Mysql Management Tool Workbench 다운로드 및 설치 </p>
+<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/workbench/">https://dev.mysql.com/downloads/workbench/</a></p>
+</li>
+<li><p>Workbench를 이용한 접속</p>
+<p>  IP : AWS Public IP </p>
+<p>  Port : 3306</p>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/19/Way-to-use-MYSQL-at-AWS/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/13/Java-SWEngineering01-DesignPattern/"
+                            aria-label=": Java-SWEngineering01-DesignPattern"
+                        >
+                            Java-SWEngineering01-DesignPattern
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-13T21:28:14+09:00">
+	
+		    Oct 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/SWEngineering/">SWEngineering</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h1><h2 id="디자인-패턴이란"><a href="#디자인-패턴이란" class="headerlink" title="디자인 패턴이란"></a>디자인 패턴이란</h2><ul>
+<li>자주 발생하는 문제를 해결하기 위해 설계된 재사용 가능한 해결책<ul>
+<li>Don’t reinvent the wheel</li>
+</ul>
+</li>
+<li>소프트웨어 설계 문제를 쉽게 해결할 수 있도록 패턴화된 설계 방식</li>
+<li>팀원들이 공유할 수 있는 공통의 언어가 되어 소통을 원활하게 함</li>
+</ul>
+<h2 id="디자인-패턴의-구조"><a href="#디자인-패턴의-구조" class="headerlink" title="디자인 패턴의 구조"></a>디자인 패턴의 구조</h2><ul>
+<li>문맥 (Context)<ul>
+<li>패턴이 적용될 수 있는 문제 상황을 기술</li>
+</ul>
+</li>
+<li>문제 (Problem)<ul>
+<li>패턴이 적용되어 해결되어야 하는 여러 설계 이슈를 기술</li>
+</ul>
+</li>
+<li>해결 (Solution)<ul>
+<li>문제를 해결하는 설계 구성 요소와 구성 요소 사이의 관계를 기술</li>
+</ul>
+</li>
+</ul>
+<h2 id="디자인-패턴의-종류"><a href="#디자인-패턴의-종류" class="headerlink" title="디자인 패턴의 종류"></a>디자인 패턴의 종류</h2><ul>
+<li><p>Gang of four 패턴</p>
+<ul>
+<li>생성 패턴 (Creational patterns)<ul>
+<li>객체의 생성 방식에 관련된 패턴</li>
+<li>Abstract Factory, Factory Method, Singleton …</li>
+</ul>
+</li>
+<li>구조 패턴 (Structural patterns)<ul>
+<li>클래스/객체를 조합한 구조를 가지는 패턴</li>
+<li>Composite, Decorator …</li>
+</ul>
+</li>
+<li>동작 패턴 (Behavioral patterns)<ul>
+<li>클래스/객체 사이의 동작 분배에 관련된 패턴</li>
+<li>Observer, State, Strategy, Template Method, Command …</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>동시성 패턴 (Concurrency patterns)</p>
+<ul>
+<li>Scheduling, Monitor, Lock …</li>
+</ul>
+</li>
+<li><p>아키텍처 패턴 (Architecture patterns)</p>
+<ul>
+<li>Model-View-Controller, Model-View-Presenter, Model-View-ViewModel …</li>
+</ul>
+</li>
+<li><p>기타 패턴</p>
+<ul>
+<li>Dependency injection, Lazy loading, Mock object …</li>
+</ul>
+</li>
+</ul>
+<h2 id="대표적인-디자인-패턴"><a href="#대표적인-디자인-패턴" class="headerlink" title="대표적인 디자인 패턴"></a>대표적인 디자인 패턴</h2><ul>
+<li><p>싱글톤 패턴</p>
+<ul>
+<li>단 하나의 객체만 존재할 수 있는 클래스를 구현하는 패턴</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>팩토리 패턴</p>
+<ul>
+<li>구상 클래스 객체를 전담하여 생성하는 클래스를 구현하는 패턴</li>
+<li>팩토리 메소드 패턴 (<a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/design_pattern/factory_pattern.htm">ref</a>)</li>
+</ul>
+<p><img src="https://www.tutorialspoint.com/design_pattern/images/factory_pattern_uml_diagram.jpg" alt="img1"></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside Rectangle::draw() method.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside Square::draw() method.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside Circle::draw() method.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShapeFactory</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line"><span class="function">Shape <span class="title">getShape</span><span class="params">(String shapeType)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(shapeType == <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;        </span><br><span class="line">    <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;CIRCLE&quot;</span>))&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Circle();</span><br><span class="line">      </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;RECTANGLE&quot;</span>))&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Rectangle();</span><br><span class="line">      </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;SQUARE&quot;</span>))&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Square();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryPatternDemo</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ShapeFactory shapeFactory = <span class="keyword">new</span> ShapeFactory();</span><br><span class="line"></span><br><span class="line">    Shape shape1 = shapeFactory.getShape(<span class="string">&quot;CIRCLE&quot;</span>);</span><br><span class="line">    shape1.draw();</span><br><span class="line"></span><br><span class="line">    Shape shape2 = shapeFactory.getShape(<span class="string">&quot;RECTANGLE&quot;</span>);</span><br><span class="line"></span><br><span class="line">    shape2.draw();</span><br><span class="line"></span><br><span class="line">    Shape shape3 = shapeFactory.getShape(<span class="string">&quot;SQUARE&quot;</span>);</span><br><span class="line"></span><br><span class="line">    shape3.draw();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>추상 팩토리 패턴 (<a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/design_pattern/abstract_factory_pattern.htm">ref</a>)</li>
+</ul>
+<p><img src="https://www.tutorialspoint.com/design_pattern/images/abstractfactory_pattern_uml_diagram.jpg" alt="img2"></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoundedRectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside RoundedRectangle::draw() method.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoundedSquare</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside RoundedSquare::draw() method.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Inside Rectangle::draw() method.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> Shape <span class="title">getShape</span><span class="params">(String shapeType)</span> </span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShapeFactory</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Shape <span class="title">getShape</span><span class="params">(String shapeType)</span></span>&#123;    </span><br><span class="line">      <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;RECTANGLE&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Rectangle();         </span><br><span class="line">      &#125;<span class="keyword">else</span> <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;SQUARE&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Square();</span><br><span class="line">      &#125;     </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoundedShapeFactory</span> <span class="keyword">extends</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Shape <span class="title">getShape</span><span class="params">(String shapeType)</span></span>&#123;    </span><br><span class="line">      <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;RECTANGLE&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoundedRectangle();         </span><br><span class="line">      &#125;<span class="keyword">else</span> <span class="keyword">if</span>(shapeType.equalsIgnoreCase(<span class="string">&quot;SQUARE&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoundedSquare();</span><br><span class="line">      &#125;     </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryProducer</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AbstractFactory <span class="title">getFactory</span><span class="params">(<span class="keyword">boolean</span> rounded)</span></span>&#123;   </span><br><span class="line">      <span class="keyword">if</span>(rounded)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoundedShapeFactory();         </span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ShapeFactory();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractFactoryPatternDemo</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      AbstractFactory shapeFactory = FactoryProducer.getFactory(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">      Shape shape1 = shapeFactory.getShape(<span class="string">&quot;RECTANGLE&quot;</span>);</span><br><span class="line">      shape1.draw();</span><br><span class="line">      Shape shape2 = shapeFactory.getShape(<span class="string">&quot;SQUARE&quot;</span>);</span><br><span class="line">      shape2.draw();</span><br><span class="line"></span><br><span class="line">      AbstractFactory shapeFactory1 = FactoryProducer.getFactory(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">      Shape shape3 = shapeFactory1.getShape(<span class="string">&quot;RECTANGLE&quot;</span>);</span><br><span class="line">      shape3.draw();</span><br><span class="line">      Shape shape4 = shapeFactory1.getShape(<span class="string">&quot;SQUARE&quot;</span>);</span><br><span class="line">      shape4.draw();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>데코레이터 패턴</p>
+<ul>
+<li>생성자를 이용해 객체에 일정한 기능을 추가하는 패턴 (<a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm">ref</a>)</li>
+</ul>
+<p><img src="https://www.tutorialspoint.com/design_pattern/images/decorator_pattern_uml_diagram.jpg" alt="img3"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Shape: Rectangle&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Shape: Circle&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ShapeDecorator</span> <span class="keyword">implements</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">protected</span> Shape decoratedShape;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ShapeDecorator</span><span class="params">(Shape decoratedShape)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.decoratedShape = decoratedShape;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;</span><br><span class="line">      decoratedShape.draw();</span><br><span class="line">  &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedShapeDecorator</span> <span class="keyword">extends</span> <span class="title">ShapeDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">RedShapeDecorator</span><span class="params">(Shape decoratedShape)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(decoratedShape);        </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      decoratedShape.draw();           </span><br><span class="line">      setRedBorder(decoratedShape);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setRedBorder</span><span class="params">(Shape decoratedShape)</span></span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Border Color: Red&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecoratorPatternDemo</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      Shape circle = <span class="keyword">new</span> Circle();</span><br><span class="line"></span><br><span class="line">      Shape redCircle = <span class="keyword">new</span> RedShapeDecorator(<span class="keyword">new</span> Circle());</span><br><span class="line"></span><br><span class="line">      Shape redRectangle = <span class="keyword">new</span> RedShapeDecorator(<span class="keyword">new</span> Rectangle());</span><br><span class="line">      System.out.println(<span class="string">&quot;Circle with normal border&quot;</span>);</span><br><span class="line">      circle.draw();</span><br><span class="line"></span><br><span class="line">      System.out.println(<span class="string">&quot;\nCircle of red border&quot;</span>);</span><br><span class="line">      redCircle.draw();</span><br><span class="line"></span><br><span class="line">      System.out.println(<span class="string">&quot;\nRectangle of red border&quot;</span>);</span><br><span class="line">      redRectangle.draw();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>옵저버 패턴</p>
+<ul>
+<li>Observable 객체의 변화를 Observer에서 알 수 있도록 하는 패턴 <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/design_pattern/observer_pattern.htm">ref</a></li>
+</ul>
+<p><img src="https://www.tutorialspoint.com/design_pattern/images/observer_pattern_uml_diagram.jpg" alt="img4"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> List&lt;Observer&gt; observers = <span class="keyword">new</span> ArrayList&lt;Observer&gt;();</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.state = state;</span><br><span class="line">      notifyAllObservers();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">      observers.add(observer);        </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyAllObservers</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (Observer observer : observers) &#123;</span><br><span class="line">        observer.update();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;     </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">protected</span> Subject subject;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BinaryObserver</span><span class="params">(Subject subject)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.subject = subject;</span><br><span class="line">      <span class="keyword">this</span>.subject.attach(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println( <span class="string">&quot;Binary String: &quot;</span> + Integer.toBinaryString( subject.getState() ) ); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OctalObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">OctalObserver</span><span class="params">(Subject subject)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.subject = subject;</span><br><span class="line">      <span class="keyword">this</span>.subject.attach(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println( <span class="string">&quot;Octal String: &quot;</span> + Integer.toOctalString( subject.getState() ) ); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HexaObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">HexaObserver</span><span class="params">(Subject subject)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.subject = subject;</span><br><span class="line">      <span class="keyword">this</span>.subject.attach(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println( <span class="string">&quot;Hex String: &quot;</span> + Integer.toHexString( subject.getState() ).toUpperCase() ); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObserverPatternDemo</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Subject subject = <span class="keyword">new</span> Subject();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">new</span> HexaObserver(subject);</span><br><span class="line">      <span class="keyword">new</span> OctalObserver(subject);</span><br><span class="line">      <span class="keyword">new</span> BinaryObserver(subject);</span><br><span class="line"></span><br><span class="line">      System.out.println(<span class="string">&quot;First state change: 15&quot;</span>);    </span><br><span class="line">      subject.setState(<span class="number">15</span>);</span><br><span class="line">      System.out.println(<span class="string">&quot;Second state change: 10&quot;</span>);    </span><br><span class="line">      subject.setState(<span class="number">10</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/13/Java-SWEngineering01-DesignPattern/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/13/Java-Advanced09-Annotation/"
+                            aria-label=": Java-Advanced09-Annotation"
+                        >
+                            Java-Advanced09-Annotation
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-13T21:25:52+09:00">
+	
+		    Oct 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="애노테이션-Annotations"><a href="#애노테이션-Annotations" class="headerlink" title="애노테이션 (Annotations)"></a>애노테이션 (Annotations)</h1><h2 id="애노테이션이란"><a href="#애노테이션이란" class="headerlink" title="애노테이션이란"></a>애노테이션이란</h2><ul>
+<li>애노테이션의 사전적인 의미는 <em>주석</em></li>
+<li>JVM, 컴파일러, 프레임워크 등에게 전달하는 메타데이터로 사용됨</li>
+</ul>
+<h2 id="기본-애노테이션"><a href="#기본-애노테이션" class="headerlink" title="기본 애노테이션"></a>기본 애노테이션</h2><table>
+<thead>
+<tr>
+<th>애노테이션</th>
+<th>설명</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Override</td>
+<td>상속하여 오버라이드된 메소드</td>
+<td></td>
+</tr>
+<tr>
+<td>@Deprecated</td>
+<td>앞으로 사라질 예정임을 표기</td>
+<td></td>
+</tr>
+<tr>
+<td>@SuppressWarnings</td>
+<td>컴파일러에게 특정 경고 메세지를 무시하도록 한다.</td>
+<td>eg. @SuppressWarnings(“unused”)</td>
+</tr>
+<tr>
+<td>@FunctionalInterface</td>
+<td>함수형 인터페이스임을 표기 (Lambda)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="애노테이션의-구성-요소"><a href="#애노테이션의-구성-요소" class="headerlink" title="애노테이션의 구성 요소"></a>애노테이션의 구성 요소</h2><ul>
+<li>애노테이션의 작성<ul>
+<li>추상 메소드와 유사한 형태로 구현</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE&#125;)</span> <span class="comment">// 메타 애노테이션</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.SOURCE)</span>                                     <span class="comment">// 메타 애노테이션</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings &#123;                                   <span class="comment">// 애노테이션 선언</span></span><br><span class="line">    String [] value();                                                 <span class="comment">// 애노테이션 속성</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>애노테이션의 사용<ul>
+<li>key=value 형태로 애노테이션에 속성의 값 전달</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(value = &#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;)</span> <span class="comment">// 키 = 값 배열</span></span><br><span class="line"><span class="meta">@SuppressWarnings(value = &quot;unused&quot;)</span>               <span class="comment">// 값이 하나인 경우 배열 생략 가능</span></span><br><span class="line"><span class="meta">@SuppressWarnings(&#123;&quot;unused&quot;, &quot;rawtypes&quot;&#125;)</span>         <span class="comment">// 속성이 value 하나인 경우 키 생략 가능</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@CustomAnnotation(key1 = &quot;value1&quot;, key2 = &#123;&quot;value2&quot;, &quot;value3&quot;&#125;)</span> <span class="comment">// 속성이 여러개인 경우 키를 여러개 사용</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Target 설정</p>
+<ul>
+<li><p>애노테이션을 사용할 수 있는 대상을 설정</p>
+</li>
+<li><p>ElementType 열거형 상수 사용</p>
+<table>
+<thead>
+<tr>
+<th><code>ElementType</code></th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TYPE</code></td>
+<td>클래스, 인터페이스, 애노테이션, 열거형</td>
+</tr>
+<tr>
+<td><code>FIELD</code></td>
+<td>필드(멤버 변수), 열거형 상수</td>
+</tr>
+<tr>
+<td><code>METHOD</code></td>
+<td>메소드</td>
+</tr>
+<tr>
+<td><code>PARAMETER</code></td>
+<td>메소드의 파라미터</td>
+</tr>
+<tr>
+<td><code>CONSTRUCTOR</code></td>
+<td>생성자</td>
+</tr>
+<tr>
+<td><code>LOCAL_VARIABLE</code></td>
+<td>로컬 변수</td>
+</tr>
+<tr>
+<td><code>ANNOTATION_TYPE</code></td>
+<td>애노테이션</td>
+</tr>
+<tr>
+<td><code>PACKAGE</code></td>
+<td>패키지</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>Retention 설정</p>
+<ul>
+<li><p>애노테이션 정보를 언제까지 유지할 것인지 설정</p>
+</li>
+<li><p>RetentionPolicy 열거형 상수 사용</p>
+</li>
+<li><p>reflection: java.lang.reflect API</p>
+<table>
+<thead>
+<tr>
+<th><code>RetentionPolicy</code></th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SOURCE</code></td>
+<td>컴파일러가 사용. 빌드된 .class 파일에는 포함되지 않음</td>
+</tr>
+<tr>
+<td><code>CLASS</code></td>
+<td>.class 파일에 포함되나, VM이 사용하지 않으며 reflection에 정보를 포함하지 않음</td>
+</tr>
+<tr>
+<td><code>RUNTIME</code></td>
+<td>.class에 포함, VM에서 인식, reflection에 정보를 포함</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="사용자-정의-애노테이션"><a href="#사용자-정의-애노테이션" class="headerlink" title="사용자 정의 애노테이션"></a>사용자 정의 애노테이션</h2><ul>
+<li><p>사용자 정의 애노테이션 구현</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">String <span class="title">valueTwo</span><span class="params">()</span> <span class="keyword">default</span> &quot;기본값&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>사용자 정의 애노테이션 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomAnnotationUsage</span> </span>&#123;</span><br><span class="line">    <span class="meta">@CustomAnnotation(&quot;game&quot;)</span></span><br><span class="line">    String gameName = <span class="string">&quot;여러분의 틱택토&quot;</span>;</span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;localhost&quot;)</span></span><br><span class="line">    String serverIP;</span><br><span class="line">    <span class="meta">@CustomAnnotation(&quot;game&quot;)</span></span><br><span class="line">    String gameMode = <span class="string">&quot;AI vs. AI&quot;</span>;</span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &quot;server&quot;, valueTwo = &quot;8888&quot;)</span></span><br><span class="line">    String serverPort;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reflection을 이용하여 애노테이션에 할당된 값 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomAnnotationTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      CustomAnnotationUsage obj = <span class="keyword">new</span> CustomAnnotationUsage();</span><br><span class="line">      Map&lt;String, Object&gt; gameProp = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">      Map&lt;String, Object&gt; serverProp = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">      Field[] fields = CustomAnnotationUsage.class.getDeclaredFields();</span><br><span class="line">      <span class="keyword">for</span> (Field field: fields) &#123;</span><br><span class="line">          CustomAnnotation annotation = field.getDeclaredAnnotation(CustomAnnotation.class);</span><br><span class="line">          <span class="keyword">if</span> (field.get(obj) == <span class="keyword">null</span>) &#123;</span><br><span class="line">              field.set(obj, annotation.valueTwo());</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (annotation.value().equals(<span class="string">&quot;game&quot;</span>)) &#123;</span><br><span class="line">              gameProp.put(field.getName(), field.get(obj));</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              serverProp.put(field.getName(), field.get(obj));</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      System.out.println(gameProp);</span><br><span class="line">      System.out.println(serverProp);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/13/Java-Advanced09-Annotation/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/08/Java-advanced08-JCF/"
                             aria-label=": Java-advanced08-JCF"
                         >
@@ -2483,608 +3210,6 @@
                         <p>
                             <a
                                 href="/2020/09/22/Java-Advanced04-LambdaExpression/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/09/17/Java-advanced03-InnerClass/"
-                            aria-label=": Java-advanced03-InnerClass"
-                        >
-                            Java-advanced03-InnerClass
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-09-17T19:43:15+09:00">
-	
-		    Sep 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="내부-클래스-Inner-Classes"><a href="#내부-클래스-Inner-Classes" class="headerlink" title="내부 클래스 (Inner Classes)"></a>내부 클래스 (Inner Classes)</h1><h2 id="내부-클래스란"><a href="#내부-클래스란" class="headerlink" title="내부 클래스란"></a>내부 클래스란</h2><ul>
-<li>클래스 내부에 선언하는 클래스로 중첩 클래스(Nested Class)라고도 부름</li>
-<li><code>HAS-A</code> 관계에 있는 클래스가 해당 클래스에서만 사용될 경우 주로 사용</li>
-</ul>
-<h2 id="내부-클래스의-종류"><a href="#내부-클래스의-종류" class="headerlink" title="내부 클래스의 종류"></a>내부 클래스의 종류</h2><ul>
-<li>클래스 영역에 선언<ul>
-<li>인스턴스 내부 클래스: 외부 클래스의 멤버 변수처럼 사용 가능</li>
-<li>클래스 내부 클래스: static이 붙은 정적인 내부 클래스</li>
-</ul>
-</li>
-<li>로컬 영역에 선언<ul>
-<li>로컬 내부 클래스: 선언된 영역의 Scope 내에서 사용 가능</li>
-<li>익명 내부 클래스: 객체를 일회성으로 생성하기 위한 이름이 없는 클래스</li>
-</ul>
-</li>
-</ul>
-<h2 id="다양한-내부-클래스"><a href="#다양한-내부-클래스" class="headerlink" title="다양한 내부 클래스"></a>다양한 내부 클래스</h2><h3 id="인스턴스-내부-클래스-Instance-Inner-Class"><a href="#인스턴스-내부-클래스-Instance-Inner-Class" class="headerlink" title="인스턴스 내부 클래스 (Instance Inner Class)"></a>인스턴스 내부 클래스 (Instance Inner Class)</h3><ul>
-<li><p>클래스 영역에 <code>static</code> 키워드 없이 선언된 클래스</p>
-</li>
-<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
-</li>
-<li><p>외부 클래스 객체를 통해서만 생성 가능</p>
-</li>
-<li><p>static 멤버 변수는 사용할 수 없으나, <code>static final</code>은 사용 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerMemberVar = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//static int staticMemberVar = 1;</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONSTANT_VAR = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(innerMemberVar);</span><br><span class="line">            System.out.println(outerMemberVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> outerMemberVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      IstanceInner obj = <span class="keyword">new</span> InstanceInner();</span><br><span class="line">      obj.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.<span class="function">new <span class="title">InstanceInner</span><span class="params">()</span></span>;</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>외부 클래스의 멤버 변수와 이름이 겹치는 경우 <code>this</code> 활용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InstanceInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span>;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);<span class="comment">// 0</span></span><br><span class="line">            System.out.println(<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 1</span></span><br><span class="line">            System.out.println(Outer.<span class="keyword">this</span>.<span class="keyword">var</span>);<span class="comment">// 2</span></span><br><span class="line">            System.out.println(Outer.y); <span class="comment">// 3 static variable</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">      InstanceInner inner = outer.new InstanceInner();</span><br><span class="line">      inner.innerMethod();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="클래스-내부-클래스-Class-Inner-Class"><a href="#클래스-내부-클래스-Class-Inner-Class" class="headerlink" title="클래스 내부 클래스 (Class Inner Class)"></a>클래스 내부 클래스 (Class Inner Class)</h3><ul>
-<li><p>클래스 영역에 <code>static</code> 키워드와 함께 선언된 내부 클래스</p>
-</li>
-<li><p>외부 클래스 객체가 없어도 생성 가능</p>
-</li>
-<li><p>외부 클래스의 private을 포함한 모든 멤버에 접근 가능</p>
-</li>
-<li><p>static 멤버 변수를 가질 수 있음</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassInner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> innerVar = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> staticInnerVar = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Outer outer = <span class="keyword">new</span> Outer();</span><br><span class="line">            System.out.println(outer.outerVar);</span><br><span class="line">            System.out.println(innerVar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> outerVar = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ClassInner inner = <span class="keyword">new</span> ClassInner();</span><br><span class="line">        inner.innerMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="로컬-내부-클래스-Local-Inner-Class"><a href="#로컬-내부-클래스-Local-Inner-Class" class="headerlink" title="로컬 내부 클래스 (Local Inner Class)"></a>로컬 내부 클래스 (Local Inner Class)</h3><ul>
-<li><p>클래스 영역이 아닌 로컬 영역에서 선언된 클래스</p>
-<ul>
-<li>메소드, 생성자, 초기화 블록의 내부</li>
-</ul>
-</li>
-<li><p>정적 변수는 가질 수 없으나, static final 변수는 가질 수 있음</p>
-</li>
-<li><p>로컬 영역의 변수 다음과 같은 사항을 따름</p>
-<ul>
-<li>Java1.7: final로 선언된 변수에만 접근 가능</li>
-<li>Java1.8: 모든 변수에 접근 가능하나, final로 간주되어 새로운 값 할당 불가</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">outerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">1</span>; <span class="comment">// 메소드 호출 스택</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">LocalInner</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">innerMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="keyword">var</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LocalInner inner = <span class="keyword">new</span> LocalInner(); <span class="comment">// 힙 영역</span></span><br><span class="line">    inner.innerMethod();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="익명의-내부-클래스-Anonymous-Inner-Class"><a href="#익명의-내부-클래스-Anonymous-Inner-Class" class="headerlink" title="익명의 내부 클래스 (Anonymous Inner Class)"></a>익명의 내부 클래스 (Anonymous Inner Class)</h3><ul>
-<li><p>로컬 내부 클래스와 동일하나, 이름이 없어 선언 즉시 한 번 사용 가능</p>
-</li>
-<li><p>추상 클래스나 인터페이스의 구현에 많이 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IFoo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnonymousInnerClassTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">useFoo</span><span class="params">(IFoo foo)</span> </span>&#123;</span><br><span class="line">        foo.<span class="keyword">do</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        useFoo(<span class="keyword">new</span> IFoo() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">do</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Do!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/09/17/Java-advanced03-InnerClass/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/18/HTML-1/"
-                            aria-label=": HTML 1"
-                        >
-                            HTML 1
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-18T13:22:27+09:00">
-	
-		    Aug 18, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><p>hyper text markup language</p>
-<p>html5 부터 xml을 포함 엄격한 문법</p>
-<p>XHTML 2.0 실패를 인정하며 WHATWG의 표준안을 수용하여 HTML5를 만듬</p>
-<h2 id="HTML4-01-XHTML1-0-과-HTML5와-의-차이점"><a href="#HTML4-01-XHTML1-0-과-HTML5와-의-차이점" class="headerlink" title="HTML4.01, XHTML1.0 과 HTML5와 의 차이점"></a>HTML4.01, XHTML1.0 과 HTML5와 의 차이점</h2><hr>
-<ul>
-<li>Block/Inline 구분하지 않게 됨</li>
-</ul>
-<h2 id="HTML의-콘텐츠-모델"><a href="#HTML의-콘텐츠-모델" class="headerlink" title="HTML의 콘텐츠 모델"></a>HTML의 콘텐츠 모델</h2>
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/18/HTML-1/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/14/Java-Advanced01-ExceptionHanding/"
-                            aria-label=": Java-Advanced01-ExceptionHanding"
-                        >
-                            Java-Advanced01-ExceptionHanding
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-14T19:39:04+09:00">
-	
-		    Aug 14, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="예외-처리-Handling-Exceptions"><a href="#예외-처리-Handling-Exceptions" class="headerlink" title="예외 처리 (Handling Exceptions)"></a>예외 처리 (Handling Exceptions)</h1><h2 id="오류와-예외"><a href="#오류와-예외" class="headerlink" title="오류와 예외"></a>오류와 예외</h2><ul>
-<li>프로그램이 동작 중에 비정상 종료가 발생하는 상황</li>
-<li>심각도에 따라 오류와 예외로 분류할 수 있음</li>
-</ul>
-<h3 id="오류-Errors"><a href="#오류-Errors" class="headerlink" title="오류 (Errors)"></a>오류 (Errors)</h3><ul>
-<li>시스템의 메모리가 부족하거나, 무한히 메소드 호출이 발생하는 등 프로그램 복구가 불가능한 상황</li>
-<li>오류가 발생하는 원인을 찾아서 제거하는 방법으로 해결</li>
-</ul>
-<h3 id="예외-Exceptions"><a href="#예외-Exceptions" class="headerlink" title="예외 (Exceptions)"></a>예외 (Exceptions)</h3><ul>
-<li>오류에 비해 심각도가 낮으며, 프로그램의 정상적인 흐름을 방해<br>ex) 파일명으로 파일을 읽으려 하는데, 파일을 찾을 수 없음</li>
-<li>문제 상황을 해결하는 로직을 별도로 구성하여 해결 가능</li>
-</ul>
-<h3 id="예외-처리"><a href="#예외-처리" class="headerlink" title="예외 처리"></a>예외 처리</h3><ul>
-<li>예외가 발생했을 때, 이 상황을 감지하고 해결하기 위해 동작하는 코드</li>
-<li>try ~ catch 구문과 Exception 클래스와 그 자식 클래스를 활용</li>
-</ul>
-<h3 id="Throwable-클래스"><a href="#Throwable-클래스" class="headerlink" title="Throwable 클래스"></a>Throwable 클래스</h3><ul>
-<li>Throwable 클래스는 Exception과 Error 클래스에 의해 상속<ul>
-<li>Exception<ul>
-<li>Checked Exceptions: 예외 처리되지 않으면 컴파일이 되지 않는 예외 - Exception Class 상속</li>
-<li>Unchecked Exception: 예외 처리되지 않아도 컴파일이 되는 예외 - RuntimeException Class 상속</li>
-</ul>
-</li>
-<li>Error: 프로그램이 복구 불가능한 상황</li>
-</ul>
-</li>
-</ul>
-<h3 id="Exception-클래스"><a href="#Exception-클래스" class="headerlink" title="Exception 클래스"></a>Exception 클래스</h3><ul>
-<li><p>Throwable 클래스의 주요 메소드</p>
-<table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public String getMessage()</code></td>
-<td>발생한 예외에 대한 메세지를 반환</td>
-</tr>
-<tr>
-<td><code>public String getLocalizedMessage()</code></td>
-<td>오버라이드하여 추가 메세지 제공 (오버라이드하지 않으면 getMessage()와 동일)</td>
-</tr>
-<tr>
-<td><code>public Throwable getCause()</code></td>
-<td>예외의 원인이 되는 Throwable 객체 반환</td>
-</tr>
-<tr>
-<td><code>public void printStackTrace()</code></td>
-<td>예외가 발생된 메소드가 호출될 때의 Method call stack을 출력</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h2 id="예외-처리-기법"><a href="#예외-처리-기법" class="headerlink" title="예외 처리 기법"></a>예외 처리 기법</h2><h3 id="try-catch-구문"><a href="#try-catch-구문" class="headerlink" title="try ~ catch 구문"></a>try ~ catch 구문</h3>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 예외가 발생할 수 있는 코드 영역</span></span><br><span class="line">    <span class="comment">// 예외 발생 시 예외 객체를 던짐 (throw)</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">// 던져진 예외를 받음 (catch)</span></span><br><span class="line">                        <span class="comment">// Exception의 자식 클래스로 지정하여 특정 클래스를 받는다.</span></span><br><span class="line">    <span class="comment">// 예외 상황을 처리하는 코드</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="다중-예외-처리"><a href="#다중-예외-처리" class="headerlink" title="다중 예외 처리"></a>다중 예외 처리</h3><ul>
-<li><p>여러 개의 catch 구문을 사용하면 다중 예외를 처리할 수 있음</p>
-</li>
-<li><p>if ~ else if 구문처럼, 순차적으로 검사하면서 적용 가능한 예외를 처리</p>
-</li>
-<li><p>다형성이 적용되어, 자식 예외를 처리 가능</p>
-</li>
-<li><p>한가지의 catch 문에 대해서 예외가 잡힘</p>
-</li>
-<li><p>상위 Exception을 제일 밑의 catch문에 배치</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 예외 발생 가능 코드 영역</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (AException e) &#123;</span><br><span class="line">    <span class="comment">// A예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (BException e) &#123;</span><br><span class="line">    <span class="comment">// B예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (CException e) &#123;</span><br><span class="line">    <span class="comment">// C예외 처리</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">// 나머지 모든 예외 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="try-catch-finally-구문"><a href="#try-catch-finally-구문" class="headerlink" title="try ~ catch ~ finally 구문"></a>try ~ catch ~ finally 구문</h3><ul>
-<li><p>try 구문 실행 중에 어떤 일이 발생해도 반드시 실행되어야 하는 구문은 finally 블록에 작성</p>
-</li>
-<li><p>try 구문 내에 return문이 있는 경우에도 finally 블록은 실행됨</p>
-</li>
-<li><p>try 구문 내에서 접근한 System 자원을 안전하게 복구하기 위해 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream file = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    file = <span class="keyword">new</span> FileInputStream(fileName);</span><br><span class="line">    file.read();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;파일처리실패&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (file != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            file.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;파일인풋스트림 종료 실패&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="try-with-resources-구문"><a href="#try-with-resources-구문" class="headerlink" title="try ~ with ~ resources 구문"></a>try ~ with ~ resources 구문</h3><ul>
-<li><p>Java1.7에서 추가된 기능</p>
-</li>
-<li><p>AutoClosable 인터페이스를 구현하는 리소스를 자동으로 close 처리</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (FileInputStream file = <span class="keyword">new</span> FileInputStream(fileName)) &#123;</span><br><span class="line">    file.read();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;파일처리실패&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="예외-처리-위임"><a href="#예외-처리-위임" class="headerlink" title="예외 처리 위임"></a>예외 처리 위임</h2><h3 id="throws"><a href="#throws" class="headerlink" title="throws"></a>throws</h3><ul>
-<li><p>호출한 메소드로 예외 처리를 전달하는 방식</p>
-</li>
-<li><p>Checked Exception의 경우 throws로 위임 가능하나, 최종적으로 try ~ catch를 만나야 함</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CheckedException</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        Class.forname(<span class="string">&quot;A Class&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            methodA();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Unchecked Exception의 경우 throws로 위임하지 않아도 자동으로 전달</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UncheckedException</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line">        x = <span class="number">10</span>/<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          methodA();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ArithmeticException e) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>메소드를 오버라이드한 경우, 조상 클래스의 메소드보다 조상 예외는 던질 수 없음</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BarOne</span> <span class="keyword">extends</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;&#125; <span class="comment">// possible</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BarTwo</span> <span class="keyword">extends</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException </span>&#123;&#125; <span class="comment">// possible</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BarThree</span> <span class="keyword">extends</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;&#125; <span class="comment">// *NOT* possible</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h3><ul>
-<li><p>예외를 발생시키는 키워드</p>
-</li>
-<li><p>new 키워드로 새 Exception 객체를 생성하여 예외 내용을 작성</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exceptMethod</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (Err) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;Some Error&quot;</span>); <span class="comment">// 예외 발생 및 Message 전달</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="사용자-정의-예외-Custom-Exceptions"><a href="#사용자-정의-예외-Custom-Exceptions" class="headerlink" title="사용자 정의 예외 (Custom Exceptions)"></a>사용자 정의 예외 (Custom Exceptions)</h2><ul>
-<li><p>Exception 또는 RuntimeException 클래스를 상속하여 작성</p>
-<ul>
-<li>Exception을 상속한경우 Checked Exception이 되어 반드시 예외를 처리해야 한다.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> ErrorCode &#123;</span><br><span class="line">        ERROR_A, ERROR_B;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ErrorCode errorCode;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(ErrorCode errorCode, String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">        <span class="keyword">this</span>.errorCode = errorCode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getLocalizedMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String message = getMessage();</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> localizedMessage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/14/Java-Advanced01-ExceptionHanding/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/14/OOP-Advanced05-ClassDiagram/"
-                            aria-label=": OOP-Advanced06-ClassDiagram"
-                        >
-                            OOP-Advanced06-ClassDiagram
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-14T19:31:33+09:00">
-	
-		    Aug 14, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/OOP-Advanced/">OOP Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="클래스-다이어그램"><a href="#클래스-다이어그램" class="headerlink" title="클래스 다이어그램"></a>클래스 다이어그램</h1><h2 id="Class-Diagram"><a href="#Class-Diagram" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
-<li>클래스의 구성요소 및 클래스 간의 관계를 묘사하는 다이어그램</li>
-<li>시간에 따라 변하지 않는 정적인 시스템 구조를 표현</li>
-</ul>
-<h2 id="클래스-다이어그램의-목적"><a href="#클래스-다이어그램의-목적" class="headerlink" title="클래스 다이어그램의 목적"></a>클래스 다이어그램의 목적</h2><ul>
-<li>문제 해결을 위한 도메인 구조를 표현</li>
-</ul>
-<h2 id="Unified-Modeling-Language-UML"><a href="#Unified-Modeling-Language-UML" class="headerlink" title="Unified Modeling Language (UML)"></a>Unified Modeling Language (UML)</h2><ul>
-<li>표준화된 모델링 표기 체계</li>
-<li>클래스를 구현하기 전에 설계하는 단계에서 사용<ul>
-<li>클래스 이름, 파라미터, 리턴 타입 등</li>
-</ul>
-</li>
-</ul>
-<h2 id="IDEA에서-UML-작성하기-Plant-UML"><a href="#IDEA에서-UML-작성하기-Plant-UML" class="headerlink" title="IDEA에서 UML 작성하기 (Plant UML)"></a>IDEA에서 UML 작성하기 (Plant UML)</h2><ul>
-<li><p>Plant UML 플러그인 설치</p>
-</li>
-<li><p>Graphviz 설치 <a target="_blank" rel="noopener" href="https://graphviz.org/download/">https://graphviz.org/download/</a></p>
-</li>
-<li><p>Plant UML의 문법</p>
-<ul>
-<li><p>클래스, 추상클래스, 인터페이스</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface IFoo &#123;</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract class Bar</span><br><span class="line"></span><br><span class="line">class Foo &#123;</span><br><span class="line">    int [] array;</span><br><span class="line">    int add(int x, int y);</span><br><span class="line">    setArray(int [] array);</span><br><span class="line">    void method();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>가시성 (Visibility)</p>
-<ul>
-<li>public : +</li>
-<li>protected : #</li>
-<li>default : ~</li>
-<li>private : -</li>
-</ul>
-</li>
-<li><p>클래스 간의 관계</p>
-<ul>
-<li>Extension <code>&lt;|-</code></li>
-<li>Aggregation <code>o--</code></li>
-<li>Composition <code>*--</code></li>
-</ul>
-</li>
-<li><p>타이틀</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title 클래스 다이어그램 제목</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>노트</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">note left of Foo</span><br><span class="line">  노트 &lt;b&gt;내용&lt;&#x2F;b&gt; 작성</span><br><span class="line">end note</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="IDEA에서-UML-자동-생성"><a href="#IDEA에서-UML-자동-생성" class="headerlink" title="IDEA에서 UML 자동 생성"></a>IDEA에서 UML 자동 생성</h2><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/idea/class-diagram.html">https://www.jetbrains.com/help/idea/class-diagram.html</a></p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/14/OOP-Advanced05-ClassDiagram/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/13/Java-Advanced02-WrapperClass/"
-                            aria-label=": Java-Advanced02(WrapperClass)"
-                        >
-                            Java-Advanced02(WrapperClass)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-13T20:15:51+09:00">
-	
-		    Aug 13, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="Wrapper-클래스-Wrapper-Class"><a href="#Wrapper-클래스-Wrapper-Class" class="headerlink" title="Wrapper 클래스 (Wrapper Class)"></a>Wrapper 클래스 (Wrapper Class)</h1><h2 id="Wrapper-클래스란"><a href="#Wrapper-클래스란" class="headerlink" title="Wrapper 클래스란"></a>Wrapper 클래스란</h2><ul>
-<li>기본형 타입을 객체로 사용하기 위한 클래스</li>
-</ul>
-<h2 id="Wrapper-클래스의-종류"><a href="#Wrapper-클래스의-종류" class="headerlink" title="Wrapper 클래스의 종류"></a>Wrapper 클래스의 종류</h2><table>
-<thead>
-<tr>
-<th>기본형</th>
-<th>Wrapper 클래스</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>byte</td>
-<td>Byte</td>
-</tr>
-<tr>
-<td>char</td>
-<td>Character</td>
-</tr>
-<tr>
-<td>short</td>
-<td>Short</td>
-</tr>
-<tr>
-<td>int</td>
-<td>Integer</td>
-</tr>
-<tr>
-<td>long</td>
-<td>Long</td>
-</tr>
-<tr>
-<td>float</td>
-<td>Float</td>
-</tr>
-<tr>
-<td>double</td>
-<td>Double</td>
-</tr>
-<tr>
-<td>boolean</td>
-<td>Boolean</td>
-</tr>
-</tbody></table>
-<h2 id="Wrapper-객체-생성"><a href="#Wrapper-객체-생성" class="headerlink" title="Wrapper 객체 생성"></a>Wrapper 객체 생성</h2><ul>
-<li><p>생성자를 이용한 객체 생성</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer integer = <span class="keyword">new</span> Integer(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>valueOf를 이용한 객체 생성</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer integer = Integer.valueOf(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="Autoboxing-amp-Unboxing"><a href="#Autoboxing-amp-Unboxing" class="headerlink" title="Autoboxing &amp; Unboxing"></a>Autoboxing &amp; Unboxing</h2><ul>
-<li><p>오토박싱 (Autoboxing)</p>
-<ul>
-<li>Java1.5부터 추가된 기능으로, 객체로 다루어야 할 때 자동으로 Wrapper 클래스로 변경하는 기능</li>
-</ul>
-</li>
-<li><p>언박싱 (Unboxing)</p>
-<ul>
-<li>Wrapper 객체를 기본형으로 자동으로 변경하는 기능</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line">Integer wrapped = i;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span> + wrapped;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="Wrapper-타입의-값-비교"><a href="#Wrapper-타입의-값-비교" class="headerlink" title="Wrapper 타입의 값 비교"></a>Wrapper 타입의 값 비교</h2><ul>
-<li><p>Wrapper 타입은 객체이므로, ==를 이용하여 값을 비교할 수 없다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Integer intOne = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">Integer intTwo = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(intOne == intTwo); <span class="comment">// false</span></span><br><span class="line">System.out.println(intOne.equals(intTwo)) <span class="comment">// true</span></span><br><span class="line">System.out.println(intOne == <span class="number">100</span>) <span class="comment">// true (Unboxing)</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="문자열의-기본-자료형-변환"><a href="#문자열의-기본-자료형-변환" class="headerlink" title="문자열의 기본 자료형 변환"></a>문자열의 기본 자료형 변환</h2><ul>
-<li><p>Parsing 정적 메소드를 이용한 변환</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = Integer.parseInt(<span class="string">&quot;100&quot;</span>);</span><br><span class="line"><span class="keyword">long</span> y = Long.parseLong(<span class="string">&quot;512345124&quot;</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Wrapper 객체로의 변환</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer intObj = Integer.valueOf(<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">Integer intObjTwo = <span class="keyword">new</span> Integer(<span class="string">&quot;1234&quot;</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/13/Java-Advanced02-WrapperClass/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

@@ -325,6 +325,547 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/27/Algorithm-%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C/"
+                            aria-label=": Algorithm-중량제한"
+                        >
+                            Algorithm-중량제한
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-27T11:20:41+09:00">
+	
+		    Oct 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>, <a class="category-link" href="/categories/Algorithm/Search/Binary-Search/">Binary Search</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1939 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1939">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li><p>탐색</p>
+</li>
+<li><p>이진탐색</p>
+</li>
+<li><p>BFS</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>다리의 개수 M의 최대 100,000, 중량 제한 C는 최대 1,000,000,000</p>
+</li>
+<li><p>이진탐색을 이용하면 시간 복잡도는 O(M * logC)</p>
+</li>
+<li><p>DFS로 도착지에 옮길 수 있는 지 확인 </p>
+</li>
+<li><p>한 번에 옮길 수 있는 물품의 최대값을 이진탐색으로 찾아낸다.</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>(<span class="params">c</span>):</span></span><br><span class="line">    queue = deque([start_node])</span><br><span class="line">    visited = [<span class="literal">False</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    visited[start_node] = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        x = queue.popleft()</span><br><span class="line">        <span class="keyword">for</span> y, weight <span class="keyword">in</span> adj[x]:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> visited[y] <span class="keyword">and</span> weight &gt;= c:</span><br><span class="line">                visited[y] = <span class="literal">True</span></span><br><span class="line">                queue.append(y)</span><br><span class="line">    <span class="keyword">return</span> visited[end_node]</span><br><span class="line"></span><br><span class="line">start = <span class="number">1000000000</span></span><br><span class="line">end = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y, weight = map(int, input().split())</span><br><span class="line">    adj[x].append((y, weight))</span><br><span class="line">    adj[y].append((x, weight))</span><br><span class="line">    start = min(start, weight)</span><br><span class="line">    end = max(end, weight)</span><br><span class="line"></span><br><span class="line">start_node, end_node = map(int, input().split())</span><br><span class="line"></span><br><span class="line">result = start</span><br><span class="line"><span class="keyword">while</span>(start &lt;= end):</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> bfs(mid):</span><br><span class="line">        result = mid</span><br><span class="line">        start = mid + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        end = mid - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/27/Algorithm-%EC%A4%91%EB%9F%89%EC%A0%9C%ED%95%9C/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/27/Algorithm-%EA%B3%B5%EC%9C%A0%EA%B8%B0-%EC%84%A4%EC%B9%98/"
+                            aria-label=": Algorithm-공유기 설치"
+                        >
+                            Algorithm-공유기 설치
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-27T10:40:54+09:00">
+	
+		    Oct 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>, <a class="category-link" href="/categories/Algorithm/Search/Binary-Search/">Binary Search</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2110 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2110">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li><p>탐색</p>
+</li>
+<li><p>이진탐색</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>집의 개수 N의 최대는 200,000 이고 집의 좌표 X의 최대 1,000,000,000이다</p>
+</li>
+<li><p>이진탐색을 이용하면 시간 복잡도는 O(N * logX)</p>
+</li>
+<li><p>집 간 거리 Gap에 대해서 이진탐색을 한다.</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">n, c = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))`</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line">start = array[<span class="number">1</span>] - array[<span class="number">0</span>]</span><br><span class="line">end = array[<span class="number">-1</span>] - array[<span class="number">0</span>]</span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(start &lt;= end):    // 시간 복잡도 : O(logX)</span><br><span class="line">    mid = (start + end) // <span class="number">2</span></span><br><span class="line">    value = array[<span class="number">0</span>]</span><br><span class="line">    count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(array)): // 시간 복잡도 : O(N)</span><br><span class="line">        <span class="keyword">if</span> array[i] &gt;= value + mid:</span><br><span class="line">            value = array[i]</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> count &gt;= c:</span><br><span class="line">        start = mid + <span class="number">1</span></span><br><span class="line">        result = mid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        end = mid - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/27/Algorithm-%EA%B3%B5%EC%9C%A0%EA%B8%B0-%EC%84%A4%EC%B9%98/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-JOIN-UNION/"
+                            aria-label=": DATABASE-JOIN UNION"
+                        >
+                            DATABASE-JOIN UNION
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:17:58+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h1><ul>
+<li><p>JOIN은 여러개의 테이블에서 데이터를 모아서 보여줄 때 사용됩니다. </p>
+</li>
+<li><p>JOIN에는 INNER JOIN, LEFT JOIN, RIGHT JOIN이 있습니다.</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/97171517-ed7d9980-17d0-11eb-83f2-fd3cfde407e1.png" alt="스크린샷 2020-10-26 오후 9 18 54"></p>
+</li>
+</ul>
+<h2 id="MAKE-TEST-TABLE-amp-DATA"><a href="#MAKE-TEST-TABLE-amp-DATA" class="headerlink" title="MAKE TEST TABLE &amp; DATA"></a>MAKE TEST TABLE &amp; DATA</h2><ul>
+<li>create table &amp; data  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span> (</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (user_id)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> addr (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    addr <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(<span class="keyword">name</span>)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;jin&quot;</span>),</span><br><span class="line">(<span class="string">&quot;po&quot;</span>),</span><br><span class="line">(<span class="string">&quot;alice&quot;</span>),</span><br><span class="line">(<span class="string">&quot;petter&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> addr(addr, user_id)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;seoul&quot;</span>, <span class="number">1</span>),</span><br><span class="line">(<span class="string">&quot;pusan&quot;</span>, <span class="number">2</span>),</span><br><span class="line">(<span class="string">&quot;deajeon&quot;</span>, <span class="number">3</span>),</span><br><span class="line">(<span class="string">&quot;deagu&quot;</span>, <span class="number">5</span>),</span><br><span class="line">(<span class="string">&quot;seoul&quot;</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h2><ul>
+<li><p>두 테이블 사이에 공통된 값이 없는 row는 출력하지 않는다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>world 데이터베이스에서 도시이름과 국가이름을 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">JOIN</span> country</span><br><span class="line"><span class="keyword">ON</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>아래와 같이 사용할수도 있다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city, country</span><br><span class="line"><span class="keyword">WHERE</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="LEFT-JOIN"><a href="#LEFT-JOIN" class="headerlink" title="LEFT JOIN"></a>LEFT JOIN</h2><ul>
+<li><p>왼쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="RIGHT-JOIN"><a href="#RIGHT-JOIN" class="headerlink" title="RIGHT JOIN"></a>RIGHT JOIN</h2><ul>
+<li><p>오른쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
+</li>
+<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="JOIN과-DISDINCT의-사용"><a href="#JOIN과-DISDINCT의-사용" class="headerlink" title="JOIN과 DISDINCT의 사용"></a>JOIN과 DISDINCT의 사용</h3><ul>
+<li><p>지역과 대륙별 사용하는 언어 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>대륙과 지역별 사용하는 언어의 수 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sub1.region, sub1.continent, <span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="keyword">count</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br><span class="line">) <span class="keyword">AS</span> sub1</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> sub1.region, sub1.continent</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="테이블-세개-조인하기"><a href="#테이블-세개-조인하기" class="headerlink" title="테이블 세개 조인하기"></a>테이블 세개 조인하기</h3><ul>
+<li>국가별, 도시별, 언어의 사용율  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> city</span><br><span class="line"><span class="keyword">ON</span> country.code = city.countrycode</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> country.code = countrylanguage.countrycode</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country, city, countrylanguage</span><br><span class="line"><span class="keyword">WHERE</span> country.code = city.countrycode <span class="keyword">and</span> country.code = countrylanguage.countrycode</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h1><blockquote>
+<p>UNION은 SELECT 문의 결과 데이터를 하나로 합쳐서 출력합니다. </p>
+</blockquote>
+<blockquote>
+<p>컬럼의 갯수와 타입, 순서가 같아야 합니다.</p>
+</blockquote>
+<blockquote>
+<p>UNION은 자동으로 distinct를 하여 중복을 제거해 줍니다. </p>
+</blockquote>
+<blockquote>
+<p>중복제거를 안하고 컬럼 데이터를 합치고 싶으면 UNION ALL을 사용합니다.</p>
+</blockquote>
+<blockquote>
+<p>또한 UNION을 이용하면 Full Outer Join을 구현할수 있습니다.</p>
+</blockquote>
+<ul>
+<li><p>UNION</p>
+<ul>
+<li>user 테이블의 name 컬럼과 addr 테이블의 addr 컬럼의 데이터를 하나로 함쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>UNION ALL</p>
+<ul>
+<li>중복데이터를 제거하지 않고 결과 데이터 합쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>FULL OUTER JOIN</p>
+<ul>
+<li>union을 이용하여 full outer join 구현  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-JOIN-UNION/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-Function/"
+                            aria-label=": DATABASE-Function"
+                        >
+                            DATABASE-Function
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:05:50+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><ul>
+<li><p>CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.</p>
+<ul>
+<li><p>CEIL</p>
+<p>  CEIL는 실수 데이터를 올림 할 때 사용합니다.</p>
+</li>
+<li><p>12.345를 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CEIL</span>(<span class="number">12.345</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">CEIL</span>(Percentage)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ROUND</p>
+<p>  ROUND는 실수데이터를 반올림 할 때 사용합니다.</p>
+<ul>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 반올림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 반올림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>TRUNCATE</p>
+<p>  TRUNCATE는 실수 데이터를 버림 할 때 사용합니다.</p>
+<ul>
+<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 버림</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRUNCATE</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 버림하여 정수로 나타냄</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>),</span><br><span class="line"><span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>DATE_FORMAT</p>
+<p>  DATE_FORMAT은 날짜 데이터에 대한 포멧을 바꿔줍니다.</p>
+<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html</a></p>
+<ul>
+<li>sakila 데이터 베이스에서 월별 총 수입  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATE_FORMAT</span>(payment_date, <span class="string">&quot;%Y-%m&quot;</span>) <span class="keyword">AS</span> monthly, <span class="keyword">SUM</span>(amount) <span class="keyword">AS</span> amount</span><br><span class="line"><span class="keyword">FROM</span> payment</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> monthly</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="조건문-IF-IFNULL-CASE"><a href="#조건문-IF-IFNULL-CASE" class="headerlink" title="조건문 IF, IFNULL, CASE"></a>조건문 IF, IFNULL, CASE</h2><ul>
+<li><p>SQL에서도 다른 언어에서 처럼 조건문 사용이 가능합니다. IF, CASE 에 대해서 설명합니다.</p>
+</li>
+<li><p>IF(조건, 참, 거짓)</p>
+</li>
+</ul>
+<pre><code>- 도시의 인구가 100만이 넘으면 &quot;big city&quot; 그렇지 않으면 &quot;small city&quot;를 출력하는 city_scale 컬럼을 추가
+    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;, population, &lt;span class=&quot;keyword&quot;&gt;IF&lt;/span&gt;(population &amp;gt; &lt;span class=&quot;number&quot;&gt;1000000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;big city&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;small city&amp;quot;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; city_scale&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; city&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+<ul>
+<li><p>IFNULL(참, 거짓)</p>
+<ul>
+<li>독립년도가 없는 데이터는 0으로 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IndepYear, <span class="keyword">IFNULL</span>(IndepYear, <span class="number">0</span>) <span class="keyword">as</span> IndepYear</span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>CASE</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CASE </span><br><span class="line">WHEN (조건1) THEN (출력1)</span><br><span class="line">WHEN (조건2) THEN (출력2)</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> (컬럼명)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>나라별로 인구가 10억 이상, 1억 이상, 1억 이하인 컬럼을 추가하여 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, population,</span><br><span class="line"><span class="keyword">CASE</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">1000000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 1 bilion&quot;</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">100000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 100 milion&quot;</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">&quot;below 100 milion&quot;</span></span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> <span class="keyword">result</span></span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-Function/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
+                            aria-label=": DATABASE-DML-INSERT UPDATE DELETE"
+                        >
+                            DATABASE-DML-INSERT UPDATE DELETE
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:00:15+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><ul>
+<li><p>테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)</span><br><span class="line"><span class="keyword">VALUES</span>(&lt;value_1&gt;, &lt;value_2&gt;, ...)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test 데이터 베이스 선택</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE test;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>user1 테이블에 user_id, name, email, age, rdate를 입력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user1(user_id, <span class="keyword">name</span>, email, age, rdate)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;pdj@gmail.com&quot;</span>, <span class="number">30</span>, <span class="keyword">now</span>()),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&quot;peter&quot;</span>, <span class="string">&quot;peter@daum.net&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2017-02-20&#x27;</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">&quot;alice&quot;</span>, <span class="string">&quot;alice@naver.com&quot;</span>, <span class="number">23</span>, <span class="string">&#x27;2018-01-05&#x27;</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">&quot;po&quot;</span>, <span class="string">&quot;po@gmail.com&quot;</span>, <span class="number">43</span>, <span class="string">&#x27;2002-09-16&#x27;</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">&quot;andy&quot;</span>, <span class="string">&quot;andy@gmail.com&quot;</span>, <span class="number">17</span>, <span class="string">&#x27;2016-04-28&#x27;</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;jin1224@gmail.com&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2013-09-02&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>city_2 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city_2 (</span><br><span class="line">    <span class="keyword">Name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    CountryCode <span class="built_in">CHAR</span>(<span class="number">3</span>),</span><br><span class="line">    District <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    Population <span class="built_in">INT</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>select 절에서 나온 결과데이터를 Insert</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> city_2</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span>, CountryCode, District, Population</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">WHERE</span> Population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h1><ul>
+<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">SET</span> &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>jin 이름을 가지고 있는 사람의 나이를 20, 이메일을 <a href="mailto:&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;">&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;</a>으로 변경  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; UPDATE user1</span><br><span class="line"><span class="keyword">SET</span> age=<span class="number">20</span>, email=<span class="string">&quot;pdj@daum.net&quot;</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">&quot;jin&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="DELETE-DROP-TRUNCATE"><a href="#DELETE-DROP-TRUNCATE" class="headerlink" title="DELETE, DROP, TRUNCATE"></a>DELETE, DROP, TRUNCATE</h1><ul>
+<li>조건을 설정하여 데이터를 삭제할수 있습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>2016-01-01 이전 데이터 삭제 (DML)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DELETE FROM user1</span><br><span class="line">WHERE rdate &lt; &quot;2016-01-01&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 구조를 남기고 모든 데이터를 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; TRUNCATE FROM user1</span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 전체를 모두 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DROP FROM user1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-Constraint/"
                             aria-label=": DATABASE-Constraint"
                         >
@@ -819,403 +1360,6 @@
                         <p>
                             <a
                                 href="/2020/10/26/%ED%8A%B8%EB%A1%9C%ED%94%BC-%EC%A7%84%EC%97%B4/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/%EB%B2%A0%EC%8A%A4%ED%8A%B8%EC%85%80%EB%9F%AC/"
-                            aria-label=": 베스트셀러"
-                        >
-                            베스트셀러
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T11:57:11+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1302 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1302">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>파이썬 dictionary 자료형 사용(HashMap)</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">books = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    book = input()</span><br><span class="line">    <span class="keyword">if</span> book <span class="keyword">not</span> <span class="keyword">in</span> books:</span><br><span class="line">        books[book] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        books[book] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">target = max(books.values())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> book, number <span class="keyword">in</span> books.items():</span><br><span class="line">    <span class="keyword">if</span> number == target:</span><br><span class="line">        array.append(book)</span><br><span class="line"></span><br><span class="line">print(sorted(array)[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/%EB%B2%A0%EC%8A%A4%ED%8A%B8%EC%85%80%EB%9F%AC/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/%EC%83%88/"
-                            aria-label=": 새"
-                        >
-                            새
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T10:48:08+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1543 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1543">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>N이 최대 1000000000 이다</p>
-</li>
-<li><p>K가 반복적으로 증가하므로, 새의 마리 수는 빠르게 증가한다</p>
-</li>
-<li><p>요구하는 대로 단순 구현하면 된다</p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">k = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> n != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">if</span> k &gt; n:</span><br><span class="line">        k = <span class="number">1</span></span><br><span class="line">    n -= k</span><br><span class="line">    k += <span class="number">1</span></span><br><span class="line">    result += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/%EC%83%88/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/%EB%AC%B8%EC%84%9C-%EA%B2%80%EC%83%89/"
-                            aria-label=": 문서 검색"
-                        >
-                            문서 검색
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T10:35:33+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1543 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1543">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>단순히 모든 경우의 수를 계산하여 해결</p>
-</li>
-<li><p>인덱스를 하나씩 올리면서 단어와 비교</p>
-</li>
-<li><p>동일하면 결과값을 1 올리고 인덱스 위치를 단어의 길이만큼 늘린다</p>
-</li>
-<li><p>다르면 인덱스를 1만 올린다</p>
-</li>
-<li><p>단어의 길이보다 문서의 남은 인덱스의 길이가 짧을 때 종료한다</p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">document = input()</span><br><span class="line">word = input()</span><br><span class="line"></span><br><span class="line">index = <span class="number">0</span></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> len(document) - index &gt;= len(word):</span><br><span class="line">    <span class="keyword">if</span> document[index:index + len(word)] == word:</span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        index += len(word)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/%EB%AC%B8%EC%84%9C-%EA%B2%80%EC%83%89/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/K%EB%B2%88%EC%A7%B8-%EC%88%98/"
-                            aria-label=": K번째 수"
-                        >
-                            K번째 수
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T18:58:54+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 11004 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11004">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 정렬</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>데이터의 크기가 5000000이다</p>
-</li>
-<li><p>병합정렬, 퀵 정렬, 힙 정렬을 사용해야한다.</p>
-</li>
-<li><p>python 기본 정렬 라이브러리로도 가능하다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-<ul>
-<li><p>병합정렬 </p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span>(<span class="params">array</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    left = array[:mid]</span><br><span class="line">    right = array[mid:]</span><br><span class="line">    i, j, k = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">        <span class="keyword">if</span> left[i] &lt; right[j]</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            right += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> i == len(left):</span><br><span class="line">        <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> j == len(right):</span><br><span class="line">        <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line">n, k = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">array = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line"></span><br><span class="line">array = merge_sort(array)</span><br><span class="line"></span><br><span class="line">print(array[k<span class="number">-1</span>])</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>정렬 라이브러리</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n, k = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">array = list(map(int, input().split()))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line">print(array[k<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/K%EB%B2%88%EC%A7%B8-%EC%88%98/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
-                            aria-label=": 수 정렬하기2"
-                        >
-                            수 정렬하기2
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T18:22:26+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2751 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2751">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 정렬</p>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>데이터의 개수가 1000000개</p>
-</li>
-<li><p>NlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬</p>
-</li>
-<li><p>기본 정렬 알고리즘으로 해결가능</p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-<ul>
-<li><p>병합 정렬</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span>(<span class="params">array</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    mid = len(array) // <span class="number">2</span></span><br><span class="line">    left = merge_sort(array[:mid])</span><br><span class="line">    right = merge_sort(array[mid:])</span><br><span class="line">    i, j, k = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">        <span class="keyword">if</span> left[i] &lt; left[j]:</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i + = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> i == len(left):</span><br><span class="line">        <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> j == len(right):</span><br><span class="line">        <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = merge_sort(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> array:</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>정렬 라이브러리</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

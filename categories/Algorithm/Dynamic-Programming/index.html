@@ -326,15 +326,15 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
-                            aria-label=": Algorithm-기타리스트"
+                            href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/"
+                            aria-label=": Algorithm-가장 높은 탑 쌓기"
                         >
-                            Algorithm-기타리스트
+                            Algorithm-가장 높은 탑 쌓기
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-11-06T20:49:30+09:00">
+    <time datetime="2020-11-06T21:18:59+09:00">
 	
 		    Nov 06, 2020
     	
@@ -351,7 +351,7 @@
             </div>
             
                 <div class="postShorten-content">
-                    <p>백준 2655 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2655">문제링크</a></p>
+                    <p>백준 9251 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/9251">문제링크</a></p>
 <ul>
 <li><p>문제유형 : </p>
 <ul>
@@ -398,6 +398,120 @@
             break
 
     print(result)</code></pre>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                            aria-label=": Algorithm-기타리스트"
+                        >
+                            Algorithm-기타리스트
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-06T20:49:30+09:00">
+	
+		    Nov 06, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 2655 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2655">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>동적 프로그래밍</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>벽돌의 수가 N개일 때, 시간복잡도 O(N^2)</p>
+</li>
+<li><p>벽돌의 번호를 출력해야함 -&gt; 계산된 테이블 역추적 가능해야함</p>
+</li>
+<li><p>먼저 벽돌을 무게 기준으로 정렬</p>
+</li>
+<li><p>D[i] = 인덱스 i인 벽돌을 가장 아래에 두었을 때의 높이</p>
+</li>
+<li><p>모든 0 &lt;= j &lt; i에 대해, D[i] = max(D[i], D[j] + height[i]) if area[i] &gt; area[j]</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/98366665-b2545380-2077-11eb-8864-377b0eb9f703.png" alt="스크린샷 2020-11-06 오후 9 33 07"></p>
+</li>
+<li><p>이후에 Max Value에서 테이블 역추적</p>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<pre><code class="python">    n = int(input())
+    array = []
+
+    array.append((0, 0, 0, 0))
+    for i in range(1, n + 1):
+        area, height, weight = map(int, input().split())
+        array.append((i, area, height, weight))
+
+    array.sort(key=lambda data: data[3])
+
+    dp = [0] * (n + 1)
+
+    for i in range(1, n + 1):
+        for j in range(0, i):
+            if array[i][1] &gt; array[j][1]:
+                dp[i] = max(dp[i], dp[j] + array[i][2])
+
+    max_value = max(dp)
+    index = n
+    result = []
+
+    while index != 0:
+        if max_value == dp[index]:
+            result.append(array[index][0])
+            max_value -= array[index][2]
+        index -= 1
+
+    result.reverse()
+    print(len(result))
+    [print(i) for i in result]</code></pre>
 </li>
 </ul>
 

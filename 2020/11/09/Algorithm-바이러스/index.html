@@ -6,27 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Algorithm-기타리스트 - Java Server Developer</title>
+    <title>Algorithm-바이러스 - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"백준 2655 : 문제링크\n\n문제유형 : \n\n동적 프로그래밍\n\n\n설명\n\n벽돌의 수가 N개일 때, 시간복잡도 O(N^2)\n\n벽돌의 번호를 출력해야함 -&gt; 계산된 테이블 역추적 가능해야함\n\n먼저 벽돌을 무게 기준으로 정렬\n\nD[i] = 인덱스 i인 벽돌을 가장 아래에 두었을 때의 높이\n\n모든 0 &lt;= j &lt; i에 대해, D[i] = max(D[i], D[j] + height[i]) if area[i] &gt; area[j]\n  \n\n이후에 Max Value에서 테이블 역추적\n\n\n\n풀이\n    n = int(input())\n    array = []\n\n    array.append((0, 0, 0, 0))\n    for i in range(1, n + 1):\n        area, height, weight = map(int, input().split())\n        array.append((i, area, height, weight))\n\n    array.sort(key=lambda data: data[3])\n\n    dp = [0] * (n + 1)\n\n    for i in range(1, n + 1):\n        for j in range(0, i):\n            if array[i][1] &gt; array[j][1]:\n                dp[i] = max(dp[i], dp[j] + array[i][2])\n\n    max_value = max(dp)\n    index = n\n    result = []\n\n    while index != 0:\n        if max_value == dp[index]:\n            result.append(array[index][0])\n            max_value -= array[index][2]\n        index -= 1\n\n    result.reverse()\n    print(len(result))\n    [print(i) for i in result]\n\n\n","dateCreated":"2020-11-06T20:49:30+09:00","dateModified":"2020-11-09T10:08:46+09:00","datePublished":"2020-11-06T20:49:30+09:00","description":"","headline":"Algorithm-기타리스트","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/","keywords":"Algorithm, Dynamic Programming"}</script>
-    <meta name="description" content="백준 2655 : 문제링크  문제유형 :   동적 프로그래밍   설명  벽돌의 수가 N개일 때, 시간복잡도 O(N^2)  벽돌의 번호를 출력해야함 -&gt; 계산된 테이블 역추적 가능해야함  먼저 벽돌을 무게 기준으로 정렬  D[i] &#x3D; 인덱스 i인 벽돌을 가장 아래에 두었을 때의 높이  모든 0 &lt;&#x3D; j &lt; i에 대해, D[i] &#x3D; max(D[">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"\n백준 2606 : 문제링크\n\n문제유형 : \n\n그래프 탐색\n\nDFS\n\n\n\n설명\n\n시작 정점에서부터 도달할 수 있는 노드의 수를 계산\n\n\n풀이\n  123456789101112131415161718192021n = int(input())m = int(input())adj = [[] for _ in range(n + 1)]visited = [False] * (n + 1)count = 0for _ in range(m):    x, y = map(int, input().split())    adj[x].append(y)    adj[y].append(X)def dfs(now_pos):    global count    count += 1    visited[now_pos] = True    for next_pos in adj[now_pos]:        if not visited[next_pos]:            dfs(next_pos)dfs(1)print(count - 1)\n\n\n","dateCreated":"2020-11-09T10:39:42+09:00","dateModified":"2020-11-09T10:53:40+09:00","datePublished":"2020-11-09T10:39:42+09:00","description":"","headline":"Algorithm-바이러스","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/","keywords":"Algorithm, Graph, DFS"}</script>
+    <meta name="description" content="백준 2606 : 문제링크  문제유형 :   그래프 탐색  DFS    설명  시작 정점에서부터 도달할 수 있는 노드의 수를 계산   풀이   123456789101112131415161718192021n &#x3D; int(input())m &#x3D; int(input())adj &#x3D; [[] for _ in range(n + 1)]visited &#x3D; [False] * (n">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Algorithm-기타리스트">
-<meta property="og:url" content="https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/index.html">
+<meta property="og:title" content="Algorithm-바이러스">
+<meta property="og:url" content="https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="백준 2655 : 문제링크  문제유형 :   동적 프로그래밍   설명  벽돌의 수가 N개일 때, 시간복잡도 O(N^2)  벽돌의 번호를 출력해야함 -&gt; 계산된 테이블 역추적 가능해야함  먼저 벽돌을 무게 기준으로 정렬  D[i] &#x3D; 인덱스 i인 벽돌을 가장 아래에 두었을 때의 높이  모든 0 &lt;&#x3D; j &lt; i에 대해, D[i] &#x3D; max(D[">
+<meta property="og:description" content="백준 2606 : 문제링크  문제유형 :   그래프 탐색  DFS    설명  시작 정점에서부터 도달할 수 있는 노드의 수를 계산   풀이   123456789101112131415161718192021n &#x3D; int(input())m &#x3D; int(input())adj &#x3D; [[] for _ in range(n + 1)]visited &#x3D; [False] * (n">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/98366665-b2545380-2077-11eb-8864-377b0eb9f703.png">
-<meta property="article:published_time" content="2020-11-06T11:49:30.000Z">
-<meta property="article:modified_time" content="2020-11-09T01:08:46.179Z">
+<meta property="article:published_time" content="2020-11-09T01:39:42.000Z">
+<meta property="article:modified_time" content="2020-11-09T01:53:40.083Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="Dynamic Programming">
+<meta property="article:tag" content="Graph">
+<meta property="article:tag" content="DFS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/98366665-b2545380-2077-11eb-8864-377b0eb9f703.png">
     
     
         
@@ -331,20 +330,20 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Algorithm-기타리스트
+            Algorithm-바이러스
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-11-06T20:49:30+09:00">
+    <time datetime="2020-11-09T10:39:42+09:00">
 	
-		    Nov 06, 2020
+		    Nov 09, 2020
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/DFS/">DFS</a>
 
 
     
@@ -356,61 +355,24 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>백준 2655 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2655">문제링크</a></p>
+            <hr>
+<p>백준 2606 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2606">문제링크</a></p>
 <ul>
 <li><p>문제유형 : </p>
 <ul>
-<li>동적 프로그래밍</li>
+<li><p>그래프 탐색</p>
+</li>
+<li><p>DFS</p>
+</li>
 </ul>
 </li>
 <li><p>설명</p>
 <ul>
-<li><p>벽돌의 수가 N개일 때, 시간복잡도 O(N^2)</p>
-</li>
-<li><p>벽돌의 번호를 출력해야함 -&gt; 계산된 테이블 역추적 가능해야함</p>
-</li>
-<li><p>먼저 벽돌을 무게 기준으로 정렬</p>
-</li>
-<li><p>D[i] = 인덱스 i인 벽돌을 가장 아래에 두었을 때의 높이</p>
-</li>
-<li><p>모든 0 &lt;= j &lt; i에 대해, D[i] = max(D[i], D[j] + height[i]) if area[i] &gt; area[j]</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/98366665-b2545380-2077-11eb-8864-377b0eb9f703.png" alt="스크린샷 2020-11-06 오후 9 33 07"></p>
-</li>
-<li><p>이후에 Max Value에서 테이블 역추적</p>
-</li>
+<li>시작 정점에서부터 도달할 수 있는 노드의 수를 계산</li>
 </ul>
 </li>
 <li><p>풀이</p>
-<pre><code class="python">    n = int(input())
-    array = []
-
-    array.append((0, 0, 0, 0))
-    for i in range(1, n + 1):
-        area, height, weight = map(int, input().split())
-        array.append((i, area, height, weight))
-
-    array.sort(key=lambda data: data[3])
-
-    dp = [0] * (n + 1)
-
-    for i in range(1, n + 1):
-        for j in range(0, i):
-            if array[i][1] &gt; array[j][1]:
-                dp[i] = max(dp[i], dp[j] + array[i][2])
-
-    max_value = max(dp)
-    index = n
-    result = []
-
-    while index != 0:
-        if max_value == dp[index]:
-            result.append(array[index][0])
-            max_value -= array[index][2]
-        index -= 1
-
-    result.reverse()
-    print(len(result))
-    [print(i) for i in result]</code></pre>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">m = int(input())</span><br><span class="line">adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">visited = [<span class="literal">False</span>] * (n + <span class="number">1</span>)</span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    adj[x].append(y)</span><br><span class="line">    adj[y].append(X)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">now_pos</span>):</span></span><br><span class="line">    <span class="keyword">global</span> count</span><br><span class="line">    count += <span class="number">1</span></span><br><span class="line">    visited[now_pos] = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> next_pos <span class="keyword">in</span> adj[now_pos]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> visited[next_pos]:</span><br><span class="line">            dfs(next_pos)</span><br><span class="line"></span><br><span class="line">dfs(<span class="number">1</span>)</span><br><span class="line">print(count - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
@@ -424,7 +386,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a>
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/DFS/" rel="tag">DFS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Graph/" rel="tag">Graph</a>
 
             </div>
         
@@ -437,9 +399,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/"
-                    data-tooltip="Algorithm-가장 높은 탑 쌓기"
-                    aria-label="PREVIOUS: Algorithm-가장 높은 탑 쌓기"
+                    href="/2020/11/09/Algorithm-%EC%9C%A0%EA%B8%B0%EB%86%8D-%EB%B0%B0%EC%B6%94/"
+                    data-tooltip="Algorithm-유기농 배추"
+                    aria-label="PREVIOUS: Algorithm-유기농 배추"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -451,9 +413,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/06/Algorithm-LCS/"
-                    data-tooltip="Algorithm-LCS"
-                    aria-label="NEXT: Algorithm-LCS"
+                    href="/2020/11/09/Algorithm-%EC%88%A8%EB%B0%95%EA%BC%AD%EC%A7%88/"
+                    data-tooltip="Algorithm-숨박꼭질"
+                    aria-label="NEXT: Algorithm-숨박꼭질"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -478,7 +440,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -491,7 +453,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -504,7 +466,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -566,9 +528,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/"
-                    data-tooltip="Algorithm-가장 높은 탑 쌓기"
-                    aria-label="PREVIOUS: Algorithm-가장 높은 탑 쌓기"
+                    href="/2020/11/09/Algorithm-%EC%9C%A0%EA%B8%B0%EB%86%8D-%EB%B0%B0%EC%B6%94/"
+                    data-tooltip="Algorithm-유기농 배추"
+                    aria-label="PREVIOUS: Algorithm-유기농 배추"
                 >
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -580,9 +542,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/06/Algorithm-LCS/"
-                    data-tooltip="Algorithm-LCS"
-                    aria-label="NEXT: Algorithm-LCS"
+                    href="/2020/11/09/Algorithm-%EC%88%A8%EB%B0%95%EA%BC%AD%EC%A7%88/"
+                    data-tooltip="Algorithm-숨박꼭질"
+                    aria-label="NEXT: Algorithm-숨박꼭질"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -607,7 +569,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -620,7 +582,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -633,7 +595,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -677,7 +639,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -690,7 +652,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -703,7 +665,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -764,9 +726,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/11/06/Algorithm-%EA%B8%B0%ED%83%80%EB%A6%AC%EC%8A%A4%ED%8A%B8/';
+            this.page.url = 'https://kimyechan.github.io/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/';
               
-            this.page.identifier = '2020/11/06/Algorithm-기타리스트/';
+            this.page.identifier = '2020/11/09/Algorithm-바이러스/';
               
           };
           (function() {
