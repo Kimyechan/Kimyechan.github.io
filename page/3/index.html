@@ -325,6 +325,101 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/27/DATABASE-Sub-Query/"
+                            aria-label=": DATABASE-Sub Query"
+                        >
+                            DATABASE-Sub Query
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-27T18:27:28+09:00">
+	
+		    Oct 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Sub-Query"><a href="#Sub-Query" class="headerlink" title="Sub Query"></a>Sub Query</h1><blockquote>
+<p>sub query는 query 문 안에 있는 query를 의미합니다. </p>
+</blockquote>
+<blockquote>
+<p>SELECT절, FROM절, WHERE 등에 사용이 가능합니다.</p>
+</blockquote>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><ul>
+<li><p>전체 나라수, 전체 도시수, 전체 언어수를 출력 ( SELECT 절에 사용 )</p>
+<h2 id="SUB-QUERY-사용시-JOIN-TABLE-크기를-줄일-수-있다"><a href="#SUB-QUERY-사용시-JOIN-TABLE-크기를-줄일-수-있다" class="headerlink" title="  SUB QUERY 사용시 JOIN TABLE 크기를 줄일 수 있다"></a>  <code>SUB QUERY 사용시 JOIN TABLE 크기를 줄일 수 있다</code></h2>  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">count</span>(<span class="keyword">name</span>) <span class="keyword">FROM</span> city) <span class="keyword">AS</span> total_city,</span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">count</span>(<span class="keyword">name</span>) <span class="keyword">FROM</span> country) <span class="keyword">AS</span> total_country,</span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">count</span>(<span class="keyword">DISTINCT</span>(<span class="keyword">Language</span>)) <span class="keyword">FROM</span> countrylanguage) <span class="keyword">AS</span> total_language</span><br><span class="line"><span class="keyword">FROM</span> DUAL</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>800만 이상되는 도시의 국가코드, 이름, 도시인구수를 출력 ( FROM 절에 사용 )</p>
+<ul>
+<li><p>SUB QUERY를 안 쓸때 </p>
+<ul>
+<li>city table row : 4079</li>
+<li>coutnry table row : 239</li>
+<li>JOIN TABLE : 4079 * 239   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    city</span><br><span class="line"><span class="keyword">JOIN</span></span><br><span class="line">    (<span class="keyword">SELECT</span> code, <span class="keyword">name</span></span><br><span class="line">    <span class="keyword">FROM</span> country) <span class="keyword">AS</span> country</span><br><span class="line"><span class="keyword">ON</span> city.countrycode = country.code</span><br><span class="line"><span class="keyword">HAVING</span> city.population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>SUB QUERY를 쓸 때</p>
+<ul>
+<li>city table row : 10</li>
+<li>coutnry table row : 239</li>
+<li>JOIN TABLE : 10 * 239   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    (<span class="keyword">SELECT</span> countrycode, <span class="keyword">name</span>, population</span><br><span class="line">    <span class="keyword">FROM</span> city</span><br><span class="line">    <span class="keyword">WHERE</span> population &gt; <span class="number">8000000</span>) <span class="keyword">AS</span> city</span><br><span class="line"><span class="keyword">JOIN</span></span><br><span class="line">    (<span class="keyword">SELECT</span> code, <span class="keyword">name</span></span><br><span class="line">    <span class="keyword">FROM</span> country) <span class="keyword">AS</span> country</span><br><span class="line"><span class="keyword">ON</span> city.countrycode = country.code;</span><br></pre></td></tr></table></figure>
+<br>
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>800만 이상 도시의 국가코드, 국가이름, 대통령이름을 출력( WHERE 절에 사용 )</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> code, <span class="keyword">name</span>, HeadOfState</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">WHERE</span> code <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(countrycode) <span class="keyword">FROM</span> city <span class="keyword">WHERE</span> population &gt; <span class="number">8000000</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/27/DATABASE-Sub-Query/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/27/Algorithm-%EC%B5%9C%EC%86%8C-%ED%9E%99/"
                             aria-label=": Algorithm-최소 힙"
                         >
@@ -1289,79 +1384,6 @@
                         <p>
                             <a
                                 href="/2020/10/26/DATABASE-DDL/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/"
-                            aria-label=": 성 지키기"
-                        >
-                            성 지키기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T12:18:55+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1236 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1236">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐색</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>행 기준, 열 기준 중 더 큰 값을 출력한다.</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(input())</span><br><span class="line"></span><br><span class="line">row = [<span class="number">0</span>] * n</span><br><span class="line">column = [<span class="number">0</span>] * m</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">        <span class="keyword">if</span> array[i][j] == <span class="string">&#x27;X&#x27;</span>:</span><br><span class="line">            row[i] = <span class="number">1</span></span><br><span class="line">            column[j] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">row_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">if</span> row[i] == <span class="number">0</span>:</span><br><span class="line">        row_count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">column_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="keyword">if</span> column[j] == <span class="number">0</span>:</span><br><span class="line">        column_count +=  <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">print(max(row_count, column_count))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/%EC%84%B1-%EC%A7%80%ED%82%A4%EA%B8%B0/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

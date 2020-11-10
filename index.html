@@ -325,6 +325,227 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/10/Web-Servlet/"
+                            aria-label=": Web-Servlet"
+                        >
+                            Web-Servlet
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-10T10:46:44+09:00">
+	
+		    Nov 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Servlet/">Servlet</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<h1 id="Servlet이란"><a href="#Servlet이란" class="headerlink" title="Servlet이란"></a>Servlet이란</h1><h2 id="Servlet의-개념"><a href="#Servlet의-개념" class="headerlink" title="Servlet의 개념"></a>Servlet의 개념</h2><p><code>웹 기반의 요청에 대한 동적인 처리가 가능한 하나의 클래스</code></p>
+<ul>
+<li>Server Side에서 돌아가는 Java Program</li>
+<li>개발자가 작성하는 부분</li>
+</ul>
+<h2 id="Servlet의-기본적인-동작과정"><a href="#Servlet의-기본적인-동작과정" class="headerlink" title="Servlet의 기본적인 동작과정"></a>Servlet의 기본적인 동작과정</h2><p><img src="https://user-images.githubusercontent.com/12459864/98617499-786aa200-2342-11eb-864d-68ab0d9309fb.png" alt="스크린샷 2020-11-10 오전 10 49 45"></p>
+<ol>
+<li>Web Server는 HTTP Request를 Web Container(Servlet Container)에게 위임한다<ol>
+<li>web.xml설정에서 어떤 URL과 매핑되어 있는지 확인</li>
+<li>클라이언트(browser)의 요청 URL을 보고 적절한 Servlet을 실행</li>
+</ol>
+</li>
+<li>Web Container는 service() 메소드를 호출하기 전에 Servlet객체를 메모리에 올린다<ol>
+<li>Web Container는 적절한 Servlet 파일을 컴파일(.class 파일 생성)한다</li>
+<li>.class 파일을 메모리에 올려 Servlet 객체를 만든다</li>
+<li>메모리에 로드될 때 Servlet객체를 초기화하는 init()메소드가 실행된다</li>
+</ol>
+</li>
+<li>Web Container는 Request가 올 때 마다 thread를 생성하여 처리한다.<ul>
+<li>각 thread는 Servlet의 단일 객체에 대한 service() 메소드를 실행한다</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Servlet Program에서 Thread의 역할<ul>
+<li>Thread의 역할: Servlet의 doGet()또는 doPost()를 호출</li>
+<li>Web Container(Servlet Container)는 thread의 생성과 제거를 담당한다<ul>
+<li>하지만 thread의 생성과 제거의 반복은 큰 오버헤드를 만든다</li>
+<li>이를 위해서 Tomcat(WAS)는 “Thread Pool”이라는 적절한 매커니즘을 사용해서 오버해드를 줄인다</li>
+</ul>
+</li>
+<li>즉, WAS는 Servlet의 Life cycle을 담당한다<ul>
+<li>웹 브라우저 클라이언트의 요청이 들어왔을때 Servlet 객체의 생성은 WAS가 알아서 처리한다</li>
+<li>WAS 위에서 Servlet이 돌아다니고 개발자는 이 Servlet을 만들어야한다</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet-Life-Cycle"><a href="#Servlet-Life-Cycle" class="headerlink" title="Servlet Life Cycle"></a>Servlet Life Cycle</h2><p><img src="https://user-images.githubusercontent.com/12459864/98619387-7a366480-2346-11eb-8974-c01160f924ef.png" alt="스크린샷 2020-11-10 오전 11 18 28"></p>
+<ul>
+<li><p>클라이언트에 요청이 들어오면 WAS는 해당 요청에 맞는 Servlet이 메모리에 있는지 확인한다</p>
+<ul>
+<li>만약 메모리에 없다면 해당 Servlet Class를 메모리에 올린 후(Servlet 객체 생성) <ul>
+<li>init() 메소드 실행 후 service() 메소드를 실행</li>
+</ul>
+</li>
+<li>메모리에 있다면 바로 service 메소드 실행  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(메모리에 없음) &#123;</span><br><span class="line">    <span class="comment">// 해당 서블릿 클래스를 메모리에 올림</span></span><br><span class="line">    <span class="comment">// init() 메소드를 실행</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// service() 메소드를 실행</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>init()</p>
+<ul>
+<li>한 번만 수행된다</li>
+<li>클라이언트의 요청에 따라 적절한 Servlet이 생성되고<br>이 Servlet이 메모리에 로드될 때 init() 메소드가 실행된다</li>
+<li>역할: Servlet 객체를 초기화</li>
+</ul>
+</li>
+<li><p>service()</p>
+<ul>
+<li>응답에 대한 모든 내용은 service()메소드에 구현해야한다</li>
+<li>Servlet이 수신한 모든 request에 대해 service() 메소드가 호출된다<ul>
+<li>HttpServlet을 상속받은 Servlet클래스에서 service()메서드를 오버라이드하지 않았다면, 그 부모인 HttpServlet의 service()가 호출된다</li>
+<li>HttpServlet의 service()메소드는 템플릿 메소드 패턴으로 구현되었다</li>
+<li>service()메소드는 request의 type(HTTP Method: GET, POST, PUT, DELETE)에 따라 적절한 메소드(doGet, doPost, doPut, doDelete)를 호출한다</li>
+<li>즉, 하위 클래스에서 doGet, doPost등의 메소드를 오버라이드 해두면 HttpServlet의 service()메소드가 요청에 맞는 메소드를 알아서 호출할 수 있게 된다</li>
+</ul>
+</li>
+<li>메소드가 return하면 thread는 종료된다</li>
+</ul>
+</li>
+<li><p>destory()</p>
+<ul>
+<li>한 번만 수행된다</li>
+<li>Web Application이 갱신되거나 WAS를 종료할 때 호출된다</li>
+<li>역할: Servlet 객체를 메모리에서 제거</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet-메서드-구현-예시"><a href="#Servlet-메서드-구현-예시" class="headerlink" title="Servlet 메서드 구현 예시"></a>Servlet 메서드 구현 예시</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// `javax.servlet.http.HttpServlet`를 상속받은 Servlet 클래스</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="comment">// doPost()를 재정의 </span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response <span class="keyword">throws</span> ServletException, IOException &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        // read form fields</span></span></span><br><span class="line"><span class="function"><span class="params">        String username = request.getParameter(<span class="string">&quot;username&quot;</span>)</span></span>;</span><br><span class="line">        String password = request.getParameter(<span class="string">&quot;password&quot;</span>);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// get response writer</span></span><br><span class="line">        PrintWriter writer = response.getWriter();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 여기서 -&gt; DB 접근 등 Business Logic 부분을 처리 */</span></span><br><span class="line">         </span><br><span class="line">        <span class="comment">// build HTML code (view 생성 부분)</span></span><br><span class="line">        String htmlResponse = <span class="string">&quot;&lt;html&gt;&quot;</span>;</span><br><span class="line">        htmlResponse += <span class="string">&quot;&lt;h2&gt;Your username is: &quot;</span> + username + <span class="string">&quot;&lt;br/&gt;&quot;</span>;      </span><br><span class="line">        htmlResponse += <span class="string">&quot;Your password is: &quot;</span> + password + <span class="string">&quot;&lt;/h2&gt;&quot;</span>;    </span><br><span class="line">        htmlResponse += <span class="string">&quot;&lt;/html&gt;&quot;</span>;    </span><br><span class="line">         </span><br><span class="line">        <span class="comment">// return response</span></span><br><span class="line">        writer.println(htmlResponse);         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>WAS는 웹 브라우저로부터 요청을 받으면</p>
+<ol>
+<li>요청할 때 가지고 있는 정보를 HttpServletRequest객체를 생성하여 저장한다</li>
+<li>웹 브라우저에게 응답을 보낼 때, 사용하기 위한 HttpServletResponse 객체를 생성한다</li>
+<li>생성된 HttpServletRequest, HttpServletResponse 객체를 Servlet에게 전달한다</li>
+</ol>
+</li>
+<li><p>일반적으로 javax.servlet.http.HttpServlet를 상속받은 Servlet클래스를 작성한다</p>
+<ol>
+<li>HttpServletRequest request 파라미터를 통해서 사용자가 입력한 data를 읽는다</li>
+<li>HttpServletResponse 파라지터를 통해서 출력/결과를 생성한다</li>
+</ol>
+</li>
+<li><p>Servlet 클래스에 doGet() 또는 doPost()중 적어도 하나를 재정의하여 작성한다</p>
+<ul>
+<li><code>protected doGet()(HttpServletRequest request, HttpServletResponse response)&#123;&#125;</code></li>
+<li><code>protected doPost()(HttpServletRequest request, HttpServletResponse response)&#123;&#125;</code></li>
+</ul>
+</li>
+<li><p>HttpServletRequest request 객체</p>
+<ul>
+<li><p>사용자가 입력한 내용을 request 객체에 받아온다</p>
+<ul>
+<li>Http 프로토콜의 Request정보를 Servlet에 전달</li>
+</ul>
+</li>
+<li><p>헤더 정보, 파라미터, 쿠키, URI, URL, Body의 Stream등을 읽어 들이는 메소드가 있다.</p>
+</li>
+<li><p>getHeader(“원하는 헤더 이름”)</p>
+<ul>
+<li>원하는 헤더 정보를 확인할 수 있다</li>
+</ul>
+</li>
+<li><p>getParameter()</p>
+<ul>
+<li>이 메소드를 호출하여 parameter값을 가져온다<ul>
+<li>parameter값은 URL또는 form의 input tag를 통해서 넘어올 수 있다</li>
+</ul>
+</li>
+<li>Ex.  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String name = request.getParameter(<span class="string">&quot;firstname&quot;</span>);</span><br><span class="line"><span class="keyword">int</span> year = Integer.parseInt (request.getParameter(<span class="string">&quot;year&quot;</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>getParameterValues()</p>
+<ul>
+<li>parameter가 여러 개의 값을 반환할 때 이 메소드를 호출한다. (Ex. checkbox)  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String languages[] = request.getParameterValues(<span class="string">&quot;language&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet-Concurrency"><a href="#Servlet-Concurrency" class="headerlink" title="Servlet Concurrency"></a>Servlet Concurrency</h2><p><img src="https://user-images.githubusercontent.com/12459864/98628278-98599000-2359-11eb-9ce9-88a1021160f7.png" alt="스크린샷 2020-11-10 오후 1 35 15"></p>
+<ul>
+<li><p>Java 서블릿 컨테니어/ 웹 서버는 일반적으로 멀티 쓰레드 환경이다.</p>
+<ul>
+<li>같은 Servlet에 대한 여러 개의 요청이 동시에 실행될 수 있어 runtime에 따라 결과가 달라질 수 있다</li>
+<li>즉, Servlet은 메모리에 한 번 올라오고 멀티 쓰레드 환경에서 여러 thread는 하나의 Servlet을 공유하기 대문에 <strong>Concurrency Control</strong>가 필요하다</li>
+</ul>
+</li>
+<li><p>Servlet의 service() 메소드 안의 변수</p>
+<ul>
+<li>정적 변수, 맴버 변수: 공유하는 자원이므로 <strong>상호 배제</strong>가 필요</li>
+<li>지역 변수: thread마다 독립적으로 생성</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet-Annotation"><a href="#Servlet-Annotation" class="headerlink" title="Servlet Annotation"></a>Servlet Annotation</h2><p><img src="https://user-images.githubusercontent.com/12459864/98628886-f20e8a00-235a-11eb-83ea-311d46ec4ad2.png" alt="스크린샷 2020-11-10 오후 1 44 53"></p>
+<ul>
+<li>Servlet API 3.0은 javax.servlet.annotation이라는 새로운 패키지를 도입했다.<ul>
+<li>Tomcat 7이상에서 사용가능</li>
+</ul>
+</li>
+<li>Annotation은 Web Deployment Descriptor파일(web.xml)의 XML 설정을 대체할 수 있다</li>
+<li>Annotation Type<ul>
+<li>@WebServlet: 서블릿 선언</li>
+<li>@WebInitParam: 초기화 매개 변수 지정</li>
+</ul>
+</li>
+<li>Ex)  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet(value = &quot;/Simple&quot;, </span></span><br><span class="line"><span class="meta">initParams = &#123;@WebInitParam(name=&quot;foo&quot;, value=&quot;Hello &quot;), </span></span><br><span class="line"><span class="meta">          @WebInitParam(name=&quot;bar&quot;, value=&quot; World!&quot;)&#125;)</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Simple</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">     response.setContentType(<span class="string">&quot;text/html&quot;</span>); </span><br><span class="line">     PrintWriter out=response.getWriter(); </span><br><span class="line"></span><br><span class="line">        out.print(<span class="string">&quot;&lt;html&gt;&lt;body&gt;&quot;</span>); </span><br><span class="line">     out.print(<span class="string">&quot;&lt;h3&gt;Hello Servlet&lt;/h3&gt;&quot;</span>); </span><br><span class="line">     out.println(getInitParameter(<span class="string">&quot;foo&quot;</span>)); </span><br><span class="line">     out.println(getInitParameter(<span class="string">&quot;bar&quot;</span>)); </span><br><span class="line">     out.print(<span class="string">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/10/Web-Servlet/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/09/Web-Web-Server%EC%99%80-WAS%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%99%80-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B5%AC%EC%A1%B0/"
                             aria-label=": Web-Web Server와 WAS의 차이와 웹 서비스 구조"
                         >
@@ -484,19 +705,16 @@
 </li>
 </ul>
 <h1 id="Web-Service-Architecture"><a href="#Web-Service-Architecture" class="headerlink" title="Web Service Architecture"></a>Web Service Architecture</h1><ul>
-<li><p>Architecture 종류</p>
-<ol>
-<li><p>Client -&gt; Web Server -&gt; DB</p>
-</li>
-<li><p>Client -&gt; WAS -&gt; DB</p>
-</li>
-<li><p>Client -&gt; Web Server -&gt; WAS -&gt; DB</p>
-<p><img src="https://user-images.githubusercontent.com/12459864/98615919-0c3a6f00-233f-11eb-8db3-4b212f0d1685.png" alt="스크린샷 2020-11-10 오전 10 24 24"></p>
-</li>
+<li>Architecture 종류<ol>
+<li>Client -&gt; Web Server -&gt; DB</li>
+<li>Client -&gt; WAS -&gt; DB</li>
+<li>Client -&gt; Web Server -&gt; WAS -&gt; DB</li>
 </ol>
 </li>
-<li><p>3번 구조의 동작 과정</p>
-<ol>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/12459864/98615919-0c3a6f00-233f-11eb-8db3-4b212f0d1685.png" alt="스크린샷 2020-11-10 오전 10 24 24"></p>
+<ul>
+<li>3번 구조의 동작 과정<ol>
 <li>Web Server는 웹 브라우저 클라이언트로부터 HTTP 요청을 받는다</li>
 <li>Web Server는 클라이언트의 요청(Request)을 WAS에 보낸다</li>
 <li>WAS는 관련된 Servlet을 메모리에 올린다</li>
@@ -504,7 +722,7 @@
 <li>HttpServletRequest와 HttpServletResponse 객체를 생성하여 Servlet에 전달한다<ol>
 <li>Thread는 Servlet의 service() 메소드를 호출한다</li>
 <li>service()메소드는 요청에 맞게 doGet()또는 doPost()메소드를 호출한다</li>
-<li><code>protected doGet(HttpServletRequest request, HttpServletResponse response)</code></li>
+<li><strong>protected doGet(HttpServletRequest request, HttpServletResponse response)</strong></li>
 </ol>
 </li>
 <li>doGet()또는 doPost()메소드는 인자에 맞게 생성된 적절한 동적 페이지를 Response객체에 담아 WAS에 전달한다</li>
@@ -1208,90 +1426,6 @@
                         <p>
                             <a
                                 href="/2020/11/06/Algorithm-LCS/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/"
-                            aria-label=": Algorithm-가장 긴 증가하는 부분 수열"
-                        >
-                            Algorithm-가장 긴 증가하는 부분 수열
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-05T21:13:37+09:00">
-	
-		    Nov 05, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 11053 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11053">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li><p>탐색</p>
-</li>
-<li><p>동적 프로그래밍</p>
-</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>수열의 크기가 N일 때, 기본적으로 동적 프로그래밍 알고리즘으로 O(N^2)으로 해결</p>
-</li>
-<li><p>D[i]는 array[i]를 마지막 원소로 가지는 부분 수열의 최대 길이</p>
-</li>
-<li><p>모든 0 &lt;= j &lt; i에 대하여, D[i] = max(D[i], D[j] + 1) if array[j] &lt; array[i]</p>
-</li>
-<li><p>N = 6 일 때</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/98241365-304c2800-1fae-11eb-9e59-90dcfaa59106.png" alt="스크린샷 2020-11-05 오후 9 30 40"></p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = list(map, input().split())</span><br><span class="line">dp = [<span class="number">1</span>] * n</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, i):</span><br><span class="line">        <span class="keyword">if</span> array[j] &lt; array[i]:</span><br><span class="line">            dp[i] = max(dp[i], dp[j] + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(max(dp))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/05/Algorithm-%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
