@@ -325,6 +325,80 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/20/%EC%8A%A4%ED%83%9D-%EC%88%98%EC%97%B4/"
+                            aria-label=": 스택 수열"
+                        >
+                            스택 수열
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-20T20:46:13+09:00">
+	
+		    Oct 20, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1874: <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1874">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 스택, 그리디</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>스택에 특정 수에 도달할 때까지 push한다.</p>
+</li>
+<li><p>스택이 특정 수에 도달하면 pop한다.</p>
+</li>
+<li><p>수의 배열을 완성하면 출력하고 불가능하면 NO를 출력한다</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">count = <span class="number">1</span></span><br><span class="line">stack = []</span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>): <span class="comment"># 데이터 개수만큼 반복</span></span><br><span class="line">    data = int(input())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> count &lt;= data: <span class="comment"># 입력 받은 데이터에 도달할 때 까지 삽입 </span></span><br><span class="line">        stack.append(count)</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        result.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> stack[<span class="number">-1</span>] == data: <span class="comment"># 스택의 최상위 원소가 데이터와 같을 때 출력</span></span><br><span class="line">        stack.pop()</span><br><span class="line">        result.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>: <span class="comment"># 불가능한 경우</span></span><br><span class="line">        print(<span class="string">&#x27;NO&#x27;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">&#x27;\n&#x27;</span>.join(result)) <span class="comment"># 가능한 경우</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/20/%EC%8A%A4%ED%83%9D-%EC%88%98%EC%97%B4/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/20/%EB%B8%94%EB%9E%99%EC%9E%AD/"
                             aria-label=": 블랙잭"
                         >
@@ -2261,315 +2335,6 @@
                         <p>
                             <a
                                 href="/2020/10/07/Java-Advanced07-IO/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/09/28/Java-Advanced06-java-lang/"
-                            aria-label=": Java-Advanced06-java.lang"
-                        >
-                            Java-Advanced06-java.lang
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-09-28T22:33:38+09:00">
-	
-		    Sep 28, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="java-lang-패키지"><a href="#java-lang-패키지" class="headerlink" title="java.lang 패키지"></a>java.lang 패키지</h1><h2 id="java-lang"><a href="#java-lang" class="headerlink" title="java.lang"></a>java.lang</h2><ul>
-<li>Java에서 가장 기본적이며 자주 사용되는 클래스를 모은 패키지</li>
-<li>별도로 import하지 않아도 사용이 가능한, Java의 기본 중의 기본</li>
-</ul>
-<h2 id="Object-Class"><a href="#Object-Class" class="headerlink" title="Object Class"></a>Object Class</h2><ul>
-<li><p>모든 클래스의 조상 클래스로, 클래스가 갖춰야할 기본 기능을 제공</p>
-</li>
-<li><p>필요한 경우 Object 클래스에 정의된 메소드를 Override하여 사용</p>
-<table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public final native Class&lt;?&gt; getClass()</code></td>
-<td>현재 객체의 클래스를 반환한다.</td>
-</tr>
-<tr>
-<td><code>public native int hashCode()</code></td>
-<td>현재 객체의 해시코드 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>public boolean equals()</code></td>
-<td>현재 객체와 대상이 같은 객체를 참조하는지 여부를 반환한다.</td>
-</tr>
-<tr>
-<td><code>public String toString()</code></td>
-<td>객체를 문자열로 변환하여 반환한다.</td>
-</tr>
-<tr>
-<td><code>proteted native clone() throws CloneNotSupportedException</code></td>
-<td>객체를 복사하여 새로운 객체로 반환한다.</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h3 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h3><ul>
-<li><p>Object 클래스의 equals() 메소드 구현</p>
-<ul>
-<li>객체의 참조만을 비교</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>String 클래스의 equals() 메소드 구현 (Overriding)</p>
-<ul>
-<li>효율적으로 객체의 내용이 동일한지 비교</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">        String aString = (String)anObject;</span><br><span class="line">        <span class="keyword">if</span> (!COMPACT_STRINGS || <span class="keyword">this</span>.coder == aString.coder) &#123;</span><br><span class="line">            <span class="keyword">return</span> StringLatin1.equals(value, aString.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h3><ul>
-<li>객체를 구분하기 위해 사용하는 정수값(해시코드)을 반환<ul>
-<li>프로그램 내에서 객체마다 유일하므로 주소값처럼 사용 가능</li>
-</ul>
-</li>
-<li><code>native</code> 메소드이므로 구현 내용을 볼 수 없음</li>
-<li>hashCode()의 제한 사항<ul>
-<li>한 객체의 hashCode()를 여러번 호출할 경우, equals()에 사용하는 값이 변하지 않으면 동일한 값을 반환해야 한다.</li>
-<li>equals() 메소드가 같다고 판단한 두 객체의 hashCode() 반환값은 같아야 한다.</li>
-<li>equals() 메소드가 다르다고 판단한 두 객체의 hashCode()가 반드시 다를 필요는 없으나, 다른 값이 나오면 HashTable 성능이 향상된다.</li>
-</ul>
-</li>
-</ul>
-<h3 id="clone"><a href="#clone" class="headerlink" title="clone()"></a>clone()</h3><ul>
-<li><p>자신을 복제하여 새로운 객체를 생성하는 메소드</p>
-</li>
-<li><p>배열을 복제할 경우 새로운 객체를 생성하므로 원본을 훼손하지 않을 수 있음</p>
-</li>
-<li><p>clone() override 시 <code>Cloneable</code> 인터페이스를 구현해야 함</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> [] ints = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> [] ints2 = ints.clone();</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="getClass"><a href="#getClass" class="headerlink" title="getClass()"></a>getClass()</h3><ul>
-<li><p>Class 에 대한 정보를 담고 있는 Class 객체를 반환</p>
-</li>
-<li><p>객체의 getClass() 메소드 또는 해당 클래스의 정적 변수 class를 이용 가능</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;method A called.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FooTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Foo foo = <span class="keyword">new</span> Foo();</span><br><span class="line">        Class fooClass = foo.getClass();</span><br><span class="line"></span><br><span class="line">        System.out.println(fooClass.getName());</span><br><span class="line">        System.out.println(fooClass.getDeclaredMethods().length);</span><br><span class="line">        System.out.println(Foo.class.getDeclaredMethod(&quot;methodA&quot;).invoke(foo));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="System"><a href="#System" class="headerlink" title="System"></a>System</h3><ul>
-<li><p>실행 중인 OS와 interact하기 위한 클래스</p>
-</li>
-<li><p>System 클래스의 주요 정적 변수</p>
-<table>
-<thead>
-<tr>
-<th>속성</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public static final PrintStream err</code></td>
-<td>오류를 출력하기 위한 표준 출력 스트림</td>
-</tr>
-<tr>
-<td><code>public static final InputStream in</code></td>
-<td>표준 입력을 처리하기 위한 입력 스트림</td>
-</tr>
-<tr>
-<td><code>public static final PrintStream out</code></td>
-<td>표준 출력을 처리하기 위한 출력 스트림</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>System 클래스의 주요 정적 메소드</p>
-<table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>arraycopy()</code></td>
-<td>src 배열의 내용을 dst 배열로 복사한다.</td>
-</tr>
-<tr>
-<td><code>currentTimeMillis()</code></td>
-<td>현재 시스템 시간을 ms로 반환한다.</td>
-</tr>
-<tr>
-<td><code>exit()</code></td>
-<td>프로그램을 종료한다</td>
-</tr>
-<tr>
-<td><code>gc()</code></td>
-<td>GC를 요청한다.</td>
-</tr>
-<tr>
-<td><code>getenv()</code></td>
-<td>환경 변수의 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>getProperties()</code></td>
-<td>시스템 속성을 Property로 반환한다.</td>
-</tr>
-<tr>
-<td><code>getProperty()</code></td>
-<td>시스템 속성 값을 문자열로 반환한다. 없을 경우 null 또는 def를 반환</td>
-</tr>
-<tr>
-<td><code>identityHashCode()</code></td>
-<td>객체의 해시코드 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>lineSeparator()</code></td>
-<td>시스템의 줄넘김 문자열을 반환한다. UNIX: <code>\n</code>, WINDOWS: <code>\r\n</code></td>
-</tr>
-<tr>
-<td><code>nanoTime()</code></td>
-<td>시스템 시간을 ns로 반환한다.</td>
-</tr>
-<tr>
-<td><code>setProperties()</code></td>
-<td>시스템 속성을 한번에 설정한다.</td>
-</tr>
-<tr>
-<td><code>setProperty()</code></td>
-<td>시스템 속성을 하나씩 설정한다.</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>주요 Property</p>
-<table>
-<thead>
-<tr>
-<th>속성</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>user.country</code></td>
-<td>OS 로케일 정보</td>
-</tr>
-<tr>
-<td><code>java.io.tmpdir</code></td>
-<td>임시 경로</td>
-</tr>
-<tr>
-<td><code>line.separator</code></td>
-<td>줄넘김 문자열</td>
-</tr>
-<tr>
-<td><code>user.home</code></td>
-<td>유저 홈 경로</td>
-</tr>
-<tr>
-<td><code>file.separator</code></td>
-<td>파일 경로 구분</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h3><ul>
-<li><p>수학 계산에 필요한 메소드를 가진 final 클래스</p>
-<table>
-<thead>
-<tr>
-<th>메소드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>abs()</code></td>
-<td>절대값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>ceil()</code></td>
-<td>올림 값을 double로 반환한다.</td>
-</tr>
-<tr>
-<td><code>floor()</code></td>
-<td>내림 값을 double로 반환한다.</td>
-</tr>
-<tr>
-<td><code>max()</code></td>
-<td>두 값 중 더 큰 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>min()</code></td>
-<td>두 값 중 더 작은 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>random()</code></td>
-<td>0 이상 1.0 미만의 임의의 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>round()</code></td>
-<td>소수점 첫째자리에서 반올림한 정수 값을 반환한다.</td>
-</tr>
-<tr>
-<td><code>addExact()</code></td>
-<td>덧셈 연산으로, Overflow 발생 시 <code>ArithmaticException</code> 발생.</td>
-</tr>
-<tr>
-<td><code>subtractExact()</code></td>
-<td>뺄셈 연산으로, Overflow 발생 시 <code>ArithmaticException</code> 발생.</td>
-</tr>
-<tr>
-<td><code>multiplyExact()</code></td>
-<td>곱셈 연산으로, Overflow 발생 시 <code>ArithmaticException</code> 발생.</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/09/28/Java-Advanced06-java-lang/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
