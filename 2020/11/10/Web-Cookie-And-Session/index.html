@@ -6,19 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Tag: HTTP - Java Server Developer</title>
+    <title>Web-Cookie And Session - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{}</script>
-    <meta property="og:type" content="blog">
-<meta property="og:title" content="Java Server Developer">
-<meta property="og:url" content="https://kimyechan.github.io/tags/HTTP/index.html">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"\nGoal\n\nCookie와 Session이 왜 필요한 이유\nCookie란 무엇인지에 대해 이해한다\nSession이란 무엇인지에 대해 이해한다\nCookie와 Session의 차이에 대해 이해한다\n\n\n쿠키와 세션의 사용 이유HTTP 프로토콜의 특징\n비연결지향(Conectionless)\nHTTP는 클라이언트가 요청(Request)을 서버에 보내고, 서버는 클라이언트에 요청에 맞는 응답(Response)를 보내면 바로 연결을 끊는다\n\n\n상태 정보를 유지 안 함(Stateless)\n연결을 끊는 순간 클라이언트와 서버의 통신은 끝나면 상태 정보를 유지하지 않는다\n\n\n\n쿠키와 세션의 필요성\nHTTP 프로토콜은 위와 같은 특징으로 모든 요청간의 의존관계가 없다\n즉, 현재 접속한 사용자가 이전에 접속했던 사용자와 같은 사용자인지 아닌지 알 수 있는 방법이 없다\n계속해서 연결을 유지하지 않기 때문에 리소스 낭비가 줄어드는 것이 큰 장점이지만, 통신할 때마다 새로 연결하기 때문에 클라이언트는 매 요청마다 인증을 해야한다는 단점이 있다\n이전 요청과 현재 요청이 같은 사용자의 요청인지 알기 위해서는 상태를 유지해야한다\nHTTP프로토콜에서 상태를 유지하기 위한 기술로 쿠키와 세션이 있다\n\n쿠키 (Cookie)쿠키란?\n쿠키는 클라이언트(브라우저) 로컬에 저장되는 키와 값이 들어있는 작은 데이터 파일한다\n유효한 시간을 명시할 수 있으며, 유효 시간이 정해지면 브라우저가 종료되어도 쿠키가 유지된다는 특징이 있다 \n쿠키는 클라이언트의 상태 정보를 로컬에 저장했다가 참조한다\n\n구성요소\n쿠키의 이름(name)\n쿠키의 값(value)\n쿠키의 만료시간(Expire)\n쿠키를 전송할 도메인 이름(Domain)\n쿠키를 전송할 경로(Path)\n보안 연결 여부(Secure)\nHttpOnly 여부(HttpOnly)\n\n세션쿠키(Session Cookie)와 지속 쿠키(Persistent Cookie)\n지속 쿠키 \n만료 날짜/시간을 지정하지 않으면 항상 유지하라는 것으로 판단하고 지속 쿠키에 저장된다\n파일로 저장되므로 브라우저가 종료되어도 쿠키는 남아있다\n\n\n세션 쿠키\n만료 날짜/시간을 지정하면 세션 쿠키로 저장된다\n브라우저 메모리에 저장되므로 브라우저가 종료되면 쿠키는 사라지게 된다\n\n\n\n동작 방식\n\n웹 브라우저가 서버에 요청\n상태를 유지하고 싶은 값을 쿠키(Cookie)로 생성\n서버가 응답할 때 Http Response Header의 Set-Cookie에 쿠키를 포함해서 전송 1Set-Cookie: id&#x3D;chan\n전달받은 쿠키는 웹 브라우저에서 관리하고 있다가, 다음 요청 때 쿠키를 Http 헤더에 넣어서 전송 1cookie: id&#x3D;chan\n서버에서는 쿠키 정보를 읽어 이전 상태 정보를 확인 후 응답\n\n쿠키 사용 예\n아이디, 비밀번호 저장\n쇼핑몰 장바구니\n\n쿠키의 제약사항\n클라이언트에 최대 300개까지 쿠키를 저장할 수 있다\n\n서버 도메인 하나당 최대 20개의 쿠키를 저장할 수 있다\n\n하나의 쿠키 값은 최대 4KB까지 저장할 수 있다\n\n쿠키는 사용자가 별도로 요청하지 않아도 브라우저(Client)에서 서버에 요청시 Request Header에 쿠키 값을 자동으로 넣어 보낸다\n\n\n그렇다고 모든 쿠키 값을 모든 요청에 넣어서 비효율적으로 동작하지 않고 지정 도메인에 해당하는 쿠키 값만을 제공한다\n\n\n\n세션(Session)세션이란?\n세션은 쿠키를 기반으로 동작하지만, 사용자 정보 파일을 브라우저에 저장하는 쿠키와 달리 세션은 서버 측에서 관리한다\n서버에서는 클라이언트를 구분하기 위해 세션 ID를 부여하며 웹 브라우저가 서버에 접속해서 브라우저를 종료할 때까지 인증상태를 유지한다\n접속 시간에 제한을 두어 일정 시간 응답이 없다면 정보가 유지되지 않게 설정이 가능하다\n사용자에 대한 정보를 서버에 두기 때문에 쿠키보다 보안에 좋지만, 사용자가 많아질수록 서버 메모리를 많이 차지하게 된다\n동접자 수가 많은 웹 사이트인 경우 서버에 과부하를 주게 되므로 성능 저하의 요인이 된다\n클라이언트가 Request를 보내면, 해당 서버 엔진이 클라이언트에게 유일한 ID를 부여하는데 이것이 세션이다\n\n동작 방식\n\n웹 브라우저가 서버에 요청\n서버가 해당 웹 브라우저(클라이언트)에 유일한 ID(Session ID)를 부여함\n서버가 응답할 때 HTTP Header(Set-Cookie)에 Session ID를 포함해서 전송\n쿠키에 Session ID를 JSESSIONID라는 이름으로 저장  1Set-Cookie : JSESSIONID&#x3D;g3r2sddh\n\n\n웹 브라우저는 이후 웹 브라우저를 닫기까지 다음 요청 때 부여된 Session ID가 담겨있는 쿠키를 HTTP Header에 넣어서 전송 1Cookie : JSESSIONID&#x3D;g3r2sddh\n서버는 세션 ID를 확인하고, 해당 세션에 관련된 정보를 확인한 후 응답\n\n\n세션도 쿠키를 사용하여 값을 주고받으며 클라이언트의 상태 정보를 유지한다\n\n\n즉, 세션이 상태 정보를 유지하는 수단으로 쿠키를 사용한다\n\n쿠키와 세션의 차이\n저장 위치\n쿠키는 클라이언트(브라우저)의 메모리 또는 파일에 저장\n세션은 서버 메모리에 저장\n\n\n보안\n쿠키는 로컬에 저장되고, 특히 파일로 저장되는 경우가 있어 탈취, 변조에 위험하고 Request/Response시에 스니핑당할 위험이 있다\n세션은 클라이언트 정보 자체가 서버에 저장되어 있으므로 비교적 안전하다\n\n\n라이프 사이클\n쿠키중 지속 쿠키는 브라우저가 종료하더라도 저장되어있다\n세션은 만료시간/날짜를 정해서 기간이 지나면 자동으로 삭제하고 세션쿠키에서 세션 아이디를 정한 경우, 브라우저 종료시 세션아이디가 삭제된다\n\n\n속도\n쿠키는 클라이언트에 저장되어 있기 때문에 서버 요청시 속도가 빠르다\n세션은 정보가 서버에 있기 때문에 처리가 요구되어 비교적 느린 속도를 낸다\n\n\n\n참고 - 캐시\n브라우저 캐시는 이미지(.png, .jpg)나 css, js파일등이 사용자의 브라우저에 저장되는 것이다\n이를 이용해서 같은 자원을 로드(load)해야할 경우에, 해당 자원을 다시 서버에 요청하지 않고 브라우저에 캐시되어 있는 자원을 쓰는 방식이다\n자원이 브라우저 캐시에 저장되면 브라우저에 있는 결 재사용하기 때문에 경우에 따라서 자원이 변경되어도 변경된 자원을 참조할 수 없는 경우가 있다\n따라서 사용자는 브라우저 캐시를 지워주거나 서버에서 클라이언트에 응답을 보낼 때 header에 자원 캐시 만료시간을 명시하는 방식을 사용하여 위와같은 문제를 해결할 수 있다\n\n","dateCreated":"2020-11-10T20:58:13+09:00","dateModified":"2020-11-11T00:22:28+09:00","datePublished":"2020-11-10T20:58:13+09:00","description":"","headline":"Web-Cookie And Session","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/","keywords":"Web, HTTP"}</script>
+    <meta name="description" content="Goal  Cookie와 Session이 왜 필요한 이유 Cookie란 무엇인지에 대해 이해한다 Session이란 무엇인지에 대해 이해한다 Cookie와 Session의 차이에 대해 이해한다   쿠키와 세션의 사용 이유HTTP 프로토콜의 특징 비연결지향(Conectionless) HTTP는 클라이언트가 요청(Request)을 서버에 보내고, 서버는 클라이">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Web-Cookie And Session">
+<meta property="og:url" content="https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/index.html">
 <meta property="og:site_name" content="Java Server Developer">
+<meta property="og:description" content="Goal  Cookie와 Session이 왜 필요한 이유 Cookie란 무엇인지에 대해 이해한다 Session이란 무엇인지에 대해 이해한다 Cookie와 Session의 차이에 대해 이해한다   쿠키와 세션의 사용 이유HTTP 프로토콜의 특징 비연결지향(Conectionless) HTTP는 클라이언트가 요청(Request)을 서버에 보내고, 서버는 클라이">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/98674901-d4621480-239c-11eb-90bb-1e620dc4b1b7.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/98686081-7c7eda00-23ab-11eb-9f4b-e7452314a2b2.png">
+<meta property="article:published_time" content="2020-11-10T11:58:13.000Z">
+<meta property="article:modified_time" content="2020-11-10T15:22:28.031Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="HTTP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/98674901-d4621480-239c-11eb-90bb-1e620dc4b1b7.png">
     
     
         
@@ -46,6 +55,8 @@
     
 
     
+        
+    
 </head>
 
     <body>
@@ -55,7 +66,7 @@
 
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -82,7 +93,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
         
         
@@ -310,30 +321,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="5"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    <section class="postShorten-group main-content-wrap">
+<article class="post">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/10/Web-Cookie-And-Session/"
-                            aria-label=": Web-Cookie And Session"
-                        >
-                            Web-Cookie And Session
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Web-Cookie And Session
+        </h1>
+    
+    
+        <div class="post-meta">
     <time datetime="2020-11-10T20:58:13+09:00">
 	
 		    Nov 10, 2020
@@ -348,10 +351,13 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <hr>
 <h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><blockquote>
 <ul>
 <li>Cookie와 Session이 왜 필요한 이유</li>
@@ -483,191 +489,136 @@
 <li>따라서 사용자는 브라우저 캐시를 지워주거나 서버에서 클라이언트에 응답을 보낼 때 header에 자원 캐시 만료시간을 명시하는 방식을 사용하여 위와같은 문제를 해결할 수 있다</li>
 </ul>
 
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/10/Web-Cookie-And-Session/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
+
+
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/10/Web-HTTP/"
-                            aria-label=": Web-HTTP"
-                        >
-                            Web-HTTP
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-10T16:40:07+09:00">
-	
-		    Nov 10, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/HTTP/">HTTP</a>
-
-
-    
-</div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/HTTP/" rel="tag">HTTP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Web/" rel="tag">Web</a>
 
             </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><h2 id="정의"><a href="#정의" class="headerlink" title="정의"></a>정의</h2><ul>
-<li><p>HTTP(Hyper Text Transfer Protocol)는 웹 서버(Apache, Nginx 등)와 클라이언트(브라우저)가 인터넷 상에서 HTML문서와 같은 리소스들을 주고받을 수 있도록 하기 위해 만든 프로토콜(통신 규약)</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/98645267-10817f00-2375-11eb-8c52-985c6aaa0cb8.png" alt="스크린샷 2020-11-10 오후 4 51 43"></p>
-</li>
-<li><p>HTTP통신은 클라이언트가 데이터를 요청(request)하면 그 요청을 처리하여 서버가 다시 클라이언트에게 응답(response)하는 큰 흐름을 따른다</p>
-</li>
-<li><p>어떠한 데이터의 형태도 주고 받을 수 있다</p>
-</li>
-</ul>
-<h2 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h2><ul>
-<li>무상태(stateless) &amp; 비연결성(Connectionless)<ul>
-<li>한 번의 요청에 대해 TCP통신을 설정한 후 한 번의 요청에 대한 응답이 처리되면 TCP연결을 끊어 버리는 형태의 통신</li>
-<li>TCP연결을 끊어 버리는 형태의 통신으로 연속적인 통신에 부적합</li>
-<li>하지만, 인터넷과 같이 다수의 사용자를 대상으로 한 Pull방식의 사용자가 필요한 문서 서비스를 전달 받는 구조에는 적합한 통신 구조</li>
-<li>한 번의 요청에 대해 한 번의 응답으로 트랜잭션이 종료되므로 연속적인 작업 처리에 필요한 트랜잭션 상태 정보를 관리하기 위한 Overhead가 없다</li>
-<li>HTTP를 상업적으로 이용하면서 이러한 구조는 큰 단점이 되었다<ul>
-<li>대안 기술: Cookies &amp; Session Tracking</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="HTTP-Request-Message의-구조"><a href="#HTTP-Request-Message의-구조" class="headerlink" title="HTTP Request Message의 구조"></a>HTTP Request Message의 구조</h2><p>3가지 부분으로 구성</p>
-<p><img src="https://user-images.githubusercontent.com/12459864/98647762-a8349c80-2378-11eb-8616-8af3d1ed3c53.png" alt="스크린샷 2020-11-10 오후 5 17 15"></p>
-<ul>
-<li><p>start line(request line)</p>
-<ul>
-<li>HTTP Method: GET, POST 등 action을 정의</li>
-<li>Request target: request가 전송되는 uri(end point)</li>
-<li>HTTP Version</li>
-</ul>
-</li>
-<li><p>headers</p>
-<ul>
-<li>클라이언트와 서버가 요청 또는 응답으로 부가적인 정보를 전송할 수 있도록 해주며, key:value 값으로 되어있다</li>
-<li>Host: (가상 호스팅을 위해) 서버의 도메인명과 서버가 리스닝하는 (부가적인) TCP 포트를 특정한다</li>
-<li>User-Agent: 요청을 보내는 클라이언트에 대한 정보</li>
-<li>Accept<ul>
-<li>MIME 타입으로 표현</li>
-<li>클라이언트가 이해 가능한 컨텐츠 타입이 무엇인지 알려준다</li>
-<li>서버는 제안 중 하나를 선택하고 사용하며 Content-Type 응답 헤더로 클라이언트에게 선택된 타입을 알려준다</li>
-</ul>
-</li>
-<li>Cache-Control(HTTP/1.1)<ul>
-<li>Cache를 이용하여 웹 서버와 클라이언트간의 요청과 응답 횟수를 줄여 대역폭을 향상하기 위해 사용된다</li>
-<li>만기일(expiration)과 유효일(validation)을 지정</li>
-</ul>
-</li>
-<li>Connection<ul>
-<li>트랜젝션 종료후에 네트워크 연결을 유지할지 말지를 결정한다</li>
-<li>HTTP/1.0은 트랜젝션 이후의 커넥션을 종료한다</li>
-<li>colse : 연결을 끊음</li>
-<li>keep alive : 연결을 지속</li>
-</ul>
-</li>
-<li>Content-Type<ul>
-<li>해당 요청이 보내는 메세지 body의 타입</li>
-<li>예를 들어 JSON을 보내면 application/json</li>
-</ul>
-</li>
-<li>Content-Length: 메세지 body의 길이</li>
-</ul>
-</li>
-<li><p>blank line: 요청에 대한 meta 정보가 전송되었음을 알린다</p>
-</li>
-<li><p>body:</p>
-<ul>
-<li>해당 request의 실제 메세지/내용이 들어있다</li>
-<li>XML, HTML, JSON 데이터가 들어갈 수 있다</li>
-</ul>
-</li>
-</ul>
-<h2 id="HTTP-Response-구조"><a href="#HTTP-Response-구조" class="headerlink" title="HTTP Response 구조"></a>HTTP Response 구조</h2><p><img src="https://user-images.githubusercontent.com/12459864/98658551-880bda00-2386-11eb-859c-92e6c5c8dc10.png" alt="스크린샷 2020-11-10 오후 6 56 58"></p>
-<ul>
-<li><p>status line</p>
-<ul>
-<li><p>response의 상태를 간략하게 나타내며, 3부분으로 구성되어 있다</p>
-<ul>
-<li>HTTP Version</li>
-<li>status code: 응답 상태를 나타내는 코드</li>
-<li>status text: 으답 상태를 설명(ex: Not Found)</li>
-</ul>
-</li>
-<li><p>headers</p>
-<ul>
-<li>request의 header와 동일하다</li>
-<li>response에서만 사용되는 header값이 있다. (예: User-Agent가 없고, Server가 있음)</li>
-</ul>
-</li>
-<li><p>blank line</p>
-</li>
-<li><p>body: 실제 응답하는 데이터를 나타낸다</p>
-</li>
-</ul>
-</li>
-</ul>
-
-                    
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
                         
-
-
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
                     
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/11/10/Web-HTTP/"
+                    data-tooltip="Web-HTTP"
+                    aria-label="NEXT: Web-HTTP"
+                >
                     
-                        <p>
-                            <a
-                                href="/2020/11/10/Web-HTTP/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
             
-        </div>
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -677,6 +628,161 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/11/10/Web-HTTP/"
+                    data-tooltip="Web-HTTP"
+                    aria-label="NEXT: Web-HTTP"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
             
         </div>
         
@@ -723,6 +829,25 @@
 
 <!--SCRIPTS END-->
 
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2020/11/10/Web-Cookie-And-Session/';
+              
+            this.page.identifier = '2020/11/10/Web-Cookie-And-Session/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
 
 
 
