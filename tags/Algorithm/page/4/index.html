@@ -326,6 +326,312 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                            aria-label=": 0 만들기"
+                        >
+                            0 만들기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-23T11:00:54+09:00">
+	
+		    Oct 23, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 7490 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/7490">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 재귀</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>자연수 N의 범위(3 &lt;= N &lt;= 9)가 한정적이므로 완전 탐색으로 문제 해결</p>
+</li>
+<li><p>수의 리스트와 연산자의 리스트로 분리하여 모든 경우의 수를 해결</p>
+</li>
+<li><p>가능한 모든 경우를 고려하여 연산자 리스트를 만들 때 재귀를 사용</p>
+</li>
+<li><p>파이썬 eval() 함수를 이용하여 문자열 형태의 표현식을 계산한다.</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recursion</span>(<span class="params">array, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) == n:</span><br><span class="line">        operators_list.append(copy.deepcopy(array))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    array.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    resursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">    array.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    recursive(array, n)</span><br><span class="line">    array.pop()</span><br><span class="line"></span><br><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    operators_list = []</span><br><span class="line">    n = int(input())</span><br><span class="line">    recursive([], n<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    integers = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> operators <span class="keyword">in</span> operators_list:</span><br><span class="line">        string = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">            string += str(integers[i]) + operators[i]</span><br><span class="line">        string += str(integers[<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">if</span> eval(string.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>)) == <span class="number">0</span>:</span><br><span class="line">            print(string)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/23/0-%EB%A7%8C%EB%93%A4%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
+                            aria-label=": 피보나치 수"
+                        >
+                            피보나치 수
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-23T10:24:01+09:00">
+	
+		    Oct 23, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Recursive/">Recursive</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1074 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1074">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 재귀</p>
+</li>
+<li><p>설명</p>
+<ul>
+<li>2^N의 크기의 사각형을 2^(N-1)의 사각형 4가지 부분으로 나눠서 재귀적으로 해결</li>
+</ul>
+</li>
+<li><p>풀이</p>
+<ul>
+<li><p>실패 코드 </p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>(<span class="params">n, x, y</span>):</span></span><br><span class="line">    <span class="keyword">global</span> result</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">    solve(n / <span class="number">2</span>, x, y)</span><br><span class="line">    solve(n / <span class="number">2</span>, x, y + n/<span class="number">2</span>)</span><br><span class="line">    solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y)</span><br><span class="line">    solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y + n / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">N, X, Y = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">solve(<span class="number">2</span> ** N, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/"
+                            aria-label=": 수 정렬하기3"
+                        >
+                            수 정렬하기3
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-22T21:28:13+09:00">
+	
+		    Oct 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 10989 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10989">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ul>
+<li><p>데이터의 개수가 최대 10000000개</p>
+</li>
+<li><p>계수 정렬 사용</p>
+<ul>
+<li><p>배열의 인덱스를 특정한 데이의 값으로 여기는 방식</p>
+</li>
+<li><p>배열의 크기는 데이터의 범위를 포함할 수 있도록 설정</p>
+</li>
+<li><p>데이터가 등장한 횟수만큼 각 인덱스의 배열 값을 증가시킴</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line">array = [<span class="number">0</span>] * <span class="number">10001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(sys.stdin.readline())</span><br><span class="line">    array[data] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    <span class="keyword">if</span> array[i] != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(array[i]):</span><br><span class="line">        print(i)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/22/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B03/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": 좌표 정렬하기"
+                        >
+                            좌표 정렬하기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-22T21:20:09+09:00">
+	
+		    Oct 22, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 11650 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/11650">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 정렬</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>튜플로 두 개의 데이터를 묶어서 저장</p>
+</li>
+<li><p>파이썬 기본 정렬 알고리즘은 튜플의 인덱스 순서대로 오름차순 정렬한다.</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split)</span><br><span class="line">    arrray.append((x, y))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    print(i[<span class="number">0</span>], i[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/22/%EC%A2%8C%ED%91%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/22/%EB%82%98%EC%9D%B4%EC%88%9C-%EC%A0%95%EB%A0%AC/"
                             aria-label=": 나이순 정렬"
                         >
@@ -771,308 +1077,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/"
-                            aria-label=": 프린터 큐"
-                        >
-                            프린터 큐
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T21:14:36+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1874: <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1874">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 큐, 구현, 그리디</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>queue의 head의 값이 최대값과 동일한 지 확인한다.</p>
-</li>
-<li><p>동일하면 지정한 값과 동일한 지 확인한다.</p>
-<p> 아니면 값을 queue의 tail로 보낸다</p>
-</li>
-<li><p>지정한 값과 동일하면 출력 아니면 값을 제거한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    n, m = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line">    queue = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">    queue = [(i, idx) <span class="keyword">for</span> idx, i <span class="keyword">in</span> enumerate(queue)]</span><br><span class="line"></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> queue[<span class="number">0</span>][<span class="number">0</span>] == max(queue, key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>])[<span class="number">0</span>]:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> queue[<span class="number">0</span>][<span class="number">1</span>] == m:</span><br><span class="line">                print(count)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                queue.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            queue.append(queue.pop(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%EC%8A%A4%ED%83%9D-%EC%88%98%EC%97%B4/"
-                            aria-label=": 스택 수열"
-                        >
-                            스택 수열
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T20:46:13+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1874: <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1874">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 스택, 그리디</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>스택에 특정 수에 도달할 때까지 push한다.</p>
-</li>
-<li><p>스택이 특정 수에 도달하면 pop한다.</p>
-</li>
-<li><p>수의 배열을 완성하면 출력하고 불가능하면 NO를 출력한다</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">count = <span class="number">1</span></span><br><span class="line">stack = []</span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>): <span class="comment"># 데이터 개수만큼 반복</span></span><br><span class="line">    data = int(input())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> count &lt;= data: <span class="comment"># 입력 받은 데이터에 도달할 때 까지 삽입 </span></span><br><span class="line">        stack.append(count)</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        result.append(<span class="string">&#x27;+&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> stack[<span class="number">-1</span>] == data: <span class="comment"># 스택의 최상위 원소가 데이터와 같을 때 출력</span></span><br><span class="line">        stack.pop()</span><br><span class="line">        result.append(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>: <span class="comment"># 불가능한 경우</span></span><br><span class="line">        print(<span class="string">&#x27;NO&#x27;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">&#x27;\n&#x27;</span>.join(result)) <span class="comment"># 가능한 경우</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%EC%8A%A4%ED%83%9D-%EC%88%98%EC%97%B4/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%EB%B8%94%EB%9E%99%EC%9E%AD/"
-                            aria-label=": 블랙잭"
-                        >
-                            블랙잭
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T20:34:55+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Bruce-Force/">Bruce Force</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2789 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2798">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 배열, 완전탐색</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>완전탐색으로 가능한 숫자 조합을 모두 구한다.</p>
-</li>
-<li><p>만들어진 조합의 합을 구한다.</p>
-</li>
-<li><p>합이 M을 넘지 않았을 때 최대값을 비교하여 갱신한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n, m = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line">data = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">length = len(data)</span><br><span class="line"></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, length):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, length):</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(j + <span class="number">1</span>, length):</span><br><span class="line">            sum_value = data[i] + data[j] + data[j]</span><br><span class="line">            <span class="keyword">if</span> sum_value &lt;= m:</span><br><span class="line">                result = max(result, sum_value)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%EB%B8%94%EB%9E%99%EC%9E%AD/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%EC%9D%8C%EA%B3%84/"
-                            aria-label=": 음계"
-                        >
-                            음계
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T19:56:02+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2920 :  <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2920">문제 링크</a></p>
-<ul>
-<li><p>문제 유형 : 배열, 구현</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>오름차순 변수 ascending, 내림차순 변수 descending 둘 다 True로 설정</p>
-</li>
-<li><p>한 문자라도 내림차순이면 ascending False</p>
-<p> 한 문자라도 오름차순이면 descending False</p>
-</li>
-<li><p>둘 다 False이면 mixed</p>
-</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li>풀이  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = list(map(int, input().split())</span><br><span class="line"></span><br><span class="line">ascending = <span class="literal">True</span></span><br><span class="line">descending = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">8</span>):</span><br><span class="line">  <span class="keyword">if</span> a[i] &gt; a[i<span class="number">-1</span>]:</span><br><span class="line">    descending = <span class="literal">False</span></span><br><span class="line">  <span class="keyword">elif</span> a[i] &lt; a[i<span class="number">-1</span>]:</span><br><span class="line">    ascending = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ascending:</span><br><span class="line">  print(<span class="string">&#x27;ascending&#x27;</span>)</span><br><span class="line"><span class="keyword">elif</span> descending:</span><br><span class="line">  print(<span class="string">&#x27;descending&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  print(<span class="string">&#x27;mixed)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%EC%9D%8C%EA%B3%84/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1088,7 +1092,18 @@
           </li>
         
         
-        <li class="pagination-number">page 4 of 4</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/tags/Algorithm/page/5/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 4 of 5</li>
     </ul>
 </div>
 
