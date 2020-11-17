@@ -326,6 +326,234 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/17/Algorithm-%EC%9A%B0%EC%A3%BC%EC%8B%A0%EA%B3%BC%EC%9D%98-%EA%B5%90%EA%B0%90/"
+                            aria-label=": Algorithm-우주신과의 교감"
+                        >
+                            Algorithm-우주신과의 교감
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-17T15:15:03+09:00">
+	
+		    Nov 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Kruskal/">Kruskal</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 5719 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/5719">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>그래프</li>
+<li>크루스칼 알고리즘</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>정점의 개수 N이 최대 1000이므로, 가능한 통로의 개수는 약 N^2이다</li>
+<li>크루스칼 알고리즘은 간선의 개수가 E일 때 O(ElogE)로 동작하므로 해결할 수 있다 (정렬 알고리즘 시간복잡도)</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_distance</span>(<span class="params">p1, p2</span>):</span></span><br><span class="line">    a = p1[<span class="number">0</span>] - p2[<span class="number">0</span>]</span><br><span class="line">    b = p1[<span class="number">1</span>] - p2[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> math.sqrt((a * a) + (b * b))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_parent</span>(<span class="params">parent, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> parent[n] == n:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> get_parent(parent, parent[n])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union_parent</span>(<span class="params">parent, a, b</span>):</span></span><br><span class="line">    a = get_parent(parent, a)</span><br><span class="line">    b = get_parent(parent, b)</span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        parent[b] = a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        parent[a] = b</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_parent</span>(<span class="params">parent, a, b</span>):</span></span><br><span class="line">    a = get_parent(parent, a)</span><br><span class="line">    b = get_parent(parent, b)</span><br><span class="line">    <span class="keyword">if</span> a == b:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">edges = []</span><br><span class="line">parent = &#123;&#125;</span><br><span class="line">locations = []</span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    locations.append((x, y))</span><br><span class="line"></span><br><span class="line">length = len(locations)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(length - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, length):</span><br><span class="line">        edges.append((i + <span class="number">1</span>, j + <span class="number">1</span>), get_distance(location[i], location[j]))</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    parent[i] = i</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    a, b = map(int, input().split())</span><br><span class="line">    union_parent(parent, a, b)</span><br><span class="line"></span><br><span class="line">edges.sort(key=<span class="keyword">lambda</span> data: data[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> a, b, cost <span class="keyword">in</span> edges:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> find_parent(parent, a, b):</span><br><span class="line">        union_parent(parent, a, b)</span><br><span class="line">        result += cost</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;%0.2f&quot;</span> %result)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/17/Algorithm-%EC%9A%B0%EC%A3%BC%EC%8B%A0%EA%B3%BC%EC%9D%98-%EA%B5%90%EA%B0%90/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/17/Algorithm-%EA%B1%B0%EC%9D%98-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%9C/"
+                            aria-label=": Algorithm-거의 최단 경로"
+                        >
+                            Algorithm-거의 최단 경로
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-17T14:18:38+09:00">
+	
+		    Nov 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Dijkstra/">Dijkstra</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 5719 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/5719">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>그래프</li>
+<li>다익스트라 최단 경로 알고리즘</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>다익스트라 최단 경로에 포함되는 모든 간선을 추적한다</li>
+<li>최단 경로에 포함되는 모든 간선을 추적할 때 DFS를 사용하여 추적하여 제외시킨다</li>
+<li>제외된 간선 외에서 다익스트라 최단 경로 알고리즘으로 차선 최단 경로를 찾는다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span>():</span></span><br><span class="line">    heap_data = []</span><br><span class="line">    heapq.heappush(heap_data, (<span class="number">0</span>, start))</span><br><span class="line">    distance[start] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> heap_data:</span><br><span class="line">        dist, now = heapq.heappop(heap_data)</span><br><span class="line">        <span class="keyword">if</span> distance[now] &lt; dist:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> adj[now]:</span><br><span class="line">            cost = dist + i[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> distance[i[<span class="number">0</span>]] &gt; cost <span class="keyword">and</span> <span class="keyword">not</span> dropped[now][i[<span class="number">0</span>]]:</span><br><span class="line">                distance[i[<span class="number">0</span>]] = cost</span><br><span class="line">                heapq.heappush(heap_data, (cost, i[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>():</span></span><br><span class="line">    q = deque()</span><br><span class="line">    q.append(end)</span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        now = q.popleft()</span><br><span class="line">        <span class="keyword">if</span> now == start:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> prev, cost <span class="keyword">in</span> reverse_adj[now]:</span><br><span class="line">            <span class="keyword">if</span> distance[now] == distance[prev] + cost</span><br><span class="line">                dropped[prev][now] = <span class="literal">True</span></span><br><span class="line">                q.append(prev)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    n, m = map(int, input().split())</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    start, end = map(int, input().split())</span><br><span class="line">    adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    reverse_adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">        x, y, cost = map(int, input().split())</span><br><span class="line">        adj[x].append((y, cost))</span><br><span class="line">        reverse_adj[y].append((x, cost))</span><br><span class="line">    dropped = [[<span class="literal">False</span>] * (n + <span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    dijkstra()</span><br><span class="line">    bfs()</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    dijkstra()</span><br><span class="line">    <span class="keyword">if</span> distance[end] != <span class="number">1e9</span>:</span><br><span class="line">        print(distance[end])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/17/Algorithm-%EA%B1%B0%EC%9D%98-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%9C/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/"
+                            aria-label=": Algorithm-해킹"
+                        >
+                            Algorithm-해킹
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-13T17:38:55+09:00">
+	
+		    Nov 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Dijkstra/">Dijkstra</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 10282 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10282">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>그래프</li>
+<li>다익스트라 최단 경로 알고리즘</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>정점의 개수 N, 간선의 개수 D</li>
+<li>우선순위 큐를 이용하여, 시간복잡도 O(NlogD)로 해결할 수 있습니다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span>(<span class="params">strat</span>):</span></span><br><span class="line">    heap_data = []</span><br><span class="line">    heapq.heappush(heap_data, (<span class="number">0</span>, start))</span><br><span class="line">    distance[start] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> heap_data:</span><br><span class="line">        dist, now = heapq.heappop(heap_data)</span><br><span class="line">        <span class="keyword">if</span> distance[now] &lt; dist:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> adj[now]:</span><br><span class="line">            cost = dist + i[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> distance[i[<span class="number">0</span>]] &gt; cost:</span><br><span class="line">                distance[i[<span class="number">0</span>]] = cost</span><br><span class="line">                heapq.heappush(heap_data, (cost, i[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(int(input())):</span><br><span class="line">    n, m, start = map(int, input().split())</span><br><span class="line">    adj = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">        x, y, cost = map(int, input().split())</span><br><span class="line">        adj[y].append((x, cost))</span><br><span class="line">    dijkstra(start)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    max_distance = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> distance:</span><br><span class="line">        <span class="keyword">if</span> i != <span class="number">1e9</span>:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; max_distance:</span><br><span class="line">                max_distance = i</span><br><span class="line">    print(count, max_distance)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/09/Algorithm-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9/"
                             aria-label=": Algorithm-효율적인 해킹"
                         >
