@@ -6,24 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Algorithm-컵라면 - Java Server Developer</title>
+    <title>Algorithm-암호 만들기 - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"\n백준 1781 : 문제링크\n\n문제유형 : \n\n탐욕 알고리즘\n\n\n설명\n\n정렬 및 우선순위 큐를 이용하여 O(NlogN)의 시간에 해결할 수 있다\n데드라인 기준으로 오름차순 정렬을 수행한다\n각 문제의 컵라면 수를 우선순위 큐에 넣으면서, 데드라이을 초과할 결우 최소원소를 제거한다\n\n\n풀이\n  12345678910111213141516import heapqn = int(input())array = []q = []for i in range(n):    a, b = map(int, input().split(&#x27; &#x27;))    array.append((a, b))array.sort()for i in array:    a = i[0]    heapq.heappush(q, i[1])    if a &lt; len(q):        heapq.heappop(q)\n\n","dateCreated":"2020-11-18T00:11:11+09:00","dateModified":"2020-11-18T00:38:23+09:00","datePublished":"2020-11-18T00:11:11+09:00","description":"","headline":"Algorithm-컵라면","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/","keywords":"Algorithm, Greedy"}</script>
-    <meta name="description" content="백준 1781 : 문제링크  문제유형 :   탐욕 알고리즘   설명  정렬 및 우선순위 큐를 이용하여 O(NlogN)의 시간에 해결할 수 있다 데드라인 기준으로 오름차순 정렬을 수행한다 각 문제의 컵라면 수를 우선순위 큐에 넣으면서, 데드라이을 초과할 결우 최소원소를 제거한다   풀이   12345678910111213141516import heapqn">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"\n백준 1759 : 문제링크\n\n문제유형 : \n\n백 트레킹\n\n\n설명\n\nC개의 문자들중에서 L개를 선택하는 모든 조합을 고려한다\n모음의 개수와 자음의 개수 조건을 확인한다\n\n\n풀이\n  123456789101112131415161718192021222324252627282930import copyresult = []string = []def combination(array, length, index):    if len(string) == length:        result.append(copy.deepcopy(string))        return    for i in range(index, len(array)):        string.append(array[i])        combination(array, length, index + 1)        string.pop()vowels = (&#x27;a&#x27;, &#x27;e&#x27;, &#x27;i&#x27;, &#x27;o&#x27;, &#x27;u&#x27;)l, c = map(int, input().split(&#x27; &#x27;))array = input().split(&#x27; &#x27;)array.sort()combination(array, l, 0)for password in result:    count = 0:    for i in password:        if i in vowels:            count += 1        if count &gt;= 1 and count &lt;= l - 2:        print(&#x27;&#x27;.join(password))\n\n\n","dateCreated":"2020-11-18T11:18:28+09:00","dateModified":"2020-11-18T12:32:02+09:00","datePublished":"2020-11-18T11:18:28+09:00","description":"","headline":"Algorithm-암호 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/","keywords":"Algorithm, Back Tracking"}</script>
+    <meta name="description" content="백준 1759 : 문제링크  문제유형 :   백 트레킹   설명  C개의 문자들중에서 L개를 선택하는 모든 조합을 고려한다 모음의 개수와 자음의 개수 조건을 확인한다   풀이   123456789101112131415161718192021222324252627282930import copyresult &#x3D; []string &#x3D; []def combination">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Algorithm-컵라면">
-<meta property="og:url" content="https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/index.html">
+<meta property="og:title" content="Algorithm-암호 만들기">
+<meta property="og:url" content="https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/index.html">
 <meta property="og:site_name" content="Java Server Developer">
-<meta property="og:description" content="백준 1781 : 문제링크  문제유형 :   탐욕 알고리즘   설명  정렬 및 우선순위 큐를 이용하여 O(NlogN)의 시간에 해결할 수 있다 데드라인 기준으로 오름차순 정렬을 수행한다 각 문제의 컵라면 수를 우선순위 큐에 넣으면서, 데드라이을 초과할 결우 최소원소를 제거한다   풀이   12345678910111213141516import heapqn">
+<meta property="og:description" content="백준 1759 : 문제링크  문제유형 :   백 트레킹   설명  C개의 문자들중에서 L개를 선택하는 모든 조합을 고려한다 모음의 개수와 자음의 개수 조건을 확인한다   풀이   123456789101112131415161718192021222324252627282930import copyresult &#x3D; []string &#x3D; []def combination">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-17T15:11:11.000Z">
-<meta property="article:modified_time" content="2020-11-17T15:38:23.940Z">
+<meta property="article:published_time" content="2020-11-18T02:18:28.000Z">
+<meta property="article:modified_time" content="2020-11-18T03:32:02.471Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="Greedy">
+<meta property="article:tag" content="Back Tracking">
 <meta name="twitter:card" content="summary">
     
     
@@ -329,12 +329,12 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Algorithm-컵라면
+            Algorithm-암호 만들기
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-11-18T00:11:11+09:00">
+    <time datetime="2020-11-18T11:18:28+09:00">
 	
 		    Nov 18, 2020
     	
@@ -342,7 +342,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Back-Tracking/">Back Tracking</a>
 
 
     
@@ -355,22 +355,22 @@
     <div class="post-content markdown">
         <div class="main-content-wrap">
             <hr>
-<p>백준 1781 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1781">문제링크</a></p>
+<p>백준 1759 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1759">문제링크</a></p>
 <ul>
 <li><p>문제유형 : </p>
 <ul>
-<li>탐욕 알고리즘</li>
+<li>백 트레킹</li>
 </ul>
 </li>
 <li><p>설명</p>
 <ul>
-<li>정렬 및 우선순위 큐를 이용하여 O(NlogN)의 시간에 해결할 수 있다</li>
-<li>데드라인 기준으로 오름차순 정렬을 수행한다</li>
-<li>각 문제의 컵라면 수를 우선순위 큐에 넣으면서, 데드라이을 초과할 결우 최소원소를 제거한다</li>
+<li>C개의 문자들중에서 L개를 선택하는 모든 조합을 고려한다</li>
+<li>모음의 개수와 자음의 개수 조건을 확인한다</li>
 </ul>
 </li>
 <li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line">q = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    a, b = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">    array.append((a, b))</span><br><span class="line">array.sort()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    a = i[<span class="number">0</span>]</span><br><span class="line">    heapq.heappush(q, i[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">if</span> a &lt; len(q):</span><br><span class="line">        heapq.heappop(q)</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line">string = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combination</span>(<span class="params">array, length, index</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(string) == length:</span><br><span class="line">        result.append(copy.deepcopy(string))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(array)):</span><br><span class="line">        string.append(array[i])</span><br><span class="line">        combination(array, length, index + <span class="number">1</span>)</span><br><span class="line">        string.pop()</span><br><span class="line"></span><br><span class="line">vowels = (<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">l, c = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line"></span><br><span class="line">array = input().split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">array.sort()</span><br><span class="line"></span><br><span class="line">combination(array, l, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> password <span class="keyword">in</span> result:</span><br><span class="line">    count = <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> password:</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> vowels:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> count &gt;= <span class="number">1</span> <span class="keyword">and</span> count &lt;= l - <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">&#x27;&#x27;</span>.join(password))</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
             
@@ -383,7 +383,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Greedy/" rel="tag">Greedy</a>
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Algorithm/" rel="tag">Algorithm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Back-Tracking/" rel="tag">Back Tracking</a>
 
             </div>
         
@@ -393,14 +393,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/18/Algorithm-N-Queen/"
-                    data-tooltip="Algorithm-N Queen"
-                    aria-label="PREVIOUS: Algorithm-N Queen"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -410,9 +407,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/"
-                    data-tooltip="Algorithm-도서관"
-                    aria-label="NEXT: Algorithm-도서관"
+                    href="/2020/11/18/Algorithm-%EC%95%8C%ED%8C%8C%EB%B2%B3/"
+                    data-tooltip="Algorithm-알파벳"
+                    aria-label="NEXT: Algorithm-알파벳"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -437,7 +434,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -450,7 +447,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -463,7 +460,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -522,14 +519,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/18/Algorithm-N-Queen/"
-                    data-tooltip="Algorithm-N Queen"
-                    aria-label="PREVIOUS: Algorithm-N Queen"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -539,9 +533,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/"
-                    data-tooltip="Algorithm-도서관"
-                    aria-label="NEXT: Algorithm-도서관"
+                    href="/2020/11/18/Algorithm-%EC%95%8C%ED%8C%8C%EB%B2%B3/"
+                    data-tooltip="Algorithm-알파벳"
+                    aria-label="NEXT: Algorithm-알파벳"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -566,7 +560,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -579,7 +573,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -592,7 +586,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -636,7 +630,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -649,7 +643,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -662,7 +656,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -723,9 +717,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/';
+            this.page.url = 'https://kimyechan.github.io/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/';
               
-            this.page.identifier = '2020/11/18/Algorithm-컵라면/';
+            this.page.identifier = '2020/11/18/Algorithm-암호-만들기/';
               
           };
           (function() {
