@@ -326,6 +326,978 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/29/DATABASE-Crontab/"
+                            aria-label=": DATABASE-Crontab"
+                        >
+                            DATABASE-Crontab
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-29T21:31:52+09:00">
+	
+		    Oct 29, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Crontab"><a href="#Crontab" class="headerlink" title="Crontab"></a>Crontab</h1><ul>
+<li><p>유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.</p>
+</li>
+<li><p>crontab basic</p>
+<ul>
+<li><p>스케쥴 설정</p>
+<p>  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -e</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>스케쥴 리스트 확인</p>
+<p>  현재 crontab의 스케쥴을 확인할 수 있다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -l</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>주기 설정</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>crontab -e 설정</p>
+</li>
+<li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
+<ul>
+<li><p>요일에서 0과 7은 일요일</p>
+</li>
+<li><p>2분 간격으로 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>매일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>일요일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>time zone 변경</p>
+<p>  타임존 변경</p>
+<ul>
+<li><p>현재 사용 시간 확인</p>
+<p>  $ timedatectl</p>
+</li>
+<li><p>사용하는 파일 심볼릭 링크확인</p>
+<p>  $ ls -l /etc/localtime</p>
+</li>
+<li><p>사용 할수 있는 타임존 확인</p>
+<p>  $ timedatectl list-timezones | grep Asia</p>
+</li>
+<li><p>타임존 변경</p>
+<p>  $ sudo timedatectl set-timezone Asia/Seoul</p>
+</li>
+<li><p>심볼릭 링크 수정</p>
+<p>  $ sudo unlink /etc/localtime</p>
+<p>  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
+</li>
+</ul>
+</li>
+<li><p>vim 에디터 인코딩 변경</p>
+<p>  $ vi .vimrc</p>
+<p>  set encoding=utf-8</p>
+</li>
+<li><p>crontab 로그 확인</p>
+<p>  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.</p>
+<p>  $ grep CRON /var/log/syslog</p>
+</li>
+<li><p>crontab 에러 확인 및 해결</p>
+<p>  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</p>
+<p>  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>  discarding output)</p>
+</li>
+</ul>
+<pre><code>- MTA : Mail Transfer Agent
+- 에러 메시지 확인하는 방법 1
+    - $ sudo apt-get install postfix
+    - $ cat /var/mail/ubuntu
+- 에러 메시지 확인하는 방법 2
+    - $ sudo apt install mailutils
+    - $ mail
+- crontab에서 실행되는 python 환경
+
+    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\* \* \* \* \* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+- pyenv 환경에 있는 python으로 실행
+
+    -  직접 python 경로 입력
+
+       \* \* \* \* \* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt
+
+    - PATH 설정
+
+      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin
+
+      \* \* \* \* \* python /home/ubuntu/version.py &gt;&gt; version.txt</code></pre>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/29/DATABASE-Crontab/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
+                            aria-label=": DATABASE-NoSQL(MongoDB)"
+                        >
+                            DATABASE-NoSQL(MongoDB)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-29T20:39:35+09:00">
+	
+		    Oct 29, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h1><h2 id="MongoDB-Setting"><a href="#MongoDB-Setting" class="headerlink" title="MongoDB Setting"></a>MongoDB Setting</h2><ol>
+<li><p>MongoDB 설치 및 설정</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update -y</span><br><span class="line">sudo apt upgrade -y</span><br><span class="line">sudo apt install -y mongodb</span><br><span class="line">sudo systemctl status mongodb</span><br><span class="line">sudo vi /etc/mongodb.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> bind_ip = 0.0.0.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> auth = <span class="literal">true</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 패스워드 설정</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mongo</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> use admin</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db.createUser(&#123; user: <span class="string">&quot;rada&quot;</span>, <span class="built_in">pwd</span>: <span class="string">&quot;radapw&quot;</span>, roles: [ <span class="string">&quot;root&quot;</span> ] &#125;)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> quit()</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart mongodb</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> aws 인스턴스 27017 포트 접속 허용</span></span><br></pre></td></tr></table></figure>
+
+<p> mongo 명령어를 입력하면 mongo shell에 접속됩니다.</p>
+</li>
+<li><p>Install Robomongo</p>
+<p> <a target="_blank" rel="noopener" href="https://robomongo.org/">https://robomongo.org/</a> 페이지에서 경로에서 ROBO 3T 다운로드 후 설치 합니다.</p>
+</li>
+<li><p>Connection</p>
+<p> MongoDB Connections에서 ip를 입력하여 서버의 mongoDB에 접속합니다.</p>
+</li>
+</ol>
+<hr>
+<h2 id="문법"><a href="#문법" class="headerlink" title="문법"></a>문법</h2><p>ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/">https://docs.mongodb.com/v3.6/reference/</a></p>
+<ul>
+<li><p>Create Database</p>
+<ul>
+<li><p>mongo 라는 이름의 데이터 베이스 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mongo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>현재 사용중인 데이터 베이스 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>database list 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> dbs</span><br></pre></td></tr></table></figure>
+<ul>
+<li>데이터 베에스를 생성후에 최소 1개이상의 document를 추가해야 생성된 데이터 베이스가 보인다</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- document 생성
+    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;use&lt;/span&gt; mongo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.user.insert(&amp;#123;&lt;span class=&quot;string&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&amp;quot;alice&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;age&amp;quot;&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&amp;quot;alice@gmail.com&amp;quot;&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+<ul>
+<li><p>Delete Database</p>
+<ul>
+<li>현재 사용중인 데이터 베이스 삭제  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropDatabase()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Create Collection</p>
+<p>  refer <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/method/db.createCollection/">https://docs.mongodb.com/v3.6/reference/method/db.createCollection/</a></p>
+<ul>
+<li><p>syntax</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(collection 이름, [option])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>option</p>
+<ul>
+<li>capped : true로 설정하면 collection의 최대 용량을 설정 (최대 용량의 크기는 size 옵션으로 설정), 설정된 최대용량 이상으로 데이터가 입력되면 오래된 데이터 부터 자동으로 삭제됩니다.</li>
+<li>autoIndex : true로 설정하면 _id 필드에 index가 자동으로 생성됩니다.</li>
+<li>size : 숫자 데이터를 사용하며 collection의 최대 사이즈를 byte 단위로 지정</li>
+<li>max : 숫자 데이터를 사용하며 최대 document 갯수를 설정</li>
+</ul>
+</li>
+<li><p>user 컬렉션을 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;user&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>autoIndex와 max 옵션을 설정하여 info 컬렉션을 생성</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;info1&quot;, &#123; autoIndexId: true, capped: true, size: 500, max:5 &#125;)</span><br><span class="line">db.createCollection(&quot;info2&quot;, &#123; autoIndexId: true, capped: true, size: 50, max:5 &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>createCollection을 사용하지 않고 article 컬렉션을 생성</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.articles.insert( &#123;&quot;title&quot;:&quot;data science&quot;, &quot;contents&quot;:&quot;mongodb&quot; &#125; )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>컬렉션 리스트 확인</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> collections</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Delete Collection</p>
+<ul>
+<li>articles 컬렉션 삭제  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.articles.drop()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Make Document</p>
+<ul>
+<li><p>syntax</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.&lt;collection_name&gt;.insert(&lt;document&gt;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>info 컬렉션에 document 추가</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;)</span><br><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;)</span><br><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>한번에 여러개의 document 추가</p>
+<ul>
+<li><p>max:5 옵션 제한에 걸려 5개의 데이터가 info1에 들어간다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.info1.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>size:50 옵션 제한에 걸려 4개의 데이터가 info2에 입력된다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.info2.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>info collection 생성하면서 document 추가</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.info.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;java&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;html&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;css&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Delete Document</p>
+<ul>
+<li>level2인 데이터 삭제 : 제약조건이 걸려있는 컬렉션의 도큐먼트는 삭제가 안됩니다.  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.remove( &#123;level:2&#125; )</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Find</p>
+<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/method/db.collection.find/index.html">https://docs.mongodb.com/manual/reference/method/db.collection.find/index.html</a></p>
+<ul>
+<li><p>syntax</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(query, projection)</span><br></pre></td></tr></table></figure>
+<p>  query : document 조회 조건을 설정. 모든 document를 조회 할때는 ({})를 사용</p>
+<p>  projection : document를 조회할때 보여지는 필드(컬럼)를 정의</p>
+</li>
+<li><p>query</p>
+<ul>
+<li><p>기본 document 조회</p>
+<ul>
+<li><p>info 컬렉션에 있는 모든 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.info.find()</span><br><span class="line">db.getCollection(&#x27;info&#x27;).find(&#123;&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subject가 python인 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;subject&quot;: &quot;python&quot;&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>비교 연산자</p>
+<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/operator/query/">https://docs.mongodb.com/v3.6/reference/operator/query/</a></p>
+<ul>
+<li><p>level이 2 이하인 document를 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;level&quot;: &#123;$lte: 2&#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>level이 3 이상인 document를 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;level&quot;: &#123;$gte: 3&#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subject가 java와 python을 포함하는 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find( &#123;&quot;subject&quot;: &#123;$in: [&quot;java&quot;, &quot;python&quot;]&#125;&#125; )</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>논리 연산자</p>
+<ol>
+<li>$or : 조건중 하나라도 true이면 true</li>
+<li>$and : 모든 조건이 true이면 true</li>
+<li>$not : 조건중 하나라도 false이면 true</li>
+<li>$nor : 모든 조건이 false이면 true (or와 반대 개념)</li>
+</ol>
+<ul>
+<li><p>subject가 python이고 level이 3이상인 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; $and: [ &#123; &quot;subject&quot;:&quot;python&quot; &#125;, &#123; &quot;level&quot;: &#123;$gte: 3&#125; &#125; ] &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subject가 python이아니고 level이 1이하가 아닌 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; $nor: [ &#123; &quot;subject&quot;:&quot;python&quot; &#125;, &#123; &quot;level&quot;: &#123;$lte: 1&#125; &#125; ] &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>level이 2보다 크지 않은 document 조회 (2 포함)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; &quot;level&quot;: &#123; $not: &#123;$gt: 2&#125; &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>$where</p>
+<ul>
+<li><p>$where 연산자를 사용하면 자바스크립트 표현식 사용이 가능합니다.</p>
+</li>
+<li><p>level이 1인 document 조회</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find( &#123; $where: &quot;this.level == 1&quot;&#125; )</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>projection</p>
+<p>  document를 조회할때 보여지는 필드(컬럼)를 정의합니다.</p>
+<ul>
+<li><p>Basic</p>
+</li>
+<li><p>subject와 comments만 출력되도록 find</p>
+<ul>
+<li>설정을 true 값을 설정하던가 false 값을 설정합니다. ( _id는 따로 설정을 안하면 true )<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&#125;,&#123;&quot;_id&quot;:false, &quot;level&quot;:false&#125;)</span><br><span class="line">db.info.find(&#123;&#125;,&#123;&quot;subject&quot;:true, &quot;level&quot;:true&#125;)</span><br><span class="line">db.info.find(&#123;&#125;,&#123;&quot;_id&quot;:false, &quot;subject&quot;:true, &quot;level&quot;:true&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Find Method</p>
+<p>  find method를 사용하면 find를 사용한 document의 결과를 가공하여 출력할수 있습니다.</p>
+<ul>
+<li><p>sort</p>
+<ul>
+<li>document를 정렬시켜 줍니다.</li>
+<li>‘sort({key: value})’ 와 같은 포멧으로 사용을 하며 key는 정렬할 필드명을 작성하고, value는 오름차순은 1, 내림차순을 -1을 넣어주면 됩니다.</li>
+</ul>
+</li>
+<li><p>info 컬렉션의 document를 level 오름차순으로 정렬</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>info 컬렉션의 document를 level 내림차순으로 정렬</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>level을 기준으로 내림차순으로 정렬한 후 subject를 기준으로 오름차순으로 정렬</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1, &quot;subject&quot;:1&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>limit</p>
+<ul>
+<li><p>limit을 사용하면 document출력 결과의 수룰 제한할수 있습니다.</p>
+</li>
+<li><p>document의 결과를 3개 까지만 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().limit(3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>document의 결과를 level로 내림차순으로 정렬하고 3개까지만 출력</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1&#125;).limit(3)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>skip</p>
+<p>  skip을 검색한 document의 결과의 시작부분을 설정할때 사용합니다.</p>
+<ul>
+<li><p>document를 3번째 부터 출력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().skip(2)</span><br></pre></td></tr></table></figure>
+
+<p><code>limit, skip을 함께 사용해서 mysql의 limit과 같이 사용할수 있습니다.</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>update</p>
+<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/command/update/index.html">https://docs.mongodb.com/manual/reference/command/update/index.html</a></p>
+<ul>
+<li><p>syntax</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update( query, update, &#123; upsert: &lt;bool&gt;, multi: &lt;bool&gt; &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>upsert : insert와 update의 합성어 (데이터가 있으면 update, 없으면 insert 한다는 의미)</p>
+</li>
+<li><p>multi : true로 설정되면 여려개의 document를 수정합니다. 기본값은 false</p>
+</li>
+</ul>
+</li>
+<li><p>특정 document를 새로운 document로 수정하기</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; &quot;subject&quot;: &quot;html&quot; &#125;,</span><br><span class="line">&#123; &quot;subject&quot;: &quot;sass&quot;, &quot;level&quot;:2&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">db.info.update(</span><br><span class="line">&#123; &quot;subject&quot;: &quot;less&quot; &#125;,</span><br><span class="line">&#123; &quot;subject&quot;: &quot;less&quot;, &quot;level&quot;: 2&#125;,</span><br><span class="line">&#123; &quot;upsert&quot;: true&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>$set, $unset</p>
+<ul>
+<li><p>$set을 사용하면 특정 document의 필드를 수정할수 있습니다.</p>
+</li>
+<li><p>$unset를 사용하면 특정 document의 필드 제거할수 있습니다.</p>
+</li>
+<li><p>python의 level을 3으로 수정 (한개의 데이터만 수정)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.update( &#123; subject: &quot;java&quot; &#125;, &#123; $set: &#123; level: 4 &#125; &#125; )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>level 2를 level 1로 수정 (여러개의 데이터 수정)</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: 2 &#125;,</span><br><span class="line">&#123; $set: &#123; level: 1 &#125; &#125;,</span><br><span class="line">&#123; multi: true &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subject가 sass인 document의 level필드 삭제</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; subject: &quot;sass&quot; &#125;,</span><br><span class="line">&#123; $unset: &#123;level: 1&#125; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>  <code>level: 1의 1은 true를 의미합니다.</code></p>
+</li>
+<li><p>level이 2이하인 데이터를 1로 수정하기</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: &#123;$lte: 2&#125; &#125;, </span><br><span class="line">&#123; $set: &#123;level: 1&#125; &#125;,</span><br><span class="line">&#123; multi: 1 &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>level이 없는 데이터 level 추가하기</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: &#123;$exists: false&#125; &#125;,</span><br><span class="line">&#123; $set: &#123;level: 2&#125; &#125;,</span><br><span class="line">&#123; multi: 1 &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Function</p>
+<p>  자바스크립트 문법으로 함수 작성이 가능합니다.</p>
+<ul>
+<li><p>skip 함수</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var showSkip = function(<span class="keyword">start</span>)&#123;</span><br><span class="line"><span class="keyword">return</span> db.info.find().skip(<span class="keyword">start</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">showSkip(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/29/DATABASE-NoSQL-MongoDB/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/28/Java-Advanced10-Multi-Thread/"
+                            aria-label=": Java-Advanced10-Multi Thread"
+                        >
+                            Java-Advanced10-Multi Thread
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-28T19:23:05+09:00">
+	
+		    Oct 28, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/Java-Advanced/">Java Advanced</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Multi-Thread-Programming"><a href="#Multi-Thread-Programming" class="headerlink" title="Multi-Thread Programming"></a>Multi-Thread Programming</h1><h2 id="Process-and-Thread"><a href="#Process-and-Thread" class="headerlink" title="Process and Thread"></a>Process and Thread</h2><ul>
+<li>Process: OS로부터 메모리를 할당받아 실행중인 프로그램</li>
+<li>Thread: 프로세스 동작의 최소 단위로, 하나의 프로세스는 여러 스레드로 이루어질 수 있다.</li>
+</ul>
+<h2 id="멀티스레드-프로그래밍의-장단점"><a href="#멀티스레드-프로그래밍의-장단점" class="headerlink" title="멀티스레드 프로그래밍의 장단점"></a>멀티스레드 프로그래밍의 장단점</h2><ul>
+<li>장점<ul>
+<li>여러 동작을 병렬적으로 처리하여 CPU의 사용률 향상</li>
+<li>시간이 걸리는 동작을 분리하여 프로그램의 응답성 향상</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>Context Switching 오버헤드 발생</li>
+<li>스레드 제어의 어려움</li>
+</ul>
+</li>
+</ul>
+<h2 id="스레드-구현"><a href="#스레드-구현" class="headerlink" title="스레드 구현"></a>스레드 구현</h2><ul>
+<li><p>스레드 생성 방법</p>
+<ol>
+<li><p>익명함수</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread threadOne = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello Thread!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>람다식</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread threadTwo = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Hello Again, Thread!&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Thread Class 상속</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello Again Again, Thread!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Thread threadThree = <span class="keyword">new</span> MyThread();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>스레드 실행</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Thread threadOne = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Thread threadTwo = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        System.out.print(<span class="string">&quot;2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">threadOne.start();</span><br><span class="line">threadTwo.start();</span><br><span class="line">System.out.println(<span class="string">&quot;Done!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><code>Thread 객체는 일회성이기 때문에 여러 번 start()메소드를 호출 할 수 없다</code></p>
+<br>
+
+</li>
+</ul>
+<h2 id="스레드의-상태-및-제어"><a href="#스레드의-상태-및-제어" class="headerlink" title="스레드의 상태 및 제어"></a>스레드의 상태 및 제어</h2><ul>
+<li><p>스레드의 상태</p>
+<ul>
+<li><p>getState() 메소드로 스레드의 상태를 확인할 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>열거형 상수</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NEW</code></td>
+<td><code>start()</code> 메소드가 아직 호출되지 않음</td>
+</tr>
+<tr>
+<td><code>RUNNABLE</code></td>
+<td>JVM에 의해 실행 가능한 상태</td>
+</tr>
+<tr>
+<td><code>BLOCKED</code></td>
+<td>객체가 블락된 상태</td>
+</tr>
+<tr>
+<td><code>WAITING</code></td>
+<td><code>sleep()</code>, <code>wait()</code>, <code>join()</code> 등에 의해 무한히 대기 중인 상태</td>
+</tr>
+<tr>
+<td><code>TIMED_WAITING</code></td>
+<td><code>sleep()</code>, <code>wait()</code>, <code>join()</code> 등에 의해 정해진 시간 동안 대기 중인 상태</td>
+</tr>
+<tr>
+<td><code>TERMINATE</code></td>
+<td><code>run()</code> 메소드가 종료된 상태</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>스레드의 우선순위 제어</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> MIN_PRIORITY = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> NORM_PRIORITY = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX_PRIORITY = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>void setPriority(int newPriority)</code></td>
+<td>새로운 우선순위로 설정한다.</td>
+</tr>
+<tr>
+<td><code>int getPriority()</code></td>
+<td>우선순위를 반환한다.</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>sleep()</code>을 이용한 제어</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Thread.sleep(<span class="number">1000</span>); <span class="comment">// ms</span></span><br><span class="line">Thread.sleep(<span class="number">100</span>, <span class="number">200</span>); <span class="comment">// ms + ns</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>join()</code>을 이용한 스레드 조인</p>
+<ul>
+<li><p>스레드 동작을 동기화하기 위해 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Thread t1 = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">&quot;A&quot;</span>));</span><br><span class="line">Thread t2 = <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">&quot;B&quot;</span>));</span><br><span class="line"></span><br><span class="line">t1.start(); <span class="comment">// t1 thread start</span></span><br><span class="line"></span><br><span class="line">t1.join(); <span class="comment">// t1 thread 종료시 까지 다른 thread 대기</span></span><br><span class="line"></span><br><span class="line">t2.start(); <span class="comment">// t2 thread start</span></span><br><span class="line"></span><br><span class="line">t2.join(<span class="number">100</span>); <span class="comment">// 100ms 기다린 후에도 t2가 종료되지 않으면 다른 쓰레드 시작 </span></span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">&quot;C&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>interrupt()</code>를 이용한 대기 중지</p>
+<ul>
+<li>기존 동작을 방해하고 반응을 강제하는 메소드<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Thread tSleep = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Interrupted&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">tSleep.start();</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tSleep.interrupt();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>yield()</code>를 이용한 상태 제어</p>
+<ul>
+<li><code>sleep()</code>과 달리 곧바로 <code>RUNNABLE</code> 상태로 변경</li>
+<li>다른 쓰레드에게 양보하고 바로 실행 대기</li>
+<li>테스트용으로 쓰임 -&gt; 쓰레드의 동작이 명확하지 않음(바로 양보하지 않는다)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.print(<span class="string">&quot;2&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>스레드의 종료</p>
+<ul>
+<li>run() 메소드의 종료</li>
+<li><code>stop()</code> 메소드 호출 (deprecated)</li>
+</ul>
+</li>
+</ul>
+<h2 id="데몬-스레드"><a href="#데몬-스레드" class="headerlink" title="데몬 스레드"></a>데몬 스레드</h2><ul>
+<li><p>정의 : 다른 스레드가 종료될 경우 함께 종료되는 보조 스레드</p>
+</li>
+<li><p>활용법</p>
+<ul>
+<li>보통 대기하며 동작하는 무한 루프로 구현</li>
+<li>일정 시간 마다 동작</li>
+<li>interrupt에 의해서 동작</li>
+</ul>
+</li>
+<li><p><code>setDaemon()</code> 메소드로 데몬 스레드로 설정</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DaemonThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DaemonThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;Daemon Thread Run&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="데이터-공유와-동기화"><a href="#데이터-공유와-동기화" class="headerlink" title="데이터 공유와 동기화"></a>데이터 공유와 동기화</h2><ul>
+<li><p>스레드간 데이터 공유 시 신뢰성에 문제가 발생할 수 있음</p>
+<p>  <code>결과는 1000000이 나오지 않는다 -&gt; count값이 동기화되지 않았기 때문</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Counter counter = <span class="keyword">new</span> Counter();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">1000</span>; j++) &#123;</span><br><span class="line">                    counter.count = counter.count + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(counter.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>synchronized</code> 키워드 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 공유 데이터 사용</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(sharedObj) &#123;</span><br><span class="line">        <span class="comment">// 공유 데이터 사용</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Example</p>
+<ul>
+<li><p>this 객체의 Intrinsic Lock을 이용한 구현</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">increaseCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ++count; <span class="comment">// 읽고, 수정하고, 쓰는 작업</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>메소드에 synchronized 키워드 사용</p>
+<ul>
+<li>synchronized 키워드가 사용된 메소드를 호출하기 위해서는 해당 객체를 소유해야만 호출이 가능. 소유하지 못하면 Blocking<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increaseCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ++count; <span class="comment">// 읽고, 수정하고, 쓰는 작업</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>wait()</code>, <code>notify()</code>, <code>notifyAll()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WorkObject</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;ThreadA의 methodA() 작업 실행&quot;</span>);</span><br><span class="line">          notify(); <span class="comment">// 일시정지 상태에 있는 ThreadB를 실행 대기상태로 만듬 </span></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              wait(); <span class="comment">// ThreadA를 일시 정지 상태로 만듬 </span></span><br><span class="line">          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;ThreadB의 methodB() 작업 실행&quot;</span>);</span><br><span class="line">          notify(); <span class="comment">// 일시정지 상태에 있는 ThreadA를 실행 대기상태로 만듬</span></span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              wait(); <span class="comment">// ThreadB를 일시 정지 상태로 만듬</span></span><br><span class="line">          &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">      <span class="keyword">private</span> WorkObject workObject;</span><br><span class="line"></span><br><span class="line">      ThreadA(WorkObject workObject) &#123;</span><br><span class="line">          <span class="keyword">this</span>.workObject = workObject;</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">              workObject.methodA(); <span class="comment">// 공유객체의 methodA를 반복적으로 호출 </span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">      <span class="keyword">private</span> WorkObject workObject;</span><br><span class="line"></span><br><span class="line">      ThreadB(WorkObject workObject) &#123;</span><br><span class="line">          <span class="keyword">this</span>.workObject = workObject;</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">              workObject.methodB(); <span class="comment">// 공유객체의 methodA를 반복적으로 호출 </span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">          WorkObject sharedObject = <span class="keyword">new</span> WorkObject();</span><br><span class="line">          </span><br><span class="line">          ThreadA threadA = <span class="keyword">new</span> ThreadA(sharedObject);</span><br><span class="line">          ThreadB threadB = <span class="keyword">new</span> ThreadB(sharedObject);</span><br><span class="line">          </span><br><span class="line">          threadA.start();</span><br><span class="line">          threadB.start();</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="세마포어"><a href="#세마포어" class="headerlink" title="세마포어"></a>세마포어</h2><ul>
+<li><p>사전적 의미 : 횟대(깃발)</p>
+</li>
+<li><p>n개의 깃발을 놓고, 여러 스레드가 경쟁하도록 하는 sync 기법</p>
+</li>
+<li><p>n = 1이면, BinarySemaphore라고 하며, Lock과 유사하게 동작</p>
+</li>
+<li><p>메소드</p>
+<ul>
+<li>release(int permits) : permits만큼의 자원 개수 반환</li>
+<li>acquire(int permits) : permits만큼의 자원 사용 (Blocking O)</li>
+<li>tryAcquire(long timeout, TimeUnit unit) : unit단위의 timeout이후 자원을 얻지 못하면 false, 얻으면 true (Blocking X)</li>
+<li>acquireUninterruptibly() : 자원을 얻지못해도 interrupt 발생 X</li>
+</ul>
+</li>
+<li><p>Example</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Semaphore sem = <span class="keyword">new</span> Semaphore(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        sem.release(<span class="number">10</span>);</span><br><span class="line">        sem.tryAcquire();</span><br><span class="line">        System.out.println(sem.availablePermits());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123; <span class="comment">// Blocking으로 동작</span></span><br><span class="line">            sem.acquire(<span class="number">12</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sem.acquireUninterruptibly(); <span class="comment">// interrupt에 반응하지 않음</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(sem.tryAcquire(<span class="number">100</span>, TimeUnit.MILLISECONDS)); <span class="comment">// Blocking 하지 않고, 실패하면 false</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        sem.release();</span><br><span class="line"></span><br><span class="line">        System.out.println(sem.availablePermits());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Dining Philosopher (식사하는 철학자)</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Philosopher</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Fork left;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Fork right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Philosopher</span><span class="params">(<span class="keyword">int</span> id, Fork left, Fork right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.left = left;</span><br><span class="line">        <span class="keyword">this</span>.right = right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                left.acquire();</span><br><span class="line">                System.out.println(id + <span class="string">&quot;: left taken&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(!right.tryAcquire(<span class="number">1000</span>, TimeUnit.MILLISECONDS))&#123;</span><br><span class="line">                    left.release();</span><br><span class="line">                    Thread.yield();</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(id + <span class="string">&quot;: right taken&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">                System.out.println(id + <span class="string">&quot;is eating&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            left.release();</span><br><span class="line">            right.release();</span><br><span class="line">            Thread.yield();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fork</span> <span class="keyword">extends</span> <span class="title">Semaphore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fork</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Philosopher[] phils = <span class="keyword">new</span> Philosopher[<span class="number">5</span>];</span><br><span class="line">        Fork[] forks = <span class="keyword">new</span> Fork[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            forks[i] = <span class="keyword">new</span> Fork();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            phils[i] = <span class="keyword">new</span> Philosopher(i, forks[i], forks[(i+<span class="number">1</span>) % <span class="number">5</span>]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        phils[<span class="number">4</span>] = <span class="keyword">new</span> Philosopher(<span class="number">4</span>, forks[<span class="number">0</span>], forks[<span class="number">4</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">            phils[i].start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="JCF와-Thread"><a href="#JCF와-Thread" class="headerlink" title="JCF와 Thread"></a>JCF와 Thread</h2><ul>
+<li><p>Vector VS List</p>
+<ul>
+<li>List   <ul>
+<li>메소드들이 Synchronized 되지 않음</li>
+<li>속도는 빠르다.</li>
+</ul>
+</li>
+<li>Vector <ul>
+<li>메소드들이 Synchronized 되어 있음</li>
+<li>속도는 느리다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>List를 Synchronized 되게 하는 방법</p>
+<ul>
+<li>Collections의 synchronizedList() 사용  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;Integer&gt; list2 = Collections.synchronizedList(list1);</span><br></pre></td></tr></table></figure>
+<h2 id="Thread-Pool"><a href="#Thread-Pool" class="headerlink" title="Thread Pool"></a>Thread Pool</h2></li>
+</ul>
+</li>
+<li><p>Thread Pool이란?</p>
+<ul>
+<li>미리 생성해 둔 Thread의 집합을 스레드 풀이라고 한다.</li>
+<li>미리 Thread를 생성해 두고, 작업만 Thread에 할당하여 동작</li>
+<li>사용 이유<ul>
+<li>Thread를 직접 만들어 사용할 경우, Multi-Thread 작업을 계속 할 때, Thread 생성/삭제 오버해드가 크다.</li>
+<li>배치작업 (모아두고 한 번에 처리하는 작업)에 유용하여 많이 사용된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Thread Pool 생성 </p>
+<ul>
+<li><p>Single Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newSingleThreadExecutor();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Thread가 1개인 ThreadPool 생성(SingleThread)</li>
+<li>실패 시, 새로운 Thread를 생성하지 않음</li>
+</ul>
+</li>
+<li><p>Cached Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newCachedThreadPool();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>초기 Thread 0개</li>
+<li>코어 Thread 0개 (일하지 않아도 종료시키지 않는 Thread)</li>
+<li>요청 작업보다 Thead가 부족하면 새 스레드 생성</li>
+<li>60초동안 일하지 않는 Thread 제거</li>
+</ul>
+</li>
+<li><p>Fixed Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService pool = Executors.newFixedThreadPool(<span class="keyword">int</span> nThreads);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>최대 Thread nThreads개</li>
+<li>코어 Thread nThreads개</li>
+<li>작업하지 않는 Thread도 제거하지 않고 동작</li>
+</ul>
+</li>
+<li><p>Scheduler Thread Pool</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ScheduledExecutorService pool = Executors.newScheduledThreadPool(<span class="keyword">int</span> corePoolSize);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>지정된 delay후에 실행하도록함(주기적으로 실행하는 명령을 예약)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>작업 생성과 처리 요청</p>
+<ul>
+<li><p>작업 생성</p>
+<ul>
+<li><p>Runnable 구현 클래스</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = <span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 작업 내용</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Callable 구현 클래스</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Callable&lt;T&gt; task = <span class="keyword">new</span> Callable&lt;T&gt;()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">// 작업 내용</span></span><br><span class="line">        <span class="keyword">return</span> T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>  <code>Runnable run()은 Return 값이 없고, Callable call()은 Return 값이 있음</code></p>
+</li>
+</ul>
+</li>
+<li><p>처리 요청</p>
+<ul>
+<li><p>매소드 </p>
+<table>
+<thead>
+<tr>
+<th>리턴 타입</th>
+<th>메소드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void</td>
+<td>execute(Runnable command)</td>
+<td>Runnable을 작업 큐에 저장, 작업 처리 결과를 받지 못함</td>
+</tr>
+<tr>
+<td>Future&lt;?&gt;</td>
+<td>submit(Runnable task)</td>
+<td>Runnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+<tr>
+<td>Future</td>
+<td>submit(Runnable task, V result)</td>
+<td>Runnable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+<tr>
+<td>Future</td>
+<td>submit(Callable task)</td>
+<td>Callable 작업 큐에 저장, 리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>execute()</p>
+<ul>
+<li><p>작업 처리 결과를 반환하지 않는다.</p>
+</li>
+<li><p>작업 처리 도중 예외가 발생하면 스레드가 종료되고 해당 스레드는 스레드 풀에서 제거된다. </p>
+</li>
+<li><p>다른 작업을 처리하기 위해 새로운 스레드를 생성한다.</p>
+</li>
+</ul>
+</li>
+<li><p>submit()</p>
+<ul>
+<li><p>작업 처리 결과를 반환한다.</p>
+</li>
+<li><p>작업 처리 도중 예외가 발생하더라도 스레드는 종료되지 않고 다음 작업을 위해 재사용</p>
+</li>
+<li><p>스레드의 생성 오버헤드를 방지하기 위해서라도 submit() 을 가급적 사용한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Thread Pool 종료</p>
+<blockquote>
+<p>Thread Pool에 속한 Thread는 데몬 스레드가 아니다</p>
+</blockquote>
+<blockquote>
+<p>따라서 주 스레드 종료시 강제종료 되지 않기 때문에 main 스레드가 종료되어도 실행상태가 유지된다.</p>
+</blockquote>
+<blockquote>
+<p>어플리케이션을 종료하기 위해서는 스레드 풀을 강제종료시켜야 한다.</p>
+</blockquote>
+<ul>
+<li><p>excutorService.shutdown()</p>
+<p>  작업큐에 남아있는 작업까지 모두 마무리 후 종료 (오버헤드를 줄이기 위해 일반적으로 많이 사용.)</p>
+</li>
+<li><p>excutorService.shoutdownNow()</p>
+<p>  작업큐 작업 잔량 상관없이 강제 종료</p>
+</li>
+<li><p>excutorService.awaitTermination(long timeout, TimeUnit unit)</p>
+<p>  모든 작업 처리를 timeout 시간안에 처리하면 true 리턴 ,처리하지 못하면 작업스레드들을 interrupt()시키고 false리턴</p>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/28/Java-Advanced10-Multi-Thread/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/"
+                            aria-label=": Algorithm-문제집"
+                        >
+                            Algorithm-문제집
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-27T23:02:22+09:00">
+	
+		    Oct 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Search/">Search</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1766 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1766">문제링크</a></p>
+<ul>
+<li><p>문제유형 </p>
+<ul>
+<li>탐색</li>
+<li>힙</li>
+<li>위상정렬</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>위상정렬<ol>
+<li>진입 차수가 0인 정점을 큐에 삽입</li>
+<li>큐에서 원소를 꺼내 해당 원소와 간선을 제거</li>
+<li>제거 이후 진입 차수가 0이 된 정점을 큐에 삽입</li>
+<li>큐가 빌 때까지 2 ~ 3을 반복</li>
+</ol>
+</li>
+<li>위상정렬 사용이유 : 2번 조건 - 먼저 푸는 것이 좋은 문제가 있는 문제는, 먼저 푸는 것이 좋은 문제를 반드시 먼저 풀어야 한다.) </li>
+<li>힙 사용이유 : 3번 조건 - 가능하면 쉬운 문제부터 풀어야 한다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">indegree = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">heap = []</span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    array[x].append(y)</span><br><span class="line">    indegree[y] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> indegree[i] == <span class="number">0</span>:</span><br><span class="line">        heapq.heappush(heap, i)</span><br><span class="line">    </span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> heap:</span><br><span class="line">    data = heapq.heappop(heap)</span><br><span class="line">    result.append(data)</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> array[data]:</span><br><span class="line">        indegree[y] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> indegree[y] == <span class="number">0</span>:</span><br><span class="line">            heapq.heappuh(heap, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result:</span><br><span class="line">    print(i, end = <span class="string">&#x27; &#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
                             aria-label=": Algorithm-카드 정렬하기"
                         >
@@ -853,483 +1825,6 @@
                         <p>
                             <a
                                 href="/2020/10/27/Algorithm-%EA%B3%B5%EC%9C%A0%EA%B8%B0-%EC%84%A4%EC%B9%98/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/DATABASE-JOIN-UNION/"
-                            aria-label=": DATABASE-JOIN UNION"
-                        >
-                            DATABASE-JOIN UNION
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T20:17:58+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h1><ul>
-<li><p>JOIN은 여러개의 테이블에서 데이터를 모아서 보여줄 때 사용됩니다. </p>
-</li>
-<li><p>JOIN에는 INNER JOIN, LEFT JOIN, RIGHT JOIN이 있습니다.</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/97171517-ed7d9980-17d0-11eb-83f2-fd3cfde407e1.png" alt="스크린샷 2020-10-26 오후 9 18 54"></p>
-</li>
-</ul>
-<h2 id="MAKE-TEST-TABLE-amp-DATA"><a href="#MAKE-TEST-TABLE-amp-DATA" class="headerlink" title="MAKE TEST TABLE &amp; DATA"></a>MAKE TEST TABLE &amp; DATA</h2><ul>
-<li>create table &amp; data  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span> (</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (user_id)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> addr (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    addr <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(<span class="keyword">name</span>)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;jin&quot;</span>),</span><br><span class="line">(<span class="string">&quot;po&quot;</span>),</span><br><span class="line">(<span class="string">&quot;alice&quot;</span>),</span><br><span class="line">(<span class="string">&quot;petter&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> addr(addr, user_id)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;seoul&quot;</span>, <span class="number">1</span>),</span><br><span class="line">(<span class="string">&quot;pusan&quot;</span>, <span class="number">2</span>),</span><br><span class="line">(<span class="string">&quot;deajeon&quot;</span>, <span class="number">3</span>),</span><br><span class="line">(<span class="string">&quot;deagu&quot;</span>, <span class="number">5</span>),</span><br><span class="line">(<span class="string">&quot;seoul&quot;</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h2><ul>
-<li><p>두 테이블 사이에 공통된 값이 없는 row는 출력하지 않는다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>world 데이터베이스에서 도시이름과 국가이름을 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">JOIN</span> country</span><br><span class="line"><span class="keyword">ON</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>아래와 같이 사용할수도 있다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city, country</span><br><span class="line"><span class="keyword">WHERE</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="LEFT-JOIN"><a href="#LEFT-JOIN" class="headerlink" title="LEFT JOIN"></a>LEFT JOIN</h2><ul>
-<li><p>왼쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="RIGHT-JOIN"><a href="#RIGHT-JOIN" class="headerlink" title="RIGHT JOIN"></a>RIGHT JOIN</h2><ul>
-<li><p>오른쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="JOIN과-DISDINCT의-사용"><a href="#JOIN과-DISDINCT의-사용" class="headerlink" title="JOIN과 DISDINCT의 사용"></a>JOIN과 DISDINCT의 사용</h3><ul>
-<li><p>지역과 대륙별 사용하는 언어 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>대륙과 지역별 사용하는 언어의 수 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sub1.region, sub1.continent, <span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="keyword">count</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br><span class="line">) <span class="keyword">AS</span> sub1</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> sub1.region, sub1.continent</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="테이블-세개-조인하기"><a href="#테이블-세개-조인하기" class="headerlink" title="테이블 세개 조인하기"></a>테이블 세개 조인하기</h3><ul>
-<li>국가별, 도시별, 언어의 사용율  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> city</span><br><span class="line"><span class="keyword">ON</span> country.code = city.countrycode</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> country.code = countrylanguage.countrycode</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country, city, countrylanguage</span><br><span class="line"><span class="keyword">WHERE</span> country.code = city.countrycode <span class="keyword">and</span> country.code = countrylanguage.countrycode</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h1><blockquote>
-<p>UNION은 SELECT 문의 결과 데이터를 하나로 합쳐서 출력합니다. </p>
-</blockquote>
-<blockquote>
-<p>컬럼의 갯수와 타입, 순서가 같아야 합니다.</p>
-</blockquote>
-<blockquote>
-<p>UNION은 자동으로 distinct를 하여 중복을 제거해 줍니다. </p>
-</blockquote>
-<blockquote>
-<p>중복제거를 안하고 컬럼 데이터를 합치고 싶으면 UNION ALL을 사용합니다.</p>
-</blockquote>
-<blockquote>
-<p>또한 UNION을 이용하면 Full Outer Join을 구현할수 있습니다.</p>
-</blockquote>
-<ul>
-<li><p>UNION</p>
-<ul>
-<li>user 테이블의 name 컬럼과 addr 테이블의 addr 컬럼의 데이터를 하나로 함쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>UNION ALL</p>
-<ul>
-<li>중복데이터를 제거하지 않고 결과 데이터 합쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>FULL OUTER JOIN</p>
-<ul>
-<li>union을 이용하여 full outer join 구현  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/DATABASE-JOIN-UNION/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/DATABASE-Function/"
-                            aria-label=": DATABASE-Function"
-                        >
-                            DATABASE-Function
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T20:05:50+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><ul>
-<li><p>CEIL, ROUND, TRUNCATE는 소수점 올림, 반올림, 버림 함수입니다.</p>
-<ul>
-<li><p>CEIL</p>
-<p>  CEIL는 실수 데이터를 올림 할 때 사용합니다.</p>
-</li>
-<li><p>12.345를 올림하여 정수로 나타냄</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CEIL</span>(<span class="number">12.345</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 올림하여 정수로 나타냄</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">CEIL</span>(Percentage)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ROUND</p>
-<p>  ROUND는 실수데이터를 반올림 할 때 사용합니다.</p>
-<ul>
-<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 반올림</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 반올림하여 정수로 나타냄</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>TRUNCATE</p>
-<p>  TRUNCATE는 실수 데이터를 버림 할 때 사용합니다.</p>
-<ul>
-<li><p>12.345를 소수 둘째자리까지 나타내고 소수 셋째자리에서 버림</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRUNCATE</span>(<span class="number">12.345</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>국가별 언어 사용 비율을 소수 첫번째자리에서 버림하여 정수로 나타냄</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CountryCode, <span class="keyword">Language</span>, Percentage, <span class="keyword">ROUND</span>(Percentage, <span class="number">0</span>),</span><br><span class="line"><span class="keyword">TRUNCATE</span>(Percentage, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">FROM</span> countrylanguage</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>DATE_FORMAT</p>
-<p>  DATE_FORMAT은 날짜 데이터에 대한 포멧을 바꿔줍니다.</p>
-<p>  <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html</a></p>
-<ul>
-<li>sakila 데이터 베이스에서 월별 총 수입  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATE_FORMAT</span>(payment_date, <span class="string">&quot;%Y-%m&quot;</span>) <span class="keyword">AS</span> monthly, <span class="keyword">SUM</span>(amount) <span class="keyword">AS</span> amount</span><br><span class="line"><span class="keyword">FROM</span> payment</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> monthly</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="조건문-IF-IFNULL-CASE"><a href="#조건문-IF-IFNULL-CASE" class="headerlink" title="조건문 IF, IFNULL, CASE"></a>조건문 IF, IFNULL, CASE</h2><ul>
-<li><p>SQL에서도 다른 언어에서 처럼 조건문 사용이 가능합니다. IF, CASE 에 대해서 설명합니다.</p>
-</li>
-<li><p>IF(조건, 참, 거짓)</p>
-</li>
-</ul>
-<pre><code>- 도시의 인구가 100만이 넘으면 &quot;big city&quot; 그렇지 않으면 &quot;small city&quot;를 출력하는 city_scale 컬럼을 추가
-    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;, population, &lt;span class=&quot;keyword&quot;&gt;IF&lt;/span&gt;(population &amp;gt; &lt;span class=&quot;number&quot;&gt;1000000&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;big city&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;small city&amp;quot;&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;AS&lt;/span&gt; city_scale&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;FROM&lt;/span&gt; city&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
-<ul>
-<li><p>IFNULL(참, 거짓)</p>
-<ul>
-<li>독립년도가 없는 데이터는 0으로 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IndepYear, <span class="keyword">IFNULL</span>(IndepYear, <span class="number">0</span>) <span class="keyword">as</span> IndepYear</span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>CASE</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CASE </span><br><span class="line">WHEN (조건1) THEN (출력1)</span><br><span class="line">WHEN (조건2) THEN (출력2)</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> (컬럼명)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>나라별로 인구가 10억 이상, 1억 이상, 1억 이하인 컬럼을 추가하여 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, population,</span><br><span class="line"><span class="keyword">CASE</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">1000000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 1 bilion&quot;</span></span><br><span class="line"><span class="keyword">WHEN</span> population &gt; <span class="number">100000000</span> <span class="keyword">THEN</span> <span class="string">&quot;upper 100 milion&quot;</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">&quot;below 100 milion&quot;</span></span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> <span class="keyword">result</span></span><br><span class="line"><span class="keyword">FROM</span> country</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/DATABASE-Function/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
-                            aria-label=": DATABASE-DML-INSERT UPDATE DELETE"
-                        >
-                            DATABASE-DML-INSERT UPDATE DELETE
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T20:00:15+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><ul>
-<li><p>테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)</span><br><span class="line"><span class="keyword">VALUES</span>(&lt;value_1&gt;, &lt;value_2&gt;, ...)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>test 데이터 베이스 선택</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE test;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>user1 테이블에 user_id, name, email, age, rdate를 입력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user1(user_id, <span class="keyword">name</span>, email, age, rdate)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;pdj@gmail.com&quot;</span>, <span class="number">30</span>, <span class="keyword">now</span>()),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&quot;peter&quot;</span>, <span class="string">&quot;peter@daum.net&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2017-02-20&#x27;</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">&quot;alice&quot;</span>, <span class="string">&quot;alice@naver.com&quot;</span>, <span class="number">23</span>, <span class="string">&#x27;2018-01-05&#x27;</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">&quot;po&quot;</span>, <span class="string">&quot;po@gmail.com&quot;</span>, <span class="number">43</span>, <span class="string">&#x27;2002-09-16&#x27;</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">&quot;andy&quot;</span>, <span class="string">&quot;andy@gmail.com&quot;</span>, <span class="number">17</span>, <span class="string">&#x27;2016-04-28&#x27;</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;jin1224@gmail.com&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2013-09-02&#x27;</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>city_2 테이블 생성</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city_2 (</span><br><span class="line">    <span class="keyword">Name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    CountryCode <span class="built_in">CHAR</span>(<span class="number">3</span>),</span><br><span class="line">    District <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    Population <span class="built_in">INT</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>select 절에서 나온 결과데이터를 Insert</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> city_2</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span>, CountryCode, District, Population</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">WHERE</span> Population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h1><ul>
-<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">SET</span> &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>jin 이름을 가지고 있는 사람의 나이를 20, 이메일을 <a href="mailto:&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;">&#x70;&#100;&#106;&#x40;&#100;&#97;&#117;&#109;&#46;&#110;&#x65;&#116;</a>으로 변경  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; UPDATE user1</span><br><span class="line"><span class="keyword">SET</span> age=<span class="number">20</span>, email=<span class="string">&quot;pdj@daum.net&quot;</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">&quot;jin&quot;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="DELETE-DROP-TRUNCATE"><a href="#DELETE-DROP-TRUNCATE" class="headerlink" title="DELETE, DROP, TRUNCATE"></a>DELETE, DROP, TRUNCATE</h1><ul>
-<li>조건을 설정하여 데이터를 삭제할수 있습니다.</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>2016-01-01 이전 데이터 삭제 (DML)</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DELETE FROM user1</span><br><span class="line">WHERE rdate &lt; &quot;2016-01-01&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>테이블 구조를 남기고 모든 데이터를 삭제 (DLL)</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; TRUNCATE FROM user1</span><br></pre></td></tr></table></figure></li>
-<li><p>테이블 전체를 모두 삭제 (DLL)</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DROP FROM user1</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/DATABASE-Constraint/"
-                            aria-label=": DATABASE-Constraint"
-                        >
-                            DATABASE-Constraint
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T19:35:11+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/">MYSQL</a>, <a class="category-link" href="/categories/DATABASE/MYSQL/DDL/">DDL</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="Constraint-제약조건"><a href="#Constraint-제약조건" class="headerlink" title="Constraint : 제약조건"></a>Constraint : 제약조건</h1><p>데이터 베이스의 테이블을 생성할때 각 컬럼은 각각의 제약조건을 갖습니다.</p>
-<ul>
-<li><p>NOT NULL</p>
-<p>  NULL 값 (비어있는 값)을 저장할수 없습니다.</p>
-</li>
-<li><p>UNIQUE</p>
-<p>  같은 값을 저장할수 없습니다.</p>
-</li>
-<li><p>PRIMARY KEY</p>
-<ul>
-<li><p>NOT NULL과 UNIQUE 의 제약조건을 동시에 만족해야 합니다.</p>
-</li>
-<li><p>그러므로 컬럼에 비어 있는 값과 동일한 값을 저장할수 없습니다. </p>
-</li>
-<li><p>하나의 테이블에 하나의 컬럼만 조건을 설정할수 있습니다.</p>
-</li>
-</ul>
-</li>
-<li><p>AUTO_INCREMENT</p>
-<p>  주로 테이블의 PRIMARY KEY 데이터를 저장할때 자동으로 숫자를 1씩 증가시켜 주는 기능으로 사용합<br>  니다.</p>
-</li>
-<li><p>FOREIGN KEY</p>
-<p>  다른 테이블과 연결되는 값이 저장됩니다.</p>
-<ul>
-<li><p>테이블 수정으로 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> money</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> fk_user</span><br><span class="line"><span class="keyword">foreign</span> <span class="keyword">key</span> (user_id)       <span class="comment"># money의 user_id</span></span><br><span class="line"><span class="keyword">references</span> <span class="keyword">user</span> (user_id);  <span class="comment"># user의 user_id</span></span><br></pre></td></tr></table></figure></li>
-<li><p>테이블 생성시 FK 설정</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>ON DELETE, ON UPDATE 설정</p>
-<ul>
-<li><p>참조를 받는 데이터가 수정하거나 삭제될때 참조 하는 데이터를 설정(수정,삭제 등등)</p>
-</li>
-<li><p>CASECADE : 참조 받는 데이터가 수정, 삭제하면, 참조하는 데이터도 수정 삭제</p>
-</li>
-<li><p>SET NULL : 참조 받는 데이터가 수정 삭제하면, 참조하는 데이터는 NULL로 수정</p>
-</li>
-</ul>
-</li>
-<li><p>DEFAULT</p>
-<p>  데이터를 저장할때 해당 컬럼에 별도의 저장값이 없으면 DEFAULT로 설정된 값이 저장됩니다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> money(</span><br><span class="line">    money_id <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    income <span class="built_in">int</span>, </span><br><span class="line">    user_id <span class="built_in">int</span>,</span><br><span class="line">    <span class="keyword">foreign</span> <span class="keyword">key</span> (user_id) <span class="keyword">references</span> <span class="keyword">user</span>(user_id)</span><br><span class="line">    <span class="keyword">on</span> <span class="keyword">update</span> <span class="keyword">cascade</span> <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/DATABASE-Constraint/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

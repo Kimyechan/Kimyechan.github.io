@@ -325,6 +325,527 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/30/Spring-Spring-MVC-1-MVC-Framework-%EC%A7%81%EC%A0%91%EA%B5%AC%ED%98%84/"
+                            aria-label=": Spring-Spring MVC 1 (MVC Framework 직접구현)"
+                        >
+                            Spring-Spring MVC 1 (MVC Framework 직접구현)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-30T20:04:16+09:00">
+	
+		    Nov 30, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Servlet기반-MVC-구조-및-동작-순서"><a href="#Servlet기반-MVC-구조-및-동작-순서" class="headerlink" title="Servlet기반 MVC 구조 및 동작 순서"></a>Servlet기반 MVC 구조 및 동작 순서</h1><p><img src="https://user-images.githubusercontent.com/12459864/100602774-b2c6ce00-3347-11eb-867b-0c8e7db60e01.png" alt="image"></p>
+<ol>
+<li>클라이언트로부터 요청이 Dispatcher Servlet으로 들어온다.</li>
+<li>Dispatcher Servlet은 DAO를 통해서 데이터를 가져온다.</li>
+<li>Http Session에 DB에서 가져온 데이터를 저장한다.(굳이 이렇게 할 필요는 없음)</li>
+<li>Dispatcher Servlet이 해당 뷰로 매칭시킨다.</li>
+<li>JSP 뷰에서 Session 객체에 저장되어진 데이터를 가져와 뷰를 구성한다</li>
+<li>구성되어진 뷰는 클라이언트로 다시 보내어진다.</li>
+</ol>
+<h1 id="Spring-MVC-구조-및-동작-순서"><a href="#Spring-MVC-구조-및-동작-순서" class="headerlink" title="Spring MVC 구조 및 동작 순서"></a>Spring MVC 구조 및 동작 순서</h1><p><img src="https://user-images.githubusercontent.com/12459864/100603516-8f505300-3348-11eb-8b33-9e39b2cb1957.png" alt="image"></p>
+<ol>
+<li>클라이언트에서 서버로 요청을 보내면 제일 먼저 Dispatcher Servlet이 요청을 받는다.</li>
+<li>Dispatcher Servlet은 받은 요청 URI를 HandlerMapping으로 보내면 HandlerMapping은 해당 URI와 매핑되는 Controller객체를 받는다.</li>
+<li>매핑된 Controller에서 DAO로 부터 데이터를 받아 business logic을 처리하고 View Name을 리턴한다</li>
+<li>View Name은 ViewResolver를 통해서 Prefix나 Suffix등의 붙어지고 해당 뷰는 Client로 보내어진다.</li>
+</ol>
+<h1 id="Spring-MVC-구조-직접-만들기"><a href="#Spring-MVC-구조-직접-만들기" class="headerlink" title="Spring MVC 구조 직접 만들기"></a>Spring MVC 구조 직접 만들기</h1><ol>
+<li><p>web.xml 설정</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>모든 요청이 Dispatcher Servlet을 거치도록 설정한다.</li>
+<li>Dispatcher Serlvet이 모든 클라이언트 요청을 첫 번째로 받는다.</li>
+</ul>
+</li>
+<li><p>Dispatcher Servlet 구현</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatcherServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HandlerMapping handlerMapping;</span><br><span class="line">    <span class="keyword">private</span> ViewResolver viewResolver;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DispatcherServlet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;===&gt; DispatcherServlet 생성&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">        handlerMapping = <span class="keyword">new</span> HandlerMapping();</span><br><span class="line">        viewResolver = <span class="keyword">new</span> ViewResolver();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ViewResolver의 접두사와 접미사를 결정한다</span></span><br><span class="line">        viewResolver.setPrefix(<span class="string">&quot;./&quot;</span>);</span><br><span class="line">        viewResolver.setSuffix(<span class="string">&quot;.jsp&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 사용자 요청 path 정보를 추출한다.</span></span><br><span class="line">        String uri = request.getRequestURI();</span><br><span class="line">        String path = uri.substring(uri.lastIndexOf(<span class="string">&quot;/&quot;</span>));</span><br><span class="line">        System.out.println(path);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. HandlerMapping을 통해 path에 해당하는 Controller를 검색한다.</span></span><br><span class="line">        Controller ctrl = handlerMapping.getController(path);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 검색된 Controller를 실행한다</span></span><br><span class="line">        String viewName = ctrl.handleRequest(request, response);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. ViewResolver를 통해 viewName에 해당하는 화면을 검색한다</span></span><br><span class="line">        String view = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!viewName.contains(<span class="string">&quot;.do&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (viewName.contains(<span class="string">&quot;.html&quot;</span>))&#123;</span><br><span class="line">                view = viewName;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                view = viewResolver.getView(viewName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            view = viewName;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. ViewResolver가 검색해준 화면으로 이동한다.</span></span><br><span class="line">        response.sendRedirect(view);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>요청이 들어오면 Dispatcher Serlvet에서 URI에 해당하는 Controller를 HandlerMapping 객체를 통해 받아온다</li>
+<li>Controller에서 logic을 처리하고 View Name을 Return해준다</li>
+<li>Return받은 View Name을 ViewResolver로 다시 재 조합한다</li>
+<li>재조합된 View Name으로 응답을 보낸다</li>
+</ul>
+</li>
+<li><p>Handler Mapping 구현</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerMapping</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Controller&gt; mappings;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandlerMapping</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 모든 컨트롤러 객체를 Map에 등록한다</span></span><br><span class="line">        mappings = <span class="keyword">new</span> HashMap&lt;String, Controller&gt;();</span><br><span class="line">        <span class="comment">// USERS관련 컨트롤러 등록</span></span><br><span class="line">        mappings.put(<span class="string">&quot;/login.do&quot;</span>, <span class="keyword">new</span> LoginController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/logout.do&quot;</span>, <span class="keyword">new</span> LogoutController());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// BOARD 관련 컨트롤러 등록</span></span><br><span class="line">        mappings.put(<span class="string">&quot;/getBoardList.do&quot;</span>, <span class="keyword">new</span> GetBoardListController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/insertBoard.do&quot;</span>, <span class="keyword">new</span> InsertBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/updateBoard.do&quot;</span>, <span class="keyword">new</span> UpdateBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/deleteBoard.do&quot;</span>, <span class="keyword">new</span> DeleteBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/getBoard.do&quot;</span>, <span class="keyword">new</span> GetBoardController());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Controller <span class="title">getController</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 매개변수로 받은 path에 해당하는 컨트롤러 객체를 검색하여 리턴한다.</span></span><br><span class="line">        <span class="keyword">return</span> mappings.get(path);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>각 요청에 대한 Controller 객체를 HashMap에 저장한다</li>
+<li>요청이 들어오면 HashMap에서 해당 Controller 객체를 가져온다</li>
+</ul>
+</li>
+<li><p>해당 Controller 구현</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsertBoardController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">handleRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        String title = request.getParameter(<span class="string">&quot;title&quot;</span>);</span><br><span class="line">        String writer = request.getParameter(<span class="string">&quot;writer&quot;</span>);</span><br><span class="line">        String content = request.getParameter(<span class="string">&quot;content&quot;</span>);</span><br><span class="line"></span><br><span class="line">        BoardVO vo = <span class="keyword">new</span> BoardVO();</span><br><span class="line">        vo.setTitle(title);</span><br><span class="line">        vo.setWriter(writer);</span><br><span class="line">        vo.setContent(content);</span><br><span class="line"></span><br><span class="line">        BoardDAO boardDAO = <span class="keyword">new</span> BoardDAOJDBC();</span><br><span class="line">        boardDAO.insertBoard(vo);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;getBoardList.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DAO에서 요청한 데이터를 가져오는 등의 Business Logic을 진행한다.</li>
+<li>응답으로 보내져야할 View Name을 Return한다.</li>
+</ul>
+</li>
+<li><p>ViewResolver 구현</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewResolver</span> </span>&#123;</span><br><span class="line">    <span class="comment">//접두사</span></span><br><span class="line">    <span class="keyword">private</span> String prefix;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//접미사</span></span><br><span class="line">    <span class="keyword">public</span> String suffix;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrefix</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.prefix = prefix;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSuffix</span><span class="params">(String suffix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.suffix = suffix;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getView</span><span class="params">(String viewName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prefix + viewName + suffix;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Controller에서 받아온 View Name에 경로설정과 파일 확장자와 같은 부분을 Prefix나 Suffix로 붙혀서 Return한다</li>
+</ul>
+</li>
+</ol>
+<h1 id="Spring-MVC-XML을-통한-설정"><a href="#Spring-MVC-XML을-통한-설정" class="headerlink" title="Spring MVC (XML을 통한 설정)"></a>Spring MVC (XML을 통한 설정)</h1><h2 id="Servlet-Container와-Spring-Container와의-관계"><a href="#Servlet-Container와-Spring-Container와의-관계" class="headerlink" title="Servlet Container와 Spring Container와의 관계"></a>Servlet Container와 Spring Container와의 관계</h2><ul>
+<li><p>Web이 아닌 Spring Project에서 Spring Container를 구성할 때에는 GenericXmlApplicationContext나 AnnotationApplicationContext와 같은 Class를 통해서 xml이나 java파일을 설정파일로 등록하고 만들었다.</p>
+</li>
+<li><p>하지만 Spring Web Project는 Spring Container를 구성할 때 XmlWebApplicationContext같은 WebApplicationContext Class로 형성되어진다.</p>
+</li>
+<li><p>Spring Web Project의 Spring Container 형성과정은 Web이 아닌 Spring Project와는 형성과정에 차이가 있다</p>
+</li>
+<li><p>Spring Web Project Container 형성과정</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/100606765-451da080-334d-11eb-9eaf-0085c2041274.png" alt="image"></p>
+<ol>
+<li><p>Tomcat과 같은 WAS가 처음 로딩될 때 Servlet Container를 생성한다</p>
+</li>
+<li><p>Servlet Container를 통해서 DispatcherServlet에 요청이 들어왔을 때 DispatcherServlet이 메모리에 형성된다</p>
+</li>
+<li><p>DispatcherServlet이 처음 생성되어 질 때 init() 메소드가 호출되어 지는데 그 메소드에 Spring Container 생성 코드가 포함되어져 있다.</p>
+</li>
+<li><p>XmlWebAppolication과 같은 객체에 Spring Bean 정보가 들어있는 action-servlet.xml을 받아서 Spring Container를 생성한다</p>
+<p> <code>Servlet Container는 Servlet, Filter, Listener와 같은 클래스 밖에 관리를 못하지만, Spring Container는 일반 클래스들도 Bean으로 등록하여 관리할 수 있다.</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li><p>web.xml에 Spring DispatcherServlet 등록</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">            org.springframework.web.servlet.DispatcherServlet</span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/config/presentation-layer.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>이전에는 직접 구현한 DispatcherServlet을 web.xml에 등록했다</li>
+<li>지금은 Spring Framework에서 만들어진 Dispatcher Servlet을 모든 요청에 매핑되도록 등록했다</li>
+<li>Spring Container 빈 설정파일은 action-servlet.xml와 같은 이름 기본 등록되어있다</li>
+<li>다른 이름의 xml로 바꾸고싶다면 param에 contextConfigLocation을 변경해주면 된다</li>
+</ul>
+</li>
+<li><p>presentation-layer.xml 설정 (Spring Bean 설정파일)</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"></span></span></span><br><span class="line"><span class="tag"><span class="string">   &lt;!-- 모든 컨트롤러 클래스들을 bean으로 등록한다 --&gt;</span></span></span><br><span class="line"><span class="tag"><span class="string">    &lt;bean id=&quot;</span><span class="attr">getBoardList</span>&quot; <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.GetBoardListController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;login&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.user.LoginController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;logout&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.user.LogoutController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;getBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.GetBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;insertBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.InsertBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;updateBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.UpdateBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;deleteBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.DeleteBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 클라이언트의 요청을 어떤 컨트롤러가 처리할지 HandlerMapping으로 매핑한다 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- handleMapping id 고정 (spring에서 등록한 bean은 마지막 단어 두개 중 첫 단어만 소문자로 변경해서 id로 등록)--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;handlerMapping&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mappings&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/login.do&quot;</span>&gt;</span>login<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/logout.do&quot;</span>&gt;</span>logout<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/getBoardList.do&quot;</span>&gt;</span>getBoardList<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/getBoard.do&quot;</span>&gt;</span>getBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/insertBoard.do&quot;</span>&gt;</span>insertBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/updateBoard.do&quot;</span>&gt;</span>updateBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/deleteBoard.do&quot;</span>&gt;</span>deleteBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--  View Resolver를 등록한다</span></span><br><span class="line"><span class="comment">            브라우저는 절대 서버가 관리하는 프로젝트의 WEB-INF폴더에 접근할 수 없다.</span></span><br><span class="line"><span class="comment">            따라서 브라우저가 직접 접근해서는 안되는 파일은 WEB-INF폴더에 은닉한다.</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/board/&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>모든 컨트롤러 클래스를 bean으로 등록한다</li>
+<li>클라이언트 각 요청의 URI마다 어떤 Controller가 처리할 지 Spring HandlerMapping으로 매핑한다</li>
+<li>Spring ViewResolver을 등록한다</li>
+<li>브라우저는 WEB-INF 폴더에 접근할 수 없으므로 브라우저가 접근하면 안되는 파일은 WEB-INF 디렉토리에 은닉한다</li>
+</ul>
+</li>
+<li><p>Spring Controller Interface를 구현한 Controller 클래스 생성</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">handleRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        String id = request.getParameter(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">        String password = request.getParameter(<span class="string">&quot;password&quot;</span>);</span><br><span class="line"></span><br><span class="line">        UserVO vo = <span class="keyword">new</span> UserVO();</span><br><span class="line">        vo.setId(id);</span><br><span class="line">        vo.setPassword(password);</span><br><span class="line"></span><br><span class="line">        UserDAO userDAO = <span class="keyword">new</span> UserDAOJDBC();</span><br><span class="line">        UserVO user = userDAO.getUser(vo);</span><br><span class="line"></span><br><span class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">        <span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">            HttpSession session = request.getSession();</span><br><span class="line">            session.setAttribute(<span class="string">&quot;user&quot;</span>, user);</span><br><span class="line">            <span class="comment">// forward: 이나 redirect: 을 뷰 이름 앞에 붙이면 ViewResolver를 무시한다</span></span><br><span class="line">            mav.setViewName(<span class="string">&quot;forward:getBoardList.do&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mav.setViewName(<span class="string">&quot;redirect:login.jsp&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>org.springframework.web.servlet.mvc.Controller의 구현체 클래스를 만든다</li>
+<li>이전에는 View Name을 String 값으로 return했다면 지금은 ModelAndView 객체로 Return한다</li>
+<li>Spring ViewResolver를 거치지 않고 ViewName을 설정하려면 redirect: 나 forward: 를 ViewName에 추가한다</li>
+</ul>
+</li>
+</ol>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/30/Spring-Spring-MVC-1-MVC-Framework-%EC%A7%81%EC%A0%91%EA%B5%AC%ED%98%84/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/30/Spring-Spring-PSA/"
+                            aria-label=": Spring-Spring PSA"
+                        >
+                            Spring-Spring PSA
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-30T10:25:10+09:00">
+	
+		    Nov 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Spring/">Spring</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/">Core Concept</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/PSA/">PSA</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<h1 id="스프링-PSA-Portable-Service-Abstraction"><a href="#스프링-PSA-Portable-Service-Abstraction" class="headerlink" title="스프링 PSA(Portable Service Abstraction)"></a>스프링 PSA(Portable Service Abstraction)</h1><p>환경의 변화에 상관없이 일관된 방식의 기술 접근 환경을 제공하려는 추상화 구조</p>
+<p>Spring은 Spring Web MVC, Spring Transaction, Spring Cache등의 다양한 기술에 Portable Service Abstraction을 제공하고 있다<br><br/><br/> </p>
+<h2 id="Web-MVC와-관련된-Service-Abstraction"><a href="#Web-MVC와-관련된-Service-Abstraction" class="headerlink" title="Web MVC와 관련된 Service Abstraction"></a>Web MVC와 관련된 Service Abstraction</h2><p>Spring MVC는 서블릿 어플리케이션임에도 불구하고 서블릿이 전혀 겉으로 들어나지 않았다.</p>
+<p>단지 @Controller 어노테이션이 붙어잇는 클래스에서 @GetMapping, @PostMapping과 같은 @RequestMapping 애노테이션을 사용해서 요청을 매핑한다</p>
+<p>실제롤는 내부적으로 서블릿 기반으로 코드가 동작하고 있지만 서블릿 기술은 추상화 계층에 숨겨져 있는 것이다.</p>
+<p>이렇게 추상화 계층을 사용하여 어떤 기술을 내부에 숨기고 개발자에게 편의성을 제공해주는 것을 Service Abstraction이라 한다.</p>
+<p>더하여 Service Abstraction으로 제공되는 기술을 다른 기술 스택으로 간편하게 바꿀 수 있는 확장성을 갖고 있는 것이 Portable Service Abstraction이다.<br><br/><br/></p>
+<h2 id="Spring-Web-MVC"><a href="#Spring-Web-MVC" class="headerlink" title="Spring Web MVC"></a>Spring Web MVC</h2><h2 id="Service-Abstraction"><a href="#Service-Abstraction" class="headerlink" title="Service Abstraction"></a>Service Abstraction</h2><p>일반 클래스에 @Controller 애노테이션을 사용하면 요청을 매핑할 수 있는 컨트롤러 역할을 수행하는 클래스가 된다.</p>
+<p>그 클래스에서는 @GetMapping과 @PostMapping 애노테이션을 사용해서 요청을 매핑할 수 있다</p>
+<p>요청을 처리하는 메소드들은 뷰를 리턴하며 각 메소드에서 model에 담은 객체가 모델에 해당한다</p>
+<p>Spring Web MVC를 사용하면 이렇게 서블릿을 간편하게 개발할 수 있는데, 뒷단에 spring이 제공해주는 여러 기능들이 숨겨져 있기 때문이다.</p>
+<p>즉 서블릿의 HttpServlet을 상속받고 doGet(), doPost() 작성하는 등의 작업을 직접하지 않아도 된다</p>
+<p>Service Abstarction의 목적 중 하나가 이러한 편의성을 제공하는 것이다.</p>
+<h2 id="Portable"><a href="#Portable" class="headerlink" title="Portable"></a>Portable</h2><p>Spring Web MVC가 Tomcat기반을 동작하고 있을 때 코드를 거의 그대로 둔 상태에서 톰캣이 아닌 완전히 다른 기술 스택으로 실행하는 것이 가능하다.</p>
+<p>spring-boot-starter-web 의존성 대신 프로젝트를 spring-boot-starter-webflux로 변경하기만 하면  톰캣이 아닌 netty기반을 실행되게 할 수 도 있다.</p>
+<p>원래 기존에 톰캣으로 실행하던 프로젝트를 netty기반으로 실행하게 하려면 더 복잡한 과정이 필요하지만 spring이 제공해주는 Spring Web MVC 추상화 계층을 사용해서 간단히 netty로 실행할 수 있는 것이다.</p>
+<p>이렇게 Spring Web MVC는 @Controller, @RequestMapping과 같은 애노테이션과 뒷단의 여러가지 복잡한 인터페이스들 그리고 기술들을 기반으로 하여 사용자가 웹 기술 스택을 간편하게 바꿀 수 있도록 해준다</p>
+<p>중요한 것은 이런 것들이 기존 코드를 거의 변경하지 않고도 가능하다는 것이다.<br><br/><br/></p>
+<h2 id="Spring-Transaction"><a href="#Spring-Transaction" class="headerlink" title="Spring Transaction"></a>Spring Transaction</h2><p>트랜잭션을 처리하려면 setAutoCommit()과 commit(), rollback()을 명시적을 호출해야 한다</p>
+<p>그러나 Spring이 제공하는 @Transactional 애노테이션을 사용하면 단순히 메소드에 애노테이션을 붙여줌으로써 트랜잭션 처리가 이루어진다.</p>
+<p>이 또한 PSA로써 다양한 기술 스택으로 구현체를 바꿀 수 있다.</p>
+<p>예를 들어 JDBC를 사용하면 DatasourceTransactionManager, JPA를 사용하는 JpaTransactionManager, Hibernate를 사용하는 HibernateTransactionManager를 유연하게 바꿔서 사용할 수 있다.</p>
+<p>즉 기존 코드는 변경하지 않은 채로 트랜잭션을 실제로 처리하는 구현체를 사용 기술에 따라 바꿔 끼울 수 있다<br><br/><br/></p>
+<h2 id="Spring-Cache"><a href="#Spring-Cache" class="headerlink" title="Spring Cache"></a>Spring Cache</h2><p>Cache도 마찬기지로 JCacheManagerm ConcurrentMapCacheManager, EhCacheManager와 같은 여러가지 구현체를 사용할 수 있다.</p>
+<p>사용자는 @Cacheable 애노테이션을 붙여줌으로써 구현체를 크게 신경쓰지 않아도 필요에ㄷ 따라 바꿔 쓸 수 있는 것이다.</p>
+<p>이렇게 spring이 제공해주는 다양한 PSA 기술 덕분에 코드는 더 견고해지고 기술이 바뀌어도 유연하게 대처할 수 있게 된다.</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/30/Spring-Spring-PSA/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/27/Spring-Spring-IoC/"
+                            aria-label=": Spring-Spring IoC"
+                        >
+                            Spring-Spring IoC
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-27T15:35:06+09:00">
+	
+		    Nov 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Spring/">Spring</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/">Core Concept</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/IoC/">IoC</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/27/Spring-Spring-IoC/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/27/Spring-Spring-AOP/"
+                            aria-label=": Spring-Spring AOP"
+                        >
+                            Spring-Spring AOP
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-27T12:34:12+09:00">
+	
+		    Nov 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Spring/">Spring</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/">Core Concept</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/AOP/">AOP</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<h1 id="스프링-AOP-Aspect-Oriented-Programming"><a href="#스프링-AOP-Aspect-Oriented-Programming" class="headerlink" title="스프링 AOP(Aspect Oriented Programming)"></a>스프링 AOP(Aspect Oriented Programming)</h1><h2 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2><p>AOP는 Asepect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다. <br/><br>관점 지향은 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 보고 <br/><br>부가적인 관점을 각각 따로 분리해서 모듈화하겠다는 것이다.</p>
+<p>예로들어 핵심적인 관점은 우리가 적용하고자 하는 핵심 비지니스 로직이 된다. <br/><br>또한 부가적인 관점은 핵심 로직외에 행해지는 데이터베이스 연결, 로깅, 파일 입출력등이 있다.</p>
+<p>AOP에서 각 관점을 기준으로 로직을 모듈화한다는 것은 코드를 부분적으로 나누어서 모듈화하겠다는 의미다. <br/><br>이때, 소스 코드상에서 핵심 비지니스 로직(Core Concerns)외에 계속 반복해서 쓰는 코드들을 발견할 수 있는데 이것을 흩어진 관심사(Crosscutting Concerns)라 부른다. </p>
+<p><img src="https://user-images.githubusercontent.com/12459864/100409913-7af22900-30b0-11eb-8a76-dbf70a7e0561.png" alt="스크린샷 2020-11-27 오후 12 59 42"></p>
+<p>위와 같이 흩어진 관심사(Crosscutting Concerns)를 Aspect로 모듈화하고 핵심적인 비지니스 로직(Core concerns)에서 분리하여 재사용하겠다는 것이 AOP이다.</p>
+<h3 id="AOP-관련-용어"><a href="#AOP-관련-용어" class="headerlink" title="AOP 관련 용어"></a>AOP 관련 용어</h3><ul>
+<li>조인 포인트(JoinPoint) : 클라이언트가 호출하는 모든 비지니스 메소드, 조인포인트 중에서 포인트컷이 되기때문에 포인트 컷의 후보로 생각할 수 있다.</li>
+<li>포인트 컷(Pointcut) : 특정 조건에 의해 필터링된 조인 포인트, 수 많은 조인 포인트 중에 특정 메소드에서만 Advice를 수행시키기 위해서 사용된다</li>
+<li>어드바이스(Advice) : Crosscutting Concern에 해당하는 공통 기능의 코드</li>
+<li>애스펙트(Aspect) : 포인트 컷과 어드바이스의 결합이다. 어떤 포인트 컷 메소드에 대해 어떤 어드바이스 메소드가 실행할 지 결정한다.</li>
+<li>위빙(Weaving) : 핵심 비지니스 로직과 Aspect를 연결하여 Advised Object를 만드는 과정<ol>
+<li>complie time</li>
+<li>load time</li>
+<li>runtime</li>
+</ol>
+</li>
+</ul>
+<h3 id="AOP-구현-방법"><a href="#AOP-구현-방법" class="headerlink" title="AOP 구현 방법"></a>AOP 구현 방법</h3><ol>
+<li><p>컴파일</p>
+<ul>
+<li>A.java —— (AOP) —–&gt; A.class </li>
+<li>컴파일을 할 때 중간에 공통 로직을 끼워 넣는다</li>
+<li>컴파일하기 전 코드에는 해당 로직이 없지만, 컴파일이 완료되면 해당 로직을 가지고<br>있는 상태이다</li>
+<li>AspectJ를 이용해서 만들어진다</li>
+</ul>
+</li>
+<li><p>바이트코드 조작</p>
+<ul>
+<li>A.java —-&gt; A.class —-&gt; (AOP) —-&gt; 메모리</li>
+<li>load time에서 ClassLoader가 A.class를 읽어온다</li>
+<li>읽어와서 메모리에 올릴 때 공통 로직이 들어가도록 조작한다</li>
+<li>AspectJ를 이용해서 만들어진다</li>
+</ul>
+</li>
+<li><p>프록시 패턴</p>
+<ul>
+<li>Runtime에서 구현하는 방식</li>
+<li>프록시 패턴을 적용하여 실제 객체가 실행되는 것이 아닌 실제 객체를 감싸고 있는 프록시 객체를 Runtime에 생성</li>
+<li>프록시 객체는 Aspect가 적용되어있고 Core Concern이 들어있는 실제 객체를 reference하고 있다</li>
+<li>AOP가 적용된 객체를 요청할 때 실제 객체가 아닌 프록시 객체가 실행된다.</li>
+<li>AspectJ로 만들어져 있으며 SPRING AOP는 이 방식으로 구현되어있다.</li>
+</ul>
+</li>
+</ol>
+<h2 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h2><h3 id="스프링-AOP-특징"><a href="#스프링-AOP-특징" class="headerlink" title="스프링 AOP 특징"></a>스프링 AOP 특징</h3><ul>
+<li>프록시 기반의 AOP 구현체</li>
+<li>스프링 빈에만 AOP를 적용할 수 있다</li>
+<li>모든 AOP 기능을 제공하는 것이 목적이 아니라, Spring IoC와 연동하여 어플리케이션의 문제에 대한 해결책을 제공하는 것이 목적</li>
+</ul>
+<h3 id="프록시-패턴"><a href="#프록시-패턴" class="headerlink" title="프록시 패턴"></a>프록시 패턴</h3><ul>
+<li><p>접근 제어 또는 부가기능 추가</p>
+<p>  <img src="https://user-images.githubusercontent.com/12459864/100412351-c78d3280-30b7-11eb-8128-07e4a4e21ee8.png" alt="image"></p>
+<ul>
+<li>인터페이스에 대해서 핵심 비지니스 로직만으로 구성되어진 실제 객체를 만든다</li>
+<li>인터페이스에 대해서 또 하나의 Proxy 구현체를 만든다</li>
+<li>이 구현체에는 부가기능이 추가있으며 실제 객체를 참조하여 실제 객체의 비지니스 로직을 실행 시킬 수 있다</li>
+<li>클라이언트는 객체를 인터페이스를 통해서 접근하게 되며, 실제객체가 직접 실행되는 것이 아닌 Proxy객체를 통해서 부가기능을 수행하고 간접적으로 실행된다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="프록시-패턴을-적용-Spring-AOP를-사용하지-않음"><a href="#프록시-패턴을-적용-Spring-AOP를-사용하지-않음" class="headerlink" title="프록시 패턴을 적용 (Spring AOP를 사용하지 않음)"></a>프록시 패턴을 적용 (Spring AOP를 사용하지 않음)</h3><ul>
+<li><p>EventService Interface</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EventService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>EventService 구현체 (핵심 비지니스 로직 수행)</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Created an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Publish an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Delete an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>EventService의 Proxy 구현체 (부가기능 + 핵심 로직 객체 참조)</p>
+<p>  @Primary로 SimpleEventService가 아닌 ProxySimpleEventService이 실행됨</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxySimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    SimpleEventService simpleEventService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        simpleEventService.createEvent();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        simpleEventService.publishEvent();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        simpleEventService.deleteEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="문제점"><a href="#문제점" class="headerlink" title="문제점"></a>문제점</h3><ul>
+<li>매번 프록시 패턴을 적용해서 프록시 클래스를 작성해야한다</li>
+<li>여러 클래스 여러 메소드들에 적용할려면 반복적인 작업이 증가한다</li>
+<li>객체들관의 관계도 복잡하다</li>
+</ul>
+<h3 id="스프링-AOP-등장"><a href="#스프링-AOP-등장" class="headerlink" title="스프링 AOP 등장"></a>스프링 AOP 등장</h3><ul>
+<li>스프링 IoC컨테이너가 제공하는 기반 시설과 Dynamic 프록시를 사용하여 여러 복잡한 문제 해결</li>
+<li>동적 프록시 : 동적으로 프록시 객체를 생성하는 방법<ul>
+<li>자바가 제공하는 방법은 인터페이스 기반 프록시 생성</li>
+<li>CGlib은 클래스 기반 프록시도 지원</li>
+</ul>
+</li>
+<li>스프링 IoC: 기존 빈을 대체하는 동적 프록시 빈을 만들어 등록해준다<ul>
+<li>클라이언트 코드에 변경이 없다</li>
+</ul>
+</li>
+</ul>
+<h3 id="스프링-AOP-적용해서-개선"><a href="#스프링-AOP-적용해서-개선" class="headerlink" title="스프링 AOP 적용해서 개선"></a>스프링 AOP 적용해서 개선</h3><p><code>스프링 AOP는 Spring Container에 등록된 Bean들만 적용된다</code></p>
+<ul>
+<li><p>Pointcut을 Annotation 기반으로 작성</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.CLASS)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> PerfLogging &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Aspect 작성 (Around 방식을 적용한 Advice 메소드 작성)</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(PerfLogging)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">logPerf</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        Object retVal = pjp.proceed();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">        <span class="keyword">return</span> retVal;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;bean(simpleEventService)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Around방식은 핵심 비지니스로직 실행 권한을 ProceedingJoinPoint로 받아온다 (Spring Container가 받아옴)</li>
+<li>받아온 객체를 실행하기 전 후에 작업을 진행한다</li>
+<li>받아온 객체가 return값을 가지고 있으면 Advice메소드에서 그 값을 return해 주어야한다</li>
+</ul>
+</li>
+<li><p>AOP를 적용할 Pointcut메소드를 지정한다(메소드 위에 어노테이션 설정)</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line">    <span class="meta">@PerfLogging</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Created an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PerfLogging</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Publish an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Delete an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Pointcut-정의-방식"><a href="#Pointcut-정의-방식" class="headerlink" title="Pointcut 정의 방식"></a>Pointcut 정의 방식</h3><ol>
+<li><p>execution 설정 방식</p>
+<ul>
+<li><p>사용 예</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around(&quot;execution(* com.example..*.EventService.*(..))&quot;)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>적용 규칙</p>
+  <img width="740" alt="스크린샷 2020-11-27 오후 2 51 06" src="https://user-images.githubusercontent.com/12459864/100415689-18088e00-30c0-11eb-8593-38f8d6a46e7d.png">
+</li>
+</ul>
+</li>
+<li><p>bean 설정 방식</p>
+<ul>
+<li><p>사용 예</p>
+<p>  적용할 빈 이름을 직접 입력</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around(&quot;bean(simpleEventService)&quot;)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>annotation 설정 방식 (위에서 설명)</p>
+</li>
+</ol>
+<h3 id="Advice-실행-시점"><a href="#Advice-실행-시점" class="headerlink" title="Advice 실행 시점"></a>Advice 실행 시점</h3><ol>
+<li><p>Before</p>
+<ul>
+<li>핵심 비지니스 로직 실행 전에 실행</li>
+<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before(&quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(JoinPoint jp)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line">    Object[] args = jp.getArgs();                   <span class="comment">// 클라이언트가 전달한 인자 정보</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;&lt;사전 처리&gt; &quot;</span> + method + <span class="string">&quot;비지니스 로직 수행 전 동작&quot;</span> + <span class="string">&quot;() 메소드 ARGS 정보 : &quot;</span> + args[<span class="number">0</span>].toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>After</p>
+<ul>
+<li>핵심 비지니스 로직 실행 후에 실행</li>
+<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@After(&quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(JoinPoint jp)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line">    Object[] args = jp.getArgs();                   <span class="comment">// 클라이언트가 전달한 인자 정보</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;&lt;사후 처리&gt; &quot;</span> + method + <span class="string">&quot;비지니스 로직 수행 후 동작&quot;</span> + <span class="string">&quot;() 메소드 ARGS 정보 : &quot;</span> + args[<span class="number">0</span>].toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>After Returning</p>
+<ul>
+<li>핵심 비지니스 로직 실행한 후 반환된 객체를 Advice에서 받아와서 실행</li>
+<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterReturning(pointcut = &quot;!void com.rubypaper.biz..*Impl.*(..))</span><span class="string">&quot;, returning = &quot;</span>returnObj<span class="string">&quot;)</span></span><br><span class="line"><span class="string">public void afterLog(Object returnObj) &#123;</span></span><br><span class="line"><span class="string">    System.out.println(&quot;</span>&lt;사후 처리&gt; 비지니스 로직 리턴 값 : <span class="string">&quot; + returnObj.toString());</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    if (returnObj instanceof UserVO) &#123;</span></span><br><span class="line"><span class="string">        UserVO user = (UserVO) returnObj;</span></span><br><span class="line"><span class="string">        if(user.getRole().equals(&quot;</span>ADMIN<span class="string">&quot;)) &#123;</span></span><br><span class="line"><span class="string">            System.out.println(user.getName() + &quot;</span>님은 관리자 화면으로 바로 이동........<span class="string">&quot;);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>핵심 비지니스 로직에서 반환된 객체를 returnObj로 받아온다</li>
+</ul>
+</li>
+<li><p>After Throwing</p>
+<ul>
+<li>핵심 비지니스 로직 실행헌 후 예외가 발생하면 예외객체를 받아와서 실행</li>
+<li>실행 예<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@AfterThrowing(pointcut = &quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;, throwing = &quot;exceptionObj&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionLog</span><span class="params">(JoinPoint jp, Exception exceptionObj)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;[ 예외처리 ]&quot;</span>+ method +<span class="string">&quot; 메소드 수행 중  예외 발생&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(exceptionObj <span class="keyword">instanceof</span> IllegalArgumentException)&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;0 번 게시 글을 등록할 수 없습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exceptionObj <span class="keyword">instanceof</span> ArithmeticException) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;0 으로 숫자를 나눌 수 없습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exceptionObj <span class="keyword">instanceof</span> SQLException) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;SQL 구문에 오류가 있습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;문제 발생 !! 시스템을 잠시 종료합니다&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>예외객체를 exceptionObj로 받아온다</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Around</p>
+<ul>
+<li>위에서 설명</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Advice에서 Pointcut에 해당되는 메소드에 대한 정보를 얻기 위해 JoinPoint라는 객체를 받아올 수 있다. Around만 예외적으로 ProceedJoinPoint라는 객체를 통해서 받아온다</p>
+</blockquote>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/27/Spring-Spring-AOP/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
                             aria-label=": Algorithm-암호 만들기"
                         >
@@ -759,310 +1280,6 @@
                         <p>
                             <a
                                 href="/2020/11/17/Algorithm-%EC%84%BC%EC%84%9C/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/17/Algorithm-%EB%B0%B0/"
-                            aria-label=": Algorithm-배"
-                        >
-                            Algorithm-배
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-17T16:11:59+09:00">
-	
-		    Nov 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 1092 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1092">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐욕 알고리즘</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>크레인과 박스를 무게 기준으로 내림차순 정렬한다</li>
-<li>무거운 박스부터 크레인이 옮기도록한다</li>
-<li>크레인의 수 N, 박스의 수 M일때 시간복잡도는 O(NM)이다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">cranes = list(map(int, input().split()))</span><br><span class="line"></span><br><span class="line">m = int(input())</span><br><span class="line">boxes = list(map(int, input().split()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> max(cranes) &lt; max(boxes):</span><br><span class="line">    print(<span class="number">-1</span>)</span><br><span class="line">    sys.exit()</span><br><span class="line"></span><br><span class="line">positions = [<span class="number">0</span>] * n</span><br><span class="line">checked = [<span class="literal">False</span>] * m</span><br><span class="line"></span><br><span class="line">cranes.sort(reverse=<span class="literal">True</span>)</span><br><span class="line">boxes.sort(reverse=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">if</span> count == len(boxes):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">while</span> position[i] &lt; len(boxes):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> checked[position[i]] <span class="keyword">and</span> cranes[i] &gt;= boxes[position[i]]:</span><br><span class="line">                checked[position[i]] = <span class="literal">True</span></span><br><span class="line">                position[i] += <span class="number">1</span></span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            position[i] += <span class="number">1</span></span><br><span class="line">    result += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/17/Algorithm-%EB%B0%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/17/Algorithm-%EC%9A%B0%EC%A3%BC%EC%8B%A0%EA%B3%BC%EC%9D%98-%EA%B5%90%EA%B0%90/"
-                            aria-label=": Algorithm-우주신과의 교감"
-                        >
-                            Algorithm-우주신과의 교감
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-17T15:15:03+09:00">
-	
-		    Nov 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Kruskal/">Kruskal</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 5719 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/5719">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>그래프</li>
-<li>크루스칼 알고리즘</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>정점의 개수 N이 최대 1000이므로, 가능한 통로의 개수는 약 N^2이다</li>
-<li>크루스칼 알고리즘은 간선의 개수가 E일 때 O(ElogE)로 동작하므로 해결할 수 있다 (정렬 알고리즘 시간복잡도)</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_distance</span>(<span class="params">p1, p2</span>):</span></span><br><span class="line">    a = p1[<span class="number">0</span>] - p2[<span class="number">0</span>]</span><br><span class="line">    b = p1[<span class="number">1</span>] - p2[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> math.sqrt((a * a) + (b * b))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_parent</span>(<span class="params">parent, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> parent[n] == n:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> get_parent(parent, parent[n])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">union_parent</span>(<span class="params">parent, a, b</span>):</span></span><br><span class="line">    a = get_parent(parent, a)</span><br><span class="line">    b = get_parent(parent, b)</span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        parent[b] = a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        parent[a] = b</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_parent</span>(<span class="params">parent, a, b</span>):</span></span><br><span class="line">    a = get_parent(parent, a)</span><br><span class="line">    b = get_parent(parent, b)</span><br><span class="line">    <span class="keyword">if</span> a == b:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">edges = []</span><br><span class="line">parent = &#123;&#125;</span><br><span class="line">locations = []</span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    locations.append((x, y))</span><br><span class="line"></span><br><span class="line">length = len(locations)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(length - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, length):</span><br><span class="line">        edges.append((i + <span class="number">1</span>, j + <span class="number">1</span>), get_distance(location[i], location[j]))</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    parent[i] = i</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    a, b = map(int, input().split())</span><br><span class="line">    union_parent(parent, a, b)</span><br><span class="line"></span><br><span class="line">edges.sort(key=<span class="keyword">lambda</span> data: data[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> a, b, cost <span class="keyword">in</span> edges:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> find_parent(parent, a, b):</span><br><span class="line">        union_parent(parent, a, b)</span><br><span class="line">        result += cost</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;%0.2f&quot;</span> %result)</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/17/Algorithm-%EC%9A%B0%EC%A3%BC%EC%8B%A0%EA%B3%BC%EC%9D%98-%EA%B5%90%EA%B0%90/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/17/Algorithm-%EA%B1%B0%EC%9D%98-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%9C/"
-                            aria-label=": Algorithm-거의 최단 경로"
-                        >
-                            Algorithm-거의 최단 경로
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-17T14:18:38+09:00">
-	
-		    Nov 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Dijkstra/">Dijkstra</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 5719 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/5719">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>그래프</li>
-<li>다익스트라 최단 경로 알고리즘</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>다익스트라 최단 경로에 포함되는 모든 간선을 추적한다</li>
-<li>최단 경로에 포함되는 모든 간선을 추적할 때 DFS를 사용하여 추적하여 제외시킨다</li>
-<li>제외된 간선 외에서 다익스트라 최단 경로 알고리즘으로 차선 최단 경로를 찾는다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span>():</span></span><br><span class="line">    heap_data = []</span><br><span class="line">    heapq.heappush(heap_data, (<span class="number">0</span>, start))</span><br><span class="line">    distance[start] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> heap_data:</span><br><span class="line">        dist, now = heapq.heappop(heap_data)</span><br><span class="line">        <span class="keyword">if</span> distance[now] &lt; dist:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> adj[now]:</span><br><span class="line">            cost = dist + i[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> distance[i[<span class="number">0</span>]] &gt; cost <span class="keyword">and</span> <span class="keyword">not</span> dropped[now][i[<span class="number">0</span>]]:</span><br><span class="line">                distance[i[<span class="number">0</span>]] = cost</span><br><span class="line">                heapq.heappush(heap_data, (cost, i[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>():</span></span><br><span class="line">    q = deque()</span><br><span class="line">    q.append(end)</span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        now = q.popleft()</span><br><span class="line">        <span class="keyword">if</span> now == start:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> prev, cost <span class="keyword">in</span> reverse_adj[now]:</span><br><span class="line">            <span class="keyword">if</span> distance[now] == distance[prev] + cost</span><br><span class="line">                dropped[prev][now] = <span class="literal">True</span></span><br><span class="line">                q.append(prev)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    n, m = map(int, input().split())</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    start, end = map(int, input().split())</span><br><span class="line">    adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    reverse_adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">        x, y, cost = map(int, input().split())</span><br><span class="line">        adj[x].append((y, cost))</span><br><span class="line">        reverse_adj[y].append((x, cost))</span><br><span class="line">    dropped = [[<span class="literal">False</span>] * (n + <span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    dijkstra()</span><br><span class="line">    bfs()</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    dijkstra()</span><br><span class="line">    <span class="keyword">if</span> distance[end] != <span class="number">1e9</span>:</span><br><span class="line">        print(distance[end])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/17/Algorithm-%EA%B1%B0%EC%9D%98-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%9C/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/"
-                            aria-label=": Algorithm-해킹"
-                        >
-                            Algorithm-해킹
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-13T17:38:55+09:00">
-	
-		    Nov 13, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Dijkstra/">Dijkstra</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 10282 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10282">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>그래프</li>
-<li>다익스트라 최단 경로 알고리즘</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>정점의 개수 N, 간선의 개수 D</li>
-<li>우선순위 큐를 이용하여, 시간복잡도 O(NlogD)로 해결할 수 있습니다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span>(<span class="params">strat</span>):</span></span><br><span class="line">    heap_data = []</span><br><span class="line">    heapq.heappush(heap_data, (<span class="number">0</span>, start))</span><br><span class="line">    distance[start] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> heap_data:</span><br><span class="line">        dist, now = heapq.heappop(heap_data)</span><br><span class="line">        <span class="keyword">if</span> distance[now] &lt; dist:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> adj[now]:</span><br><span class="line">            cost = dist + i[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> distance[i[<span class="number">0</span>]] &gt; cost:</span><br><span class="line">                distance[i[<span class="number">0</span>]] = cost</span><br><span class="line">                heapq.heappush(heap_data, (cost, i[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(int(input())):</span><br><span class="line">    n, m, start = map(int, input().split())</span><br><span class="line">    adj = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">        x, y, cost = map(int, input().split())</span><br><span class="line">        adj[y].append((x, cost))</span><br><span class="line">    dijkstra(start)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    max_distance = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> distance:</span><br><span class="line">        <span class="keyword">if</span> i != <span class="number">1e9</span>:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; max_distance:</span><br><span class="line">                max_distance = i</span><br><span class="line">    print(count, max_distance)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
