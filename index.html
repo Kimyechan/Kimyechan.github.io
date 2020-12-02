@@ -448,6 +448,94 @@
 </ul>
 </li>
 </ol>
+<h1 id="Spring-MVC-Annotation을-통한-설정"><a href="#Spring-MVC-Annotation을-통한-설정" class="headerlink" title="Spring MVC (Annotation을 통한 설정)"></a>Spring MVC (Annotation을 통한 설정)</h1><ol>
+<li><p>ComponentScan 설정</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context/spring-context-4.2.xsd&quot;</span>&gt;</span></span><br><span class="line">     </span><br><span class="line">    <span class="comment">&lt;!-- 컴포넌트 스캔 설정 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.rubypaper&quot;</span>/&gt;</span>&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@Controller를 Bean으로 인식하기 위해서 ComponentScan을 할 package를 지정한다 </li>
+<li>xml로 component scan을 설정하지 않고 @ComponentScan Annotation을 시작 패키지안의 클래스에 붙여줘도 된다</li>
+</ul>
+</li>
+<li><p>Controller 설정</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsertBoardController</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/insertBoard.do&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertBoard</span><span class="params">(BoardVO vo)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Controller Class에 @Controller Annotation을 추가해서 Spring Container에게 Controller클래스로 Bean을 등록한다</p>
+</li>
+<li><p>Controller Class안의 메소드에 매핑할 URI값을 @RequsetMapping(value = “URI”)로 설정한다</p>
+</li>
+<li><p>Controller 메소드의 Parameter 매핑<br>  <img src="https://user-images.githubusercontent.com/12459864/100863944-a8880980-34d8-11eb-8e49-454ab363da54.png" alt="image"></p>
+<ul>
+<li>Client에서 input 태그의 name값으로 요청이 들어오면 매핑되는 Method의 파라미터값에서 name과 매핑되는 setter메소드를 통해 값이 바인딩된다           </li>
+</ul>
+</li>
+<li><p>요청 방식에 따른 @RequestMapping 사용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/login.do&quot;, method=RequestMethod.GET)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">loginView</span><span class="params">(UserVO vo)</span> </span>&#123;</span><br><span class="line">        vo.setId(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">                vo.setPassword(<span class="string">&quot;test123&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;login.jsp&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/login.do&quot;, method=RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(UserVO vo, UserDAO userDAO)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(userDAO.getUser(vo) != <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">&quot;getBoardList.do&quot;</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">&quot;login.jsp&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>@RequestMapping에서 매핑될 URI를 value로 정하고 Http Method를 method값에 지정한다</p>
+</li>
+<li><p>@RequestMapping은 Http Method에 따라서 @GetMapping, @PostMapping등으로 사용될 수 있다</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="Layer-통합하기-Presentation-Layer-Business-Layer"><a href="#Layer-통합하기-Presentation-Layer-Business-Layer" class="headerlink" title="Layer 통합하기 (Presentation-Layer, Business-Layer)"></a>Layer 통합하기 (Presentation-Layer, Business-Layer)</h1><h2 id="DispatcherServlet를-통해-만들어진-Spring-Container만-사용"><a href="#DispatcherServlet를-통해-만들어진-Spring-Container만-사용" class="headerlink" title="DispatcherServlet를 통해 만들어진 Spring Container만 사용"></a>DispatcherServlet를 통해 만들어진 Spring Container만 사용</h2><p><img src="https://user-images.githubusercontent.com/12459864/100865866-3d8c0200-34db-11eb-8f6c-b9b2b273702c.png" alt="image"></p>
+<ul>
+<li>요청이 들어오면 DispatcherServlet이 생성되고 생성될 때 presentation-layer.xml을 가져와서 xml에 설정되어진 Bean들을 가지고 Spring Container가 생성된다</li>
+<li>해당 Spring Container에는 Controller Bean들만 등록되어지고 직접 DAO에 접근해서 로직을 처리한다</li>
+</ul>
+<h2 id="Service를-통해서-Controller가-접근-시-문제점"><a href="#Service를-통해서-Controller가-접근-시-문제점" class="headerlink" title="Service를 통해서 Controller가 접근 시 문제점"></a>Service를 통해서 Controller가 접근 시 문제점</h2><p><img src="https://user-images.githubusercontent.com/12459864/100866290-c86cfc80-34db-11eb-9fb8-d950d792dd2c.png" alt="image"></p>
+<ul>
+<li>Controller를 직접 DAO로 접근시키지 않고 Service Class를 통해서 접근한다</li>
+<li>하지만 presentaion-layer.xml에 등록되어진 Bean은 Controller Bean 밖에 없다</li>
+<li>따라서 해당 Spring Container는 Service Bean들에 접근할 수 없다</li>
+</ul>
+<h2 id="Layer를-분리하여-연결"><a href="#Layer를-분리하여-연결" class="headerlink" title="Layer를 분리하여 연결"></a>Layer를 분리하여 연결</h2><ul>
+<li><p>Presentation Layer와 Business Layer를 분리한다<br>  <img src="https://user-images.githubusercontent.com/12459864/100866665-56e17e00-34dc-11eb-961c-e93a83a5cd3c.png" alt="image"></p>
+<ul>
+<li>Controller에 해당하는 부분은 Presentation Layer로 분리한다</li>
+<li>DAO, Service에 해당하는 부분은 Business Layer로 분리한다</li>
+<li>Controller는 분리된 두개의 개층을 Service Class를 통해서 접근한다</li>
+</ul>
+</li>
+<li><p>Business Layer용 Spring Container 생성</p>
+<ul>
+<li>ContextLoaderListener 등록  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:business-*.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span></span><br><span class="line">        org.springframework.web.context.ContextLoaderListener</span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span>    </span><br></pre></td></tr></table></figure>
+<ul>
+<li>Servlet 설정 파일인 web.xml에 ContextLoaderListener를 등록한다</li>
+<li>해당 Listener는 business layer 설정파일 xml을 가지고 있다</li>
+<li>ContextLoaderListener는 ServletContextListener를 구현하고 있다. </li>
+<li>ServletContextListener는 Servlet Container가 시작하거나 종료 될 때 동작하는 Listenr이다.</li>
+<li>따라서 ContextLoaderListener는 Servlet Container가 시작할 때 contextLoader로 business layer xml 정보를 가지고 WebApplicationContext를 만들어서 Spring Container를 생성한다</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Container간의 관계<br>  <img src="https://user-images.githubusercontent.com/12459864/100867825-0d922e00-34de-11eb-999b-aabc808b72a1.png" alt="image"></p>
+<ul>
+<li><p>Root Spring Container가 ContextLoaderListener를 통해서 생성된 Container로 Service와 DAO Bean들을 가지고 있다</p>
+</li>
+<li><p>하위 Spring Contaienr를 DispatcherServlet을 통해서 생성된 Container로 Controller를 Bean으로 가지고 있다</p>
+</li>
+<li><p>하위 Container는 Root Container의 Bean들을 상속받아서 사용한다</p>
+</li>
+<li><p>이제 Controller는 Root Spring Container에 생성되어진 Service Bean에 접근이 가능해진다</p>
+</li>
+</ul>
+</li>
+<li><p>Container 생성과정</p>
+<ol>
+<li><p>Tomcat Server를 가동하면 Servlet Container가 생성된다</p>
+</li>
+<li><p>Servlet Container가 생성될 때 ContextLoadListener가 동작해여 businees layer xml 설정정보를 가지고 Spring Container가 생성된다</p>
+</li>
+<li><p>Server가 가동된 이후에 Client를 통해서 요청이 들어오면<br>DispatcherServlet이 메모리에 생성되어진다</p>
+</li>
+<li><p>DispatcherServlet이 생성되어 초기화 될 때 presentation layer xml 설정정보를 가지고 또 다른 Spring Container를 생성한다</p>
+<p><code>Web Application에서 생성되어진 Container는 Servlet Container, Businees Spring Container, Presentation Layer Container 총 3개이다</code></p>
+</li>
+</ol>
+</li>
+</ul>
 
                     
                         
