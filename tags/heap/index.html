@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Java Server Developer">
-    <title>Tag: heap - Java Server Developer</title>
+    <title>Tag: Heap - Java Server Developer</title>
     <meta name="author" content="Yechan Kim">
     
     
@@ -14,7 +14,7 @@
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
 <meta property="og:title" content="Java Server Developer">
-<meta property="og:url" content="https://kimyechan.github.io/tags/heap/index.html">
+<meta property="og:url" content="https://kimyechan.github.io/tags/Heap/index.html">
 <meta property="og:site_name" content="Java Server Developer">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
@@ -326,15 +326,15 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/"
-                            aria-label=": Algorithm-문제집"
+                            href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/"
+                            aria-label=": Algorithm-카드 정렬하기"
                         >
-                            Algorithm-문제집
+                            Algorithm-카드 정렬하기
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-10-27T23:02:22+09:00">
+    <time datetime="2020-10-27T21:31:51+09:00">
 	
 		    Oct 27, 2020
     	
@@ -351,30 +351,28 @@
             </div>
             
                 <div class="postShorten-content">
-                    <p>백준 1766 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1766">문제링크</a></p>
+                    <p>백준 1715 : <a href="acmicpc.net/problem/1715">문제링크</a></p>
 <ul>
-<li><p>문제유형 </p>
+<li><p>문제유형 : </p>
 <ul>
 <li>탐색</li>
 <li>힙</li>
-<li>위상정렬</li>
+<li>그리디</li>
 </ul>
 </li>
 <li><p>설명</p>
 <ul>
-<li>위상정렬<ol>
-<li>진입 차수가 0인 정점을 큐에 삽입</li>
-<li>큐에서 원소를 꺼내 해당 원소와 간선을 제거</li>
-<li>제거 이후 진입 차수가 0이 된 정점을 큐에 삽입</li>
-<li>큐가 빌 때까지 2 ~ 3을 반복</li>
-</ol>
-</li>
-<li>위상정렬 사용이유 : 2번 조건 - 먼저 푸는 것이 좋은 문제가 있는 문제는, 먼저 푸는 것이 좋은 문제를 반드시 먼저 풀어야 한다.) </li>
-<li>힙 사용이유 : 3번 조건 - 가능하면 쉬운 문제부터 풀어야 한다</li>
+<li>가장 작은 숫자의 카드 묶음을 먼저 합쳤을 때 최소값</li>
+<li>heap을 사용해서 작은 값 두개를 pop한다</li>
+<li>추출한 두 개의 값을 합해서 결과에 더한다</li>
+<li>합한 값을 다시 heap에 push한다</li>
+<li>heap에 값이 한 개 남았을 때 종료한다</li>
 </ul>
 </li>
 <li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">array = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">indegree = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">heap = []</span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    array[x].append(y)</span><br><span class="line">    indegree[y] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> indegree[i] == <span class="number">0</span>:</span><br><span class="line">        heapq.heappush(heap, i)</span><br><span class="line">    </span><br><span class="line">result = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> heap:</span><br><span class="line">    data = heapq.heappop(heap)</span><br><span class="line">    result.append(data)</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> array[data]:</span><br><span class="line">        indegree[y] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> indegree[y] == <span class="number">0</span>:</span><br><span class="line">            heapq.heappuh(heap, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result:</span><br><span class="line">    print(i, end = <span class="string">&#x27; &#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">heap = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    data = int(input())</span><br><span class="line">    heaq.heappush(heapq, data)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> len(heap) != <span class="number">1</span>:</span><br><span class="line">    one = heapq.heappop(heap)</span><br><span class="line">    two = heapq.heappop(heap)</span><br><span class="line">    sum_value = one + two</span><br><span class="line">    result += sum_value</span><br><span class="line">    heapq.heappush(heap, sum_value)</span><br><span class="line"></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
 
                     
@@ -385,8 +383,91 @@
                     
                         <p>
                             <a
-                                href="/2020/10/27/Algorithm-%EB%AC%B8%EC%A0%9C%EC%A7%91/#post-footer"
+                                href="/2020/10/27/Algorithm-%EC%B9%B4%EB%93%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0/#post-footer"
                                 class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
+        
+        
+        <li class="pagination-number">page 1 of 1</li>
+    </ul>
+</div>
+
+</section>
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Yechan Kim. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+
+
+
+    </body>
+</html>
+                         class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
                                 Comment and share
@@ -487,7 +568,7 @@
 
                 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
-        Copyrights &copy; 2020 Yechan Kim. All Rights Reserved.
+        Copyrights &copy; 2021 Yechan Kim. All Rights Reserved.
     </span>
 </footer>
 
