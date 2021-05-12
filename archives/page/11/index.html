@@ -5,17 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Java Server Developer">
-    <title>Archives - Java Server Developer</title>
+    <meta name="generator" content="Build Up">
+    <title>Archives - Build Up</title>
     <meta name="author" content="Yechan Kim">
     
     
     
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
-<meta property="og:title" content="Java Server Developer">
+<meta property="og:title" content="Build Up">
 <meta property="og:url" content="https://kimyechan.github.io/archives/page/11/index.html">
-<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:site_name" content="Build Up">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
@@ -63,7 +63,7 @@
             href="/"
             aria-label=""
         >
-            Java Server Developer
+            Build Up
         </a>
     </div>
     
@@ -316,6 +316,89 @@
                         ">
                 
     <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-05-Conditional/"
+                            aria-label=": JavaBasic-05(Conditional)"
+                        >
+                            JavaBasic-05(Conditional)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:27:14+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="조건문-Conditional-Statements"><a href="#조건문-Conditional-Statements" class="headerlink" title="조건문 (Conditional Statements)"></a>조건문 (Conditional Statements)</h1><h2 id="조건문의-구성"><a href="#조건문의-구성" class="headerlink" title="조건문의 구성"></a>조건문의 구성</h2><ul>
+<li>조건식 (Conditional Expression), 실행문 (Execution Statement)</li>
+</ul>
+<h2 id="다양한-조건문"><a href="#다양한-조건문" class="headerlink" title="다양한 조건문"></a>다양한 조건문</h2><h3 id="if-계열-조건문"><a href="#if-계열-조건문" class="headerlink" title="if 계열 조건문"></a>if 계열 조건문</h3><h4 id="if-문"><a href="#if-문" class="headerlink" title="if 문"></a>if 문</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(조건식)</span><br><span class="line">  <span class="comment">// 실행문</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(조건식) &#123;</span><br><span class="line">  <span class="comment">// 실행문</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="if-else-문"><a href="#if-else-문" class="headerlink" title="if ~ else 문"></a>if ~ else 문</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(조건식) &#123;</span><br><span class="line">  <span class="comment">// 조건식이 true일때 실행할 실행문</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 조건식이 false일때 실행할 실행문</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="if-else-if-else-문"><a href="#if-else-if-else-문" class="headerlink" title="if ~ else if ~ else 문"></a>if ~ else if ~ else 문</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(조건식<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="comment">// 조건식1이 true일때 실행할 실행문</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(조건식<span class="number">2</span>) &#123;</span><br><span class="line">  <span class="comment">// 조건식1이 false이고, 조건식2가 true일때 실행할 실행문</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 모든 조건식이 false일 때 실행할 실행문</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Nested-if-문"><a href="#Nested-if-문" class="headerlink" title="Nested if 문"></a>Nested if 문</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(조건식<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(조건식<span class="number">2</span>) &#123;</span><br><span class="line">    <span class="comment">// 조건식1과 조건식2가 true일때 실행할 실행문</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(조건식<span class="number">3</span>) &#123;</span><br><span class="line">      <span class="comment">// 조건식1과 조건식3이 true이고 조건식2가 false일때 실행할 실행문</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="switch-case"><a href="#switch-case" class="headerlink" title="switch ~ case"></a>switch ~ case</h3><ul>
+<li>조건식과 비교할 대상이 여럿일 때 사용<ul>
+<li>조건식의 출력은 정수값, 문자열, 열거형 등 정확한 값을 리턴</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(조건식) &#123;</span><br><span class="line">  <span class="keyword">case</span> 비교값<span class="number">1</span>:</span><br><span class="line">    <span class="comment">// 실행문1</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> 비교값<span class="number">2</span>:</span><br><span class="line">    <span class="comment">// 실행문2</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// 실행문3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Fall-through<ul>
+<li>break 문을 사용하지 않고 다음 case문을 실행시키는 방법</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(조건식) &#123;</span><br><span class="line">  <span class="keyword">case</span> 비교값<span class="number">1</span>:</span><br><span class="line">    <span class="comment">// 실행문1</span></span><br><span class="line">  <span class="keyword">case</span> 비교값<span class="number">2</span>:</span><br><span class="line">    <span class="comment">// 실행문2</span></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// 실행문3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 비교값1에 해당할 경우: 실행문1, 실행문2, 실행문3 실행</span></span><br><span class="line"><span class="comment">// 비교값2에 해당할 경우: 실행문2, 실행문3 실행</span></span><br><span class="line"><span class="comment">// 해당하는 값이 없을 경우: 실행문3 실행</span></span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-05-Conditional/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
     
     
     <article class="postShorten postShorten--thumbnailimg-bottom">

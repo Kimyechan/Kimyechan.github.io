@@ -5,17 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Java Server Developer">
-    <title>Archives - Java Server Developer</title>
+    <meta name="generator" content="Build Up">
+    <title>Archives - Build Up</title>
     <meta name="author" content="Yechan Kim">
     
     
     
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
-<meta property="og:title" content="Java Server Developer">
+<meta property="og:title" content="Build Up">
 <meta property="og:url" content="https://kimyechan.github.io/archives/index.html">
-<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:site_name" content="Build Up">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
@@ -63,7 +63,7 @@
             href="/"
             aria-label=""
         >
-            Java Server Developer
+            Build Up
         </a>
     </div>
     
@@ -326,6 +326,207 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/05/12/OS-2-System-Structure-Program-Execution/"
+                            aria-label=": OS-2.System Structure &amp; Program Execution"
+                        >
+                            OS-2.System Structure &amp; Program Execution
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-05-12T01:17:35+09:00">
+	
+		    May 12, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="컴퓨터-시스템-구조"><a href="#컴퓨터-시스템-구조" class="headerlink" title="컴퓨터 시스템 구조"></a>컴퓨터 시스템 구조</h2><ul>
+<li><p>Computer</p>
+<ul>
+<li>CPU<ul>
+<li>mode bit : 사용자 모드 (0 : 커널, 1 : 사용자)</li>
+<li>registers : CPU가 일시적으로 데이터를 저장하는 기억장치 입니다</li>
+<li>interrupt line : 들어온 인터럽트를 확인하는 공간입니다</li>
+</ul>
+</li>
+<li>Memory: CPU의 작업 공간입니다</li>
+</ul>
+</li>
+<li><p>timer : 한 작업 당 CPU를 일정시간 동안만 사용할 수 있도록하는 하드웨어 입니다 (인터럽트를 CPU에 겁니다)</p>
+</li>
+<li><p>DMA controller: CPU의 interrupt 작업을 대신해줍니다 (I/O 작업의 결과를 메모리에 반영하고 완료하면 CPU에 Interrupt를 한 번만 작업합니다)</p>
+</li>
+<li><p>memoery controller : DMA, CPU의 메모리 접근을 제어합니다 (DMA와 CPU가 동시에 같은 메모리를 작업하지 않도록 합니다)</p>
+</li>
+<li><p>I/O device</p>
+<ul>
+<li><p>device controller : 각 device를 제어합니다</p>
+</li>
+<li><p>local buffuer : device controller 작업 공간입니다</p>
+<img width="763" alt="스크린샷 2021-05-12 오전 1 20 27" src="https://user-images.githubusercontent.com/12459864/117925870-d0568580-b332-11eb-9b9c-98304b9349cb.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Device-Controller"><a href="#Device-Controller" class="headerlink" title="Device Controller"></a>Device Controller</h3><ul>
+<li>해당 I/O 장치유형을 관리하는 일종의 작은 CPU입니다</li>
+<li>제어 정보를 위해 control register, status register를 가집니다</li>
+<li>일종의 data register인 local buffer를 가집니다</li>
+<li>I/O 작업은 실제 device와 local buffer 사이에 일어나고 I/O 작업이 완료되면 Device Controller는 Interrupt로 CPU나 DMA에 완료됨을 알려줍니다</li>
+<li>device driver VS device controller<ul>
+<li>device driver는 OS 코드 중에서 각 장치별 처리루틴을 작성한 software 입니다</li>
+<li>device controller는 각 장치를 통제하는 일종의 작은 CPU인 hareware 입니다</li>
+</ul>
+</li>
+</ul>
+<h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><ul>
+<li>정해진 시간이 흐른 뒤 운영체제에게 제어권이 넘어가도록 인터럽트를 발생시키는 하드웨어 입니다</li>
+<li>타이머는 매 클럭마다 1씩 감소되고 0이 되어지면 타이머 인터럽트가 발생합니다</li>
+<li>CPU를 특정 프로그램이 독점하는 것으로부터 보호합니다</li>
+<li>타이머는 time sharing을 하기위해 많이 사용되어집니다</li>
+</ul>
+<h3 id="DMA-Direct-Memory-Access"><a href="#DMA-Direct-Memory-Access" class="headerlink" title="DMA (Direct Memory Access)"></a>DMA (Direct Memory Access)</h3><ul>
+<li>CPU의 중재 없이 device controller가 device의 buffer storage의 내용을 메모리에 block 단위로 직접 전송하도록 해줍니다</li>
+<li>바이트 단위가 아니라 block 단위로 인터럽트를 발생시키기 때문에 CPU에 인터럽트가 적게 걸립니다</li>
+</ul>
+<h2 id="인터럽트-Interrupt"><a href="#인터럽트-Interrupt" class="headerlink" title="인터럽트 (Interrupt)"></a>인터럽트 (Interrupt)</h2><ul>
+<li>인터럽트 : 인터럽트를 당한 시점의 레지스터와 program counter를 저장한 후 CPU의 제어를 인터럽트 처리 루틴에 넘깁니다</li>
+<li>인터럽트의 종류<ul>
+<li>Interrupt (하드웨어 인터럽트): 하드웨어가 발생시킨 인터럽트입니다</li>
+<li>Trap (소프트웨어 인터럽트)<ul>
+<li>Exception: 프로그램이 오류를 범한 경우</li>
+<li>System call: 사용자 프로그램이 운영체제의 서비스를 받기 위해 커널 함수를 호출하는 것</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>인터럽트 관련 용어<ul>
+<li>인터럽트 벡터 : 해당 인터럽트의 처리 루틴 주소를 가지고 있습니다</li>
+<li>인터럽트 처리 루틴(Interrupt Service Routine, 인터럽트 핸들러) : 해당 인터럽트를 처리하는 커널 함수입니다</li>
+</ul>
+</li>
+</ul>
+<h2 id="I-O-System-Call-흐름-자세히-보기"><a href="#I-O-System-Call-흐름-자세히-보기" class="headerlink" title="I/O System Call 흐름 자세히 보기"></a>I/O System Call 흐름 자세히 보기</h2><ol>
+<li>사용자 프로그램은 I/O 명령은 특권 명령이여서 OS의 도움이 필요합니다.</li>
+<li>따라서 System Call을 사용하여 운영체제에게 I/O를 요청하게 됩니다.</li>
+<li>trap을 사용하여 인터럽트 벡터의 특정 위치로 이동하고 인터럽트 벡터가 가리키는 인터럽트 서비스 루틴으로 이동합니다</li>
+<li>이 I/O 요청이 올바른 요청인지 확인후 I/O를 수행합니다</li>
+<li>I/O 완료 시 제어권을 시스템 콜 다음 명령으로 옮깁니다</li>
+</ol>
+<h2 id="작업-흐름-I-O-작업"><a href="#작업-흐름-I-O-작업" class="headerlink" title="작업 흐름 - I/O 작업"></a>작업 흐름 - I/O 작업</h2><ol>
+<li>CPU가 Program A를 작업하고 있습니다</li>
+<li>Program1에서 I/O 작업을 요청하기 위해 시스템 콜을 실행합니다</li>
+<li>해당 시스템 콜로 인해서 인터럽트가 걸려서 CPU 제어권이 OS로 넘어갑니다</li>
+<li>OS에서 I/O 작업을 처리하도록 해당 device에 요청합니다</li>
+<li>OS에서 스케쥴링하여 다음 작업인 Program B에 CPU를 넘겨줍니다</li>
+<li>이후에 해당 device에서 I/O 작업을 마치고 CPU의 interrupt line에 완료 인터럽트를 겁니다</li>
+<li>CPU는 instruction을 실행하면서 interrupt line에 인터럽트가 들어온 것을 확인하고 CPU 제어권이 OS로 넘어갑니다</li>
+<li>OS에서는 완료된 I/O 작업을 확인하고 Program1을 실행 가능 상태로 전환하여 스케쥴링합니다.</li>
+</ol>
+<h2 id="작업-흐름-Timer"><a href="#작업-흐름-Timer" class="headerlink" title="작업 흐름 - Timer"></a>작업 흐름 - Timer</h2><ol>
+<li>OS에서 스케쥴링하여 Program A에 CPU 제어권을 넘겨주고 Timer를 설정합니다.</li>
+<li>Program A가 작업하고 있다가 작업이 완료되기 전에 Timer에 시간이 만료되어서 CPU에 Interrupt가 걸립니다.</li>
+<li>CPU는 Interrupt를 확인하고 CPU의 제어권이 OS로 넘어갑니다</li>
+<li>OS는 동일하게 다음 스케쥴링된 프로그램에게 CPU 제어권을 넘겨주고 Timer를 설정합니다</li>
+</ol>
+<h2 id="동기식-입출력과-비동기식-입출력"><a href="#동기식-입출력과-비동기식-입출력" class="headerlink" title="동기식 입출력과 비동기식 입출력"></a>동기식 입출력과 비동기식 입출력</h2><ul>
+<li>동기식 입출력 (synchronous I/O)<ul>
+<li>I/O 요청 후 입출력 작업이 완료된 후에야 제어가 사용자 프로그램으로 넘어갑니다</li>
+<li>구현 방법 1<ul>
+<li>I/O가 끝날 때까지 CPU를 가지고 있습니다</li>
+<li>CPU낭비가 심하고 매시점 하나의 I/O만 일어날 수 있습니다</li>
+</ul>
+</li>
+<li>구현 방법 2<ul>
+<li>I/O가 완료될 때까지 해당 프로그램에게서 CPU를 빼앗습니다</li>
+<li>I/O 처리를 기다리는 줄에 그 프로그램을 줄 세우고 다른 프로그램에게 CPU를 줍니다</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>비동기식 입출력 (asynchronous I/O)<ul>
+<li>I/O가 시작된 후 입출력 작업이 끝나기를 기다리지 않고 제어가 다시 원래의 사용자 프로그램에게 넘어갑니다</li>
+</ul>
+</li>
+<li>두 경우 모두 I/O 완료는 인터럽트를 통해서 알려줍니다</li>
+</ul>
+<h2 id="프로그램의-실행-메모리-load"><a href="#프로그램의-실행-메모리-load" class="headerlink" title="프로그램의 실행 (메모리 load)"></a>프로그램의 실행 (메모리 load)</h2><ul>
+<li><p>File System에 존재하는 프로그램이 메모리에 load될 때 code, data, stack 영역으로 구분되어지는 Virtual memory로 형성되어 지고, 실제 메모리에 올라가는 부분은 Virtual memory와 매핑되어지는 일부분만 올라갑니다. 이후에 메모리의 일부분은 File System에 존재하는 Swap area와 교체가 일어나면서 메모리에 올라갔다가 내려오게 됩니다.</p>
+  <img width="896" alt="스크린샷 2021-05-12 오후 3 45 09" src="https://user-images.githubusercontent.com/12459864/117977878-3b707e00-b36c-11eb-945d-fe28964aab0a.png">
+
+
+</li>
+</ul>
+<h2 id="커널-주소-공간의-내용"><a href="#커널-주소-공간의-내용" class="headerlink" title="커널 주소 공간의 내용"></a>커널 주소 공간의 내용</h2><ul>
+<li><p>code</p>
+<ul>
+<li>시스템 콜, 인터럽트 처리 코드</li>
+<li>자원 관리를 위한 코드</li>
+<li>편리한 서비스 제공을 위한 코드</li>
+</ul>
+</li>
+<li><p>data</p>
+<ul>
+<li>PCB</li>
+<li>CPU, Memory, Disk에 관한 데이터</li>
+</ul>
+</li>
+<li><p>stack</p>
+<ul>
+<li><p>각 프로세스에 관한 커널 스택</p>
+<img width="898" alt="스크린샷 2021-05-12 오후 3 47 17" src="https://user-images.githubusercontent.com/12459864/117978233-a0c46f00-b36c-11eb-8253-3d0aa49c6d95.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/05/12/OS-2-System-Structure-Program-Execution/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/05/07/OS-1-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/"
                             aria-label=": OS-1.운영체제란 무엇인가?"
                         >
@@ -411,6 +612,9 @@
 <li>Multiprocessor : 하나의 컴퓨터에 CPU (processor)가 여러 개 붙어 있음을 의미합니다</li>
 </ul>
 </li>
+</ul>
+<h3 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h3><ul>
+<li>반효경 교수님 강의</li>
 </ul>
 
                     
@@ -1334,83 +1538,6 @@
                         <p>
                             <a
                                 href="/2020/11/18/Algorithm-%EC%BB%B5%EB%9D%BC%EB%A9%B4/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/"
-                            aria-label=": Algorithm-도서관"
-                        >
-                            Algorithm-도서관
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-17T23:34:51+09:00">
-	
-		    Nov 17, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 1461 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1461">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>탐욕 알고리즘</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>일직선상에 책들을 순서대로 위치시킨다</li>
-<li>0보다 큰 책들과 0보다 작은 책들을 나누어서 처리한다</li>
-<li>음수와 양수 좌표를 위해 두 개의 우선순위 큐를 이용한다</li>
-<li>마지막 책을 놓을 때는 다시 0으로 돌아올 필요가 없기 때문에, 가장 먼 책을 마지막으로 놓는다</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">array = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line">positive = []</span><br><span class="line">negative = []</span><br><span class="line"></span><br><span class="line">largest = max(max(array), - min(array))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    <span class="keyword">if</span> i &gt; <span class="number">0</span>:</span><br><span class="line">        heapq.heappush(positive, -i)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        heapq.heappush(negative, i)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> positive:</span><br><span class="line">    result += heapq.heappop(positive)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> positive:</span><br><span class="line">            heapq.heappop(positive)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> negative:</span><br><span class="line">    result += heapq.heappop(negative)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> negative:</span><br><span class="line">            heapq.heappop(negative)</span><br><span class="line"></span><br><span class="line">print(-result * <span class="number">2</span> - largest)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

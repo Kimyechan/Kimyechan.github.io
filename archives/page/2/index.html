@@ -5,17 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Java Server Developer">
-    <title>Archives - Java Server Developer</title>
+    <meta name="generator" content="Build Up">
+    <title>Archives - Build Up</title>
     <meta name="author" content="Yechan Kim">
     
     
     
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
-<meta property="og:title" content="Java Server Developer">
+<meta property="og:title" content="Build Up">
 <meta property="og:url" content="https://kimyechan.github.io/archives/page/2/index.html">
-<meta property="og:site_name" content="Java Server Developer">
+<meta property="og:site_name" content="Build Up">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
@@ -63,7 +63,7 @@
             href="/"
             aria-label=""
         >
-            Java Server Developer
+            Build Up
         </a>
     </div>
     
@@ -316,6 +316,83 @@
                         ">
                 
     <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/"
+                            aria-label=": Algorithm-도서관"
+                        >
+                            Algorithm-도서관
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-17T23:34:51+09:00">
+	
+		    Nov 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 1461 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1461">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>탐욕 알고리즘</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>일직선상에 책들을 순서대로 위치시킨다</li>
+<li>0보다 큰 책들과 0보다 작은 책들을 나누어서 처리한다</li>
+<li>음수와 양수 좌표를 위해 두 개의 우선순위 큐를 이용한다</li>
+<li>마지막 책을 놓을 때는 다시 0으로 돌아올 필요가 없기 때문에, 가장 먼 책을 마지막으로 놓는다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">array = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line">positive = []</span><br><span class="line">negative = []</span><br><span class="line"></span><br><span class="line">largest = max(max(array), - min(array))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    <span class="keyword">if</span> i &gt; <span class="number">0</span>:</span><br><span class="line">        heapq.heappush(positive, -i)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        heapq.heappush(negative, i)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> positive:</span><br><span class="line">    result += heapq.heappop(positive)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> positive:</span><br><span class="line">            heapq.heappop(positive)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> negative:</span><br><span class="line">    result += heapq.heappop(negative)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> negative:</span><br><span class="line">            heapq.heappop(negative)</span><br><span class="line"></span><br><span class="line">print(-result * <span class="number">2</span> - largest)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/17/Algorithm-%EB%8F%84%EC%84%9C%EA%B4%80/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
     
     
     <article class="postShorten postShorten--thumbnailimg-bottom">
@@ -1470,84 +1547,6 @@
                         <p>
                             <a
                                 href="/2020/11/09/Web-Web-Server%EC%99%80-WAS%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%99%80-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B5%AC%EC%A1%B0/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/09/Algorithm-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9/"
-                            aria-label=": Algorithm-효율적인 해킹"
-                        >
-                            Algorithm-효율적인 해킹
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-09T11:43:17+09:00">
-	
-		    Nov 09, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/BFS/">BFS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<p>백준 1325 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1325">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li><p>그래프 탐색</p>
-</li>
-<li><p>BFS</p>
-</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li>DFS, BFS를 수행할 때마다 방문하게 되는 노드의 개수를 계산</li>
-<li>가장 노드의 개수가 크게 되는 시작 정점을 출력</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    adj[y].append(x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>(<span class="params">v</span>):</span></span><br><span class="line">    q = deque([v])</span><br><span class="line">    visited = [<span class="literal">False</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    visited[v] = <span class="literal">True</span></span><br><span class="line">    count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        v = q.popleft()</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> adj[v]:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> visited[e]:</span><br><span class="line">                q.append(e)</span><br><span class="line">                visited[e] = <span class="literal">True</span></span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line">max_value = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">c = bfs(i)</span><br><span class="line"><span class="keyword">if</span> c &gt; max_value:</span><br><span class="line">    result = [i]</span><br><span class="line">    max_value = c</span><br><span class="line"><span class="keyword">elif</span> c == max_value:</span><br><span class="line">    result.append(i)</span><br><span class="line">    max_value = c</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> result:</span><br><span class="line">    print(e, end = <span class="string">&quot; &quot;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/09/Algorithm-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
