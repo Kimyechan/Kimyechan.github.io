@@ -340,6 +340,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
 </div>
 
             </div>
@@ -390,6 +396,12 @@
 		    Jul 22, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
     
 </div>
 
@@ -448,15 +460,21 @@
 </li>
 </ul>
 <h2 id="fork-시스템-콜"><a href="#fork-시스템-콜" class="headerlink" title="fork() 시스템 콜"></a>fork() 시스템 콜</h2><ul>
-<li>자식 프로세스는 부모 프로세스에서 fork한 이후부터 실행 (Program Counter도 복제)</li>
+<li>자식 프로세스는 부모 프로세스에서 Program Counte도 복제해서 fork한 이후부터 실행<img width="852" alt="스크린샷 2021-07-22 오후 10 28 43" src="https://user-images.githubusercontent.com/12459864/126659660-d00ce869-03ab-4e0e-b8b9-4cab585b1168.png">
+
+</li>
 </ul>
 <h2 id="exec-시스템-콜"><a href="#exec-시스템-콜" class="headerlink" title="exec() 시스템 콜"></a>exec() 시스템 콜</h2><ul>
-<li>프로세스에 새로운 프로그램을 덮어서 다른 프로그램으로 만들어 실행</li>
+<li>프로세스에 새로운 프로그램을 덮어서 다른 프로그램으로 만들어 실행<img width="777" alt="스크린샷 2021-07-22 오후 10 35 11" src="https://user-images.githubusercontent.com/12459864/126659912-9d3b6ff2-937c-4c72-8c38-ae6fdae24f22.png">
+
+</li>
 </ul>
 <h2 id="wait-시스템-콜"><a href="#wait-시스템-콜" class="headerlink" title="wait() 시스템 콜"></a>wait() 시스템 콜</h2><ul>
 <li>프로세스 A가 wait() 시스템 콜을 호출<ul>
 <li>커널은 child가 종료될 때까지 프로세스 A를 sleep시킨다 (block 상태)</li>
-<li>child process가 종료되면 커널은 프로세스 A를 깨운다 (ready 상태)</li>
+<li>child process가 종료되면 커널은 프로세스 A를 깨운다 (ready 상태)<img width="793" alt="스크린샷 2021-07-22 오후 11 52 37" src="https://user-images.githubusercontent.com/12459864/126660202-1860392b-b463-4893-9412-c3810f46e1ae.png">
+
+</li>
 </ul>
 </li>
 </ul>
@@ -475,7 +493,7 @@
 </li>
 <li>키보드로 kill, break 등을 친 경우</li>
 <li>부모가 종료하는 경우<ul>
-<li>부모 프로세스가 종ㄹ하기 전에 자식들이 먼전 종료됨</li>
+<li>부모 프로세스가 종료하기 전에 자식들이 먼전 종료됨</li>
 </ul>
 </li>
 </ul>
@@ -491,12 +509,38 @@
 </li>
 <li><p>협력 프로세스 </p>
 <ul>
-<li>프로세스 협력 메커니즘을 통해 </li>
+<li>프로세스 협력 메커니즘을 통해 하나의 프로세스가 다른 프로세스의 수행에 영향을 미칠 수 있음</li>
 </ul>
 </li>
-<li><p>message passing -&gt; 커널을 통해서 전달됨</p>
+<li><p>프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)</p>
+<ul>
+<li><p>message passing : 커널을 통해서 메시지 전달됨</p>
 </li>
-<li><p>shared memory -&gt; 물리적인 메모리 공간이 공유됨</p>
+<li><p>shared memory </p>
+<ul>
+<li>프로세스간 메모리 공유 요청을 커널에게 요청한 후, 커널을 통해서 특정 물리 메모리 공간을 공유합니다</li>
+</ul>
+<img width="770" alt="스크린샷 2021-07-23 오전 12 07 57" src="https://user-images.githubusercontent.com/12459864/126662773-46e2200f-226f-4cb1-bafa-6cccc5ee665b.png">
+
+<p><code>thread : 프로세스 간의 협력은 아니지만 동일한 process를 구성하는 thread간에는 주소공간을 공유하므로 협력이 가능하다</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Message-Passing"><a href="#Message-Passing" class="headerlink" title="Message Passing"></a>Message Passing</h3><ul>
+<li><p>Message System : 프로세스 사이에 공유 변수를 일체 사용하지 않고 통신하는 시스템</p>
+</li>
+<li><p>Direct Communication</p>
+<ul>
+<li>통신하려는 프로세스의 이름을 명시적으로 표시<img width="542" alt="스크린샷 2021-07-23 오전 12 04 56" src="https://user-images.githubusercontent.com/12459864/126662219-59171061-d6c3-4515-b69d-fa7fe8dba3f3.png">
+</li>
+</ul>
+</li>
+<li><p>Indirect Communication</p>
+<ul>
+<li>mailbox (또는 port)를 통해 메시지를 간접 전달</li>
+<li>특정 대상이 아니라 임의의 대상들이 메시지를 확인하고 가져감<img width="681" alt="스크린샷 2021-07-23 오전 12 05 02" src="https://user-images.githubusercontent.com/12459864/126662225-f0b3a288-3b97-4fcf-9392-fe89f8f5d939.png"></li>
+</ul>
 </li>
 </ul>
 
@@ -544,6 +588,12 @@
 		    May 14, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
     
 </div>
 
