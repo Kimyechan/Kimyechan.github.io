@@ -326,6 +326,85 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/05/14/OS-4-Thread/"
+                            aria-label=": OS-4.Thread"
+                        >
+                            OS-4.Thread
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-05-14T16:49:45+09:00">
+	
+		    May 14, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Thread란"><a href="#Thread란" class="headerlink" title="Thread란"></a>Thread란</h2><p><code>A thread (or lightweight process) is a basic unit of CPU utilization</code></p>
+<ul>
+<li>Thread의 구성<ul>
+<li>program counter</li>
+<li>register set</li>
+<li>stack space</li>
+</ul>
+</li>
+<li>Thread가 동료 thread와 공유하는 부분(=task)<ul>
+<li>code section</li>
+<li>data section</li>
+<li>OS resources</li>
+</ul>
+</li>
+<li>heavyweight process는 하나의 thread를 가지고 있는 task로 볼 수 있습니다</li>
+</ul>
+<p><img width="600" alt="스크린샷 2021-05-14 오후 6 24 12" src="https://user-images.githubusercontent.com/12459864/118250604-9e375600-b4e1-11eb-8675-90f1be0a375f.png"> <br></p>
+<img width="600" alt="스크린샷 2021-05-14 오후 6 36 52" src="https://user-images.githubusercontent.com/12459864/118252128-67623f80-b4e3-11eb-80e6-e55e12192090.png">
+
+<h2 id="Thread의-장점"><a href="#Thread의-장점" class="headerlink" title="Thread의 장점"></a>Thread의 장점</h2><ol>
+<li>다중 스레드로 구성된 태스크 구조에서는 하나의 서버 스레드가 blocked(waiting) 상태인 동안에도 동일한 태스크 내의 다른 스레드가 실행(running)되어 빠른 처리를 할 수 있습니다<ul>
+<li>ex) 웹 브라우저가 웹 페이지를 불러올 때 html과 text를 먼저 불러오고 text만으로 사용자가 작업할 수 있게 한 다음, 다른 스레드가 image를 불러오는 작업을 할 수 있습니다</li>
+</ul>
+</li>
+<li>동일한 일을 수행하는 다중 스레드가 협력하여 높은 처리율(throughput)과 성능 향상을 얻을 수 있습니다.</li>
+<li>자원 낭비를 막는다 (프로세스 각각으로 돌리면 각 프로세스당 메모리가 필요하게 되서 더 많은 메모리를 차지합니다)</li>
+<li>스레드를 사용하면 병렬성을 높일 수 있습니다(멀티 코어일 경우)</li>
+</ol>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/05/14/OS-4-Thread/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/05/14/OS-3-Process/"
                             aria-label=": OS-3.Process"
                         >

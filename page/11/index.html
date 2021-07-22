@@ -325,6 +325,317 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-07-Arrays/"
+                            aria-label=": JavaBasic-07(Arrays)"
+                        >
+                            JavaBasic-07(Arrays)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:32:51+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="배열-Arrays"><a href="#배열-Arrays" class="headerlink" title="배열 (Arrays)"></a>배열 (Arrays)</h1><h2 id="배열의-특성"><a href="#배열의-특성" class="headerlink" title="배열의 특성"></a>배열의 특성</h2><ul>
+<li>하나의 변수로 여러개의 값을 다룰 수 있다.</li>
+<li>동일한 자료형의 값만 다룰 수 있다.</li>
+<li>한번 생성된 배열의 크기는 변하지 않는다.</li>
+<li>배열에 속한 값은 메모리에 연속적으로 위치한다.</li>
+</ul>
+<h2 id="배열의-생성"><a href="#배열의-생성" class="headerlink" title="배열의 생성"></a>배열의 생성</h2><ul>
+<li><p>배열의 선언</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] intArray;<span class="comment">// 자료형[] 변수명; recommended</span></span><br><span class="line"><span class="keyword">int</span> integerArray[];<span class="comment">// 자료형 변수명[]; old c-style</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>배열의 생성/초기화</p>
+<ul>
+<li><p>생성 후 값 할당</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] intArray = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">intArray[<span class="number">0</span>] = <span class="number">4</span>;</span><br><span class="line">intArray[<span class="number">1</span>] = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] intArray;</span><br><span class="line">intArray = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>생성과 동시에 값 할당</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">65</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] intArray2 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">4</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="배열과-반복문"><a href="#배열과-반복문" class="headerlink" title="배열과 반복문"></a>배열과 반복문</h2><ul>
+<li><p>인덱스를 이용한 배열 접근</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span>[] floatArray = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; floatArray.length; i++) &#123;</span><br><span class="line">  floatArray[i] = i * <span class="number">0.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>향상된 for 문을 이용한 배열 접근</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> value: intArray) &#123;</span><br><span class="line">  System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="배열의-크기-변경"><a href="#배열의-크기-변경" class="headerlink" title="배열의 크기 변경"></a>배열의 크기 변경</h2><ul>
+<li>배열의 크기는 변경할 수 없으므로 새로운 배열을 만들고 데이터를 옮겨야 한다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] src = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] dst = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; source.length; i++) &#123;</span><br><span class="line">  dst[i] = src[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] src = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] dst = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">System.arraycopy(src, <span class="number">0</span>, dst, <span class="number">0</span>, src.length);</span><br></pre></td></tr></table></figure>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-07-Arrays/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-09-String/"
+                            aria-label=": JavaBasic-09(String)"
+                        >
+                            JavaBasic-09(String)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:28:30+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="문자열-Strings"><a href="#문자열-Strings" class="headerlink" title="문자열 (Strings)"></a>문자열 (Strings)</h1><h2 id="문자열의-특징"><a href="#문자열의-특징" class="headerlink" title="문자열의 특징"></a>문자열의 특징</h2><ul>
+<li>클래스로 구현되어 있다.</li>
+<li>내부에 문자의 배열로 데이터가 구현되어 있다.</li>
+<li>한번 만든 문자열은 변하지 않는다. (Immutable)</li>
+</ul>
+<h2 id="문자열의-생성"><a href="#문자열의-생성" class="headerlink" title="문자열의 생성"></a>문자열의 생성</h2><ul>
+<li><p>new 키워드를 이용하여 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="keyword">new</span> String(<span class="string">&quot;문자열 생성&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>new 키워드 없이 생성 (권장)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="string">&quot;문자열 생성&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="문자열-메소드"><a href="#문자열-메소드" class="headerlink" title="문자열 메소드"></a>문자열 메소드</h2><table>
+<thead>
+<tr>
+<th>메소드</th>
+<th>메소드 선언</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>length()</td>
+<td><code>public int length()</code></td>
+<td>문자열의 길이를 출력</td>
+</tr>
+<tr>
+<td>charAt()</td>
+<td><code>public char charAt(int index)</code></td>
+<td>index번째에 위치한 문자 출력</td>
+</tr>
+<tr>
+<td>indexOf()</td>
+<td><code>public int indexOf(char ch)</code></td>
+<td>ch가 위치한 index 출력. 없을 시 -1</td>
+</tr>
+<tr>
+<td>equals()</td>
+<td><code>public boolean equals(Object anObject</code></td>
+<td>anObject와 비교한 결과 출력</td>
+</tr>
+<tr>
+<td>equalsIgnoreCase()</td>
+<td><code>public boolean equalsIgnoreCase(String anotherString)</code></td>
+<td>대소문자 구분없이 anotherString과 비교 결과 출력</td>
+</tr>
+<tr>
+<td>replace()</td>
+<td><code>public String replace(char odlChar, char newChar)</code></td>
+<td>oldChar를 찾아 newChar로 변경된 문자열 출력</td>
+</tr>
+<tr>
+<td>substring()</td>
+<td><code>public String substring(int beginIndex, int endIndex)</code></td>
+<td>문자열을 beginIndex부터 endIndex-1까지 잘라서 출력</td>
+</tr>
+<tr>
+<td>trim()</td>
+<td><code>public String trim()</code></td>
+<td>문자열 좌우 공백을 없앤 결과를 출력</td>
+</tr>
+<tr>
+<td>matches()</td>
+<td><code>public boolean matches(String regex)</code></td>
+<td>문자열을 정규표현식 regex 확인 결과 출력</td>
+</tr>
+<tr>
+<td>split()</td>
+<td><code>public String[] split(String regex)</code></td>
+<td>문자열을 정규표현식 형태로 나눈 후 배열로 출력</td>
+</tr>
+</tbody></table>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-09-String/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/08/10/JavaBasic-08-NDArrays/"
+                            aria-label=": JavaBasic-08(NDArrays)"
+                        >
+                            JavaBasic-08(NDArrays)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-08-10T19:27:59+09:00">
+	
+		    Aug 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>, <a class="category-link" href="/categories/Java/JavaBasic/">JavaBasic</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="다차원-배열-N-D-Arrays"><a href="#다차원-배열-N-D-Arrays" class="headerlink" title="다차원 배열 (N-D Arrays)"></a>다차원 배열 (N-D Arrays)</h1><h2 id="다차원-배열의-정의"><a href="#다차원-배열의-정의" class="headerlink" title="다차원 배열의 정의"></a>다차원 배열의 정의</h2><ul>
+<li>배열을 담고 있는 배열을 다차원 배열이라고 한다.</li>
+<li>수학의 선 -&gt; 면 -&gt; 공간 등과 동일한 개념</li>
+</ul>
+<h2 id="다차원-배열의-생성"><a href="#다차원-배열의-생성" class="headerlink" title="다차원 배열의 생성"></a>다차원 배열의 생성</h2><ul>
+<li><p>다차원 배열의 선언</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array2D[];</span><br><span class="line"><span class="keyword">int</span>[][] array2D;</span><br><span class="line"><span class="keyword">int</span> array2D[][];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>다차원 배열의 생성</p>
+<ul>
+<li><p>여러 차원의 배열을 동시에 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] array2D = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>][<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>상위 차원의 배열부터 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] array2D = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>][];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array2D.length; i++) &#123;</span><br><span class="line">  array2D[i] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>다차원 배열의 초기화</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] array2D = &#123;&#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">65</span>&#125;,</span><br><span class="line">                   &#123;<span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>&#125;, <span class="comment">// length may vary</span></span><br><span class="line">                   &#123;<span class="number">10</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">67</span>, <span class="number">3</span>&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="배열과-반복문"><a href="#배열과-반복문" class="headerlink" title="배열과 반복문"></a>배열과 반복문</h2><ul>
+<li><p>인덱스를 이용한 배열 접근</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] array2D = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array2D.length; i++) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; array2D[i].length; j++) &#123;</span><br><span class="line">    array2D[i][j] = i * j;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/08/10/JavaBasic-08-NDArrays/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/08/10/JavaBasic-06-Loops/"
                             aria-label=": JavaBasic-06(Loops)"
                         >
@@ -1760,70 +2071,6 @@ message:</code></pre>
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/08/07/hello-world/"
-                            aria-label=": Hello World"
-                        >
-                            Hello World
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-08-07T16:12:20+09:00">
-	
-		    Aug 07, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/08/07/hello-world/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1839,7 +2086,18 @@ message:</code></pre>
           </li>
         
         
-        <li class="pagination-number">page 11 of 11</li>
+          <li class="pagination-next">
+            <a
+                class="btn btn--default btn--small"
+                href="/page/12/"
+                aria-label="OLDER POSTS"
+            >
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+        <li class="pagination-number">page 11 of 12</li>
     </ul>
 </div>
 

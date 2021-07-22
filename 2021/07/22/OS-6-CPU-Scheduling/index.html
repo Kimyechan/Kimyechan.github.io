@@ -6,32 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Build Up">
-    <title>OS-3.Process - Build Up</title>
+    <title>OS-6-CPU Scheduling - Build Up</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Process Concept\nProcess is a program in execution\n프로세스의 문맥 (context)\nCPU 수행 상태를 나타내는 하드웨어 문맥\nProgram Counter(PC)\n각종 register\n\n\n프로세스의 주소 공간\ncode, data, stack\n\n\n프로세스 관련 커널 자료 구조\nPCB (Process Control Block)\nKernel stack\n\n\n\n\n\n\n\nProcess State\n프로세스는 상태(state)가 변경되며 수행됩니다\n\nRunning : CPU를 잡고 instruction을 수행중인 상태\n\nReady : CPU를 기다리는 상태(CPU만 얻으면 실행할 수 있는 상태)\n\nBlocked(wait, sleep)\n\nCPU를 주어도 당장 instruction을 실행할 수 없는 상태\nProcess 자신이 요청한 event(I/O)가 즉시 만족되지 않아 이를 기다리는 상태\n디스크에서 file을 읽어와야 하는 경우\n\n\nNew: 프로세스가 생성중인 상태\n\nTerminated: 수행이 끝난 상태\n  \n\n각 작업의 큐는 Kernel의 Data영역에서 관리되어집니다\n  \n\n\n\nPCB\n운영체제가 각 프로세스를 관리하기 위해 프로세스당 유지하는 정보\n\n다음의 구성 요소를 가집니다 (구조체로 유지)\n\nOS가 관리상 사용하는 정보\n\nProcess state, Process ID\nscheduling information, priority\n\n\nCPU 수행 관련 하드웨어 값\n\nprogram counter(PC), registers\n\n\n메모리 관련\n\ncode, data, stack의 위치 정보\n\n\n파일 관련\n\nOpen file descriptiors…\n\n\n\n\n\n\n\n문맥 교환 (Context Switching)\nCPU를 한 프로세스에서 다른 프로세스로 넘겨주는 과정\n\nCPU가 다른 프로세스에게 넘어갈 때 운영체제는 운영체제는 다음을 수행합니다\n\nCPU를 내어주는 프로세스의 상태를 그 프로세스의 PCB에 저장\n\nCPU를 새롭게 얻는 프로세스의 상태를 PCB에서 읽어옴\n\n\n\n\nSystem Call이나 Interrupt 발생시 반드시 Context switching이 일어나는 것은 아닙니다\n  \n\n\n1번의 경우에도 CPU 수행 정보 등 context의 일부를 PCB에 save해야 하지만 문맥교환을 하는 2번의 경우 cache memory flush가 발생하기 때문에 성능 부담이 훨씬 큽니다\n\n\n\n프로세스를 스케줄링하기 위한 큐\nJob Queue: 현재 시스템 내에 있는 모든 프로세스의 집합 (Process Queue + Device Queue)\n\nReady Queue: 현재 메모리 내에 있으면서 CPU를 잡아서 실행되기를 기다리는 프로세스의 집합\n\nDevice Queue: I/O device의 처리를 기다리는 프로세스의 집합\n  프로세스들은 각 큐를 오가며 수행됩니다\n\n\n스케줄러\n장기 스케줄러 (job scheduler)\n\n시작 프로세스 중 어떤 것들을 ready queue로 보낼지 결정합니다\n프로세스에 memory(및 각종 자원)을 주는 문제\ndegree of multiprogramming을 제어\ntime sharing system에는 보통 장기 스케줄러 없이 무조건 ready 상태가 됩니다\n\n\n단기 스케줄러 (cpu scheduler)\n\n어떤 프로세스를 다음번에 running 시킬 지 결정합니다\n프로세스에 CPU를 주는 문제\n\n\n중기 스케줄러 (swapper)\n\n여유 공간 마련을 위해 프로세스를 통째로 메모레에서 디스크로 쫓아냅니다\n\n프로세스에게서 memory를 뺏는 문제\n\ndegree of multiprogramming을 제어\n\n현재 시스템은 프로그램을 무조건 메모리에 올리고 swapper를 이용해서 메모리에서 쫓아낸다 (장기 스케줄러대신 중기 스케줄러를 사용한다)\n중기 스케줄러로 인해서 Suspended라는 프로세스의 상태가 추가됩니다\n\n\n\n\n새로운 프로세스 상태\nRunning\nReady\nBlocked\nSuspended (stopped)\n외부적인 이유로 프로세스의 수행이 정지된 상태\n프로세스는 통째로 디스크에서 swap out 됩니다\n(예) 메모리에 너무 많은 프로세스가 올라와서 성능이 저하되었을 때 사용자가 직접 process를 중단시거나 시스템이 중단시킵니다\n\n\n\nBlock은 자신이 요청한 event가 만족되면 Ready 상태가 되어집니다\nSuspended는 외부에서 다시 resume해 주어야 Activce됩니다\n\n\n참고\n반효경 교수님 운영체제 강의\n\n","dateCreated":"2021-05-14T14:30:20+09:00","dateModified":"2021-05-14T15:54:28+09:00","datePublished":"2021-05-14T14:30:20+09:00","description":"","headline":"OS-3.Process","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/05/14/OS-3-Process/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/05/14/OS-3-Process/","keywords":"OS"}</script>
-    <meta name="description" content="Process Concept Process is a program in execution 프로세스의 문맥 (context) CPU 수행 상태를 나타내는 하드웨어 문맥 Program Counter(PC) 각종 register   프로세스의 주소 공간 code, data, stack   프로세스 관련 커널 자료 구조 PCB (Process Control Blo">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="OS-3.Process">
-<meta property="og:url" content="https://kimyechan.github.io/2021/05/14/OS-3-Process/index.html">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"","dateCreated":"2021-07-22T23:29:19+09:00","dateModified":"2021-07-22T23:29:19+09:00","datePublished":"2021-07-22T23:29:19+09:00","description":"","headline":"OS-6-CPU Scheduling","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"}</script>
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="OS-6-CPU Scheduling">
+<meta property="og:url" content="https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/index.html">
 <meta property="og:site_name" content="Build Up">
-<meta property="og:description" content="Process Concept Process is a program in execution 프로세스의 문맥 (context) CPU 수행 상태를 나타내는 하드웨어 문맥 Program Counter(PC) 각종 register   프로세스의 주소 공간 code, data, stack   프로세스 관련 커널 자료 구조 PCB (Process Control Blo">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118230050-fc573f80-b4c7-11eb-9f13-f086c060da31.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118230358-83a4b300-b4c8-11eb-8af5-21d3f804904c.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118230425-a0d98180-b4c8-11eb-9a91-5251a28ec036.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118231014-72a87180-b4c9-11eb-8de1-815ea7323c3f.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118231230-c61abf80-b4c9-11eb-9a38-51faf544b6ed.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118231487-31fd2800-b4ca-11eb-98b7-dbc65b75ca66.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/118233147-7d183a80-b4cc-11eb-85e5-ca4b8c9dd302.png">
-<meta property="article:published_time" content="2021-05-14T05:30:20.000Z">
-<meta property="article:modified_time" content="2021-05-14T06:54:28.442Z">
+<meta property="article:published_time" content="2021-07-22T14:29:19.000Z">
+<meta property="article:modified_time" content="2021-07-22T14:29:19.916Z">
 <meta property="article:author" content="Yechan Kim">
-<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/118230050-fc573f80-b4c7-11eb-9f13-f086c060da31.png">
     
     
         
@@ -336,22 +325,16 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            OS-3.Process
+            OS-6-CPU Scheduling
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-05-14T14:30:20+09:00">
+    <time datetime="2021-07-22T23:29:19+09:00">
 	
-		    May 14, 2021
+		    Jul 22, 2021
     	
     </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
     
 </div>
 
@@ -361,160 +344,7 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h2 id="Process-Concept"><a href="#Process-Concept" class="headerlink" title="Process Concept"></a>Process Concept</h2><ul>
-<li>Process is a program in execution</li>
-<li>프로세스의 문맥 (context)<ul>
-<li>CPU 수행 상태를 나타내는 하드웨어 문맥<ul>
-<li>Program Counter(PC)</li>
-<li>각종 register</li>
-</ul>
-</li>
-<li>프로세스의 주소 공간<ul>
-<li>code, data, stack</li>
-</ul>
-</li>
-<li>프로세스 관련 커널 자료 구조<ul>
-<li>PCB (Process Control Block)</li>
-<li>Kernel stack</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img width="464" alt="스크린샷 2021-05-14 오후 2 34 58" src="https://user-images.githubusercontent.com/12459864/118230050-fc573f80-b4c7-11eb-9f13-f086c060da31.png">
-
-<h2 id="Process-State"><a href="#Process-State" class="headerlink" title="Process State"></a>Process State</h2><ul>
-<li><p>프로세스는 상태(state)가 변경되며 수행됩니다</p>
-</li>
-<li><p>Running : CPU를 잡고 instruction을 수행중인 상태</p>
-</li>
-<li><p>Ready : CPU를 기다리는 상태(CPU만 얻으면 실행할 수 있는 상태)</p>
-</li>
-<li><p>Blocked(wait, sleep)</p>
-<ul>
-<li>CPU를 주어도 당장 instruction을 실행할 수 없는 상태</li>
-<li>Process 자신이 요청한 event(I/O)가 즉시 만족되지 않아 이를 기다리는 상태</li>
-<li>디스크에서 file을 읽어와야 하는 경우</li>
-</ul>
-</li>
-<li><p>New: 프로세스가 생성중인 상태</p>
-</li>
-<li><p>Terminated: 수행이 끝난 상태</p>
-  <img width="942" alt="스크린샷 2021-05-14 오후 2 41 11" src="https://user-images.githubusercontent.com/12459864/118230358-83a4b300-b4c8-11eb-8af5-21d3f804904c.png">
-</li>
-<li><p>각 작업의 큐는 Kernel의 Data영역에서 관리되어집니다</p>
-  <img width="927" alt="스크린샷 2021-05-14 오후 2 47 09" src="https://user-images.githubusercontent.com/12459864/118230425-a0d98180-b4c8-11eb-9a91-5251a28ec036.png">
-
-</li>
-</ul>
-<h2 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h2><ul>
-<li><p>운영체제가 각 프로세스를 관리하기 위해 프로세스당 유지하는 정보</p>
-</li>
-<li><p>다음의 구성 요소를 가집니다 (구조체로 유지)</p>
-<ol>
-<li><p>OS가 관리상 사용하는 정보</p>
-<ul>
-<li>Process state, Process ID</li>
-<li>scheduling information, priority</li>
-</ul>
-</li>
-<li><p>CPU 수행 관련 하드웨어 값</p>
-<ul>
-<li>program counter(PC), registers</li>
-</ul>
-</li>
-<li><p>메모리 관련</p>
-<ul>
-<li>code, data, stack의 위치 정보</li>
-</ul>
-</li>
-<li><p>파일 관련</p>
-<ul>
-<li>Open file descriptiors…</li>
-</ul>
-<img width="343" alt="스크린샷 2021-05-14 오후 3 31 13" src="https://user-images.githubusercontent.com/12459864/118231014-72a87180-b4c9-11eb-8de1-815ea7323c3f.png">
-
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="문맥-교환-Context-Switching"><a href="#문맥-교환-Context-Switching" class="headerlink" title="문맥 교환 (Context Switching)"></a>문맥 교환 (Context Switching)</h2><ul>
-<li><p>CPU를 한 프로세스에서 다른 프로세스로 넘겨주는 과정</p>
-</li>
-<li><p>CPU가 다른 프로세스에게 넘어갈 때 운영체제는 운영체제는 다음을 수행합니다</p>
-<ul>
-<li><p>CPU를 내어주는 프로세스의 상태를 그 프로세스의 PCB에 저장</p>
-</li>
-<li><p>CPU를 새롭게 얻는 프로세스의 상태를 PCB에서 읽어옴</p>
-<img width="698" alt="스크린샷 2021-05-14 오후 3 33 34" src="https://user-images.githubusercontent.com/12459864/118231230-c61abf80-b4c9-11eb-9a38-51faf544b6ed.png">
-</li>
-</ul>
-</li>
-<li><p>System Call이나 Interrupt 발생시 반드시 Context switching이 일어나는 것은 아닙니다</p>
-  <img width="809" alt="스크린샷 2021-05-14 오후 3 35 50" src="https://user-images.githubusercontent.com/12459864/118231487-31fd2800-b4ca-11eb-98b7-dbc65b75ca66.png">
-
-<ul>
-<li>1번의 경우에도 CPU 수행 정보 등 context의 일부를 PCB에 save해야 하지만 문맥교환을 하는 2번의 경우 cache memory flush가 발생하기 때문에 성능 부담이 훨씬 큽니다</li>
-</ul>
-</li>
-</ul>
-<h2 id="프로세스를-스케줄링하기-위한-큐"><a href="#프로세스를-스케줄링하기-위한-큐" class="headerlink" title="프로세스를 스케줄링하기 위한 큐"></a>프로세스를 스케줄링하기 위한 큐</h2><ul>
-<li><p>Job Queue: 현재 시스템 내에 있는 모든 프로세스의 집합 (Process Queue + Device Queue)</p>
-</li>
-<li><p>Ready Queue: 현재 메모리 내에 있으면서 CPU를 잡아서 실행되기를 기다리는 프로세스의 집합</p>
-</li>
-<li><p>Device Queue: I/O device의 처리를 기다리는 프로세스의 집합</p>
-<p>  <code>프로세스들은 각 큐를 오가며 수행됩니다</code></p>
-</li>
-</ul>
-<h2 id="스케줄러"><a href="#스케줄러" class="headerlink" title="스케줄러"></a>스케줄러</h2><ul>
-<li><p>장기 스케줄러 (job scheduler)</p>
-<ul>
-<li>시작 프로세스 중 어떤 것들을 ready queue로 보낼지 결정합니다</li>
-<li>프로세스에 memory(및 각종 자원)을 주는 문제</li>
-<li>degree of multiprogramming을 제어</li>
-<li>time sharing system에는 보통 장기 스케줄러 없이 무조건 ready 상태가 됩니다</li>
-</ul>
-</li>
-<li><p>단기 스케줄러 (cpu scheduler)</p>
-<ul>
-<li>어떤 프로세스를 다음번에 running 시킬 지 결정합니다</li>
-<li>프로세스에 CPU를 주는 문제</li>
-</ul>
-</li>
-<li><p>중기 스케줄러 (swapper)</p>
-<ul>
-<li><p>여유 공간 마련을 위해 프로세스를 통째로 메모레에서 디스크로 쫓아냅니다</p>
-</li>
-<li><p>프로세스에게서 memory를 뺏는 문제</p>
-</li>
-<li><p>degree of multiprogramming을 제어</p>
-</li>
-<li><p>현재 시스템은 프로그램을 무조건 메모리에 올리고 swapper를 이용해서 메모리에서 쫓아낸다 (장기 스케줄러대신 중기 스케줄러를 사용한다)</p>
-<p><code>중기 스케줄러로 인해서 Suspended라는 프로세스의 상태가 추가됩니다</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="새로운-프로세스-상태"><a href="#새로운-프로세스-상태" class="headerlink" title="새로운 프로세스 상태"></a>새로운 프로세스 상태</h2><ul>
-<li>Running</li>
-<li>Ready</li>
-<li>Blocked</li>
-<li>Suspended (stopped)<ul>
-<li>외부적인 이유로 프로세스의 수행이 정지된 상태</li>
-<li>프로세스는 통째로 디스크에서 swap out 됩니다</li>
-<li>(예) 메모리에 너무 많은 프로세스가 올라와서 성능이 저하되었을 때 사용자가 직접 process를 중단시거나 시스템이 중단시킵니다</li>
-</ul>
-</li>
-</ul>
-<p><code>Block은 자신이 요청한 event가 만족되면 Ready 상태가 되어집니다</code></p>
-<p><code>Suspended는 외부에서 다시 resume해 주어야 Activce됩니다</code></p>
-<img width="934" alt="스크린샷 2021-05-14 오후 3 09 54" src="https://user-images.githubusercontent.com/12459864/118233147-7d183a80-b4cc-11eb-85e5-ca4b8c9dd302.png">
-
-<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
+            
             
 
 
@@ -522,27 +352,17 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">TAGGED IN</span><br/>
-                
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/OS/" rel="tag">OS</a>
-
-            </div>
-        
         
             <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/14/OS-4-Thread/"
-                    data-tooltip="OS-4.Thread"
-                    aria-label="PREVIOUS: OS-4.Thread"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -552,9 +372,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/12/OS-2-System-Structure-Program-Execution/"
-                    data-tooltip="OS-2.System Structure &amp; Program Execution"
-                    aria-label="NEXT: OS-2.System Structure &amp; Program Execution"
+                    href="/2021/07/22/OS-5-Process-Management/"
+                    data-tooltip="OS-5-Process Management"
+                    aria-label="NEXT: OS-5-Process Management"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -579,7 +399,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -592,7 +412,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -605,7 +425,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -664,14 +484,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/14/OS-4-Thread/"
-                    data-tooltip="OS-4.Thread"
-                    aria-label="PREVIOUS: OS-4.Thread"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -681,9 +498,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/12/OS-2-System-Structure-Program-Execution/"
-                    data-tooltip="OS-2.System Structure &amp; Program Execution"
-                    aria-label="NEXT: OS-2.System Structure &amp; Program Execution"
+                    href="/2021/07/22/OS-5-Process-Management/"
+                    data-tooltip="OS-5-Process Management"
+                    aria-label="NEXT: OS-5-Process Management"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -708,7 +525,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -721,7 +538,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -734,7 +551,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -778,7 +595,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -791,7 +608,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -804,7 +621,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/05/14/OS-3-Process/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -865,9 +682,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2021/05/14/OS-3-Process/';
+            this.page.url = 'https://kimyechan.github.io/2021/07/22/OS-6-CPU-Scheduling/';
               
-            this.page.identifier = '2021/05/14/OS-3-Process/';
+            this.page.identifier = '2021/07/22/OS-6-CPU-Scheduling/';
               
           };
           (function() {

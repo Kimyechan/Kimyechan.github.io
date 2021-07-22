@@ -326,6 +326,290 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/22/OS-6-CPU-Scheduling/"
+                            aria-label=": OS-6-CPU Scheduling"
+                        >
+                            OS-6-CPU Scheduling
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-22T23:29:19+09:00">
+	
+		    Jul 22, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/22/OS-6-CPU-Scheduling/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/07/22/OS-5-Process-Management/"
+                            aria-label=": OS-5-Process Management"
+                        >
+                            OS-5-Process Management
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-22T22:07:04+09:00">
+	
+		    Jul 22, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="프로세스-생성-Process-Creation"><a href="#프로세스-생성-Process-Creation" class="headerlink" title="프로세스 생성 (Process Creation)"></a>프로세스 생성 (Process Creation)</h2><ul>
+<li>부모 프로세스가 자식 프로세스를 생성합니다 (복제 생성)</li>
+<li>프로세스의 트리 형성</li>
+<li>프로세스는 자원을 필요로 합니다<ul>
+<li>운영체제로 받는다</li>
+<li>부모와 공유한다</li>
+</ul>
+</li>
+<li>자원의 공유<ul>
+<li>부모와 지식이 모든 자원을 공유하는 모델</li>
+<li>일부를 공유하는 모델</li>
+<li>전혀 공유하지 않는 모델</li>
+</ul>
+</li>
+<li>수행 (Execution)<ul>
+<li>부모와 자식은 공존하며 수행되는 모델</li>
+<li>자식이 종료(terminate)될 때까지 부모가 기다리는(wait)모델</li>
+</ul>
+</li>
+<li>주소 공간 (Address space)<ul>
+<li>자식은 부모의 공간을 복사함 (binary and OS data)</li>
+<li>자식은 그 공간에 새로운 프로그램을 올림</li>
+</ul>
+</li>
+<li>유닉스의 예<ul>
+<li>fork() 시스템 콜이 새로운 프로세스를 생성<ul>
+<li>부모를 그래로 복사 (OS data except PID + binary)</li>
+<li>주소 공간 할당</li>
+</ul>
+</li>
+<li>fork 다음에 이어지는 exec() 시스템 콜을 통해 새로운 프로그램을 메모리에 올림</li>
+</ul>
+</li>
+</ul>
+<h2 id="프로세스-종료-Process-Termination"><a href="#프로세스-종료-Process-Termination" class="headerlink" title="프로세스 종료 (Process Termination)"></a>프로세스 종료 (Process Termination)</h2><ul>
+<li>프로세스가 마지막 명령을 수행한 후 운영체제에게 이를 알려줌 (exit)<ul>
+<li>자식이 부모에게 output data를 보냄 (via wait)</li>
+<li>프로세스의 각종자원들이 운영체제에게 반납됨</li>
+</ul>
+</li>
+<li>부모 프로세스가 자식의 수행을 종료시킴 (abort)<ul>
+<li>자식이 할당 자원의 한계치를 넘어섬</li>
+<li>자식에게 할당된 태스크가 더 이상 필요하지 않음</li>
+<li>부모가 종료(exit)하는 경우<ul>
+<li>운영체제는 부모 프로세스가 종료하는 경우 자식이 더 이상 수행되도록 두지 않는다</li>
+<li>단계적인 종료</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="fork-시스템-콜"><a href="#fork-시스템-콜" class="headerlink" title="fork() 시스템 콜"></a>fork() 시스템 콜</h2><ul>
+<li>자식 프로세스는 부모 프로세스에서 fork한 이후부터 실행 (Program Counter도 복제)</li>
+</ul>
+<h2 id="exec-시스템-콜"><a href="#exec-시스템-콜" class="headerlink" title="exec() 시스템 콜"></a>exec() 시스템 콜</h2><ul>
+<li>프로세스에 새로운 프로그램을 덮어서 다른 프로그램으로 만들어 실행</li>
+</ul>
+<h2 id="wait-시스템-콜"><a href="#wait-시스템-콜" class="headerlink" title="wait() 시스템 콜"></a>wait() 시스템 콜</h2><ul>
+<li>프로세스 A가 wait() 시스템 콜을 호출<ul>
+<li>커널은 child가 종료될 때까지 프로세스 A를 sleep시킨다 (block 상태)</li>
+<li>child process가 종료되면 커널은 프로세스 A를 깨운다 (ready 상태)</li>
+</ul>
+</li>
+</ul>
+<h2 id="exit-시스템-콜"><a href="#exit-시스템-콜" class="headerlink" title="exit() 시스템 콜"></a>exit() 시스템 콜</h2><ul>
+<li>프로세스 종료<ul>
+<li>자발적인 종료<ul>
+<li>마지막 statement 수행 후 exit() 시스템 콜을 통해</li>
+<li>프로그램에 명시적으로 적어주지 않아도 main 함수가 리턴되는 위치에 컴파일러가 넣어줌</li>
+</ul>
+</li>
+<li>비자발적 종료<ul>
+<li>부모 프로세스가 자식 프로세스를 강제 종료시킴<ul>
+<li>자식 프로세스가 한계치를 넘어서 자원 요청</li>
+<li>자식에게 할당된 태스크가 더 이상 필요하지 않음</li>
+</ul>
+</li>
+<li>키보드로 kill, break 등을 친 경우</li>
+<li>부모가 종료하는 경우<ul>
+<li>부모 프로세스가 종ㄹ하기 전에 자식들이 먼전 종료됨</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="프로세스-간-협력"><a href="#프로세스-간-협력" class="headerlink" title="프로세스 간 협력"></a>프로세스 간 협력</h2><ul>
+<li><p>독립적 프로세스</p>
+<ul>
+<li>프로세스는 각자의 주소 공간을 가지고 수행되므로 원칙적으로 하나의 프로세스는 다른 프로세스의 수행에 영향을 미치지 못합</li>
+</ul>
+</li>
+<li><p>협력 프로세스 </p>
+<ul>
+<li>프로세스 협력 메커니즘을 통해 </li>
+</ul>
+</li>
+<li><p>message passing -&gt; 커널을 통해서 전달됨</p>
+</li>
+<li><p>shared memory -&gt; 물리적인 메모리 공간이 공유됨</p>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/22/OS-5-Process-Management/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/05/14/OS-4-Thread/"
+                            aria-label=": OS-4.Thread"
+                        >
+                            OS-4.Thread
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-05-14T16:49:45+09:00">
+	
+		    May 14, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Thread란"><a href="#Thread란" class="headerlink" title="Thread란"></a>Thread란</h2><p><code>A thread (or lightweight process) is a basic unit of CPU utilization</code></p>
+<ul>
+<li>Thread의 구성<ul>
+<li>program counter</li>
+<li>register set</li>
+<li>stack space</li>
+</ul>
+</li>
+<li>Thread가 동료 thread와 공유하는 부분(=task)<ul>
+<li>code section</li>
+<li>data section</li>
+<li>OS resources</li>
+</ul>
+</li>
+<li>heavyweight process는 하나의 thread를 가지고 있는 task로 볼 수 있습니다</li>
+</ul>
+<p><img width="600" alt="스크린샷 2021-05-14 오후 6 24 12" src="https://user-images.githubusercontent.com/12459864/118250604-9e375600-b4e1-11eb-8675-90f1be0a375f.png"> <br></p>
+<img width="600" alt="스크린샷 2021-05-14 오후 6 36 52" src="https://user-images.githubusercontent.com/12459864/118252128-67623f80-b4e3-11eb-80e6-e55e12192090.png">
+
+<h2 id="Thread의-장점"><a href="#Thread의-장점" class="headerlink" title="Thread의 장점"></a>Thread의 장점</h2><ol>
+<li>다중 스레드로 구성된 태스크 구조에서는 하나의 서버 스레드가 blocked(waiting) 상태인 동안에도 동일한 태스크 내의 다른 스레드가 실행(running)되어 빠른 처리를 할 수 있습니다<ul>
+<li>ex) 웹 브라우저가 웹 페이지를 불러올 때 html과 text를 먼저 불러오고 text만으로 사용자가 작업할 수 있게 한 다음, 다른 스레드가 image를 불러오는 작업을 할 수 있습니다</li>
+</ul>
+</li>
+<li>동일한 일을 수행하는 다중 스레드가 협력하여 높은 처리율(throughput)과 성능 향상을 얻을 수 있습니다.</li>
+<li>자원 낭비를 막는다 (프로세스 각각으로 돌리면 각 프로세스당 메모리가 필요하게 되서 더 많은 메모리를 차지합니다)</li>
+<li>스레드를 사용하면 병렬성을 높일 수 있습니다(멀티 코어일 경우)</li>
+</ol>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/05/14/OS-4-Thread/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/05/14/OS-3-Process/"
                             aria-label=": OS-3.Process"
                         >
