@@ -326,6 +326,354 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/23/OS-7-Process-Synchronization/"
+                            aria-label=": OS-7-Process Synchronization"
+                        >
+                            OS-7-Process Synchronization
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-23T15:46:42+09:00">
+	
+		    Jul 23, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h2><img width="500" alt="스크린샷 2021-07-23 오후 8 05 59" src="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
+
+<ul>
+<li>S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음</li>
+<li>Multiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음</li>
+</ul>
+<h2 id="OS에서-Race-Conditoin이-발생하는-경우"><a href="#OS에서-Race-Conditoin이-발생하는-경우" class="headerlink" title="OS에서 Race Conditoin이 발생하는 경우"></a>OS에서 Race Conditoin이 발생하는 경우</h2><ol>
+<li>kernel 수행 중 인터럽트 발생 시</li>
+<li>Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우</li>
+<li>Multiprocessor에서 shared memory 내의 kernel data</li>
+</ol>
+<h3 id="Case1-interrupt-handler-v-s-kernel"><a href="#Case1-interrupt-handler-v-s-kernel" class="headerlink" title="Case1. interrupt handler v.s kernel"></a>Case1. interrupt handler v.s kernel</h3><img width="500" alt="스크린샷 2021-07-23 오후 8 14 11" src="https://user-images.githubusercontent.com/12459864/126774306-979760c3-61f3-4b37-94ba-98606150f0d6.png">
+
+<ul>
+<li><p>커널 모드 running 중 interrupt가 발생하여 인터럽트 처리 루틴이 수행</p>
+<p>  <code>양쪽 다 커널 코드이므로 kernel address space를 공유하기 때문에 Race Condition이 발생할 수 있다</code></p>
+<p>  <code>커널 모드 running중에는 interrupt가 걸리는 것을 막아서 Race Condition을 피할 수 있다</code></p>
+</li>
+</ul>
+<h3 id="Case2-Preempt-a-process-running-in-kernel"><a href="#Case2-Preempt-a-process-running-in-kernel" class="headerlink" title="Case2. Preempt a process running in kernel?"></a>Case2. Preempt a process running in kernel?</h3><img width="802" alt="스크린샷 2021-07-23 오후 8 19 09" src="https://user-images.githubusercontent.com/12459864/126774798-902683a9-3615-4347-b20c-7d930984afb1.png">
+
+<ul>
+<li><p>두 프로세스의 address space 간에는 data sharing이 없음</p>
+</li>
+<li><p>그러나 system call을 하는 동안에는 kernel address space의 data를 access하게 됨(share)</p>
+</li>
+<li><p>커널 작업 중간에 CPU를 preempt하면 Race Condition 발생</p>
+  <img width="500" alt="스크린샷 2021-07-23 오후 8 23 04" src="https://user-images.githubusercontent.com/12459864/126775122-5029628b-81f0-4399-926f-6d48406f30c5.png">
+</li>
+<li><p>해결책: 커널 모드에서 수행 중일 때는 CPU를 preempt하지않고, 커널 모드에서 사용자 모드로 돌아갈 때 preempt한다</p>
+</li>
+</ul>
+<h3 id="Case3-Multiprocessor"><a href="#Case3-Multiprocessor" class="headerlink" title="Case3. Multiprocessor"></a>Case3. Multiprocessor</h3><img width="762" alt="스크린샷 2021-07-23 오후 8 26 17" src="https://user-images.githubusercontent.com/12459864/126775403-8a09989f-188d-4926-abbd-d70eb03ab1cf.png">
+
+<ul>
+<li><p>여러 CPU가 한 자원에 동시 접근한다 -&gt; Race Condition</p>
+</li>
+<li><p>Multi Processor인 경우 서로 다른 CPU가 접근하기 때문에 interrupt를 enable/disable로 해결되지 않는다</p>
+</li>
+<li><p>해결 방법</p>
+<ol>
+<li>한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법</li>
+<li>커널 내부에 있는 각 공유 데이터를 접근할 때마다 그 데이터에 대한 lock/unlock하는 방법</li>
+</ol>
+</li>
+</ul>
+<h2 id="Process-Synchronization-문제"><a href="#Process-Synchronization-문제" class="headerlink" title="Process Synchronization 문제"></a>Process Synchronization 문제</h2><ul>
+<li><p>공유 데이터(shared data)의 동시 접근(concurrent access)은 데이터의 불일치 문제를 발생시킬 수 있다</p>
+</li>
+<li><p>일관성(consistency) 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 매커니즘이 필요하다</p>
+</li>
+<li><p>Race Condition</p>
+<ul>
+<li><p>여러 프로세스들이 동시에 공유 데이터를 접근하는 상황</p>
+</li>
+<li><p>데이터의 최종 연산 결과는 마지막에 그 데이터를 다룬 프로세스에 따라 달라짐</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 8 45 23" src="https://user-images.githubusercontent.com/12459864/126777297-f71d04d8-757d-4ed4-9540-46b300beac5a.png">
+
+<p><code>race condition을 막기 위해서는 concurrent process는 동기화(synchronize) 되어야 한다</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-Critical-Section-Problem"><a href="#The-Critical-Section-Problem" class="headerlink" title="The Critical-Section Problem"></a>The Critical-Section Problem</h2><ul>
+<li>n 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우</li>
+<li>각 프로세스의 code segment에는 공유 데이터를 접근하는 코드인 critical section이 존재</li>
+<li>하나의 프로세스가 <code>critical section</code>에 있을때 다른 모든 프로세스는 critical section에 들어갈 수 없어야 한다</li>
+</ul>
+<h3 id="프로그램적-해결법의-충족-조건"><a href="#프로그램적-해결법의-충족-조건" class="headerlink" title="프로그램적 해결법의 충족 조건"></a>프로그램적 해결법의 충족 조건</h3><ul>
+<li>Mutual Exclusion : 프로세스가 critical section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 critical section에 들어가면 안된다</li>
+<li>Progress : 아무도 critical section에 있지 않은 상태에서 critical section에 들어가고자 하는 프로세스가 있으면 critical section에 들어가게 해주어야 한다</li>
+<li>Bounded Waiting(유한 대기) : 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야한다</li>
+</ul>
+<h3 id="해결-알고리즘-Case-1"><a href="#해결-알고리즘-Case-1" class="headerlink" title="해결 알고리즘 Case 1"></a>해결 알고리즘 Case 1</h3><ul>
+<li><p>Synchronization variable</p>
+<ul>
+<li><p>int turn;</p>
+</li>
+<li><p>initially turn = 0;</p>
+<img width="400" alt="스크린샷 2021-07-23 오후 8 59 59" src="https://user-images.githubusercontent.com/12459864/126778753-4dc95f73-9551-4ad5-8273-52b6865e6f57.png">
+</li>
+</ul>
+</li>
+<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
+<p>  <code>반드시 한번씩 교대로 들어가야만 한다. 임계 구역에 작업하는 프로세스가 없어도, 한 프로세스가 연속해서 들어가지 못한다</code></p>
+</li>
+</ul>
+<h3 id="해결-알고리즘-Case-2"><a href="#해결-알고리즘-Case-2" class="headerlink" title="해결 알고리즘 Case 2"></a>해결 알고리즘 Case 2</h3><ul>
+<li><p>Synchronization variable</p>
+<ul>
+<li><p>boolean flag[2];</p>
+</li>
+<li><p>initially flag[] = false;</p>
+<img width="400" alt="스크린샷 2021-07-23 오후 9 05 34" src="https://user-images.githubusercontent.com/12459864/126779294-5d469692-5fab-48c2-9e06-4f832157fa5b.png">
+</li>
+</ul>
+</li>
+<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
+<p>  <code>프로세스 둘 다 2행까지 수행 후에 끊임없이 서로에게 양보하는 상황 발생 가능</code></p>
+</li>
+</ul>
+<h3 id="해결-알고리즘-Case-3-Peterson’s-Algorithm"><a href="#해결-알고리즘-Case-3-Peterson’s-Algorithm" class="headerlink" title="해결 알고리즘 Case 3 (Peterson’s Algorithm)"></a>해결 알고리즘 Case 3 (Peterson’s Algorithm)</h3><ul>
+<li><p>algorithm 1 2 번을 조합함</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 09 55" src="https://user-images.githubusercontent.com/12459864/126779735-01a7ad79-af16-458a-b106-a9f9cb255be6.png">
+</li>
+<li><p>두 프로세스의 임계영역 문제 해결조건을 모두 만족한다</p>
+<p>  <code>하지만 Busy Waiting!이다 (계속 CPU와 memroy를 쓰면서 wait)</code></p>
+</li>
+</ul>
+<h3 id="Synchronization-Hardware"><a href="#Synchronization-Hardware" class="headerlink" title="Synchronization Hardware"></a>Synchronization Hardware</h3><ul>
+<li><p>하드웨어적으로 Test &amp; modify를 atomic하게 수행할 수 있도록 지원하는 경우 앞의 문제는 간단히 해결</p>
+  <img width="300" alt="스크린샷 2021-07-23 오후 9 34 54" src="https://user-images.githubusercontent.com/12459864/126782372-6363c316-b832-42b0-83ba-86dae64a08dd.png">
+</li>
+<li><p>Mutual Exclusion with Test &amp; Set</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 35 06" src="https://user-images.githubusercontent.com/12459864/126782378-1edfb6b3-0808-40da-aec4-92328d8d5a3c.png">
+
+</li>
+</ul>
+<h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><ul>
+<li><p>앞의 방식들을 추상화 시킴</p>
+</li>
+<li><p>Semaphores <code>S</code></p>
+<ul>
+<li><p>integer variable</p>
+</li>
+<li><p>S는 자원의 갯수</p>
+</li>
+<li><p>아래의 두 가지 atomic 연산에 의해서만 접근 가능</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 51 37" src="https://user-images.githubusercontent.com/12459864/126784266-ab3f09b2-0f33-4850-8315-af5139c74bcf.png"></li>
+</ul>
+</li>
+<li><p>세마포어의 두가지 종류</p>
+<ol>
+<li>Counting Semaphore<ul>
+<li>도메인이 0 이상인 임의의 정수값</li>
+<li>주로 resource counting에 사용</li>
+</ul>
+</li>
+<li>Binary Semaphore (=mutex)<ul>
+<li>0 또는 1 값만 가질 수 있는 semaphore</li>
+<li>주로 mutual exclusion (lock/unlock)에 사용</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="Critical-Section-Of-n-Processes"><a href="#Critical-Section-Of-n-Processes" class="headerlink" title="Critical Section Of n Processes"></a>Critical Section Of n Processes</h4><img width="400" alt="스크린샷 2021-07-23 오후 9 56 55" src="https://user-images.githubusercontent.com/12459864/126784739-f940e8f8-671b-41d5-a395-20dcc6c169ed.png">
+
+<p><code>위의 방식은 busy-wait 방식으로 임계구역이 오래걸리는 작업일 경우 효율적이지 못하다 따라서 Block &amp; Wake up 방식을 사용하는 방법도 있다</code></p>
+<h3 id="Block-And-Wake-Up-구현"><a href="#Block-And-Wake-Up-구현" class="headerlink" title="Block And Wake Up 구현"></a>Block And Wake Up 구현</h3><ul>
+<li><p>Semaphore를 다음과 같이 정의한다</p>
+<p>  &lt;img width=”400” alt=”스크린샷 2021-07-23 오후 10 02 04” src=”<a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-">https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-</a> </p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 10 02 23" src="https://user-images.githubusercontent.com/12459864/126785516-6f6156ad-a95c-4691-a0f2-1d2e28407f6e.png">
+</li>
+<li><p>block과 wakeup을 다음과 같이 가정</p>
+<ul>
+<li>block : 커널은 block을 호춝한 프로세스를 suspend시키고, 이 프로세스의 PCB를 semaphore에 대한 wait queue에 넣음</li>
+<li>wakeup(P) : block된 프로세스 P를 wakeup 시킴, 이 프로세스의 PCB를 ready queue로 </li>
+</ul>
+</li>
+<li><p>Semaphore 연산</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 10 09 03" src="https://user-images.githubusercontent.com/12459864/126786403-d142893d-e779-4251-a7cb-0831523e35f5.png">
+
+<p>  <code>value는 block과 wake up의 기준</code></p>
+</li>
+</ul>
+<h3 id="Busy-wait-vs-Block-wakeup"><a href="#Busy-wait-vs-Block-wakeup" class="headerlink" title="Busy-wait vs Block/wakeup"></a>Busy-wait vs Block/wakeup</h3><ul>
+<li>Critical section의 길이가 긴 경우 Block/wakeup이 적당</li>
+<li>Critical section의 길이가 매우 짧은 경우 Block/wakeup 오버헤드가 busy-wait 오버헤드보다 더 커질 수 있음</li>
+<li>일반적으로는 Block/wakeup 방식이 더 좋음</li>
+</ul>
+<h2 id="Deadlock-and-Starvation"><a href="#Deadlock-and-Starvation" class="headerlink" title="Deadlock and Starvation"></a>Deadlock and Starvation</h2><ul>
+<li><p>Deadlock : 둘 이상의 프로세스가 서로 상대방에 의행 충족될 수 있는 event를 무한히 기다리는 현상</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 11 18 04" src="https://user-images.githubusercontent.com/12459864/126795452-7f6e8dec-dc11-4982-ba83-65ec421db03a.png">
+</li>
+<li><p>Starvation : <code>indefinite blocking</code>, 프로세스가 suspend된 이후에 해당하는 세마포어 큐에서 빠져나갈 수 없는 현상</p>
+</li>
+</ul>
+<h2 id="대표적인-Race-Condition-문제"><a href="#대표적인-Race-Condition-문제" class="headerlink" title="대표적인 Race Condition 문제"></a>대표적인 Race Condition 문제</h2><h3 id="Bounded-Buffer-Problem"><a href="#Bounded-Buffer-Problem" class="headerlink" title="Bounded-Buffer Problem"></a>Bounded-Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-23 오후 11 22 10" src="https://user-images.githubusercontent.com/12459864/126796039-cade610e-36bc-4a9b-987b-697188c75901.png">
+
+<ul>
+<li><p>shared data</p>
+<ul>
+<li>buffer 자체</li>
+<li>buffer 조작 변수 (empty/full buffer의 시작 위치)</li>
+</ul>
+</li>
+<li><p>Synchronization variables</p>
+<ul>
+<li><p>mutual exclusion -&gt; Need binary semaphore (Buffer의 사용 여부)</p>
+</li>
+<li><p>resource count -&gt; Need integer semaphore (남은 empty/full buffer의 수 표시)</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 27 27" src="https://user-images.githubusercontent.com/12459864/126796801-75ef6b43-9d0d-4c5e-a30a-d95971ff1d05.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Readers-Writers-Problem"><a href="#Readers-Writers-Problem" class="headerlink" title="Readers-Writers Problem"></a>Readers-Writers Problem</h3><ul>
+<li><p>한 프로세스가 DB에 write 중일 때 다른 process가 접근하면 안됨</p>
+</li>
+<li><p>read는 동시에 여럿이 해도 됨</p>
+</li>
+<li><p>solution</p>
+<ul>
+<li>Writer가 DB에 접근 허가를 아직 얻지 못한 상태에서는 모든 대기중인 Reader들을 다 DB에 접근하게 해준다</li>
+<li>Writer는 대기 중인 Reader가 하나도 없을 때 DB 접근이 허용된다</li>
+<li>일단 Wrtier가 DB에 접근 중이면 Reader들은 접근이 금지된다</li>
+<li>Wrtier가 DB에서 빠져나가야만 Reader의 접근이 허용된다</li>
+</ul>
+</li>
+<li><p>shared data</p>
+<ul>
+<li>DB 자체</li>
+<li>readcount; -&gt; 현재 DB에 접근 중인 Reader의 수</li>
+</ul>
+</li>
+<li><p>Synchronization variables</p>
+<ul>
+<li><p>mutex -&gt; 공유 변수 readcount의 mutual exclusion을 보장</p>
+</li>
+<li><p>db -&gt; reader와 writer가 공유 DB 자체를 올바르게 접근하게 하는 역할</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 39 11" src="https://user-images.githubusercontent.com/12459864/126798380-8a4486c7-98a4-4f6d-b49b-a42d8a5eebf5.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dining-Philosophers-Problem"><a href="#Dining-Philosophers-Problem" class="headerlink" title="Dining-Philosophers Problem"></a>Dining-Philosophers Problem</h3><img width="500" alt="스크린샷 2021-07-23 오후 11 48 06" src="https://user-images.githubusercontent.com/12459864/126799613-27f45259-1028-4e52-8f15-777c1bdc5adb.png">
+
+<ul>
+<li><p>위의 solution의 문제점</p>
+<ul>
+<li>Deadlock 가능성이 있다</li>
+<li>모든 철학자가 동시에 배가 고파져서 왼쪽 젓가락만 집을 경우</li>
+</ul>
+</li>
+<li><p>해결 방안</p>
+<ul>
+<li>4명의 철학자만이 동시에 테이블에 앉을 수 있도록 한다</li>
+<li>젓가락을 두 개 모두 집을 수 있을 때에만 젓가락을 집도록한다</li>
+<li>짝수(홀수) 철학자는 왼쪽(오른쪽) 젓가락부터 집도록한다</li>
+</ul>
+</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 52 10" src="https://user-images.githubusercontent.com/12459864/126800179-689d5ff5-3df5-4fba-99a2-cfa033768de3.png">
+
+<h2 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h2><ul>
+<li><p>Semaphore의 문제점</p>
+<ul>
+<li><p>코딩하기 힘들다</p>
+</li>
+<li><p>정확성의 입증이 어렵다</p>
+</li>
+<li><p>자발적 협력이 필요하다</p>
+</li>
+<li><p>한 번의 실수가 모든 시스템에 치명적인 영향을 미친다</p>
+  <img width="300" alt="스크린샷 2021-07-23 오후 11 57 14" src="https://user-images.githubusercontent.com/12459864/126800849-f5b6c1b3-a26b-4ce8-a10e-c1a961958b6c.png">
+</li>
+</ul>
+</li>
+<li><p>모니터란?</p>
+<ul>
+<li><p>동시 수행중인 프로세스 사이에서 abstract data type의 안전한 공유를 보장하기 위한 high-level synchronization construct</p>
+  <img width="300" alt="스크린샷 2021-07-24 오전 12 01 53" src="https://user-images.githubusercontent.com/12459864/126801996-c765b406-a4dc-43bf-b363-a889113b4b3d.png"></li>
+<li><p>모니터 내에서는 한 번에 하나의 프로세스만이 활동 가능하다</p>
+</li>
+<li><p>프로그래머가 동기화 제약 조건을 명시적으로 코딩할 필요없음</p>
+</li>
+<li><p>프로세스가 모니터 안에서 대기할 수 있도록 하기 위해 <code>conditional variable</code> 사용</p>
+<ul>
+<li>condition x, y;</li>
+</ul>
+</li>
+<li><p>condition variable은 wait와 signal 연산에 의해서만 접근 가능</p>
+<ul>
+<li><p><code>x.wait();</code> : x.wait()을 invoke한 프로세스는 다른 프로세스가 x.signal()을 invoke하기 전까지는 suspend된다</p>
+</li>
+<li><p><code>x.signal();</code> : x.signal()은 정확하게 하나의 suspend된 프로세스를 resume한다. Suspend된 프로세스가 없으면 아무 일도 일어나지 않는다</p>
+<img width="600" alt="스크린샷 2021-07-24 오전 12 06 19" src="https://user-images.githubusercontent.com/12459864/126802092-30fc9555-362e-4ede-a636-63d728dde445.png">
+
+<p><code>monitor에 프로세스가 작업중이면 외부 entry queue에서 대기한다</code></p>
+<p><code>monitor내부에서 condition x가 없으면 x에 관한 queue에서 대기한다</code></p>
+<p><code>내부에서 작업중인 프로세스가 없거나 작업중인 프로세스가 condition 대기 queue에서 sleep하고 있으면 외부 작업 큐에서 프로세스가 monitor를 작업한다</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Monitor를-적용한-Bounded-Buffer-Problem"><a href="#Monitor를-적용한-Bounded-Buffer-Problem" class="headerlink" title="Monitor를 적용한 Bounded Buffer Problem"></a>Monitor를 적용한 Bounded Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 11 51" src="https://user-images.githubusercontent.com/12459864/126802932-f1e76993-dc72-47c1-90cd-7a8f66590721.png">
+
+<h3 id="Monitor를-적용한-Dining-Philosophers-Problem"><a href="#Monitor를-적용한-Dining-Philosophers-Problem" class="headerlink" title="Monitor를 적용한 Dining-Philosophers Problem"></a>Monitor를 적용한 Dining-Philosophers Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 12 05" src="https://user-images.githubusercontent.com/12459864/126803056-9f7ca7e7-1c4d-4e7e-bb10-51e527fd5833.png">
+
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/23/OS-7-Process-Synchronization/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/22/OS-6-CPU-Scheduling/"
                             aria-label=": OS-6-CPU Scheduling"
                         >
@@ -1771,231 +2119,6 @@
                         <p>
                             <a
                                 href="/2020/11/27/Spring-Spring-IoC/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/27/Spring-Spring-AOP/"
-                            aria-label=": Spring-Spring AOP"
-                        >
-                            Spring-Spring AOP
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-27T12:34:12+09:00">
-	
-		    Nov 27, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Spring/">Spring</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/">Core Concept</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/AOP/">AOP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<h1 id="스프링-AOP-Aspect-Oriented-Programming"><a href="#스프링-AOP-Aspect-Oriented-Programming" class="headerlink" title="스프링 AOP(Aspect Oriented Programming)"></a>스프링 AOP(Aspect Oriented Programming)</h1><h2 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2><p>AOP는 Asepect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다. <br/><br>관점 지향은 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 보고 <br/><br>부가적인 관점을 각각 따로 분리해서 모듈화하겠다는 것이다.</p>
-<p>예로들어 핵심적인 관점은 우리가 적용하고자 하는 핵심 비지니스 로직이 된다. <br/><br>또한 부가적인 관점은 핵심 로직외에 행해지는 데이터베이스 연결, 로깅, 파일 입출력등이 있다.</p>
-<p>AOP에서 각 관점을 기준으로 로직을 모듈화한다는 것은 코드를 부분적으로 나누어서 모듈화하겠다는 의미다. <br/><br>이때, 소스 코드상에서 핵심 비지니스 로직(Core Concerns)외에 계속 반복해서 쓰는 코드들을 발견할 수 있는데 이것을 흩어진 관심사(Crosscutting Concerns)라 부른다. </p>
-<p><img src="https://user-images.githubusercontent.com/12459864/100409913-7af22900-30b0-11eb-8a76-dbf70a7e0561.png" alt="스크린샷 2020-11-27 오후 12 59 42"></p>
-<p>위와 같이 흩어진 관심사(Crosscutting Concerns)를 Aspect로 모듈화하고 핵심적인 비지니스 로직(Core concerns)에서 분리하여 재사용하겠다는 것이 AOP이다.</p>
-<h3 id="AOP-관련-용어"><a href="#AOP-관련-용어" class="headerlink" title="AOP 관련 용어"></a>AOP 관련 용어</h3><ul>
-<li>조인 포인트(JoinPoint) : 클라이언트가 호출하는 모든 비지니스 메소드, 조인포인트 중에서 포인트컷이 되기때문에 포인트 컷의 후보로 생각할 수 있다.</li>
-<li>포인트 컷(Pointcut) : 특정 조건에 의해 필터링된 조인 포인트, 수 많은 조인 포인트 중에 특정 메소드에서만 Advice를 수행시키기 위해서 사용된다</li>
-<li>어드바이스(Advice) : Crosscutting Concern에 해당하는 공통 기능의 코드</li>
-<li>애스펙트(Aspect) : 포인트 컷과 어드바이스의 결합이다. 어떤 포인트 컷 메소드에 대해 어떤 어드바이스 메소드가 실행할 지 결정한다.</li>
-<li>위빙(Weaving) : 핵심 비지니스 로직과 Aspect를 연결하여 Advised Object를 만드는 과정<ol>
-<li>complie time</li>
-<li>load time</li>
-<li>runtime</li>
-</ol>
-</li>
-</ul>
-<h3 id="AOP-구현-방법"><a href="#AOP-구현-방법" class="headerlink" title="AOP 구현 방법"></a>AOP 구현 방법</h3><ol>
-<li><p>컴파일</p>
-<ul>
-<li>A.java —— (AOP) —–&gt; A.class </li>
-<li>컴파일을 할 때 중간에 공통 로직을 끼워 넣는다</li>
-<li>컴파일하기 전 코드에는 해당 로직이 없지만, 컴파일이 완료되면 해당 로직을 가지고<br>있는 상태이다</li>
-<li>AspectJ를 이용해서 만들어진다</li>
-</ul>
-</li>
-<li><p>바이트코드 조작</p>
-<ul>
-<li>A.java —-&gt; A.class —-&gt; (AOP) —-&gt; 메모리</li>
-<li>load time에서 ClassLoader가 A.class를 읽어온다</li>
-<li>읽어와서 메모리에 올릴 때 공통 로직이 들어가도록 조작한다</li>
-<li>AspectJ를 이용해서 만들어진다</li>
-</ul>
-</li>
-<li><p>프록시 패턴</p>
-<ul>
-<li>Runtime에서 구현하는 방식</li>
-<li>프록시 패턴을 적용하여 실제 객체가 실행되는 것이 아닌 실제 객체를 감싸고 있는 프록시 객체를 Runtime에 생성</li>
-<li>프록시 객체는 Aspect가 적용되어있고 Core Concern이 들어있는 실제 객체를 reference하고 있다</li>
-<li>AOP가 적용된 객체를 요청할 때 실제 객체가 아닌 프록시 객체가 실행된다.</li>
-<li>AspectJ로 만들어져 있으며 SPRING AOP는 이 방식으로 구현되어있다.</li>
-</ul>
-</li>
-</ol>
-<h2 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h2><h3 id="스프링-AOP-특징"><a href="#스프링-AOP-특징" class="headerlink" title="스프링 AOP 특징"></a>스프링 AOP 특징</h3><ul>
-<li>프록시 기반의 AOP 구현체</li>
-<li>스프링 빈에만 AOP를 적용할 수 있다</li>
-<li>모든 AOP 기능을 제공하는 것이 목적이 아니라, Spring IoC와 연동하여 어플리케이션의 문제에 대한 해결책을 제공하는 것이 목적</li>
-</ul>
-<h3 id="프록시-패턴"><a href="#프록시-패턴" class="headerlink" title="프록시 패턴"></a>프록시 패턴</h3><ul>
-<li><p>접근 제어 또는 부가기능 추가</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/100412351-c78d3280-30b7-11eb-8128-07e4a4e21ee8.png" alt="image"></p>
-<ul>
-<li>인터페이스에 대해서 핵심 비지니스 로직만으로 구성되어진 실제 객체를 만든다</li>
-<li>인터페이스에 대해서 또 하나의 Proxy 구현체를 만든다</li>
-<li>이 구현체에는 부가기능이 추가있으며 실제 객체를 참조하여 실제 객체의 비지니스 로직을 실행 시킬 수 있다</li>
-<li>클라이언트는 객체를 인터페이스를 통해서 접근하게 되며, 실제객체가 직접 실행되는 것이 아닌 Proxy객체를 통해서 부가기능을 수행하고 간접적으로 실행된다.</li>
-</ul>
-</li>
-</ul>
-<h3 id="프록시-패턴을-적용-Spring-AOP를-사용하지-않음"><a href="#프록시-패턴을-적용-Spring-AOP를-사용하지-않음" class="headerlink" title="프록시 패턴을 적용 (Spring AOP를 사용하지 않음)"></a>프록시 패턴을 적용 (Spring AOP를 사용하지 않음)</h3><ul>
-<li><p>EventService Interface</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EventService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>EventService 구현체 (핵심 비지니스 로직 수행)</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Created an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Publish an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Delete an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>EventService의 Proxy 구현체 (부가기능 + 핵심 로직 객체 참조)</p>
-<p>  @Primary로 SimpleEventService가 아닌 ProxySimpleEventService이 실행됨</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxySimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    SimpleEventService simpleEventService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        simpleEventService.createEvent();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        simpleEventService.publishEvent();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        simpleEventService.deleteEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="문제점"><a href="#문제점" class="headerlink" title="문제점"></a>문제점</h3><ul>
-<li>매번 프록시 패턴을 적용해서 프록시 클래스를 작성해야한다</li>
-<li>여러 클래스 여러 메소드들에 적용할려면 반복적인 작업이 증가한다</li>
-<li>객체들관의 관계도 복잡하다</li>
-</ul>
-<h3 id="스프링-AOP-등장"><a href="#스프링-AOP-등장" class="headerlink" title="스프링 AOP 등장"></a>스프링 AOP 등장</h3><ul>
-<li>스프링 IoC컨테이너가 제공하는 기반 시설과 Dynamic 프록시를 사용하여 여러 복잡한 문제 해결</li>
-<li>동적 프록시 : 동적으로 프록시 객체를 생성하는 방법<ul>
-<li>자바가 제공하는 방법은 인터페이스 기반 프록시 생성</li>
-<li>CGlib은 클래스 기반 프록시도 지원</li>
-</ul>
-</li>
-<li>스프링 IoC: 기존 빈을 대체하는 동적 프록시 빈을 만들어 등록해준다<ul>
-<li>클라이언트 코드에 변경이 없다</li>
-</ul>
-</li>
-</ul>
-<h3 id="스프링-AOP-적용해서-개선"><a href="#스프링-AOP-적용해서-개선" class="headerlink" title="스프링 AOP 적용해서 개선"></a>스프링 AOP 적용해서 개선</h3><p><code>스프링 AOP는 Spring Container에 등록된 Bean들만 적용된다</code></p>
-<ul>
-<li><p>Pointcut을 Annotation 기반으로 작성</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.CLASS)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> PerfLogging &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Aspect 작성 (Around 방식을 적용한 Advice 메소드 작성)</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(PerfLogging)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">logPerf</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        Object retVal = pjp.proceed();</span><br><span class="line">        System.out.println(System.currentTimeMillis() - begin);</span><br><span class="line">        <span class="keyword">return</span> retVal;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;bean(simpleEventService)&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Around방식은 핵심 비지니스로직 실행 권한을 ProceedingJoinPoint로 받아온다 (Spring Container가 받아옴)</li>
-<li>받아온 객체를 실행하기 전 후에 작업을 진행한다</li>
-<li>받아온 객체가 return값을 가지고 있으면 Advice메소드에서 그 값을 return해 주어야한다</li>
-</ul>
-</li>
-<li><p>AOP를 적용할 Pointcut메소드를 지정한다(메소드 위에 어노테이션 설정)</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleEventService</span> <span class="keyword">implements</span> <span class="title">EventService</span></span>&#123;</span><br><span class="line">    <span class="meta">@PerfLogging</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Created an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PerfLogging</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Publish an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Delete an event&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="Pointcut-정의-방식"><a href="#Pointcut-정의-방식" class="headerlink" title="Pointcut 정의 방식"></a>Pointcut 정의 방식</h3><ol>
-<li><p>execution 설정 방식</p>
-<ul>
-<li><p>사용 예</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around(&quot;execution(* com.example..*.EventService.*(..))&quot;)</span></span><br></pre></td></tr></table></figure></li>
-<li><p>적용 규칙</p>
-  <img width="740" alt="스크린샷 2020-11-27 오후 2 51 06" src="https://user-images.githubusercontent.com/12459864/100415689-18088e00-30c0-11eb-8593-38f8d6a46e7d.png">
-</li>
-</ul>
-</li>
-<li><p>bean 설정 방식</p>
-<ul>
-<li><p>사용 예</p>
-<p>  적용할 빈 이름을 직접 입력</p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around(&quot;bean(simpleEventService)&quot;)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>annotation 설정 방식 (위에서 설명)</p>
-</li>
-</ol>
-<h3 id="Advice-실행-시점"><a href="#Advice-실행-시점" class="headerlink" title="Advice 실행 시점"></a>Advice 실행 시점</h3><ol>
-<li><p>Before</p>
-<ul>
-<li>핵심 비지니스 로직 실행 전에 실행</li>
-<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before(&quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(JoinPoint jp)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line">    Object[] args = jp.getArgs();                   <span class="comment">// 클라이언트가 전달한 인자 정보</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;&lt;사전 처리&gt; &quot;</span> + method + <span class="string">&quot;비지니스 로직 수행 전 동작&quot;</span> + <span class="string">&quot;() 메소드 ARGS 정보 : &quot;</span> + args[<span class="number">0</span>].toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>After</p>
-<ul>
-<li>핵심 비지니스 로직 실행 후에 실행</li>
-<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@After(&quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(JoinPoint jp)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line">    Object[] args = jp.getArgs();                   <span class="comment">// 클라이언트가 전달한 인자 정보</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;&lt;사후 처리&gt; &quot;</span> + method + <span class="string">&quot;비지니스 로직 수행 후 동작&quot;</span> + <span class="string">&quot;() 메소드 ARGS 정보 : &quot;</span> + args[<span class="number">0</span>].toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>After Returning</p>
-<ul>
-<li>핵심 비지니스 로직 실행한 후 반환된 객체를 Advice에서 받아와서 실행</li>
-<li>실행 예  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterReturning(pointcut = &quot;!void com.rubypaper.biz..*Impl.*(..))</span><span class="string">&quot;, returning = &quot;</span>returnObj<span class="string">&quot;)</span></span><br><span class="line"><span class="string">public void afterLog(Object returnObj) &#123;</span></span><br><span class="line"><span class="string">    System.out.println(&quot;</span>&lt;사후 처리&gt; 비지니스 로직 리턴 값 : <span class="string">&quot; + returnObj.toString());</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    if (returnObj instanceof UserVO) &#123;</span></span><br><span class="line"><span class="string">        UserVO user = (UserVO) returnObj;</span></span><br><span class="line"><span class="string">        if(user.getRole().equals(&quot;</span>ADMIN<span class="string">&quot;)) &#123;</span></span><br><span class="line"><span class="string">            System.out.println(user.getName() + &quot;</span>님은 관리자 화면으로 바로 이동........<span class="string">&quot;);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></li>
-<li>핵심 비지니스 로직에서 반환된 객체를 returnObj로 받아온다</li>
-</ul>
-</li>
-<li><p>After Throwing</p>
-<ul>
-<li>핵심 비지니스 로직 실행헌 후 예외가 발생하면 예외객체를 받아와서 실행</li>
-<li>실행 예<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@AfterThrowing(pointcut = &quot;execution(* com.rubypaper.biz..*Impl.*(..))&quot;, throwing = &quot;exceptionObj&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionLog</span><span class="params">(JoinPoint jp, Exception exceptionObj)</span> </span>&#123;</span><br><span class="line">    String method = jp.getSignature().getName();    <span class="comment">// 클라이언트가 호출한 메소드 이름</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;[ 예외처리 ]&quot;</span>+ method +<span class="string">&quot; 메소드 수행 중  예외 발생&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(exceptionObj <span class="keyword">instanceof</span> IllegalArgumentException)&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;0 번 게시 글을 등록할 수 없습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exceptionObj <span class="keyword">instanceof</span> ArithmeticException) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;0 으로 숫자를 나눌 수 없습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (exceptionObj <span class="keyword">instanceof</span> SQLException) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;SQL 구문에 오류가 있습니다&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;문제 발생 !! 시스템을 잠시 종료합니다&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>예외객체를 exceptionObj로 받아온다</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Around</p>
-<ul>
-<li>위에서 설명</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>Advice에서 Pointcut에 해당되는 메소드에 대한 정보를 얻기 위해 JoinPoint라는 객체를 받아올 수 있다. Around만 예외적으로 ProceedJoinPoint라는 객체를 통해서 받아온다</p>
-</blockquote>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/27/Spring-Spring-AOP/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

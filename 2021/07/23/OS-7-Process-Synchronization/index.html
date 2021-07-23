@@ -6,19 +6,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Build Up">
-    <title>Archives: 2021/7 - Build Up</title>
+    <title>OS-7-Process Synchronization - Build Up</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{}</script>
-    <meta property="og:type" content="blog">
-<meta property="og:title" content="Build Up">
-<meta property="og:url" content="https://kimyechan.github.io/archives/2021/07/index.html">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Race Condition\n\n\nS-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음\nMultiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음\n\nOS에서 Race Conditoin이 발생하는 경우\nkernel 수행 중 인터럽트 발생 시\nProcess가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우\nMultiprocessor에서 shared memory 내의 kernel data\n\nCase1. interrupt handler v.s kernel\n\n\n커널 모드 running 중 interrupt가 발생하여 인터럽트 처리 루틴이 수행\n  양쪽 다 커널 코드이므로 kernel address space를 공유하기 때문에 Race Condition이 발생할 수 있다\n  커널 모드 running중에는 interrupt가 걸리는 것을 막아서 Race Condition을 피할 수 있다\n\n\nCase2. Preempt a process running in kernel?\n\n\n두 프로세스의 address space 간에는 data sharing이 없음\n\n그러나 system call을 하는 동안에는 kernel address space의 data를 access하게 됨(share)\n\n커널 작업 중간에 CPU를 preempt하면 Race Condition 발생\n  \n\n해결책: 커널 모드에서 수행 중일 때는 CPU를 preempt하지않고, 커널 모드에서 사용자 모드로 돌아갈 때 preempt한다\n\n\nCase3. Multiprocessor\n\n\n여러 CPU가 한 자원에 동시 접근한다 -&gt; Race Condition\n\nMulti Processor인 경우 서로 다른 CPU가 접근하기 때문에 interrupt를 enable/disable로 해결되지 않는다\n\n해결 방법\n\n한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법\n커널 내부에 있는 각 공유 데이터를 접근할 때마다 그 데이터에 대한 lock/unlock하는 방법\n\n\n\nProcess Synchronization 문제\n공유 데이터(shared data)의 동시 접근(concurrent access)은 데이터의 불일치 문제를 발생시킬 수 있다\n\n일관성(consistency) 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 매커니즘이 필요하다\n\nRace Condition\n\n여러 프로세스들이 동시에 공유 데이터를 접근하는 상황\n\n데이터의 최종 연산 결과는 마지막에 그 데이터를 다룬 프로세스에 따라 달라짐\n\n\nrace condition을 막기 위해서는 concurrent process는 동기화(synchronize) 되어야 한다\n\n\n\n\nThe Critical-Section Problem\nn 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우\n각 프로세스의 code segment에는 공유 데이터를 접근하는 코드인 critical section이 존재\n하나의 프로세스가 critical section에 있을때 다른 모든 프로세스는 critical section에 들어갈 수 없어야 한다\n\n프로그램적 해결법의 충족 조건\nMutual Exclusion : 프로세스가 critical section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 critical section에 들어가면 안된다\nProgress : 아무도 critical section에 있지 않은 상태에서 critical section에 들어가고자 하는 프로세스가 있으면 critical section에 들어가게 해주어야 한다\nBounded Waiting(유한 대기) : 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야한다\n\n해결 알고리즘 Case 1\nSynchronization variable\n\nint turn;\n\ninitially turn = 0;\n\n\n\n\nmutual exclusion은 만족하나, progress를 만족하지 못함\n  반드시 한번씩 교대로 들어가야만 한다. 임계 구역에 작업하는 프로세스가 없어도, 한 프로세스가 연속해서 들어가지 못한다\n\n\n해결 알고리즘 Case 2\nSynchronization variable\n\nboolean flag[2];\n\ninitially flag[] = false;\n\n\n\n\nmutual exclusion은 만족하나, progress를 만족하지 못함\n  프로세스 둘 다 2행까지 수행 후에 끊임없이 서로에게 양보하는 상황 발생 가능\n\n\n해결 알고리즘 Case 3 (Peterson’s Algorithm)\nalgorithm 1 2 번을 조합함\n  \n\n두 프로세스의 임계영역 문제 해결조건을 모두 만족한다\n  하지만 Busy Waiting!이다 (계속 CPU와 memroy를 쓰면서 wait)\n\n\nSynchronization Hardware\n하드웨어적으로 Test &amp; modify를 atomic하게 수행할 수 있도록 지원하는 경우 앞의 문제는 간단히 해결\n  \n\nMutual Exclusion with Test &amp; Set\n  \n\n\n\nSemaphores\n앞의 방식들을 추상화 시킴\n\nSemaphores S\n\ninteger variable\n\nS는 자원의 갯수\n\n아래의 두 가지 atomic 연산에 의해서만 접근 가능\n  \n\n\n세마포어의 두가지 종류\n\nCounting Semaphore\n도메인이 0 이상인 임의의 정수값\n주로 resource counting에 사용\n\n\nBinary Semaphore (=mutex)\n0 또는 1 값만 가질 수 있는 semaphore\n주로 mutual exclusion (lock/unlock)에 사용\n\n\n\n\n\nCritical Section Of n Processes\n\n위의 방식은 busy-wait 방식으로 임계구역이 오래걸리는 작업일 경우 효율적이지 못하다 따라서 Block &amp; Wake up 방식을 사용하는 방법도 있다\nBlock And Wake Up 구현\nSemaphore를 다음과 같이 정의한다\n  &lt;img width=”400” alt=”스크린샷 2021-07-23 오후 10 02 04” src=”https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea- \n  \n\nblock과 wakeup을 다음과 같이 가정\n\nblock : 커널은 block을 호춝한 프로세스를 suspend시키고, 이 프로세스의 PCB를 semaphore에 대한 wait queue에 넣음\nwakeup(P) : block된 프로세스 P를 wakeup 시킴, 이 프로세스의 PCB를 ready queue로 \n\n\nSemaphore 연산\n  \n\n  value는 block과 wake up의 기준\n\n\nBusy-wait vs Block/wakeup\nCritical section의 길이가 긴 경우 Block/wakeup이 적당\nCritical section의 길이가 매우 짧은 경우 Block/wakeup 오버헤드가 busy-wait 오버헤드보다 더 커질 수 있음\n일반적으로는 Block/wakeup 방식이 더 좋음\n\nDeadlock and Starvation\nDeadlock : 둘 이상의 프로세스가 서로 상대방에 의행 충족될 수 있는 event를 무한히 기다리는 현상\n  \n\nStarvation : indefinite blocking, 프로세스가 suspend된 이후에 해당하는 세마포어 큐에서 빠져나갈 수 없는 현상\n\n\n대표적인 Race Condition 문제Bounded-Buffer Problem\n\n\nshared data\n\nbuffer 자체\nbuffer 조작 변수 (empty/full buffer의 시작 위치)\n\n\nSynchronization variables\n\nmutual exclusion -&gt; Need binary semaphore (Buffer의 사용 여부)\n\nresource count -&gt; Need integer semaphore (남은 empty/full buffer의 수 표시)\n\n\n\n\n\n\nReaders-Writers Problem\n한 프로세스가 DB에 write 중일 때 다른 process가 접근하면 안됨\n\nread는 동시에 여럿이 해도 됨\n\nsolution\n\nWriter가 DB에 접근 허가를 아직 얻지 못한 상태에서는 모든 대기중인 Reader들을 다 DB에 접근하게 해준다\nWriter는 대기 중인 Reader가 하나도 없을 때 DB 접근이 허용된다\n일단 Wrtier가 DB에 접근 중이면 Reader들은 접근이 금지된다\nWrtier가 DB에서 빠져나가야만 Reader의 접근이 허용된다\n\n\nshared data\n\nDB 자체\nreadcount; -&gt; 현재 DB에 접근 중인 Reader의 수\n\n\nSynchronization variables\n\nmutex -&gt; 공유 변수 readcount의 mutual exclusion을 보장\n\ndb -&gt; reader와 writer가 공유 DB 자체를 올바르게 접근하게 하는 역할\n\n\n\n\n\n\nDining-Philosophers Problem\n\n\n위의 solution의 문제점\n\nDeadlock 가능성이 있다\n모든 철학자가 동시에 배가 고파져서 왼쪽 젓가락만 집을 경우\n\n\n해결 방안\n\n4명의 철학자만이 동시에 테이블에 앉을 수 있도록 한다\n젓가락을 두 개 모두 집을 수 있을 때에만 젓가락을 집도록한다\n짝수(홀수) 철학자는 왼쪽(오른쪽) 젓가락부터 집도록한다\n\n\n\n\n\nMonitor\nSemaphore의 문제점\n\n코딩하기 힘들다\n\n정확성의 입증이 어렵다\n\n자발적 협력이 필요하다\n\n한 번의 실수가 모든 시스템에 치명적인 영향을 미친다\n  \n\n\n\n모니터란?\n\n동시 수행중인 프로세스 사이에서 abstract data type의 안전한 공유를 보장하기 위한 high-level synchronization construct\n  \n모니터 내에서는 한 번에 하나의 프로세스만이 활동 가능하다\n\n프로그래머가 동기화 제약 조건을 명시적으로 코딩할 필요없음\n\n프로세스가 모니터 안에서 대기할 수 있도록 하기 위해 conditional variable 사용\n\ncondition x, y;\n\n\ncondition variable은 wait와 signal 연산에 의해서만 접근 가능\n\nx.wait(); : x.wait()을 invoke한 프로세스는 다른 프로세스가 x.signal()을 invoke하기 전까지는 suspend된다\n\nx.signal(); : x.signal()은 정확하게 하나의 suspend된 프로세스를 resume한다. Suspend된 프로세스가 없으면 아무 일도 일어나지 않는다\n\n\nmonitor에 프로세스가 작업중이면 외부 entry queue에서 대기한다\nmonitor내부에서 condition x가 없으면 x에 관한 queue에서 대기한다\n내부에서 작업중인 프로세스가 없거나 작업중인 프로세스가 condition 대기 queue에서 sleep하고 있으면 외부 작업 큐에서 프로세스가 monitor를 작업한다\n\n\n\n\n\n\nMonitor를 적용한 Bounded Buffer Problem\n\nMonitor를 적용한 Dining-Philosophers Problem\n\n참고\n반효경 교수님 운영체제 강의\n\n","dateCreated":"2021-07-23T15:46:42+09:00","dateModified":"2021-07-24T00:16:02+09:00","datePublished":"2021-07-23T15:46:42+09:00","description":"","headline":"OS-7-Process Synchronization","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"}</script>
+    <meta name="description" content="Race Condition   S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음 Multiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음  OS에서 Race Conditoin">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="OS-7-Process Synchronization">
+<meta property="og:url" content="https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/index.html">
 <meta property="og:site_name" content="Build Up">
+<meta property="og:description" content="Race Condition   S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음 Multiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음  OS에서 Race Conditoin">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126774306-979760c3-61f3-4b37-94ba-98606150f0d6.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126774798-902683a9-3615-4347-b20c-7d930984afb1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126775122-5029628b-81f0-4399-926f-6d48406f30c5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126775403-8a09989f-188d-4926-abbd-d70eb03ab1cf.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126777297-f71d04d8-757d-4ed4-9540-46b300beac5a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126778753-4dc95f73-9551-4ad5-8273-52b6865e6f57.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126779294-5d469692-5fab-48c2-9e06-4f832157fa5b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126779735-01a7ad79-af16-458a-b106-a9f9cb255be6.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126782372-6363c316-b832-42b0-83ba-86dae64a08dd.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126782378-1edfb6b3-0808-40da-aec4-92328d8d5a3c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126784266-ab3f09b2-0f33-4850-8315-af5139c74bcf.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126784739-f940e8f8-671b-41d5-a395-20dcc6c169ed.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126785516-6f6156ad-a95c-4691-a0f2-1d2e28407f6e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126786403-d142893d-e779-4251-a7cb-0831523e35f5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126795452-7f6e8dec-dc11-4982-ba83-65ec421db03a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126796039-cade610e-36bc-4a9b-987b-697188c75901.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126796801-75ef6b43-9d0d-4c5e-a30a-d95971ff1d05.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126798380-8a4486c7-98a4-4f6d-b49b-a42d8a5eebf5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126799613-27f45259-1028-4e52-8f15-777c1bdc5adb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126800179-689d5ff5-3df5-4fba-99a2-cfa033768de3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126800849-f5b6c1b3-a26b-4ce8-a10e-c1a961958b6c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126801996-c765b406-a4dc-43bf-b363-a889113b4b3d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126802092-30fc9555-362e-4ede-a636-63d728dde445.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126802932-f1e76993-dc72-47c1-90cd-7a8f66590721.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/126803056-9f7ca7e7-1c4d-4e7e-bb10-51e527fd5833.png">
+<meta property="article:published_time" content="2021-07-23T06:46:42.000Z">
+<meta property="article:modified_time" content="2021-07-23T15:16:02.603Z">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
     
     
         
@@ -46,6 +77,8 @@
     
 
     
+        
+    
 </head>
 
     <body>
@@ -55,7 +88,7 @@
 
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -82,7 +115,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
         
         
@@ -310,30 +343,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="5"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    <section class="postShorten-group main-content-wrap">
+<article class="post">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/07/23/OS-7-Process-Synchronization/"
-                            aria-label=": OS-7-Process Synchronization"
-                        >
-                            OS-7-Process Synchronization
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            OS-7-Process Synchronization
+        </h1>
+    
+    
+        <div class="post-meta">
     <time datetime="2021-07-23T15:46:42+09:00">
 	
 		    Jul 23, 2021
@@ -342,10 +367,13 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h2><img width="500" alt="스크린샷 2021-07-23 오후 8 05 59" src="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h2><img width="500" alt="스크린샷 2021-07-23 오후 8 05 59" src="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
 
 <ul>
 <li>S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음</li>
@@ -643,500 +671,128 @@
 <li>반효경 교수님 운영체제 강의</li>
 </ul>
 
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/07/23/OS-7-Process-Synchronization/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
+
+
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/07/22/OS-6-CPU-Scheduling/"
-                            aria-label=": OS-6-CPU Scheduling"
-                        >
-                            OS-6-CPU Scheduling
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-07-22T23:29:19+09:00">
-	
-		    Jul 22, 2021
-    	
-    </time>
-    
-        <span>in </span>
         
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="CPU-and-I-O-Burst-Time"><a href="#CPU-and-I-O-Burst-Time" class="headerlink" title="CPU and I/O Burst Time"></a>CPU and I/O Burst Time</h2><ul>
-<li><p>CPU burst time: CPU 실행시간</p>
-</li>
-<li><p>I/O burst time: I/O 작업 대기 시간</p>
-<img width="500" alt="스크린샷 2021-07-23 오후 12 55 54" src="https://user-images.githubusercontent.com/12459864/126735727-d2e43807-3ae0-4077-9df2-6baddb7c8aa2.png">
-</li>
-<li><p>프로세스 특성에 따른 분류</p>
-<ul>
-<li>I/O bound process<ul>
-<li>CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 job</li>
-<li>(many short CPU bursts)</li>
-</ul>
-</li>
-<li>CPU bound process<ul>
-<li>계산 위주의 job</li>
-<li>(few very long CPU bursts)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>여러 종류의 process이 섞여 있기 때문에 CPU 스케줄링이 필요하다</p>
-<ul>
-<li>Interactivce job에게 적절한 response 제공</li>
-<li>CPU와 I/O 장치 등 시스템 자원을 골고루 효율적으로 사용<img width="500" alt="스크린샷 2021-07-23 오후 12 59 07" src="https://user-images.githubusercontent.com/12459864/126735869-254b6657-f7da-422e-a7e4-ffb730c80d4f.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="CPU-Scheduler-amp-Dispatcher"><a href="#CPU-Scheduler-amp-Dispatcher" class="headerlink" title="CPU Scheduler &amp; Dispatcher"></a>CPU Scheduler &amp; Dispatcher</h2><ul>
-<li><p>CPU Scheduler </p>
-<ul>
-<li>Ready 상태의 프로세스 중에서 이번에 CPU를 줄 프로세스를 고른다</li>
-</ul>
-</li>
-<li><p>Dispatcher </p>
-<ul>
-<li>CPU 제어권을 CPU Scheduler에 의해 선택된 프로세스에게 넘긴다</li>
-<li>이 과정을 context switching(문맥 교환)이라고 한다</li>
-</ul>
-</li>
-<li><p>CPU 스케줄링이 필요한 경우는 프로세스에게 다음과 같은 상태 변화가 있는 경우이다</p>
-<ol>
-<li><p>Running -&gt; Blocked (예: I/O 요청하는 시스템 콜)</p>
-</li>
-<li><p>Running -&gt; Ready (예: 할당 시간 만료 timer interrupt)</p>
-</li>
-<li><p>Blocked -&gt; Ready (예: I/O 완료 후 인터럽트)</p>
-</li>
-<li><p>Terminate</p>
-<p><code>1, 4에서 스케줄링은 nonpreemptive, 나머지는 preemptive</code></p>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="Scheduling-Criteria"><a href="#Scheduling-Criteria" class="headerlink" title="Scheduling Criteria"></a>Scheduling Criteria</h2><ul>
-<li><p>CPU utilization(이용률) : CPU가 놀지 않고 사용하는 비율</p>
-</li>
-<li><p>Throughput(처리량) : 주어진 시간안에 몇 개의 작업을 완료하였는가?</p>
-</li>
-<li><p>Turnaround time(소요시간) : CPU를 대기하고 다 쓰고 반환하는 시간</p>
-</li>
-<li><p>Waiting time(대기시간) : CPU를 대기하는 시간</p>
-</li>
-<li><p>Response time(응답시간) : CPU를 처음으로 얻기까지 걸린 시간 </p>
-<p>  <code>이용률, 처리량은 시스템 입장에서</code></p>
-<p>  <code>소요시간, 대기 시간, 응답 시간 프로세스(사용자) 입장에서 기준이다</code></p>
-</li>
-</ul>
-<h2 id="Scheduling-Algorithm"><a href="#Scheduling-Algorithm" class="headerlink" title="Scheduling Algorithm"></a>Scheduling Algorithm</h2><ul>
-<li>CPU를 누구한테 줄 것 인가?</li>
-<li>CPU를 오래 잡고있으면 뺐을 것인가?</li>
-</ul>
-<h3 id="FCFS-First-Come-First-Served"><a href="#FCFS-First-Come-First-Served" class="headerlink" title="FCFS(First-Come First-Served)"></a>FCFS(First-Come First-Served)</h3><ul>
-<li>프로세스 도착 순서대로 스케줄링 한다</li>
-<li>오래걸리는 프로세스가 먼저 도착하면 전체 평균 응답시간이 느리다<ul>
-<li>소요시간이 긴 프로세스가 먼저 도착할 경우<img width="387" alt="스크린샷 2021-07-23 오후 1 22 51" src="https://user-images.githubusercontent.com/12459864/126737126-0c067ae8-1f3b-4ab4-9470-65ba005cbd73.png"></li>
-<li>소요시간이 짧은 프로세스가 먼저 도착할 경우<img width="382" alt="스크린샷 2021-07-23 오후 1 25 20" src="https://user-images.githubusercontent.com/12459864/126737297-49505f19-2a73-4340-a423-d9bbab211420.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="SJF-Shortest-Job-First"><a href="#SJF-Shortest-Job-First" class="headerlink" title="SJF (Shortest-Job-First)"></a>SJF (Shortest-Job-First)</h3><ul>
-<li><p>CPU burst time이 가장 짧은 프로세스를 먼저 스케줄링 한다</p>
-</li>
-<li><p>SJF 종류</p>
-<ul>
-<li><p>Nonpreemptive(비선점형)</p>
-<ul>
-<li>CPU를 잡으면 이번 CPU burst가 완료될 때까지 CPU를 선점 당하지 않음<img width="394" alt="스크린샷 2021-07-23 오후 1 30 12" src="https://user-images.githubusercontent.com/12459864/126737584-ba5d3937-a76f-440b-8822-0265c34b231d.png">
-</li>
-</ul>
-</li>
-<li><p>Preemptive(선점형)</p>
-<ul>
-<li>현재 수행중인 프로세스의 남은 burst time보다 더 짧은 CPU burst time을 가지는 새로운 프로세스가 도착하면 CPU를 빼앗김</li>
-<li>Shortest-Remaining Time-First(SRTF)이라고도 부른다<img width="388" alt="스크린샷 2021-07-23 오후 1 34 08" src="https://user-images.githubusercontent.com/12459864/126737783-a406ff4f-80a7-4071-aa7b-a51149a0d9f2.png">
-
-</li>
-</ul>
-<p><code>SJF는 최적의 스케줄링 알고리즘으로 주어진 프로세스에게 minmum average waiting time을 보장한다</code></p>
-</li>
-</ul>
-</li>
-<li><p>문제점</p>
-<ul>
-<li><p>starvation : CPU burst time이 긴 프로세스는 CPU를 얻기 힘들다.</p>
-</li>
-<li><p>실제 프로세스들의 CPU burst time 예측하기 어려움</p>
-<ul>
-<li><p>과거의 CPU burst time을 이용하여 추정만이 가능하다</p>
-<img width="477" alt="스크린샷 2021-07-23 오후 1 43 33" src="https://user-images.githubusercontent.com/12459864/126738275-24a83e57-e663-433e-bfb2-bfb43626d07c.png">
-
-<p>  <code>최근의 CPU burst time 측정값이 현재의 추정치에 영향을 더 미친다</code></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Priority-Scheduling"><a href="#Priority-Scheduling" class="headerlink" title="Priority Scheduling"></a>Priority Scheduling</h3><ul>
-<li>우선순위가 높은 것 먼저 스케줄링한다</li>
-<li>선점형 비선점형 두가지 종류가 있다</li>
-<li>SJF도 priority = predicted next CPU burst time인 일종의 priority scheduling이다</li>
-<li>문제점으로 우선순위가 낮은 프로세스가 실행되지 않는 Starvation 문제가 있다</li>
-<li>따라서 Aging 방식을 통해서 프로세스의 우선순위를 시간이 지남에 따라 증가시켜 주는 방식으로 해결한다</li>
-</ul>
-<h3 id="Round-Robin-RR"><a href="#Round-Robin-RR" class="headerlink" title="Round Robin (RR)"></a>Round Robin (RR)</h3><ul>
-<li>각 프로세스는 동일한 크기의 할당 시간(time quantum)을 가진다</li>
-<li>할당 시간이 지나면 프로세스는 선점(preempted) 당하고 ready queue의 제일 뒤에서 다시 줄 선다.</li>
-<li>n개의 프로세스가 ready queue에 할당 시간이 q time unit인 경우<ul>
-<li><code>어떤 프로세스도 (n - 1)q time unit 이상을 기다리지 않는다</code></li>
-<li><code>응답시간이 빨리진다</code></li>
-</ul>
-</li>
-</ul>
-<p><code>time quantum이 많이 길어지면 FCFS Scheduling 처럼 동작하고</code></p>
-<p><code>time quantum이 짧아지면 짧아질수록 context switching 오버헤드가 커진다</code></p>
-<img width="410" alt="스크린샷 2021-07-23 오후 2 00 29" src="https://user-images.githubusercontent.com/12459864/126739165-56b25860-a53c-4e8c-9189-34b660f2f828.png">
-
-<h2 id="Multilevel-Queue"><a href="#Multilevel-Queue" class="headerlink" title="Multilevel Queue"></a>Multilevel Queue</h2><img width="500" alt="스크린샷 2021-07-23 오후 2 01 43" src="https://user-images.githubusercontent.com/12459864/126739233-d6f3c4e9-2339-44be-bec9-cdd1af3819cc.png">
-
-<ul>
-<li>우선순위가 높은 큐의 작업을 우선시 한다</li>
-<li>Ready queue를 여러 개로 분할<ul>
-<li>foreground (interactive)</li>
-<li>background (batch - no human interactive)</li>
-</ul>
-</li>
-<li>각 큐는 독립적인 스케줄링 알고리즘을 가짐<ul>
-<li>foreground - RR</li>
-<li>background - FCFS</li>
-</ul>
-</li>
-<li>큐간의 스케줄링이 필요<ul>
-<li>Fixed priority scheduling <ul>
-<li>foreground에 작업을 우선으로 하고 foreground에 작업이 없으면 background 작업 시작</li>
-<li>starvation의 가능성이 있다</li>
-</ul>
-</li>
-<li>Time slice<ul>
-<li>각 큐에 CPU time을 적절한 비율로 할당한다</li>
-<li>80% foregound in RR, 20% to background in FCFS </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Multilevel-Feedback-Queue"><a href="#Multilevel-Feedback-Queue" class="headerlink" title="Multilevel Feedback Queue"></a>Multilevel Feedback Queue</h2><img width="500" alt="스크린샷 2021-07-23 오후 2 10 27" src="https://user-images.githubusercontent.com/12459864/126739732-7bf254bf-e67f-48ab-9840-dd0f18a942cd.png">
-
-<ul>
-<li>프로세스가 다른 큐로 이동가능하다</li>
-<li>Scheduling<ol>
-<li>new job이 queue Q0로 들어감</li>
-<li>CPU를 잡아서 할당 시간 8 milliseconds 동안 수행됨</li>
-<li>8 milliseconds 동안 다 끝내지 못했으면 queue Q1으로 내려감</li>
-<li>Q1에 줄서서 기다렸다가 CPU를 잡아서 16ms 동안 수행됨</li>
-<li>16ms에서 끝내지 못한 경우 queue Q2로 쫓겨남</li>
-</ol>
-</li>
-</ul>
-<h2 id="Multiple-Processor-Scheduling"><a href="#Multiple-Processor-Scheduling" class="headerlink" title="Multiple-Processor Scheduling"></a>Multiple-Processor Scheduling</h2><ul>
-<li>Homogeneous processor 인 경우<ul>
-<li>Queue에 한 줄로 세워서 각 프로세서가 알아서 꺼내가게 할 수 있다</li>
-<li>반드시 특정 프로세서에서 수행되어야 하는 프로세스가 있는 경우에는 문제가 더 복잡해짐</li>
-</ul>
-</li>
-<li>Load sharding<ul>
-<li>일부 프로세서에 job이 몰리지 않도록 부하를 적절히 공유하는 메커니즘이 필요</li>
-<li>별개의 큐를 두는 방법 vs 공동 큐를 사용하는 방법</li>
-</ul>
-</li>
-<li>Symmetric Multiprocessing (SMP)<ul>
-<li>각 프로세서가 각자 알아서 스케줄링 결정</li>
-</ul>
-</li>
-<li>Asymmetric multiprocessing<ul>
-<li>하나의 프로세서가 시스템 데이터의 접근과 공유를 책임지고 나머지 프로세서는 거기에 따름</li>
-</ul>
-</li>
-</ul>
-<h2 id="Real-Time-Scheduling"><a href="#Real-Time-Scheduling" class="headerlink" title="Real-Time Scheduling"></a>Real-Time Scheduling</h2><ul>
-<li>Hard real-time systems : 정해진 시간 안에 반드시 스케줄링해야 함</li>
-<li>Soft read-time systems : 정해진 시간에 반드시 스케줄링하지 않지만, 일반 프로세스에 비해 높은 prioty를 갖도록 해야함</li>
-</ul>
-<h2 id="Thread-Scheduling"><a href="#Thread-Scheduling" class="headerlink" title="Thread Scheduling"></a>Thread Scheduling</h2><ul>
-<li>Local Scheduling : User level thread의 경우 사용자 수준의 thread library에 의해 어떤 thread를 스케줄할지 결정</li>
-<li>Global Scheduling : Kernel level tthrea의 경우 일반 프로세스와 마찬가지로 커널의 단기 스케줄러가 어떤 thread를 스케줄할지 결정</li>
-</ul>
-<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
-                    
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
                         
-
-
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
                     
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/07/22/OS-6-CPU-Scheduling/"
+                    data-tooltip="OS-6-CPU Scheduling"
+                    aria-label="NEXT: OS-6-CPU Scheduling"
+                >
                     
-                        <p>
-                            <a
-                                href="/2021/07/22/OS-6-CPU-Scheduling/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
             
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
             
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/07/22/OS-5-Process-Management/"
-                            aria-label=": OS-5-Process Management"
-                        >
-                            OS-5-Process Management
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-07-22T22:07:04+09:00">
-	
-		    Jul 22, 2021
-    	
-    </time>
-    
-        <span>in </span>
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
         
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
             
-                <div class="postShorten-content">
-                    <h2 id="프로세스-생성-Process-Creation"><a href="#프로세스-생성-Process-Creation" class="headerlink" title="프로세스 생성 (Process Creation)"></a>프로세스 생성 (Process Creation)</h2><ul>
-<li>부모 프로세스가 자식 프로세스를 생성합니다 (복제 생성)</li>
-<li>프로세스의 트리 형성</li>
-<li>프로세스는 자원을 필요로 합니다<ul>
-<li>운영체제로 받는다</li>
-<li>부모와 공유한다</li>
-</ul>
-</li>
-<li>자원의 공유<ul>
-<li>부모와 지식이 모든 자원을 공유하는 모델</li>
-<li>일부를 공유하는 모델</li>
-<li>전혀 공유하지 않는 모델</li>
-</ul>
-</li>
-<li>수행 (Execution)<ul>
-<li>부모와 자식은 공존하며 수행되는 모델</li>
-<li>자식이 종료(terminate)될 때까지 부모가 기다리는(wait)모델</li>
-</ul>
-</li>
-<li>주소 공간 (Address space)<ul>
-<li>자식은 부모의 공간을 복사함 (binary and OS data)</li>
-<li>자식은 그 공간에 새로운 프로그램을 올림</li>
-</ul>
-</li>
-<li>유닉스의 예<ul>
-<li>fork() 시스템 콜이 새로운 프로세스를 생성<ul>
-<li>부모를 그래로 복사 (OS data except PID + binary)</li>
-<li>주소 공간 할당</li>
-</ul>
-</li>
-<li>fork 다음에 이어지는 exec() 시스템 콜을 통해 새로운 프로그램을 메모리에 올림</li>
-</ul>
-</li>
-</ul>
-<h2 id="프로세스-종료-Process-Termination"><a href="#프로세스-종료-Process-Termination" class="headerlink" title="프로세스 종료 (Process Termination)"></a>프로세스 종료 (Process Termination)</h2><ul>
-<li>프로세스가 마지막 명령을 수행한 후 운영체제에게 이를 알려줌 (exit)<ul>
-<li>자식이 부모에게 output data를 보냄 (via wait)</li>
-<li>프로세스의 각종자원들이 운영체제에게 반납됨</li>
-</ul>
-</li>
-<li>부모 프로세스가 자식의 수행을 종료시킴 (abort)<ul>
-<li>자식이 할당 자원의 한계치를 넘어섬</li>
-<li>자식에게 할당된 태스크가 더 이상 필요하지 않음</li>
-<li>부모가 종료(exit)하는 경우<ul>
-<li>운영체제는 부모 프로세스가 종료하는 경우 자식이 더 이상 수행되도록 두지 않는다</li>
-<li>단계적인 종료</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="fork-시스템-콜"><a href="#fork-시스템-콜" class="headerlink" title="fork() 시스템 콜"></a>fork() 시스템 콜</h2><ul>
-<li>자식 프로세스는 부모 프로세스에서 Program Counte도 복제해서 fork한 이후부터 실행<img width="852" alt="스크린샷 2021-07-22 오후 10 28 43" src="https://user-images.githubusercontent.com/12459864/126659660-d00ce869-03ab-4e0e-b8b9-4cab585b1168.png">
-
-</li>
-</ul>
-<h2 id="exec-시스템-콜"><a href="#exec-시스템-콜" class="headerlink" title="exec() 시스템 콜"></a>exec() 시스템 콜</h2><ul>
-<li>프로세스에 새로운 프로그램을 덮어서 다른 프로그램으로 만들어 실행<img width="777" alt="스크린샷 2021-07-22 오후 10 35 11" src="https://user-images.githubusercontent.com/12459864/126659912-9d3b6ff2-937c-4c72-8c38-ae6fdae24f22.png">
-
-</li>
-</ul>
-<h2 id="wait-시스템-콜"><a href="#wait-시스템-콜" class="headerlink" title="wait() 시스템 콜"></a>wait() 시스템 콜</h2><ul>
-<li>프로세스 A가 wait() 시스템 콜을 호출<ul>
-<li>커널은 child가 종료될 때까지 프로세스 A를 sleep시킨다 (block 상태)</li>
-<li>child process가 종료되면 커널은 프로세스 A를 깨운다 (ready 상태)<img width="793" alt="스크린샷 2021-07-22 오후 11 52 37" src="https://user-images.githubusercontent.com/12459864/126660202-1860392b-b463-4893-9412-c3810f46e1ae.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="exit-시스템-콜"><a href="#exit-시스템-콜" class="headerlink" title="exit() 시스템 콜"></a>exit() 시스템 콜</h2><ul>
-<li>프로세스 종료<ul>
-<li>자발적인 종료<ul>
-<li>마지막 statement 수행 후 exit() 시스템 콜을 통해</li>
-<li>프로그램에 명시적으로 적어주지 않아도 main 함수가 리턴되는 위치에 컴파일러가 넣어줌</li>
-</ul>
-</li>
-<li>비자발적 종료<ul>
-<li>부모 프로세스가 자식 프로세스를 강제 종료시킴<ul>
-<li>자식 프로세스가 한계치를 넘어서 자원 요청</li>
-<li>자식에게 할당된 태스크가 더 이상 필요하지 않음</li>
-</ul>
-</li>
-<li>키보드로 kill, break 등을 친 경우</li>
-<li>부모가 종료하는 경우<ul>
-<li>부모 프로세스가 종료하기 전에 자식들이 먼전 종료됨</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="프로세스-간-협력"><a href="#프로세스-간-협력" class="headerlink" title="프로세스 간 협력"></a>프로세스 간 협력</h2><ul>
-<li><p>독립적 프로세스</p>
-<ul>
-<li>프로세스는 각자의 주소 공간을 가지고 수행되므로 원칙적으로 하나의 프로세스는 다른 프로세스의 수행에 영향을 미치지 못합</li>
-</ul>
-</li>
-<li><p>협력 프로세스 </p>
-<ul>
-<li>프로세스 협력 메커니즘을 통해 하나의 프로세스가 다른 프로세스의 수행에 영향을 미칠 수 있음</li>
-</ul>
-</li>
-<li><p>프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)</p>
-<ul>
-<li><p>message passing : 커널을 통해서 메시지 전달됨</p>
-</li>
-<li><p>shared memory </p>
-<ul>
-<li>프로세스간 메모리 공유 요청을 커널에게 요청한 후, 커널을 통해서 특정 물리 메모리 공간을 공유합니다</li>
-</ul>
-<img width="770" alt="스크린샷 2021-07-23 오전 12 07 57" src="https://user-images.githubusercontent.com/12459864/126662773-46e2200f-226f-4cb1-bafa-6cccc5ee665b.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<p><code>thread : 프로세스 간의 협력은 아니지만 동일한 process를 구성하는 thread간에는 주소공간을 공유하므로 협력이 가능하다</code></p>
-<h3 id="Message-Passing"><a href="#Message-Passing" class="headerlink" title="Message Passing"></a>Message Passing</h3><ul>
-<li>Message System : 프로세스 사이에 공유 변수를 일체 사용하지 않고 통신하는 시스템</li>
-<li>Direct Communication<ul>
-<li>통신하려는 프로세스의 이름을 명시적으로 표시<img width="542" alt="스크린샷 2021-07-23 오전 12 04 56" src="https://user-images.githubusercontent.com/12459864/126662219-59171061-d6c3-4515-b69d-fa7fe8dba3f3.png"></li>
-</ul>
-</li>
-<li>Indirect Communication<ul>
-<li>mailbox (또는 port)를 통해 메시지를 간접 전달</li>
-<li>특정 대상이 아니라 임의의 대상들이 메시지를 확인하고 가져감<img width="681" alt="스크린샷 2021-07-23 오전 12 05 02" src="https://user-images.githubusercontent.com/12459864/126662225-f0b3a288-3b97-4fcf-9392-fe89f8f5d939.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/07/22/OS-5-Process-Management/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
-        </div>
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
 
 
 
@@ -1147,6 +803,161 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/07/22/OS-6-CPU-Scheduling/"
+                    data-tooltip="OS-6-CPU Scheduling"
+                    aria-label="NEXT: OS-6-CPU Scheduling"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
             
         </div>
         
@@ -1193,6 +1004,25 @@
 
 <!--SCRIPTS END-->
 
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2021/07/23/OS-7-Process-Synchronization/';
+              
+            this.page.identifier = '2021/07/23/OS-7-Process-Synchronization/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
 
 
 
