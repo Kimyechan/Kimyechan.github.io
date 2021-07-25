@@ -325,6 +325,301 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/24/OS-8-Dead-Lock/"
+                            aria-label=": OS-8-Dead Lock"
+                        >
+                            OS-8-Dead Lock
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-24T23:46:31+09:00">
+	
+		    Jul 24, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <img width="500" alt="스크린샷 2021-07-24 오후 11 46 58" src="https://user-images.githubusercontent.com/12459864/126872849-0acfef70-8095-4a7c-a5da-7d12f6421fd7.png">
+
+<p><code>길을 점유하면서 상대방의 길을 점유하길 원한다</code></p>
+<h2 id="The-Deadlock-Problem"><a href="#The-Deadlock-Problem" class="headerlink" title="The Deadlock Problem"></a>The Deadlock Problem</h2><ul>
+<li><p>Deadlock : 일련의 프로세스들이 서로가 가진 자원을 기다리며 block된 상태</p>
+</li>
+<li><p>Resource (자원)</p>
+<ul>
+<li>하드웨어, 소프트웨어 등을 포함하는 개념</li>
+<li>(예) I/O device, CPU cycle, memory space, semaphore 등</li>
+<li>프로세스가 자원을 사용하는 절차 : Request -&gt; Allocate -&gt; Use -&gt; Release</li>
+</ul>
+</li>
+<li><p>Deadlock Example 1</p>
+<ul>
+<li>시스템에 2개의 tape drive가 있다</li>
+<li>프로세스 P1과 P2 각각이 하나의 tape drive를 보유한 채 다른 하나를 기다리고 있다</li>
+</ul>
+</li>
+<li><p>Deadlock Example 2</p>
+<ul>
+<li><p>Binary semaphores A and B</p>
+<p>  <code>P0가 A 자원을 점유한 후 인터럽트가 걸려서 context switching하여 P1이 B 자원을 점유 이후에서로의 자원을 할당받기 위해서 대기한다</code></p>
+  <img width="270" alt="스크린샷 2021-07-25 오전 12 22 50" src="https://user-images.githubusercontent.com/12459864/126873090-b6a702ee-eb8d-46b6-8511-5485c1b4d0fc.png">
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-발생의-4가지-조건"><a href="#Deadlock-발생의-4가지-조건" class="headerlink" title="Deadlock 발생의 4가지 조건"></a>Deadlock 발생의 4가지 조건</h2><ul>
+<li>Mutual exclusion (상호 배제)<ul>
+<li>매 순간 하나의 프로세스만이 자원을 사용할 수 있음</li>
+</ul>
+</li>
+<li>No preemption (비선점)<ul>
+<li>프로세스는 자원을 스스로 내어놓을 뿐 강제로 빼앗기지 않음</li>
+</ul>
+</li>
+<li>Hold and wait (보유 대기)<ul>
+<li>자원을 가진 프로세스가 다른 자원을 기다릴 때 보유 자원을 놓지 않고 계속 까지고 있음</li>
+</ul>
+</li>
+<li>Circular wait (순환 대기)<ul>
+<li>자원을 기다리는 프로세스간에 사이클이 형성되어야 함</li>
+<li>프로세스 P0, P1, …, Pn이 있을 때</li>
+<li>P0은 P1이 가진 자원을 기다림</li>
+<li>P1은 P2이 가진 자원을 기다림</li>
+<li>Pn-1은 Pn이 가진 자원을 기다림</li>
+<li>Pn은 P0이 가진 자원을 기다림</li>
+</ul>
+</li>
+</ul>
+<h2 id="Resource-Allocation-Graph"><a href="#Resource-Allocation-Graph" class="headerlink" title="Resource-Allocation Graph"></a>Resource-Allocation Graph</h2><img width="600" alt="스크린샷 2021-07-25 오전 12 32 35" src="https://user-images.githubusercontent.com/12459864/126873422-8e207d2d-9682-4b94-8a4d-386317a4df6a.png">
+
+<img width="754" alt="스크린샷 2021-07-25 오전 12 34 14" src="https://user-images.githubusercontent.com/12459864/126873473-cb0ee39b-3368-471e-af42-aea8f2a67c92.png">
+
+<ul>
+<li>그래프에 cycle이 없으면 deadlock이 아니다</li>
+<li>그래프에 cycle이 있으면<ul>
+<li>if <code>only one instace</code> per resource type, then deadlock</li>
+<li>if several instances per resource type, possibility of deadlock</li>
+</ul>
+</li>
+</ul>
+<p><code>2번째 그림에서 P4가 사용후 자원 R2를 반납하고, P2가 자원 R1을 반납하기 때문에 때문에 deadlock은 없다</code></p>
+<h2 id="Deadlock의-처리-방법"><a href="#Deadlock의-처리-방법" class="headerlink" title="Deadlock의 처리 방법"></a>Deadlock의 처리 방법</h2><ul>
+<li>Deadlock Prevention<ul>
+<li>자원 할당 시 Deadlock의 4가지 필요 조건 중 어느 하나가 만족되지 않도록 하는 것</li>
+</ul>
+</li>
+<li>Deadlock Avoidance<ul>
+<li>자원 요청에 대한 부가적인 정보를 이용해서 deadlock의 가능성이 없는 경우에만 자원을 할당</li>
+<li>시스템 state가 원래 state로 돌아올 수 있는 경우에만 자원 할당</li>
+</ul>
+</li>
+<li>Deadlock Detection and recovery<ul>
+<li>Deadlock 발생은 허용하되 그에 대한 detection 루틴을 두어 deadlock 발견시 recover</li>
+</ul>
+</li>
+<li>Deadlock Ignorance<ul>
+<li>Deadlock을 시스템이 책임지지 않음</li>
+<li>UNIX를 포함한 대부분의 OS가 채택</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-Prevention"><a href="#Deadlock-Prevention" class="headerlink" title="Deadlock Prevention"></a>Deadlock Prevention</h2><ul>
+<li>Mutual Exclusion<ul>
+<li>공유해서는 안되는 자원의 경우 반드시 성립해야 함</li>
+</ul>
+</li>
+<li>Hold and Wait<ul>
+<li>프로세스가 자원을 요청할 때 다른 어떤 자원도 가지고 있지 않아야 한다</li>
+<li>방법 1. 프로세스 시작 시 모든 필요한 자원을 할당받게 하는 방법</li>
+<li>방법 2. 자원이 필요할 경우 보유 자원을 모두 놓고 다시 요청</li>
+</ul>
+</li>
+<li>No Preemption<ul>
+<li>process가 어떤 자원을 기다려야 하는 경우 이미 보유한 자원이 선점됨</li>
+<li>모든 필요한 저원을 얻을 수 있을 때 그 프로세스는 다시 시작된다</li>
+<li>State를 쉽게 save하고 restore할 수 있는 자원에서 주로 사용(CPU, memeory)</li>
+</ul>
+</li>
+<li>Circular Wait<ul>
+<li>모든 자원 유형에 할당 순서를 정하여 정해진 순서대로만 자원을 할당</li>
+<li>예를 들어 순서가 3인 자원 Ri를 보유 중인 프로세스가 순서가 1인 자원 Rj를 할당받기 위해서는 우선 Ri를 release해야한다</li>
+</ul>
+</li>
+</ul>
+<p><code>-&gt; Utilization 저하, throughput 감소, starvation 문제</code></p>
+<h2 id="Deadlock-Avoidance"><a href="#Deadlock-Avoidance" class="headerlink" title="Deadlock Avoidance"></a>Deadlock Avoidance</h2><ul>
+<li><p>Deadlock avoidance</p>
+<ul>
+<li>자원 요청에 대한 부가 정보를 이요해서 자원 할당이 deadlock으로 부터 안전한지 동적으로 조사해서 안전한 경우에만 할당</li>
+<li>가장 단순하고 일반적인 모델은 프로세스들이 필요하는 각 자원별 최대 사용랴을 미리 선언하도록 하는 방법임</li>
+<li>평생 쓸 자원들을 선언함으로써 자원에 Deadlock 가능성이 있을 경우를 피한다</li>
+</ul>
+</li>
+<li><p>safe state</p>
+<ul>
+<li>시스템 내의 프로세스들에 대한 safe sequence가 존재하는 상태</li>
+</ul>
+</li>
+<li><p>safe sequence</p>
+<ul>
+<li><p>프로세스 sequence&lt;P1, P2, …, Pn&gt;이 safe하려면 Pi(1 &lt;= i &lt;= n)의 자원 요청이 “가용 자원 + 모든 Pj(j &lt; i)의 보유 자원”에 의해 충족되어야 함</p>
+</li>
+<li><p>조건을 만족하면 다음 방법으로 모든 프로세스의 수행을 보장</p>
+<ul>
+<li>Pi의 자원 요청이 즉시 충족될 수 없으면 모든 Pj(j &lt; i)가 종료될 때까지 기다린다</li>
+<li>Pi-1이 종료되면 Pi의 자원요청을 만족시켜 수행한다</li>
+</ul>
+<img width="345" alt="스크린샷 2021-07-25 오전 12 59 56" src="https://user-images.githubusercontent.com/12459864/126874170-02661eec-e016-4be2-b322-da37dc1895c5.png">
+</li>
+</ul>
+</li>
+<li><p>시스템이 safe state에 있으면 no deadlock, 시스템이 unsafe state에 있으면 possibility of deadlock</p>
+</li>
+<li><p>Deadlock Avoidance는 시스템이 unsafe state에 들어가지 않는 것을 보장한다</p>
+</li>
+<li><p>2가지 경우의 avoidance 알고리즘</p>
+<ul>
+<li><code>Single instance</code> per resource types -&gt; <code>Resource Allocation Graph algorithm</code></li>
+<li><code>Multi instance</code> per resource types -&gt; <code>Banker&#39;s Algorithm</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Resource-Allocation-Graph-algorithm"><a href="#Resource-Allocation-Graph-algorithm" class="headerlink" title="Resource Allocation Graph algorithm"></a>Resource Allocation Graph algorithm</h3><img width="600" alt="스크린샷 2021-07-25 오전 1 04 10" src="https://user-images.githubusercontent.com/12459864/126874323-802bee3f-b0d4-41ac-9f18-8db10f47545a.png">
+
+<h3 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h3><ul>
+<li>가정<ul>
+<li>모든 프로세스는 자원의 최대 사용량을 미리 명시</li>
+<li>프로세스가 요청 자원을 모두 할당 받은 경우 유한 시간 안에 이들 자원을 다시 반납한다</li>
+</ul>
+</li>
+<li>방법<ul>
+<li>기본 개념: 자원 요청시 safe 상태를 유지할 경우에만 할당</li>
+<li>총 요청 자원의 수가 가용 자원의 수보다 적은 프로세스를 선택 (그런 프로세스가 없으면 unsafe 상태)</li>
+<li>그런 프로세스가 있으면 그 프로세스에게 자원을 할당</li>
+<li>할당받은 프로세스가 종료되면 모든 자원을 반납</li>
+<li>모든 프로세스가 종료될 때까지 이러한 과정을 반복</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-25 오전 1 05 09" src="https://user-images.githubusercontent.com/12459864/126874344-ea55d92d-b015-49a8-907d-bd9562dbca15.png">
+
+<h2 id="Deadlock-Detection-and-Recovery"><a href="#Deadlock-Detection-and-Recovery" class="headerlink" title="Deadlock Detection and Recovery"></a>Deadlock Detection and Recovery</h2><ul>
+<li><p>Deadlock Detection</p>
+<ul>
+<li>Resource type 당 single instance인 경우<ul>
+<li>자원 할당 그래프에서 cycle이 곧 deadlock을 의미</li>
+</ul>
+</li>
+<li>Resource type 당 multiple instance인 경우<ul>
+<li>Banker’s algorithm과 유사한 방법 활용</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Wait-for graph 알고리즘</p>
+<ul>
+<li><p>Resource type ekd single instance인 경우</p>
+</li>
+<li><p>Wait-for graph</p>
+<ul>
+<li><p>Resource type당 single instance인 경우</p>
+</li>
+<li><p>Wait-for graph</p>
+<ul>
+<li>자원 할당 그래프의 변형</li>
+<li>프로세스만으로 node 구성</li>
+<li>Pj가 가지고 있는 자원을 Pk가 기다리는 경우 Pk -&gt; Pj</li>
+</ul>
+</li>
+<li><p>Algorithm</p>
+<ul>
+<li>Wait-for graph에 사이클이 존재하는지를 주기적으로 조사</li>
+<li>O(n^2)</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-25 오후 5 10 58" src="https://user-images.githubusercontent.com/12459864/126892338-72867b60-8f47-4aa6-a365-dfbaeecb3067.png">
+
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-25 오후 5 12 18" src="https://user-images.githubusercontent.com/12459864/126892384-592798df-fdbe-4fc5-be34-e36ecffe5542.png">
+</li>
+</ul>
+</li>
+<li><p>Recovery</p>
+<ul>
+<li>Process termination<ul>
+<li>Abort all deadlocked processes</li>
+<li>Abort one process at a time until the deadlock cycle is eliminated</li>
+</ul>
+</li>
+<li>Resource Preemption<ul>
+<li>비용을 최소화할 victim을 선정</li>
+<li>safe state로 rollback하여 process를 restart</li>
+<li>Starvation 문제<ul>
+<li>동일한 프로세스가 계속해서 victim으로 선정되는 경우</li>
+<li>cost factor에 rollback 횟수도 같이 고려</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-Ignorance"><a href="#Deadlock-Ignorance" class="headerlink" title="Deadlock Ignorance"></a>Deadlock Ignorance</h2><ul>
+<li>Deadlock이 일어나지 않는다고 생각하고 아무런 조치도 취하지 않음<ul>
+<li>Deadlock이 매우 드물게 발생하므로 deadlock에 대한 조치 자체가 더 큰 overhead일 수 있다</li>
+<li>만야그 시스템에서 deadlock이 발생한 경우 시스템이 비정상적으로 작동하는 것을 사람이 직점 느낀 후 직접 process를 죽이는 등의 방법으로 대처</li>
+<li>UNIX, Windows등 대부분의 범용 OS가 채택</li>
+</ul>
+</li>
+</ul>
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/24/OS-8-Dead-Lock/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/23/OS-7-Process-Synchronization/"
                             aria-label=": OS-7-Process Synchronization"
                         >
@@ -338,6 +633,12 @@
 		    Jul 23, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
     
 </div>
 
@@ -2061,63 +2362,6 @@
                         <p>
                             <a
                                 href="/2020/11/30/Spring-Spring-PSA/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/27/Spring-Spring-IoC/"
-                            aria-label=": Spring-Spring IoC"
-                        >
-                            Spring-Spring IoC
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-27T15:35:06+09:00">
-	
-		    Nov 27, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/Spring/">Spring</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/">Core Concept</a>, <a class="category-link" href="/categories/Web/Spring/Core-Concept/IoC/">IoC</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/27/Spring-Spring-IoC/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

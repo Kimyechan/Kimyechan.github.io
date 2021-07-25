@@ -326,6 +326,655 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/24/OS-8-Dead-Lock/"
+                            aria-label=": OS-8-Dead Lock"
+                        >
+                            OS-8-Dead Lock
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-24T23:46:31+09:00">
+	
+		    Jul 24, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <img width="500" alt="스크린샷 2021-07-24 오후 11 46 58" src="https://user-images.githubusercontent.com/12459864/126872849-0acfef70-8095-4a7c-a5da-7d12f6421fd7.png">
+
+<p><code>길을 점유하면서 상대방의 길을 점유하길 원한다</code></p>
+<h2 id="The-Deadlock-Problem"><a href="#The-Deadlock-Problem" class="headerlink" title="The Deadlock Problem"></a>The Deadlock Problem</h2><ul>
+<li><p>Deadlock : 일련의 프로세스들이 서로가 가진 자원을 기다리며 block된 상태</p>
+</li>
+<li><p>Resource (자원)</p>
+<ul>
+<li>하드웨어, 소프트웨어 등을 포함하는 개념</li>
+<li>(예) I/O device, CPU cycle, memory space, semaphore 등</li>
+<li>프로세스가 자원을 사용하는 절차 : Request -&gt; Allocate -&gt; Use -&gt; Release</li>
+</ul>
+</li>
+<li><p>Deadlock Example 1</p>
+<ul>
+<li>시스템에 2개의 tape drive가 있다</li>
+<li>프로세스 P1과 P2 각각이 하나의 tape drive를 보유한 채 다른 하나를 기다리고 있다</li>
+</ul>
+</li>
+<li><p>Deadlock Example 2</p>
+<ul>
+<li><p>Binary semaphores A and B</p>
+<p>  <code>P0가 A 자원을 점유한 후 인터럽트가 걸려서 context switching하여 P1이 B 자원을 점유 이후에서로의 자원을 할당받기 위해서 대기한다</code></p>
+  <img width="270" alt="스크린샷 2021-07-25 오전 12 22 50" src="https://user-images.githubusercontent.com/12459864/126873090-b6a702ee-eb8d-46b6-8511-5485c1b4d0fc.png">
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-발생의-4가지-조건"><a href="#Deadlock-발생의-4가지-조건" class="headerlink" title="Deadlock 발생의 4가지 조건"></a>Deadlock 발생의 4가지 조건</h2><ul>
+<li>Mutual exclusion (상호 배제)<ul>
+<li>매 순간 하나의 프로세스만이 자원을 사용할 수 있음</li>
+</ul>
+</li>
+<li>No preemption (비선점)<ul>
+<li>프로세스는 자원을 스스로 내어놓을 뿐 강제로 빼앗기지 않음</li>
+</ul>
+</li>
+<li>Hold and wait (보유 대기)<ul>
+<li>자원을 가진 프로세스가 다른 자원을 기다릴 때 보유 자원을 놓지 않고 계속 까지고 있음</li>
+</ul>
+</li>
+<li>Circular wait (순환 대기)<ul>
+<li>자원을 기다리는 프로세스간에 사이클이 형성되어야 함</li>
+<li>프로세스 P0, P1, …, Pn이 있을 때</li>
+<li>P0은 P1이 가진 자원을 기다림</li>
+<li>P1은 P2이 가진 자원을 기다림</li>
+<li>Pn-1은 Pn이 가진 자원을 기다림</li>
+<li>Pn은 P0이 가진 자원을 기다림</li>
+</ul>
+</li>
+</ul>
+<h2 id="Resource-Allocation-Graph"><a href="#Resource-Allocation-Graph" class="headerlink" title="Resource-Allocation Graph"></a>Resource-Allocation Graph</h2><img width="600" alt="스크린샷 2021-07-25 오전 12 32 35" src="https://user-images.githubusercontent.com/12459864/126873422-8e207d2d-9682-4b94-8a4d-386317a4df6a.png">
+
+<img width="754" alt="스크린샷 2021-07-25 오전 12 34 14" src="https://user-images.githubusercontent.com/12459864/126873473-cb0ee39b-3368-471e-af42-aea8f2a67c92.png">
+
+<ul>
+<li>그래프에 cycle이 없으면 deadlock이 아니다</li>
+<li>그래프에 cycle이 있으면<ul>
+<li>if <code>only one instace</code> per resource type, then deadlock</li>
+<li>if several instances per resource type, possibility of deadlock</li>
+</ul>
+</li>
+</ul>
+<p><code>2번째 그림에서 P4가 사용후 자원 R2를 반납하고, P2가 자원 R1을 반납하기 때문에 때문에 deadlock은 없다</code></p>
+<h2 id="Deadlock의-처리-방법"><a href="#Deadlock의-처리-방법" class="headerlink" title="Deadlock의 처리 방법"></a>Deadlock의 처리 방법</h2><ul>
+<li>Deadlock Prevention<ul>
+<li>자원 할당 시 Deadlock의 4가지 필요 조건 중 어느 하나가 만족되지 않도록 하는 것</li>
+</ul>
+</li>
+<li>Deadlock Avoidance<ul>
+<li>자원 요청에 대한 부가적인 정보를 이용해서 deadlock의 가능성이 없는 경우에만 자원을 할당</li>
+<li>시스템 state가 원래 state로 돌아올 수 있는 경우에만 자원 할당</li>
+</ul>
+</li>
+<li>Deadlock Detection and recovery<ul>
+<li>Deadlock 발생은 허용하되 그에 대한 detection 루틴을 두어 deadlock 발견시 recover</li>
+</ul>
+</li>
+<li>Deadlock Ignorance<ul>
+<li>Deadlock을 시스템이 책임지지 않음</li>
+<li>UNIX를 포함한 대부분의 OS가 채택</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-Prevention"><a href="#Deadlock-Prevention" class="headerlink" title="Deadlock Prevention"></a>Deadlock Prevention</h2><ul>
+<li>Mutual Exclusion<ul>
+<li>공유해서는 안되는 자원의 경우 반드시 성립해야 함</li>
+</ul>
+</li>
+<li>Hold and Wait<ul>
+<li>프로세스가 자원을 요청할 때 다른 어떤 자원도 가지고 있지 않아야 한다</li>
+<li>방법 1. 프로세스 시작 시 모든 필요한 자원을 할당받게 하는 방법</li>
+<li>방법 2. 자원이 필요할 경우 보유 자원을 모두 놓고 다시 요청</li>
+</ul>
+</li>
+<li>No Preemption<ul>
+<li>process가 어떤 자원을 기다려야 하는 경우 이미 보유한 자원이 선점됨</li>
+<li>모든 필요한 저원을 얻을 수 있을 때 그 프로세스는 다시 시작된다</li>
+<li>State를 쉽게 save하고 restore할 수 있는 자원에서 주로 사용(CPU, memeory)</li>
+</ul>
+</li>
+<li>Circular Wait<ul>
+<li>모든 자원 유형에 할당 순서를 정하여 정해진 순서대로만 자원을 할당</li>
+<li>예를 들어 순서가 3인 자원 Ri를 보유 중인 프로세스가 순서가 1인 자원 Rj를 할당받기 위해서는 우선 Ri를 release해야한다</li>
+</ul>
+</li>
+</ul>
+<p><code>-&gt; Utilization 저하, throughput 감소, starvation 문제</code></p>
+<h2 id="Deadlock-Avoidance"><a href="#Deadlock-Avoidance" class="headerlink" title="Deadlock Avoidance"></a>Deadlock Avoidance</h2><ul>
+<li><p>Deadlock avoidance</p>
+<ul>
+<li>자원 요청에 대한 부가 정보를 이요해서 자원 할당이 deadlock으로 부터 안전한지 동적으로 조사해서 안전한 경우에만 할당</li>
+<li>가장 단순하고 일반적인 모델은 프로세스들이 필요하는 각 자원별 최대 사용랴을 미리 선언하도록 하는 방법임</li>
+<li>평생 쓸 자원들을 선언함으로써 자원에 Deadlock 가능성이 있을 경우를 피한다</li>
+</ul>
+</li>
+<li><p>safe state</p>
+<ul>
+<li>시스템 내의 프로세스들에 대한 safe sequence가 존재하는 상태</li>
+</ul>
+</li>
+<li><p>safe sequence</p>
+<ul>
+<li><p>프로세스 sequence&lt;P1, P2, …, Pn&gt;이 safe하려면 Pi(1 &lt;= i &lt;= n)의 자원 요청이 “가용 자원 + 모든 Pj(j &lt; i)의 보유 자원”에 의해 충족되어야 함</p>
+</li>
+<li><p>조건을 만족하면 다음 방법으로 모든 프로세스의 수행을 보장</p>
+<ul>
+<li>Pi의 자원 요청이 즉시 충족될 수 없으면 모든 Pj(j &lt; i)가 종료될 때까지 기다린다</li>
+<li>Pi-1이 종료되면 Pi의 자원요청을 만족시켜 수행한다</li>
+</ul>
+<img width="345" alt="스크린샷 2021-07-25 오전 12 59 56" src="https://user-images.githubusercontent.com/12459864/126874170-02661eec-e016-4be2-b322-da37dc1895c5.png">
+</li>
+</ul>
+</li>
+<li><p>시스템이 safe state에 있으면 no deadlock, 시스템이 unsafe state에 있으면 possibility of deadlock</p>
+</li>
+<li><p>Deadlock Avoidance는 시스템이 unsafe state에 들어가지 않는 것을 보장한다</p>
+</li>
+<li><p>2가지 경우의 avoidance 알고리즘</p>
+<ul>
+<li><code>Single instance</code> per resource types -&gt; <code>Resource Allocation Graph algorithm</code></li>
+<li><code>Multi instance</code> per resource types -&gt; <code>Banker&#39;s Algorithm</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Resource-Allocation-Graph-algorithm"><a href="#Resource-Allocation-Graph-algorithm" class="headerlink" title="Resource Allocation Graph algorithm"></a>Resource Allocation Graph algorithm</h3><img width="600" alt="스크린샷 2021-07-25 오전 1 04 10" src="https://user-images.githubusercontent.com/12459864/126874323-802bee3f-b0d4-41ac-9f18-8db10f47545a.png">
+
+<h3 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h3><ul>
+<li>가정<ul>
+<li>모든 프로세스는 자원의 최대 사용량을 미리 명시</li>
+<li>프로세스가 요청 자원을 모두 할당 받은 경우 유한 시간 안에 이들 자원을 다시 반납한다</li>
+</ul>
+</li>
+<li>방법<ul>
+<li>기본 개념: 자원 요청시 safe 상태를 유지할 경우에만 할당</li>
+<li>총 요청 자원의 수가 가용 자원의 수보다 적은 프로세스를 선택 (그런 프로세스가 없으면 unsafe 상태)</li>
+<li>그런 프로세스가 있으면 그 프로세스에게 자원을 할당</li>
+<li>할당받은 프로세스가 종료되면 모든 자원을 반납</li>
+<li>모든 프로세스가 종료될 때까지 이러한 과정을 반복</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-25 오전 1 05 09" src="https://user-images.githubusercontent.com/12459864/126874344-ea55d92d-b015-49a8-907d-bd9562dbca15.png">
+
+<h2 id="Deadlock-Detection-and-Recovery"><a href="#Deadlock-Detection-and-Recovery" class="headerlink" title="Deadlock Detection and Recovery"></a>Deadlock Detection and Recovery</h2><ul>
+<li><p>Deadlock Detection</p>
+<ul>
+<li>Resource type 당 single instance인 경우<ul>
+<li>자원 할당 그래프에서 cycle이 곧 deadlock을 의미</li>
+</ul>
+</li>
+<li>Resource type 당 multiple instance인 경우<ul>
+<li>Banker’s algorithm과 유사한 방법 활용</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Wait-for graph 알고리즘</p>
+<ul>
+<li><p>Resource type ekd single instance인 경우</p>
+</li>
+<li><p>Wait-for graph</p>
+<ul>
+<li><p>Resource type당 single instance인 경우</p>
+</li>
+<li><p>Wait-for graph</p>
+<ul>
+<li>자원 할당 그래프의 변형</li>
+<li>프로세스만으로 node 구성</li>
+<li>Pj가 가지고 있는 자원을 Pk가 기다리는 경우 Pk -&gt; Pj</li>
+</ul>
+</li>
+<li><p>Algorithm</p>
+<ul>
+<li>Wait-for graph에 사이클이 존재하는지를 주기적으로 조사</li>
+<li>O(n^2)</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-25 오후 5 10 58" src="https://user-images.githubusercontent.com/12459864/126892338-72867b60-8f47-4aa6-a365-dfbaeecb3067.png">
+
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-25 오후 5 12 18" src="https://user-images.githubusercontent.com/12459864/126892384-592798df-fdbe-4fc5-be34-e36ecffe5542.png">
+</li>
+</ul>
+</li>
+<li><p>Recovery</p>
+<ul>
+<li>Process termination<ul>
+<li>Abort all deadlocked processes</li>
+<li>Abort one process at a time until the deadlock cycle is eliminated</li>
+</ul>
+</li>
+<li>Resource Preemption<ul>
+<li>비용을 최소화할 victim을 선정</li>
+<li>safe state로 rollback하여 process를 restart</li>
+<li>Starvation 문제<ul>
+<li>동일한 프로세스가 계속해서 victim으로 선정되는 경우</li>
+<li>cost factor에 rollback 횟수도 같이 고려</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deadlock-Ignorance"><a href="#Deadlock-Ignorance" class="headerlink" title="Deadlock Ignorance"></a>Deadlock Ignorance</h2><ul>
+<li>Deadlock이 일어나지 않는다고 생각하고 아무런 조치도 취하지 않음<ul>
+<li>Deadlock이 매우 드물게 발생하므로 deadlock에 대한 조치 자체가 더 큰 overhead일 수 있다</li>
+<li>만야그 시스템에서 deadlock이 발생한 경우 시스템이 비정상적으로 작동하는 것을 사람이 직점 느낀 후 직접 process를 죽이는 등의 방법으로 대처</li>
+<li>UNIX, Windows등 대부분의 범용 OS가 채택</li>
+</ul>
+</li>
+</ul>
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/24/OS-8-Dead-Lock/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/07/23/OS-7-Process-Synchronization/"
+                            aria-label=": OS-7-Process Synchronization"
+                        >
+                            OS-7-Process Synchronization
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-23T15:46:42+09:00">
+	
+		    Jul 23, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h2><img width="500" alt="스크린샷 2021-07-23 오후 8 05 59" src="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
+
+<ul>
+<li>S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음</li>
+<li>Multiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음</li>
+</ul>
+<h2 id="OS에서-Race-Conditoin이-발생하는-경우"><a href="#OS에서-Race-Conditoin이-발생하는-경우" class="headerlink" title="OS에서 Race Conditoin이 발생하는 경우"></a>OS에서 Race Conditoin이 발생하는 경우</h2><ol>
+<li>kernel 수행 중 인터럽트 발생 시</li>
+<li>Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우</li>
+<li>Multiprocessor에서 shared memory 내의 kernel data</li>
+</ol>
+<h3 id="Case1-interrupt-handler-v-s-kernel"><a href="#Case1-interrupt-handler-v-s-kernel" class="headerlink" title="Case1. interrupt handler v.s kernel"></a>Case1. interrupt handler v.s kernel</h3><img width="500" alt="스크린샷 2021-07-23 오후 8 14 11" src="https://user-images.githubusercontent.com/12459864/126774306-979760c3-61f3-4b37-94ba-98606150f0d6.png">
+
+<ul>
+<li><p>커널 모드 running 중 interrupt가 발생하여 인터럽트 처리 루틴이 수행</p>
+<p>  <code>양쪽 다 커널 코드이므로 kernel address space를 공유하기 때문에 Race Condition이 발생할 수 있다</code></p>
+<p>  <code>커널 모드 running중에는 interrupt가 걸리는 것을 막아서 Race Condition을 피할 수 있다</code></p>
+</li>
+</ul>
+<h3 id="Case2-Preempt-a-process-running-in-kernel"><a href="#Case2-Preempt-a-process-running-in-kernel" class="headerlink" title="Case2. Preempt a process running in kernel?"></a>Case2. Preempt a process running in kernel?</h3><img width="802" alt="스크린샷 2021-07-23 오후 8 19 09" src="https://user-images.githubusercontent.com/12459864/126774798-902683a9-3615-4347-b20c-7d930984afb1.png">
+
+<ul>
+<li><p>두 프로세스의 address space 간에는 data sharing이 없음</p>
+</li>
+<li><p>그러나 system call을 하는 동안에는 kernel address space의 data를 access하게 됨(share)</p>
+</li>
+<li><p>커널 작업 중간에 CPU를 preempt하면 Race Condition 발생</p>
+  <img width="500" alt="스크린샷 2021-07-23 오후 8 23 04" src="https://user-images.githubusercontent.com/12459864/126775122-5029628b-81f0-4399-926f-6d48406f30c5.png">
+</li>
+<li><p>해결책: 커널 모드에서 수행 중일 때는 CPU를 preempt하지않고, 커널 모드에서 사용자 모드로 돌아갈 때 preempt한다</p>
+</li>
+</ul>
+<h3 id="Case3-Multiprocessor"><a href="#Case3-Multiprocessor" class="headerlink" title="Case3. Multiprocessor"></a>Case3. Multiprocessor</h3><img width="762" alt="스크린샷 2021-07-23 오후 8 26 17" src="https://user-images.githubusercontent.com/12459864/126775403-8a09989f-188d-4926-abbd-d70eb03ab1cf.png">
+
+<ul>
+<li><p>여러 CPU가 한 자원에 동시 접근한다 -&gt; Race Condition</p>
+</li>
+<li><p>Multi Processor인 경우 서로 다른 CPU가 접근하기 때문에 interrupt를 enable/disable로 해결되지 않는다</p>
+</li>
+<li><p>해결 방법</p>
+<ol>
+<li>한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법</li>
+<li>커널 내부에 있는 각 공유 데이터를 접근할 때마다 그 데이터에 대한 lock/unlock하는 방법</li>
+</ol>
+</li>
+</ul>
+<h2 id="Process-Synchronization-문제"><a href="#Process-Synchronization-문제" class="headerlink" title="Process Synchronization 문제"></a>Process Synchronization 문제</h2><ul>
+<li><p>공유 데이터(shared data)의 동시 접근(concurrent access)은 데이터의 불일치 문제를 발생시킬 수 있다</p>
+</li>
+<li><p>일관성(consistency) 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 매커니즘이 필요하다</p>
+</li>
+<li><p>Race Condition</p>
+<ul>
+<li><p>여러 프로세스들이 동시에 공유 데이터를 접근하는 상황</p>
+</li>
+<li><p>데이터의 최종 연산 결과는 마지막에 그 데이터를 다룬 프로세스에 따라 달라짐</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 8 45 23" src="https://user-images.githubusercontent.com/12459864/126777297-f71d04d8-757d-4ed4-9540-46b300beac5a.png">
+
+<p><code>race condition을 막기 위해서는 concurrent process는 동기화(synchronize) 되어야 한다</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-Critical-Section-Problem"><a href="#The-Critical-Section-Problem" class="headerlink" title="The Critical-Section Problem"></a>The Critical-Section Problem</h2><ul>
+<li>n 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우</li>
+<li>각 프로세스의 code segment에는 공유 데이터를 접근하는 코드인 critical section이 존재</li>
+<li>하나의 프로세스가 <code>critical section</code>에 있을때 다른 모든 프로세스는 critical section에 들어갈 수 없어야 한다</li>
+</ul>
+<h3 id="프로그램적-해결법의-충족-조건"><a href="#프로그램적-해결법의-충족-조건" class="headerlink" title="프로그램적 해결법의 충족 조건"></a>프로그램적 해결법의 충족 조건</h3><ul>
+<li>Mutual Exclusion : 프로세스가 critical section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 critical section에 들어가면 안된다</li>
+<li>Progress : 아무도 critical section에 있지 않은 상태에서 critical section에 들어가고자 하는 프로세스가 있으면 critical section에 들어가게 해주어야 한다</li>
+<li>Bounded Waiting(유한 대기) : 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야한다</li>
+</ul>
+<h3 id="해결-알고리즘-Case-1"><a href="#해결-알고리즘-Case-1" class="headerlink" title="해결 알고리즘 Case 1"></a>해결 알고리즘 Case 1</h3><ul>
+<li><p>Synchronization variable</p>
+<ul>
+<li><p>int turn;</p>
+</li>
+<li><p>initially turn = 0;</p>
+<img width="400" alt="스크린샷 2021-07-23 오후 8 59 59" src="https://user-images.githubusercontent.com/12459864/126778753-4dc95f73-9551-4ad5-8273-52b6865e6f57.png">
+</li>
+</ul>
+</li>
+<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
+<p>  <code>반드시 한번씩 교대로 들어가야만 한다. 임계 구역에 작업하는 프로세스가 없어도, 한 프로세스가 연속해서 들어가지 못한다</code></p>
+</li>
+</ul>
+<h3 id="해결-알고리즘-Case-2"><a href="#해결-알고리즘-Case-2" class="headerlink" title="해결 알고리즘 Case 2"></a>해결 알고리즘 Case 2</h3><ul>
+<li><p>Synchronization variable</p>
+<ul>
+<li><p>boolean flag[2];</p>
+</li>
+<li><p>initially flag[] = false;</p>
+<img width="400" alt="스크린샷 2021-07-23 오후 9 05 34" src="https://user-images.githubusercontent.com/12459864/126779294-5d469692-5fab-48c2-9e06-4f832157fa5b.png">
+</li>
+</ul>
+</li>
+<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
+<p>  <code>프로세스 둘 다 2행까지 수행 후에 끊임없이 서로에게 양보하는 상황 발생 가능</code></p>
+</li>
+</ul>
+<h3 id="해결-알고리즘-Case-3-Peterson’s-Algorithm"><a href="#해결-알고리즘-Case-3-Peterson’s-Algorithm" class="headerlink" title="해결 알고리즘 Case 3 (Peterson’s Algorithm)"></a>해결 알고리즘 Case 3 (Peterson’s Algorithm)</h3><ul>
+<li><p>algorithm 1 2 번을 조합함</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 09 55" src="https://user-images.githubusercontent.com/12459864/126779735-01a7ad79-af16-458a-b106-a9f9cb255be6.png">
+</li>
+<li><p>두 프로세스의 임계영역 문제 해결조건을 모두 만족한다</p>
+<p>  <code>하지만 Busy Waiting!이다 (계속 CPU와 memroy를 쓰면서 wait)</code></p>
+</li>
+</ul>
+<h3 id="Synchronization-Hardware"><a href="#Synchronization-Hardware" class="headerlink" title="Synchronization Hardware"></a>Synchronization Hardware</h3><ul>
+<li><p>하드웨어적으로 Test &amp; modify를 atomic하게 수행할 수 있도록 지원하는 경우 앞의 문제는 간단히 해결</p>
+  <img width="300" alt="스크린샷 2021-07-23 오후 9 34 54" src="https://user-images.githubusercontent.com/12459864/126782372-6363c316-b832-42b0-83ba-86dae64a08dd.png">
+</li>
+<li><p>Mutual Exclusion with Test &amp; Set</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 35 06" src="https://user-images.githubusercontent.com/12459864/126782378-1edfb6b3-0808-40da-aec4-92328d8d5a3c.png">
+
+</li>
+</ul>
+<h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><ul>
+<li><p>앞의 방식들을 추상화 시킴</p>
+</li>
+<li><p>Semaphores <code>S</code></p>
+<ul>
+<li><p>integer variable</p>
+</li>
+<li><p>S는 자원의 갯수</p>
+</li>
+<li><p>아래의 두 가지 atomic 연산에 의해서만 접근 가능</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 9 51 37" src="https://user-images.githubusercontent.com/12459864/126784266-ab3f09b2-0f33-4850-8315-af5139c74bcf.png"></li>
+</ul>
+</li>
+<li><p>세마포어의 두가지 종류</p>
+<ol>
+<li>Counting Semaphore<ul>
+<li>도메인이 0 이상인 임의의 정수값</li>
+<li>주로 resource counting에 사용</li>
+</ul>
+</li>
+<li>Binary Semaphore (=mutex)<ul>
+<li>0 또는 1 값만 가질 수 있는 semaphore</li>
+<li>주로 mutual exclusion (lock/unlock)에 사용</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="Critical-Section-Of-n-Processes"><a href="#Critical-Section-Of-n-Processes" class="headerlink" title="Critical Section Of n Processes"></a>Critical Section Of n Processes</h4><img width="400" alt="스크린샷 2021-07-23 오후 9 56 55" src="https://user-images.githubusercontent.com/12459864/126784739-f940e8f8-671b-41d5-a395-20dcc6c169ed.png">
+
+<p><code>위의 방식은 busy-wait 방식으로 임계구역이 오래걸리는 작업일 경우 효율적이지 못하다 따라서 Block &amp; Wake up 방식을 사용하는 방법도 있다</code></p>
+<h3 id="Block-And-Wake-Up-구현"><a href="#Block-And-Wake-Up-구현" class="headerlink" title="Block And Wake Up 구현"></a>Block And Wake Up 구현</h3><ul>
+<li><p>Semaphore를 다음과 같이 정의한다</p>
+<p>  &lt;img width=”400” alt=”스크린샷 2021-07-23 오후 10 02 04” src=”<a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-">https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-</a> </p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 10 02 23" src="https://user-images.githubusercontent.com/12459864/126785516-6f6156ad-a95c-4691-a0f2-1d2e28407f6e.png">
+</li>
+<li><p>block과 wakeup을 다음과 같이 가정</p>
+<ul>
+<li>block : 커널은 block을 호춝한 프로세스를 suspend시키고, 이 프로세스의 PCB를 semaphore에 대한 wait queue에 넣음</li>
+<li>wakeup(P) : block된 프로세스 P를 wakeup 시킴, 이 프로세스의 PCB를 ready queue로 </li>
+</ul>
+</li>
+<li><p>Semaphore 연산</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 10 09 03" src="https://user-images.githubusercontent.com/12459864/126786403-d142893d-e779-4251-a7cb-0831523e35f5.png">
+
+<p>  <code>value는 block과 wake up의 기준</code></p>
+</li>
+</ul>
+<h3 id="Busy-wait-vs-Block-wakeup"><a href="#Busy-wait-vs-Block-wakeup" class="headerlink" title="Busy-wait vs Block/wakeup"></a>Busy-wait vs Block/wakeup</h3><ul>
+<li>Critical section의 길이가 긴 경우 Block/wakeup이 적당</li>
+<li>Critical section의 길이가 매우 짧은 경우 Block/wakeup 오버헤드가 busy-wait 오버헤드보다 더 커질 수 있음</li>
+<li>일반적으로는 Block/wakeup 방식이 더 좋음</li>
+</ul>
+<h2 id="Deadlock-and-Starvation"><a href="#Deadlock-and-Starvation" class="headerlink" title="Deadlock and Starvation"></a>Deadlock and Starvation</h2><ul>
+<li><p>Deadlock : 둘 이상의 프로세스가 서로 상대방에 의행 충족될 수 있는 event를 무한히 기다리는 현상</p>
+  <img width="400" alt="스크린샷 2021-07-23 오후 11 18 04" src="https://user-images.githubusercontent.com/12459864/126795452-7f6e8dec-dc11-4982-ba83-65ec421db03a.png">
+</li>
+<li><p>Starvation : <code>indefinite blocking</code>, 프로세스가 suspend된 이후에 해당하는 세마포어 큐에서 빠져나갈 수 없는 현상</p>
+</li>
+</ul>
+<h2 id="대표적인-Race-Condition-문제"><a href="#대표적인-Race-Condition-문제" class="headerlink" title="대표적인 Race Condition 문제"></a>대표적인 Race Condition 문제</h2><h3 id="Bounded-Buffer-Problem"><a href="#Bounded-Buffer-Problem" class="headerlink" title="Bounded-Buffer Problem"></a>Bounded-Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-23 오후 11 22 10" src="https://user-images.githubusercontent.com/12459864/126796039-cade610e-36bc-4a9b-987b-697188c75901.png">
+
+<ul>
+<li><p>shared data</p>
+<ul>
+<li>buffer 자체</li>
+<li>buffer 조작 변수 (empty/full buffer의 시작 위치)</li>
+</ul>
+</li>
+<li><p>Synchronization variables</p>
+<ul>
+<li><p>mutual exclusion -&gt; Need binary semaphore (Buffer의 사용 여부)</p>
+</li>
+<li><p>resource count -&gt; Need integer semaphore (남은 empty/full buffer의 수 표시)</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 27 27" src="https://user-images.githubusercontent.com/12459864/126796801-75ef6b43-9d0d-4c5e-a30a-d95971ff1d05.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Readers-Writers-Problem"><a href="#Readers-Writers-Problem" class="headerlink" title="Readers-Writers Problem"></a>Readers-Writers Problem</h3><ul>
+<li><p>한 프로세스가 DB에 write 중일 때 다른 process가 접근하면 안됨</p>
+</li>
+<li><p>read는 동시에 여럿이 해도 됨</p>
+</li>
+<li><p>solution</p>
+<ul>
+<li>Writer가 DB에 접근 허가를 아직 얻지 못한 상태에서는 모든 대기중인 Reader들을 다 DB에 접근하게 해준다</li>
+<li>Writer는 대기 중인 Reader가 하나도 없을 때 DB 접근이 허용된다</li>
+<li>일단 Wrtier가 DB에 접근 중이면 Reader들은 접근이 금지된다</li>
+<li>Wrtier가 DB에서 빠져나가야만 Reader의 접근이 허용된다</li>
+</ul>
+</li>
+<li><p>shared data</p>
+<ul>
+<li>DB 자체</li>
+<li>readcount; -&gt; 현재 DB에 접근 중인 Reader의 수</li>
+</ul>
+</li>
+<li><p>Synchronization variables</p>
+<ul>
+<li><p>mutex -&gt; 공유 변수 readcount의 mutual exclusion을 보장</p>
+</li>
+<li><p>db -&gt; reader와 writer가 공유 DB 자체를 올바르게 접근하게 하는 역할</p>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 39 11" src="https://user-images.githubusercontent.com/12459864/126798380-8a4486c7-98a4-4f6d-b49b-a42d8a5eebf5.png">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dining-Philosophers-Problem"><a href="#Dining-Philosophers-Problem" class="headerlink" title="Dining-Philosophers Problem"></a>Dining-Philosophers Problem</h3><img width="500" alt="스크린샷 2021-07-23 오후 11 48 06" src="https://user-images.githubusercontent.com/12459864/126799613-27f45259-1028-4e52-8f15-777c1bdc5adb.png">
+
+<ul>
+<li><p>위의 solution의 문제점</p>
+<ul>
+<li>Deadlock 가능성이 있다</li>
+<li>모든 철학자가 동시에 배가 고파져서 왼쪽 젓가락만 집을 경우</li>
+</ul>
+</li>
+<li><p>해결 방안</p>
+<ul>
+<li>4명의 철학자만이 동시에 테이블에 앉을 수 있도록 한다</li>
+<li>젓가락을 두 개 모두 집을 수 있을 때에만 젓가락을 집도록한다</li>
+<li>짝수(홀수) 철학자는 왼쪽(오른쪽) 젓가락부터 집도록한다</li>
+</ul>
+</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-23 오후 11 52 10" src="https://user-images.githubusercontent.com/12459864/126800179-689d5ff5-3df5-4fba-99a2-cfa033768de3.png">
+
+<h2 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h2><ul>
+<li><p>Semaphore의 문제점</p>
+<ul>
+<li><p>코딩하기 힘들다</p>
+</li>
+<li><p>정확성의 입증이 어렵다</p>
+</li>
+<li><p>자발적 협력이 필요하다</p>
+</li>
+<li><p>한 번의 실수가 모든 시스템에 치명적인 영향을 미친다</p>
+  <img width="300" alt="스크린샷 2021-07-23 오후 11 57 14" src="https://user-images.githubusercontent.com/12459864/126800849-f5b6c1b3-a26b-4ce8-a10e-c1a961958b6c.png">
+</li>
+</ul>
+</li>
+<li><p>모니터란?</p>
+<ul>
+<li><p>동시 수행중인 프로세스 사이에서 abstract data type의 안전한 공유를 보장하기 위한 high-level synchronization construct</p>
+  <img width="300" alt="스크린샷 2021-07-24 오전 12 01 53" src="https://user-images.githubusercontent.com/12459864/126801996-c765b406-a4dc-43bf-b363-a889113b4b3d.png"></li>
+<li><p>모니터 내에서는 한 번에 하나의 프로세스만이 활동 가능하다</p>
+</li>
+<li><p>프로그래머가 동기화 제약 조건을 명시적으로 코딩할 필요없음</p>
+</li>
+<li><p>프로세스가 모니터 안에서 대기할 수 있도록 하기 위해 <code>conditional variable</code> 사용</p>
+<ul>
+<li>condition x, y;</li>
+</ul>
+</li>
+<li><p>condition variable은 wait와 signal 연산에 의해서만 접근 가능</p>
+<ul>
+<li><p><code>x.wait();</code> : x.wait()을 invoke한 프로세스는 다른 프로세스가 x.signal()을 invoke하기 전까지는 suspend된다</p>
+</li>
+<li><p><code>x.signal();</code> : x.signal()은 정확하게 하나의 suspend된 프로세스를 resume한다. Suspend된 프로세스가 없으면 아무 일도 일어나지 않는다</p>
+<img width="600" alt="스크린샷 2021-07-24 오전 12 06 19" src="https://user-images.githubusercontent.com/12459864/126802092-30fc9555-362e-4ede-a636-63d728dde445.png">
+
+<p><code>monitor에 프로세스가 작업중이면 외부 entry queue에서 대기한다</code></p>
+<p><code>monitor내부에서 condition x가 없으면 x에 관한 queue에서 대기한다</code></p>
+<p><code>내부에서 작업중인 프로세스가 없거나 작업중인 프로세스가 condition 대기 queue에서 sleep하고 있으면 외부 작업 큐에서 프로세스가 monitor를 작업한다</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Monitor를-적용한-Bounded-Buffer-Problem"><a href="#Monitor를-적용한-Bounded-Buffer-Problem" class="headerlink" title="Monitor를 적용한 Bounded Buffer Problem"></a>Monitor를 적용한 Bounded Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 11 51" src="https://user-images.githubusercontent.com/12459864/126802932-f1e76993-dc72-47c1-90cd-7a8f66590721.png">
+
+<h3 id="Monitor를-적용한-Dining-Philosophers-Problem"><a href="#Monitor를-적용한-Dining-Philosophers-Problem" class="headerlink" title="Monitor를 적용한 Dining-Philosophers Problem"></a>Monitor를 적용한 Dining-Philosophers Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 12 05" src="https://user-images.githubusercontent.com/12459864/126803056-9f7ca7e7-1c4d-4e7e-bb10-51e527fd5833.png">
+
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/23/OS-7-Process-Synchronization/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/22/OS-6-CPU-Scheduling/"
                             aria-label=": OS-6-CPU Scheduling"
                         >

@@ -325,6 +325,106 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/"
+                            aria-label=": DATABASE-DML-INSERT UPDATE DELETE"
+                        >
+                            DATABASE-DML-INSERT UPDATE DELETE
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-26T20:00:15+09:00">
+	
+		    Oct 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><ul>
+<li><p>테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에 VALUES 뒤에 value 값이 순서대로 와야 합니다.</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> &lt;table_name&gt;(&lt;column_name_1&gt;, &lt;column_name_2&gt;, ...)</span><br><span class="line"><span class="keyword">VALUES</span>(&lt;value_1&gt;, &lt;value_2&gt;, ...)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test 데이터 베이스 선택</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; USE test;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>user1 테이블에 user_id, name, email, age, rdate를 입력</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user1(user_id, <span class="keyword">name</span>, email, age, rdate)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;pdj@gmail.com&quot;</span>, <span class="number">30</span>, <span class="keyword">now</span>()),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&quot;peter&quot;</span>, <span class="string">&quot;peter@daum.net&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2017-02-20&#x27;</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="string">&quot;alice&quot;</span>, <span class="string">&quot;alice@naver.com&quot;</span>, <span class="number">23</span>, <span class="string">&#x27;2018-01-05&#x27;</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="string">&quot;po&quot;</span>, <span class="string">&quot;po@gmail.com&quot;</span>, <span class="number">43</span>, <span class="string">&#x27;2002-09-16&#x27;</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="string">&quot;andy&quot;</span>, <span class="string">&quot;andy@gmail.com&quot;</span>, <span class="number">17</span>, <span class="string">&#x27;2016-04-28&#x27;</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="string">&quot;jin&quot;</span>, <span class="string">&quot;jin1224@gmail.com&quot;</span>, <span class="number">33</span>, <span class="string">&#x27;2013-09-02&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>city_2 테이블 생성</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> city_2 (</span><br><span class="line">    <span class="keyword">Name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    CountryCode <span class="built_in">CHAR</span>(<span class="number">3</span>),</span><br><span class="line">    District <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    Population <span class="built_in">INT</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>select 절에서 나온 결과데이터를 Insert</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> city_2</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">Name</span>, CountryCode, District, Population</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">WHERE</span> Population &gt; <span class="number">8000000</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h1><ul>
+<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. 또한 limit도 함께 사용해주면 좋습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">SET</span> &lt;column_name_1&gt; = &lt;value_1&gt;, &lt;column_name_2&gt; = &lt;value_2&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>jin 이름을 가지고 있는 사람의 나이를 20, 이메일을 <a href="mailto:&#x70;&#x64;&#x6a;&#x40;&#100;&#97;&#x75;&#x6d;&#x2e;&#110;&#101;&#116;">&#x70;&#x64;&#x6a;&#x40;&#100;&#97;&#x75;&#x6d;&#x2e;&#110;&#101;&#116;</a>으로 변경  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; UPDATE user1</span><br><span class="line"><span class="keyword">SET</span> age=<span class="number">20</span>, email=<span class="string">&quot;pdj@daum.net&quot;</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">&quot;jin&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="DELETE-DROP-TRUNCATE"><a href="#DELETE-DROP-TRUNCATE" class="headerlink" title="DELETE, DROP, TRUNCATE"></a>DELETE, DROP, TRUNCATE</h1><ul>
+<li>조건을 설정하여 데이터를 삭제할수 있습니다.</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> &lt;table_name&gt;</span><br><span class="line"><span class="keyword">WHERE</span> &lt;condition&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>2016-01-01 이전 데이터 삭제 (DML)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DELETE FROM user1</span><br><span class="line">WHERE rdate &lt; &quot;2016-01-01&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 구조를 남기고 모든 데이터를 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; TRUNCATE FROM user1</span><br></pre></td></tr></table></figure></li>
+<li><p>테이블 전체를 모두 삭제 (DLL)</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; DROP FROM user1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/26/DATABASE-DML-INSERT-UPDATE-DELETE/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/26/DATABASE-Constraint/"
                             aria-label=": DATABASE-Constraint"
                         >
@@ -1134,88 +1234,6 @@
                         <p>
                             <a
                                 href="/2020/10/23/K%EB%B2%88%EC%A7%B8-%EC%88%98/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/"
-                            aria-label=": 수 정렬하기2"
-                        >
-                            수 정렬하기2
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-23T18:22:26+09:00">
-	
-		    Oct 23, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Sorting/">Sorting</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 2751 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2751">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 정렬</p>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>데이터의 개수가 1000000개</p>
-</li>
-<li><p>NlogN의 정렬 알고리즘을 이용해야한다. -&gt; 병합, 퀵, 힙 정렬</p>
-</li>
-<li><p>기본 정렬 알고리즘으로 해결가능</p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-<ul>
-<li><p>병합 정렬</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span>(<span class="params">array</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array) &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    mid = len(array) // <span class="number">2</span></span><br><span class="line">    left = merge_sort(array[:mid])</span><br><span class="line">    right = merge_sort(array[mid:])</span><br><span class="line">    i, j, k = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">        <span class="keyword">if</span> left[i] &lt; left[j]:</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i + = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> i == len(left):</span><br><span class="line">        <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">            array[k] = right[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> j == len(right):</span><br><span class="line">        <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">            array[k] = left[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            k += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = merge_sort(array)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> array:</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>정렬 라이브러리</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">array = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    array.append(int(input()))</span><br><span class="line"></span><br><span class="line">array = sorted(array)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/23/%EC%88%98-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B02/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
