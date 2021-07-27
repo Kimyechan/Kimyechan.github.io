@@ -5,17 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Build Up">
-    <title>Archives - Build Up</title>
+    <meta name="generator" content="Run PSVM">
+    <title>Archives - Run PSVM</title>
     <meta name="author" content="Yechan Kim">
     
     
     
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
-<meta property="og:title" content="Build Up">
+<meta property="og:title" content="Run PSVM">
 <meta property="og:url" content="https://kimyechan.github.io/archives/page/4/index.html">
-<meta property="og:site_name" content="Build Up">
+<meta property="og:site_name" content="Run PSVM">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
@@ -63,7 +63,7 @@
             href="/"
             aria-label=""
         >
-            Build Up
+            Run PSVM
         </a>
     </div>
     
@@ -316,6 +316,83 @@
                         ">
                 
     <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2020/11/09/Algorithm-%EC%88%A8%EB%B0%95%EA%BC%AD%EC%A7%88/"
+                            aria-label=": Algorithm-숨박꼭질"
+                        >
+                            Algorithm-숨박꼭질
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-09T10:25:32+09:00">
+	
+		    Nov 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/BFS/">BFS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 1697 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1697">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li><p>그래프 탐색</p>
+</li>
+<li><p>BFS</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>특정 위치까지 이동하는 최단 시간을 계산</li>
+<li>이동 시간이 모두 1초로 동일, BFS를 이용하여 해결</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">MAX = <span class="number">100001</span></span><br><span class="line">n, k = map(int, input().split())</span><br><span class="line">array = [<span class="number">0</span>] * MAX</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>():</span></span><br><span class="line">    q = deque([n])</span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        now_pos = q.popleft()</span><br><span class="line">        <span class="keyword">if</span> now_pos == k:</span><br><span class="line">            <span class="keyword">return</span> array[now_post]</span><br><span class="line">        <span class="keyword">for</span> next_pos <span class="keyword">in</span> (now_pos - <span class="number">1</span>, now_pos + <span class="number">1</span>, now_pos * <span class="number">2</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= next_pos &lt; MAX <span class="keyword">and</span> <span class="keyword">not</span> array[next_pos]:</span><br><span class="line">                array[next_pos] = array[now_pos] + <span class="number">1</span></span><br><span class="line">                q.append(next_pos)</span><br><span class="line"></span><br><span class="line">print(bfs())</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/09/Algorithm-%EC%88%A8%EB%B0%95%EA%BC%AD%EC%A7%88/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
     
     
     <article class="postShorten postShorten--thumbnailimg-bottom">
@@ -1404,330 +1481,6 @@
                         <p>
                             <a
                                 href="/2020/10/29/DATABASE-Crontab/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
-                            aria-label=": DATABASE-NoSQL(MongoDB)"
-                        >
-                            DATABASE-NoSQL(MongoDB)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-29T20:39:35+09:00">
-	
-		    Oct 29, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h1><h2 id="MongoDB-Setting"><a href="#MongoDB-Setting" class="headerlink" title="MongoDB Setting"></a>MongoDB Setting</h2><ol>
-<li><p>MongoDB 설치 및 설정</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update -y</span><br><span class="line">sudo apt upgrade -y</span><br><span class="line">sudo apt install -y mongodb</span><br><span class="line">sudo systemctl status mongodb</span><br><span class="line">sudo vi /etc/mongodb.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> bind_ip = 0.0.0.0</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> auth = <span class="literal">true</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 패스워드 설정</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mongo</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> use admin</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db.createUser(&#123; user: <span class="string">&quot;rada&quot;</span>, <span class="built_in">pwd</span>: <span class="string">&quot;radapw&quot;</span>, roles: [ <span class="string">&quot;root&quot;</span> ] &#125;)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> quit()</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart mongodb</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> aws 인스턴스 27017 포트 접속 허용</span></span><br></pre></td></tr></table></figure>
-
-<p> mongo 명령어를 입력하면 mongo shell에 접속됩니다.</p>
-</li>
-<li><p>Install Robomongo</p>
-<p> <a target="_blank" rel="noopener" href="https://robomongo.org/">https://robomongo.org/</a> 페이지에서 경로에서 ROBO 3T 다운로드 후 설치 합니다.</p>
-</li>
-<li><p>Connection</p>
-<p> MongoDB Connections에서 ip를 입력하여 서버의 mongoDB에 접속합니다.</p>
-</li>
-</ol>
-<hr>
-<h2 id="문법"><a href="#문법" class="headerlink" title="문법"></a>문법</h2><p>ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/">https://docs.mongodb.com/v3.6/reference/</a></p>
-<ul>
-<li><p>Create Database</p>
-<ul>
-<li><p>mongo 라는 이름의 데이터 베이스 생성</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mongo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>현재 사용중인 데이터 베이스 확인</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>database list 확인</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> dbs</span><br></pre></td></tr></table></figure>
-<ul>
-<li>데이터 베에스를 생성후에 최소 1개이상의 document를 추가해야 생성된 데이터 베이스가 보인다</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>- document 생성
-    &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;use&lt;/span&gt; mongo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.user.insert(&amp;#123;&lt;span class=&quot;string&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&amp;quot;alice&amp;quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;age&amp;quot;&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&amp;quot;email&amp;quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&amp;quot;alice@gmail.com&amp;quot;&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
-<ul>
-<li><p>Delete Database</p>
-<ul>
-<li>현재 사용중인 데이터 베이스 삭제  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropDatabase()</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>Create Collection</p>
-<p>  refer <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/method/db.createCollection/">https://docs.mongodb.com/v3.6/reference/method/db.createCollection/</a></p>
-<ul>
-<li><p>syntax</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(collection 이름, [option])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>option</p>
-<ul>
-<li>capped : true로 설정하면 collection의 최대 용량을 설정 (최대 용량의 크기는 size 옵션으로 설정), 설정된 최대용량 이상으로 데이터가 입력되면 오래된 데이터 부터 자동으로 삭제됩니다.</li>
-<li>autoIndex : true로 설정하면 _id 필드에 index가 자동으로 생성됩니다.</li>
-<li>size : 숫자 데이터를 사용하며 collection의 최대 사이즈를 byte 단위로 지정</li>
-<li>max : 숫자 데이터를 사용하며 최대 document 갯수를 설정</li>
-</ul>
-</li>
-<li><p>user 컬렉션을 생성</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;user&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>autoIndex와 max 옵션을 설정하여 info 컬렉션을 생성</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;info1&quot;, &#123; autoIndexId: true, capped: true, size: 500, max:5 &#125;)</span><br><span class="line">db.createCollection(&quot;info2&quot;, &#123; autoIndexId: true, capped: true, size: 50, max:5 &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>createCollection을 사용하지 않고 article 컬렉션을 생성</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.articles.insert( &#123;&quot;title&quot;:&quot;data science&quot;, &quot;contents&quot;:&quot;mongodb&quot; &#125; )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>컬렉션 리스트 확인</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> collections</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Delete Collection</p>
-<ul>
-<li>articles 컬렉션 삭제  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.articles.drop()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Make Document</p>
-<ul>
-<li><p>syntax</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.&lt;collection_name&gt;.insert(&lt;document&gt;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>info 컬렉션에 document 추가</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;)</span><br><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;)</span><br><span class="line">db.info1.insert(&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>한번에 여러개의 document 추가</p>
-<ul>
-<li><p>max:5 옵션 제한에 걸려 5개의 데이터가 info1에 들어간다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.info1.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>size:50 옵션 제한에 걸려 4개의 데이터가 info2에 입력된다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.info2.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>info collection 생성하면서 document 추가</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.info.insert( [</span><br><span class="line">&#123; &quot;subject&quot;:&quot;python&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;web&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;sql&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;java&quot;, &quot;level&quot;:3 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;html&quot;, &quot;level&quot;:1 &#125;,</span><br><span class="line">&#123; &quot;subject&quot;:&quot;css&quot;, &quot;level&quot;:2 &#125;,</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Delete Document</p>
-<ul>
-<li>level2인 데이터 삭제 : 제약조건이 걸려있는 컬렉션의 도큐먼트는 삭제가 안됩니다.  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.remove( &#123;level:2&#125; )</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Find</p>
-<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/method/db.collection.find/index.html">https://docs.mongodb.com/manual/reference/method/db.collection.find/index.html</a></p>
-<ul>
-<li><p>syntax</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(query, projection)</span><br></pre></td></tr></table></figure>
-<p>  query : document 조회 조건을 설정. 모든 document를 조회 할때는 ({})를 사용</p>
-<p>  projection : document를 조회할때 보여지는 필드(컬럼)를 정의</p>
-</li>
-<li><p>query</p>
-<ul>
-<li><p>기본 document 조회</p>
-<ul>
-<li><p>info 컬렉션에 있는 모든 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.info.find()</span><br><span class="line">db.getCollection(&#x27;info&#x27;).find(&#123;&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>subject가 python인 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;subject&quot;: &quot;python&quot;&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>비교 연산자</p>
-<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.6/reference/operator/query/">https://docs.mongodb.com/v3.6/reference/operator/query/</a></p>
-<ul>
-<li><p>level이 2 이하인 document를 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;level&quot;: &#123;$lte: 2&#125; &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>level이 3 이상인 document를 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&quot;level&quot;: &#123;$gte: 3&#125; &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>subject가 java와 python을 포함하는 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find( &#123;&quot;subject&quot;: &#123;$in: [&quot;java&quot;, &quot;python&quot;]&#125;&#125; )</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>논리 연산자</p>
-<ol>
-<li>$or : 조건중 하나라도 true이면 true</li>
-<li>$and : 모든 조건이 true이면 true</li>
-<li>$not : 조건중 하나라도 false이면 true</li>
-<li>$nor : 모든 조건이 false이면 true (or와 반대 개념)</li>
-</ol>
-<ul>
-<li><p>subject가 python이고 level이 3이상인 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; $and: [ &#123; &quot;subject&quot;:&quot;python&quot; &#125;, &#123; &quot;level&quot;: &#123;$gte: 3&#125; &#125; ] &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>subject가 python이아니고 level이 1이하가 아닌 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; $nor: [ &#123; &quot;subject&quot;:&quot;python&quot; &#125;, &#123; &quot;level&quot;: &#123;$lte: 1&#125; &#125; ] &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>level이 2보다 크지 않은 document 조회 (2 포함)</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123; &quot;level&quot;: &#123; $not: &#123;$gt: 2&#125; &#125; &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>$where</p>
-<ul>
-<li><p>$where 연산자를 사용하면 자바스크립트 표현식 사용이 가능합니다.</p>
-</li>
-<li><p>level이 1인 document 조회</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find( &#123; $where: &quot;this.level == 1&quot;&#125; )</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>projection</p>
-<p>  document를 조회할때 보여지는 필드(컬럼)를 정의합니다.</p>
-<ul>
-<li><p>Basic</p>
-</li>
-<li><p>subject와 comments만 출력되도록 find</p>
-<ul>
-<li>설정을 true 값을 설정하던가 false 값을 설정합니다. ( _id는 따로 설정을 안하면 true )<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.info.find(&#123;&#125;,&#123;&quot;_id&quot;:false, &quot;level&quot;:false&#125;)</span><br><span class="line">db.info.find(&#123;&#125;,&#123;&quot;subject&quot;:true, &quot;level&quot;:true&#125;)</span><br><span class="line">db.info.find(&#123;&#125;,&#123;&quot;_id&quot;:false, &quot;subject&quot;:true, &quot;level&quot;:true&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Find Method</p>
-<p>  find method를 사용하면 find를 사용한 document의 결과를 가공하여 출력할수 있습니다.</p>
-<ul>
-<li><p>sort</p>
-<ul>
-<li>document를 정렬시켜 줍니다.</li>
-<li>‘sort({key: value})’ 와 같은 포멧으로 사용을 하며 key는 정렬할 필드명을 작성하고, value는 오름차순은 1, 내림차순을 -1을 넣어주면 됩니다.</li>
-</ul>
-</li>
-<li><p>info 컬렉션의 document를 level 오름차순으로 정렬</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:1&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>info 컬렉션의 document를 level 내림차순으로 정렬</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>level을 기준으로 내림차순으로 정렬한 후 subject를 기준으로 오름차순으로 정렬</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1, &quot;subject&quot;:1&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>limit</p>
-<ul>
-<li><p>limit을 사용하면 document출력 결과의 수룰 제한할수 있습니다.</p>
-</li>
-<li><p>document의 결과를 3개 까지만 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().limit(3)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>document의 결과를 level로 내림차순으로 정렬하고 3개까지만 출력</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().sort(&#123;&quot;level&quot;:-1&#125;).limit(3)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>skip</p>
-<p>  skip을 검색한 document의 결과의 시작부분을 설정할때 사용합니다.</p>
-<ul>
-<li><p>document를 3번째 부터 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.find().skip(2)</span><br></pre></td></tr></table></figure>
-
-<p><code>limit, skip을 함께 사용해서 mysql의 limit과 같이 사용할수 있습니다.</code></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>update</p>
-<p>  ref : <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/command/update/index.html">https://docs.mongodb.com/manual/reference/command/update/index.html</a></p>
-<ul>
-<li><p>syntax</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update( query, update, &#123; upsert: &lt;bool&gt;, multi: &lt;bool&gt; &#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>upsert : insert와 update의 합성어 (데이터가 있으면 update, 없으면 insert 한다는 의미)</p>
-</li>
-<li><p>multi : true로 설정되면 여려개의 document를 수정합니다. 기본값은 false</p>
-</li>
-</ul>
-</li>
-<li><p>특정 document를 새로운 document로 수정하기</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; &quot;subject&quot;: &quot;html&quot; &#125;,</span><br><span class="line">&#123; &quot;subject&quot;: &quot;sass&quot;, &quot;level&quot;:2&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">db.info.update(</span><br><span class="line">&#123; &quot;subject&quot;: &quot;less&quot; &#125;,</span><br><span class="line">&#123; &quot;subject&quot;: &quot;less&quot;, &quot;level&quot;: 2&#125;,</span><br><span class="line">&#123; &quot;upsert&quot;: true&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>$set, $unset</p>
-<ul>
-<li><p>$set을 사용하면 특정 document의 필드를 수정할수 있습니다.</p>
-</li>
-<li><p>$unset를 사용하면 특정 document의 필드 제거할수 있습니다.</p>
-</li>
-<li><p>python의 level을 3으로 수정 (한개의 데이터만 수정)</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.info.update( &#123; subject: &quot;java&quot; &#125;, &#123; $set: &#123; level: 4 &#125; &#125; )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>level 2를 level 1로 수정 (여러개의 데이터 수정)</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: 2 &#125;,</span><br><span class="line">&#123; $set: &#123; level: 1 &#125; &#125;,</span><br><span class="line">&#123; multi: true &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>subject가 sass인 document의 level필드 삭제</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; subject: &quot;sass&quot; &#125;,</span><br><span class="line">&#123; $unset: &#123;level: 1&#125; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>  <code>level: 1의 1은 true를 의미합니다.</code></p>
-</li>
-<li><p>level이 2이하인 데이터를 1로 수정하기</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: &#123;$lte: 2&#125; &#125;, </span><br><span class="line">&#123; $set: &#123;level: 1&#125; &#125;,</span><br><span class="line">&#123; multi: 1 &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>level이 없는 데이터 level 추가하기</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.info.update(</span><br><span class="line">&#123; level: &#123;$exists: false&#125; &#125;,</span><br><span class="line">&#123; $set: &#123;level: 2&#125; &#125;,</span><br><span class="line">&#123; multi: 1 &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Function</p>
-<p>  자바스크립트 문법으로 함수 작성이 가능합니다.</p>
-<ul>
-<li><p>skip 함수</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var showSkip = function(<span class="keyword">start</span>)&#123;</span><br><span class="line"><span class="keyword">return</span> db.info.find().skip(<span class="keyword">start</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">showSkip(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/29/DATABASE-NoSQL-MongoDB/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
