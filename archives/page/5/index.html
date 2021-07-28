@@ -326,6 +326,161 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/29/DATABASE-Crontab/"
+                            aria-label=": DATABASE-Crontab"
+                        >
+                            DATABASE-Crontab
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-29T21:31:52+09:00">
+	
+		    Oct 29, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="Crontab"><a href="#Crontab" class="headerlink" title="Crontab"></a>Crontab</h1><ul>
+<li><p>유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.</p>
+</li>
+<li><p>crontab basic</p>
+<ul>
+<li><p>스케쥴 설정</p>
+<p>  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -e</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>스케쥴 리스트 확인</p>
+<p>  현재 crontab의 스케쥴을 확인할 수 있다.</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -l</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>주기 설정</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>crontab -e 설정</p>
+</li>
+<li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
+<ul>
+<li><p>요일에서 0과 7은 일요일</p>
+</li>
+<li><p>2분 간격으로 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>매시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>매일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>일요일 5시 10분과 20분에 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>time zone 변경</p>
+<p>  타임존 변경</p>
+<ul>
+<li><p>현재 사용 시간 확인</p>
+<p>  $ timedatectl</p>
+</li>
+<li><p>사용하는 파일 심볼릭 링크확인</p>
+<p>  $ ls -l /etc/localtime</p>
+</li>
+<li><p>사용 할수 있는 타임존 확인</p>
+<p>  $ timedatectl list-timezones | grep Asia</p>
+</li>
+<li><p>타임존 변경</p>
+<p>  $ sudo timedatectl set-timezone Asia/Seoul</p>
+</li>
+<li><p>심볼릭 링크 수정</p>
+<p>  $ sudo unlink /etc/localtime</p>
+<p>  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
+</li>
+</ul>
+</li>
+<li><p>vim 에디터 인코딩 변경</p>
+<p>  $ vi .vimrc</p>
+<p>  set encoding=utf-8</p>
+</li>
+<li><p>crontab 로그 확인</p>
+<p>  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.</p>
+<p>  $ grep CRON /var/log/syslog</p>
+</li>
+<li><p>crontab 에러 확인 및 해결</p>
+<p>  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</p>
+<p>  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>  discarding output)</p>
+</li>
+</ul>
+<pre><code>- MTA : Mail Transfer Agent
+- 에러 메시지 확인하는 방법 1
+    - $ sudo apt-get install postfix
+    - $ cat /var/mail/ubuntu
+- 에러 메시지 확인하는 방법 2
+    - $ sudo apt install mailutils
+    - $ mail
+- crontab에서 실행되는 python 환경
+
+    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\* \* \* \* \* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+
+- pyenv 환경에 있는 python으로 실행
+
+    -  직접 python 경로 입력
+
+       \* \* \* \* \* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt
+
+    - PATH 설정
+
+      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin
+
+      \* \* \* \* \* python /home/ubuntu/version.py &gt;&gt; version.txt</code></pre>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/29/DATABASE-Crontab/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/29/DATABASE-NoSQL-MongoDB/"
                             aria-label=": DATABASE-NoSQL(MongoDB)"
                         >
@@ -1670,155 +1825,6 @@
                         <p>
                             <a
                                 href="/2020/10/27/Algorithm-%EA%B3%B5%EC%9C%A0%EA%B8%B0-%EC%84%A4%EC%B9%98/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/26/DATABASE-JOIN-UNION/"
-                            aria-label=": DATABASE-JOIN UNION"
-                        >
-                            DATABASE-JOIN UNION
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-26T20:17:58+09:00">
-	
-		    Oct 26, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/DATABASE/">DATABASE</a>, <a class="category-link" href="/categories/DATABASE/DML/">DML</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h1><ul>
-<li><p>JOIN은 여러개의 테이블에서 데이터를 모아서 보여줄 때 사용됩니다. </p>
-</li>
-<li><p>JOIN에는 INNER JOIN, LEFT JOIN, RIGHT JOIN이 있습니다.</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/97171517-ed7d9980-17d0-11eb-83f2-fd3cfde407e1.png" alt="스크린샷 2020-10-26 오후 9 18 54"></p>
-</li>
-</ul>
-<h2 id="MAKE-TEST-TABLE-amp-DATA"><a href="#MAKE-TEST-TABLE-amp-DATA" class="headerlink" title="MAKE TEST TABLE &amp; DATA"></a>MAKE TEST TABLE &amp; DATA</h2><ul>
-<li>create table &amp; data  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span> (</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (user_id)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> addr (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    addr <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    user_id <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(<span class="keyword">name</span>)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;jin&quot;</span>),</span><br><span class="line">(<span class="string">&quot;po&quot;</span>),</span><br><span class="line">(<span class="string">&quot;alice&quot;</span>),</span><br><span class="line">(<span class="string">&quot;petter&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> addr(addr, user_id)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&quot;seoul&quot;</span>, <span class="number">1</span>),</span><br><span class="line">(<span class="string">&quot;pusan&quot;</span>, <span class="number">2</span>),</span><br><span class="line">(<span class="string">&quot;deajeon&quot;</span>, <span class="number">3</span>),</span><br><span class="line">(<span class="string">&quot;deagu&quot;</span>, <span class="number">5</span>),</span><br><span class="line">(<span class="string">&quot;seoul&quot;</span>, <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h2><ul>
-<li><p>두 테이블 사이에 공통된 값이 없는 row는 출력하지 않는다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>world 데이터베이스에서 도시이름과 국가이름을 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city</span><br><span class="line"><span class="keyword">JOIN</span> country</span><br><span class="line"><span class="keyword">ON</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>아래와 같이 사용할수도 있다.</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> city.name <span class="keyword">AS</span> country_name, country.name <span class="keyword">AS</span> city_name</span><br><span class="line"><span class="keyword">FROM</span> city, country</span><br><span class="line"><span class="keyword">WHERE</span> city.CountryCode = country.code</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="LEFT-JOIN"><a href="#LEFT-JOIN" class="headerlink" title="LEFT JOIN"></a>LEFT JOIN</h2><ul>
-<li><p>왼쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="RIGHT-JOIN"><a href="#RIGHT-JOIN" class="headerlink" title="RIGHT JOIN"></a>RIGHT JOIN</h2><ul>
-<li><p>오른쪽 테이블을 기준으로 왼쪽 테이블의 모든 데이터가 출력되고 매핑되는 키값이 없으면 NULL로 출력된다.</p>
-</li>
-<li><p>두 테이블을 합쳐 id, name, addr 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="JOIN과-DISDINCT의-사용"><a href="#JOIN과-DISDINCT의-사용" class="headerlink" title="JOIN과 DISDINCT의 사용"></a>JOIN과 DISDINCT의 사용</h3><ul>
-<li><p>지역과 대륙별 사용하는 언어 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>대륙과 지역별 사용하는 언어의 수 출력</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sub1.region, sub1.continent, <span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="keyword">count</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> country.Region, country.continent, countrylanguage.Language</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> countrylanguage.CountryCode = country.Code</span><br><span class="line">) <span class="keyword">AS</span> sub1</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> sub1.region, sub1.continent</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="테이블-세개-조인하기"><a href="#테이블-세개-조인하기" class="headerlink" title="테이블 세개 조인하기"></a>테이블 세개 조인하기</h3><ul>
-<li>국가별, 도시별, 언어의 사용율  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country</span><br><span class="line"><span class="keyword">JOIN</span> city</span><br><span class="line"><span class="keyword">ON</span> country.code = city.countrycode</span><br><span class="line"><span class="keyword">JOIN</span> countrylanguage</span><br><span class="line"><span class="keyword">ON</span> country.code = countrylanguage.countrycode</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> country.name <span class="keyword">as</span> country_name, city.name <span class="keyword">as</span> city_name,</span><br><span class="line">countrylanguage.language, countrylanguage.percentage</span><br><span class="line"><span class="keyword">FROM</span> country, city, countrylanguage</span><br><span class="line"><span class="keyword">WHERE</span> country.code = city.countrycode <span class="keyword">and</span> country.code = countrylanguage.countrycode</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="UNION"><a href="#UNION" class="headerlink" title="UNION"></a>UNION</h1><blockquote>
-<p>UNION은 SELECT 문의 결과 데이터를 하나로 합쳐서 출력합니다. </p>
-</blockquote>
-<blockquote>
-<p>컬럼의 갯수와 타입, 순서가 같아야 합니다.</p>
-</blockquote>
-<blockquote>
-<p>UNION은 자동으로 distinct를 하여 중복을 제거해 줍니다. </p>
-</blockquote>
-<blockquote>
-<p>중복제거를 안하고 컬럼 데이터를 합치고 싶으면 UNION ALL을 사용합니다.</p>
-</blockquote>
-<blockquote>
-<p>또한 UNION을 이용하면 Full Outer Join을 구현할수 있습니다.</p>
-</blockquote>
-<ul>
-<li><p>UNION</p>
-<ul>
-<li>user 테이블의 name 컬럼과 addr 테이블의 addr 컬럼의 데이터를 하나로 함쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>UNION ALL</p>
-<ul>
-<li>중복데이터를 제거하지 않고 결과 데이터 합쳐서 출력  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> addr</span><br><span class="line"><span class="keyword">FROM</span> addr</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>FULL OUTER JOIN</p>
-<ul>
-<li>union을 이용하여 full outer join 구현  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, user.name, addr.addr</span><br><span class="line"><span class="keyword">FROM</span> <span class="keyword">user</span></span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> addr</span><br><span class="line"><span class="keyword">ON</span> user.user_id = addr.user_id</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/26/DATABASE-JOIN-UNION/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

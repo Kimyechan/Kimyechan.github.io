@@ -326,6 +326,83 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/"
+                            aria-label=": Algorithm-바이러스"
+                        >
+                            Algorithm-바이러스
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-09T10:39:42+09:00">
+	
+		    Nov 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/DFS/">DFS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 2606 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/2606">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li><p>그래프 탐색</p>
+</li>
+<li><p>DFS</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>시작 정점에서부터 도달할 수 있는 노드의 수를 계산</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line">m = int(input())</span><br><span class="line">adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">visited = [<span class="literal">False</span>] * (n + <span class="number">1</span>)</span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    adj[x].append(y)</span><br><span class="line">    adj[y].append(X)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">now_pos</span>):</span></span><br><span class="line">    <span class="keyword">global</span> count</span><br><span class="line">    count += <span class="number">1</span></span><br><span class="line">    visited[now_pos] = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> next_pos <span class="keyword">in</span> adj[now_pos]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> visited[next_pos]:</span><br><span class="line">            dfs(next_pos)</span><br><span class="line"></span><br><span class="line">dfs(<span class="number">1</span>)</span><br><span class="line">print(count - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/09/Algorithm-%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/09/Algorithm-%EC%88%A8%EB%B0%95%EA%BC%AD%EC%A7%88/"
                             aria-label=": Algorithm-숨박꼭질"
                         >
@@ -1326,161 +1403,6 @@
                         <p>
                             <a
                                 href="/2020/10/30/Java-Advanced11-RegularExpressions/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/29/DATABASE-Crontab/"
-                            aria-label=": DATABASE-Crontab"
-                        >
-                            DATABASE-Crontab
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-29T21:31:52+09:00">
-	
-		    Oct 29, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="Crontab"><a href="#Crontab" class="headerlink" title="Crontab"></a>Crontab</h1><ul>
-<li><p>유닉스 OS 계열에서 특정 시간에 특정 작업을 해야하는 경우 사용하는 스케쥴러입니다.</p>
-</li>
-<li><p>crontab basic</p>
-<ul>
-<li><p>스케쥴 설정</p>
-<p>  아래의 커멘드를 입력하면 스케줄을 설정할수 있는 vi 에디터 페이지가 생성된다. 여기에 어떤 주기로 어떤 파일을 실행할지에 대한 리스트를 작성해주면 된다.</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -e</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>스케쥴 리스트 확인</p>
-<p>  현재 crontab의 스케쥴을 확인할 수 있다.</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> crontab -l</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>주기 설정</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi time.py</span><br><span class="line"></span><br><span class="line">import datetime</span><br><span class="line">today = datetime.datetime.now()</span><br><span class="line">print(str(today))</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>crontab -e 설정</p>
-</li>
-<li><p>*  *  *  *  * -&gt;<br>분(0-59) | 시간(0-23) | 일(1-31) | 월(1-12) | 요일(0-7)</p>
-<ul>
-<li><p>요일에서 0과 7은 일요일</p>
-</li>
-<li><p>2분 간격으로 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;2 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-<li><p>매시 10분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-<li><p>매시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 * * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>매일 5시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * * python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>일요일 5시 10분과 20분에 실행</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10,20 5 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>5시에서 10시까지 매시에 5분마다 time.py를 실행하고 결과를 time.txt에 저장</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&#x2F;5 5-10 * * 0 python3 &#x2F;home&#x2F;ubuntu&#x2F;time.py &gt;&gt; time.txt</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>time zone 변경</p>
-<p>  타임존 변경</p>
-<ul>
-<li><p>현재 사용 시간 확인</p>
-<p>  $ timedatectl</p>
-</li>
-<li><p>사용하는 파일 심볼릭 링크확인</p>
-<p>  $ ls -l /etc/localtime</p>
-</li>
-<li><p>사용 할수 있는 타임존 확인</p>
-<p>  $ timedatectl list-timezones | grep Asia</p>
-</li>
-<li><p>타임존 변경</p>
-<p>  $ sudo timedatectl set-timezone Asia/Seoul</p>
-</li>
-<li><p>심볼릭 링크 수정</p>
-<p>  $ sudo unlink /etc/localtime</p>
-<p>  $ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime</p>
-</li>
-</ul>
-</li>
-<li><p>vim 에디터 인코딩 변경</p>
-<p>  $ vi .vimrc</p>
-<p>  set encoding=utf-8</p>
-</li>
-<li><p>crontab 로그 확인</p>
-<p>  아래의 명령으로 crontab의 시스템 로그를 확인 할수 있습니다.</p>
-<p>  $ grep CRON /var/log/syslog</p>
-</li>
-<li><p>crontab 에러 확인 및 해결</p>
-<p>  에러가 발생하면 아래와 같은 에러 로그를 확인할수 있습니다.</p>
-<p>  Mar 4 07:42:01 ip-172-31-3-64 CRON[7494]: (CRON) info (No MTA installed,<br>  discarding output)</p>
-</li>
-</ul>
-<pre><code>- MTA : Mail Transfer Agent
-- 에러 메시지 확인하는 방법 1
-    - $ sudo apt-get install postfix
-    - $ cat /var/mail/ubuntu
-- 에러 메시지 확인하는 방법 2
-    - $ sudo apt install mailutils
-    - $ mail
-- crontab에서 실행되는 python 환경
-
-    - crontab 에서는 .bash_profile이 실행되지 않기때문에 pyenv 환경이 적용되지 않습니다.
-
-        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vi version.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import sys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(sys.version.split(&amp;quot; &amp;quot;)[0])&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-
-        &lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\* \* \* \* \* python /home/ubuntu/version.py &amp;gt;&amp;gt; version.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
-
-- pyenv 환경에 있는 python으로 실행
-
-    -  직접 python 경로 입력
-
-       \* \* \* \* \* /home/ubuntu/.pyenv/versions/python3/bin/python /home/ubuntu/version.py &gt;&gt; version.txt
-
-    - PATH 설정
-
-      PATH=/usr/local/bin/:/sbin:/bin:/usr/sbin:/home/ubuntu/.pyenv/versions/python3/bin
-
-      \* \* \* \* \* python /home/ubuntu/version.py &gt;&gt; version.txt</code></pre>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/29/DATABASE-Crontab/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

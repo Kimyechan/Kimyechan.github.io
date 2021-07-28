@@ -325,6 +325,318 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/28/OS-10-Virtual-Memory/"
+                            aria-label=": OS-10-Virtual Memory"
+                        >
+                            OS-10-Virtual Memory
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-28T10:34:54+09:00">
+	
+		    Jul 28, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Demand-Paging"><a href="#Demand-Paging" class="headerlink" title="Demand Paging"></a>Demand Paging</h2><ul>
+<li>실제로 필요할 때 page를 메모리에 올리는 것<ul>
+<li>I/O 양의 감소 -&gt; 많은 프로세스가 메모리에 올라올 수 있기 때문에 </li>
+<li>Memory 사용량 감소</li>
+<li>빠른 응답 시간</li>
+<li>더 많은 사용자 수용</li>
+</ul>
+</li>
+<li>Valid / Invalid bit의 사용<ul>
+<li>Invalid의 의미<ul>
+<li>사용되지 않은 주소 영역인 경우</li>
+<li>페이지가 물리적 메모리에 없는 경우</li>
+</ul>
+</li>
+<li>처음에는 모든 page entry가 invalid로 초기화</li>
+<li>address translation 시에 invalid bit이 set되어 있으면</li>
+<li><code>-&gt; page fault</code></li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오전 11 11 02" src="https://user-images.githubusercontent.com/12459864/127252568-5da8527d-a7ce-4b66-8004-cca12522f83d.png">
+
+<h2 id="Page-Fault"><a href="#Page-Fault" class="headerlink" title="Page Fault"></a>Page Fault</h2><ul>
+<li>invalid page를 접근하면 MMU가 trap을 발생시킴 (page fault trap)</li>
+<li>Kernel mode로 들어가서 page fault handler가 invoke됨</li>
+<li>다음과 같은 순서로 page fault를 처리한다<ol>
+<li>Invalid reference? (e.g. bad address, protection violation) =&gt; abort process</li>
+<li>Get an empty page frame. (없으면 뺏어온다: replace)</li>
+<li>해당 페이지를 disk에서 memory로 읽어온다<ol>
+<li>disk I/O가 끝나기까지 이 프로세스는 CPU를 preempt 당함 (block)</li>
+<li>Disk read 가 끝나면 page tables entry 기록, valid/invalid bit = “valid”</li>
+<li>ready queue에 process를 insert -&gt; dispatch later</li>
+</ol>
+</li>
+<li>이 프로세스가 CPU를 잡고 다시 running</li>
+<li>아까 중단되었던 instruction을 재개</li>
+</ol>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오전 11 19 35" src="https://user-images.githubusercontent.com/12459864/127253275-31bcc838-634a-4d2c-ade2-423abd2a02c4.png">
+
+<ul>
+<li>Demand Paging의 성능<ul>
+<li>Page Fault Rate 0 &lt;= p &lt;= 1.0<ul>
+<li>if p = 0, no page faults</li>
+<li>if p = 1, every reference is a fault</li>
+</ul>
+</li>
+<li>Effective Acess Time  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x3D; (1 - p) * (memory access) </span><br><span class="line">    + p * (OS &amp; HW page fault overhead</span><br><span class="line">            + [swap page out if needed]</span><br><span class="line">            + swap page in</span><br><span class="line">            + OS &amp; HW restart overhead)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Free-frame이-없는-경우"><a href="#Free-frame이-없는-경우" class="headerlink" title="Free frame이 없는 경우"></a>Free frame이 없는 경우</h2><ul>
+<li>Page replacement<ul>
+<li>어떤 frame을 빼앗아올지 결정해야 함</li>
+<li>곧바로 사용되지 않을 page를 쫓아내는 것이 좋음</li>
+<li>동일한 페이지가 여러 번 메모리에 쫓겨났다가 다시 들어올 수 있음</li>
+</ul>
+</li>
+<li>Replacement Algorithm<ul>
+<li>page-fault을 최소화하는 것이 목표</li>
+<li>알고리즘의 평가<ul>
+<li>주어진 page reference string에 대해 page fault를 얼마나 내는지 조사</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오전 11 32 51" src="https://user-images.githubusercontent.com/12459864/127254407-210c62e3-3254-40ba-9a9b-5f2d20b9da94.png">
+
+<h2 id="Page-Replacement-Algorithm"><a href="#Page-Replacement-Algorithm" class="headerlink" title="Page Replacement Algorithm"></a>Page Replacement Algorithm</h2><h3 id="Optimal-Algorithm"><a href="#Optimal-Algorithm" class="headerlink" title="Optimal Algorithm"></a>Optimal Algorithm</h3><ul>
+<li>MIN(OPT): 가장 먼 미래에 참조되는 page를 replace</li>
+<li>4 frames example  <img width="500" alt="스크린샷 2021-07-28 오전 11 39 36" src="https://user-images.githubusercontent.com/12459864/127254963-ad23c017-3daf-4566-8c17-9a2a2f97d149.png"></li>
+<li>미래에 참조를 어떻게 아는가?<ul>
+<li>Offline algorithm</li>
+</ul>
+</li>
+<li>다른 알고리즘의 성능에 대한 upper bound 제공<ul>
+<li>Belady’s optiaml algorithm, MIN, OPT 등으로 불림</li>
+</ul>
+</li>
+</ul>
+<h3 id="FIFO-First-In-First-Out-Algorithm"><a href="#FIFO-First-In-First-Out-Algorithm" class="headerlink" title="FIFO (First In First Out) Algorithm"></a>FIFO (First In First Out) Algorithm</h3><ul>
+<li><p>FIFO: 먼저 들어온 것을 먼저 내쫓음</p>
+  <img width="500" alt="스크린샷 2021-07-28 오전 11 43 13" src="https://user-images.githubusercontent.com/12459864/127255283-72cc7d5b-4fa3-4d1a-8ba9-76b6629161ac.png">
+
+<p>  <code>FIFO Algorithm은 Page frame을 늘렸을 때 Page fault가 더 발생할 수 있다</code></p>
+</li>
+</ul>
+<h3 id="LRU-Least-Recently-Used-Algorithm"><a href="#LRU-Least-Recently-Used-Algorithm" class="headerlink" title="LRU (Least Recently Used) Algorithm"></a>LRU (Least Recently Used) Algorithm</h3><ul>
+<li>LRU: 가장 오래 전에 참조된 것을 지움  <img width="500" alt="스크린샷 2021-07-28 오전 11 45 03" src="https://user-images.githubusercontent.com/12459864/127255485-835ae0e1-2a38-4e26-bf76-8346ea1c0fe3.png">
+
+</li>
+</ul>
+<h3 id="LFU-Least-Frequently-Used-Algorithm"><a href="#LFU-Least-Frequently-Used-Algorithm" class="headerlink" title="LFU (Least Frequently Used) Algorithm"></a>LFU (Least Frequently Used) Algorithm</h3><ul>
+<li>LFU: 참조 횟수(reference count)가 가장 적은 페이지를 지움<ul>
+<li>최저 참조 횟수인 page가 여럿 잇는 경우<ul>
+<li>LFU 알고리즘 자체에서는 여러 page 중 임으로 선정한다</li>
+<li>성능 향상을 위해 가장 오래 전에 참조된 page를 지우게 구현할 수도 있다</li>
+</ul>
+</li>
+<li>장단점<ul>
+<li>LRU처럼 직전 참조 시점만 보는 것이 아니라 장기적인 시간 규모를 보기 때문에 page의 인기도를 좀 더 정확히 반영할 수 있음</li>
+<li>참조 시점의 최근성을 반영하지 못함</li>
+<li>LRU보다 구현이 복잡함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="LRU와-LFU-알고리즘-비교"><a href="#LRU와-LFU-알고리즘-비교" class="headerlink" title="LRU와 LFU 알고리즘 비교"></a>LRU와 LFU 알고리즘 비교</h3><img width="600" alt="스크린샷 2021-07-28 오전 11 51 44" src="https://user-images.githubusercontent.com/12459864/127256021-03d4e269-2ec6-43c5-acc6-43d8c708cb01.png">
+<br>
+<img width="600" alt="스크린샷 2021-07-28 오전 11 00 29" src="https://user-images.githubusercontent.com/12459864/127256085-9be80656-9169-444e-b9ea-23643d946847.png">
+
+<h2 id="다양한-캐슁-환경"><a href="#다양한-캐슁-환경" class="headerlink" title="다양한 캐슁 환경"></a>다양한 캐슁 환경</h2><ul>
+<li>캐슁 기법<ul>
+<li>한정된 빠른 공간(=캐쉬)에 요청된 데이터를 저장해 두었다가 후속 요청시 캐쉬로부터 직접 서비스하는 방식</li>
+<li>paging system 외에도 cache memroy, buffer caching, Web caching등 다양한 분야에서 사용</li>
+</ul>
+</li>
+<li>캐쉬 운영의 시간 제약<ul>
+<li>교체 알고리즘에서 삭제할 항목을 결정하는 일에 지나치게 많은 시간이 걸리는 경우 실제 시스템에서 사용할 수 없음</li>
+<li>Buffer caching이나 Web caching의 경우<ul>
+<li>O(1)에서 O(log n) 정도까지 허용</li>
+</ul>
+</li>
+<li>Paging system인 경우<ul>
+<li>page fault인 경우에만 OS가 관여함</li>
+<li><code>페이지가 이미 메모리에 존재하는 경우 참조시각 등의 정보를 OS가 알 수 없음</code></li>
+<li>그 때문에 O(1)인 LRU의 list 조작조차 불가능</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Clock-Algorithm"><a href="#Clock-Algorithm" class="headerlink" title="Clock Algorithm"></a>Clock Algorithm</h2><ul>
+<li>Clock algorithm<ul>
+<li>LRU의 근사(approximation) 알고리즘</li>
+<li>여러 명칭으로 불림<ul>
+<li>Second chance algorithm</li>
+<li>NUR (Not Used Recently) 또는 NRU (Not Recently Used)</li>
+</ul>
+</li>
+<li>Reference bit을 사용해서 교체 대항 페이지 선정 (circular list)</li>
+<li>reference bit가 0인 것을 찾을 때까지 포인터를 하나씩 앞으로 이동</li>
+<li>포인터가 이동하는 중에 reference bit 1은 모두 0으로 바꿈</li>
+<li>Reference bit이 0인 것을 찾으면 그 페이지를 교체</li>
+<li>한 바퀴 되돌아와서도(=second chance) 0이면 그때에는 replace 당함</li>
+<li>자주 사용되는 페이지라면 second chance가 올 때 1</li>
+</ul>
+</li>
+<li>Clock algorithm의 개선<ul>
+<li>reference bit과 modified bit (dirty bit)을 함께 사용</li>
+<li>reference bit = 1 : 최근에 참조된 페이지</li>
+<li>modified bit = 1 : 최근에 변경된 페이지 (swap area에 변경된 정보를 반영하는 I/O 작업이 동반된다)</li>
+</ul>
+</li>
+</ul>
+<img width="744" alt="스크린샷 2021-07-28 오후 2 04 57" src="https://user-images.githubusercontent.com/12459864/127266713-51c4a9fa-7dec-430c-9bdf-dff13e1370ff.png">
+
+<h2 id="Page-Frame의-Allocation"><a href="#Page-Frame의-Allocation" class="headerlink" title="Page Frame의 Allocation"></a>Page Frame의 Allocation</h2><ul>
+<li><p>Allocation problem: 각 process에 얼마만큼의 page frame을 할당할 것인가?</p>
+</li>
+<li><p>Allocation의 필요성</p>
+<ul>
+<li>메모리 참조 명령어 수행시 명령어, 데이터등 여러 페이지 동시 참조<ul>
+<li>명령어 수행을 위해 최소한 할당되어야 하는 frame의 수가 있음</li>
+</ul>
+</li>
+<li>Loop를 구성하는 page들은 한꺼번에 allocate 되는 것이 유리함<ul>
+<li>최소한의 allocation이 없으면 매 loop마다 page fault</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Allocation Scheme</p>
+<ul>
+<li>Equal allocation: 모든 프로세스에 똑같은 갯수 할당</li>
+<li>Proportional allocation: 프로세스 크기에 비례하여 할당</li>
+<li>Priority allocation: 프로세스의 priority에 따라 다르게 할당</li>
+</ul>
+</li>
+</ul>
+<h2 id="Global-vs-Local-Replacement"><a href="#Global-vs-Local-Replacement" class="headerlink" title="Global vs Local Replacement"></a>Global vs Local Replacement</h2><ul>
+<li>Global replacement<ul>
+<li>Replace 시 다른 process에 할당된 frame을 빼앗아 올 수 있다</li>
+<li>Process별 할당량을 조절하는 또 다른 방법임</li>
+<li>FIFO, LRU, LFU 등의 알고리즘을 global replacement로 사용시에 해당 Working set, PFF 알고리즘 사용</li>
+</ul>
+</li>
+<li>Local replacement<ul>
+<li>자신에게 할당된 frame 내에서만 replacement</li>
+<li>FIFO, LRU, LFU등의 알고리즘을 process 별로 운영시</li>
+</ul>
+</li>
+</ul>
+<h2 id="Thrashing"><a href="#Thrashing" class="headerlink" title="Thrashing"></a>Thrashing</h2><ul>
+<li>프로세스의 원할한 수행에 필요한 최소한의 page frame 수를 할당 받지 못한 경우 발생</li>
+<li>Page fault rate이 매우 높아짐</li>
+<li>CPU utilization이 낮아짐</li>
+<li>OS는 MPD (multiprogramming degree)룰 높여야 한다고 판단 (I/O 작업때문에 CPU이 이용률이 낮아지기 때문에)</li>
+<li>또 다른 프로세스가 시스템에 추가됨 (higher MPD)</li>
+<li>프로세스 당 할당된 frame의 수가 더욱 감소</li>
+<li>프로세스는 page는 swap in/ swap out으로 바쁨</li>
+<li>대부분의 시간에 CPU는 한가함</li>
+<li>low throughput</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오후 2 23 36" src="https://user-images.githubusercontent.com/12459864/127268276-bc1ff032-6972-4d5b-81b3-cec093bcd3b5.png">
+
+
+<h2 id="Working-Set-Model"><a href="#Working-Set-Model" class="headerlink" title="Working-Set Model"></a>Working-Set Model</h2><ul>
+<li>Locality of reference<ul>
+<li>프로세스는 특정 시간 동안 일정 장소만을 집중적으로 참조한다</li>
+<li>집중적을 참조되는 해당 page들의 집합을 locality set이라 함</li>
+</ul>
+</li>
+<li>Working-set Model<ul>
+<li>Locality에 기반하여 프로세스가 일정 시간 동안 원활하게 수행되기 위해 한꺼번에 메모리에 올라와 있어야하는 page들의 집합을 Working Set이라 정의함</li>
+<li>Working Set 모델에서는 process의 working set 전체가 메모리에 올라와 있어야 수행되고 그렇지 않을 경우 모든 frame을 반남한 후 swap out (suspend)</li>
+<li>Thrashing을 방지함</li>
+<li>Multiprogramming degree를 결정함</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오후 3 15 27" src="https://user-images.githubusercontent.com/12459864/127273128-be5e76f6-e284-4f2f-8c5f-1be3d26f89f5.png">
+
+<h2 id="PFF-Page-Fault-Frequency-Scheme"><a href="#PFF-Page-Fault-Frequency-Scheme" class="headerlink" title="PFF (Page-Fault Frequency) Scheme"></a>PFF (Page-Fault Frequency) Scheme</h2><ul>
+<li>page-fault rate의 상한값과 하한값을 둔다<ul>
+<li>page fault rate이 상하값을 넘으면 frame을 더 할당한다</li>
+<li>page fault rate이 하한값 이하이면 할당 frame 수를 줄인다</li>
+</ul>
+</li>
+<li>빈 frame이 없으면 일부 프로세스를 swap out</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-28 오후 3 18 55" src="https://user-images.githubusercontent.com/12459864/127273606-fcc7df29-3fdf-4acb-b4e8-3bedc12c3c28.png">
+
+<h2 id="Page-Size의-결정"><a href="#Page-Size의-결정" class="headerlink" title="Page Size의 결정"></a>Page Size의 결정</h2><ul>
+<li>Page size를 감소시키면<ul>
+<li>페이지 수 증가</li>
+<li>페이지 테이블 크기 증가</li>
+<li>internal fragmentation 감소</li>
+<li>Disk transfer의 효율성 감소<ul>
+<li>Seek/rotation vs transfer</li>
+</ul>
+</li>
+<li>필요한 정보만 메모리에 올라와 메모리 이용이 효율적<ul>
+<li>Locality의 활용 측면에서 좋지 않음</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Trend<ul>
+<li>Larger page size</li>
+</ul>
+</li>
+</ul>
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/28/OS-10-Virtual-Memory/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/26/OS-9-Memoery-Management/"
                             aria-label=": OS-9 Memoery Management"
                         >
@@ -2587,249 +2899,6 @@
                         <p>
                             <a
                                 href="/2021/05/07/OS-1-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/30/Spring-Spring-MVC-1-MVC-Framework-%EC%A7%81%EC%A0%91%EA%B5%AC%ED%98%84/"
-                            aria-label=": Spring-Spring MVC 1 (MVC Framework 직접구현)"
-                        >
-                            Spring-Spring MVC 1 (MVC Framework 직접구현)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-30T20:04:16+09:00">
-	
-		    Nov 30, 2020
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="Servlet기반-MVC-구조-및-동작-순서"><a href="#Servlet기반-MVC-구조-및-동작-순서" class="headerlink" title="Servlet기반 MVC 구조 및 동작 순서"></a>Servlet기반 MVC 구조 및 동작 순서</h1><p><img src="https://user-images.githubusercontent.com/12459864/100602774-b2c6ce00-3347-11eb-867b-0c8e7db60e01.png" alt="image"></p>
-<ol>
-<li>클라이언트로부터 요청이 Dispatcher Servlet으로 들어온다.</li>
-<li>Dispatcher Servlet은 DAO를 통해서 데이터를 가져온다.</li>
-<li>Http Session에 DB에서 가져온 데이터를 저장한다.(굳이 이렇게 할 필요는 없음)</li>
-<li>Dispatcher Servlet이 해당 뷰로 매칭시킨다.</li>
-<li>JSP 뷰에서 Session 객체에 저장되어진 데이터를 가져와 뷰를 구성한다</li>
-<li>구성되어진 뷰는 클라이언트로 다시 보내어진다.</li>
-</ol>
-<h1 id="Spring-MVC-구조-및-동작-순서"><a href="#Spring-MVC-구조-및-동작-순서" class="headerlink" title="Spring MVC 구조 및 동작 순서"></a>Spring MVC 구조 및 동작 순서</h1><p><img src="https://user-images.githubusercontent.com/12459864/100603516-8f505300-3348-11eb-8b33-9e39b2cb1957.png" alt="image"></p>
-<ol>
-<li>클라이언트에서 서버로 요청을 보내면 제일 먼저 Dispatcher Servlet이 요청을 받는다.</li>
-<li>Dispatcher Servlet은 받은 요청 URI를 HandlerMapping으로 보내면 HandlerMapping은 해당 URI와 매핑되는 Controller객체를 받는다.</li>
-<li>매핑된 Controller에서 DAO로 부터 데이터를 받아 business logic을 처리하고 View Name을 리턴한다</li>
-<li>View Name은 ViewResolver를 통해서 Prefix나 Suffix등의 붙어지고 해당 뷰는 Client로 보내어진다.</li>
-</ol>
-<h1 id="Spring-MVC-구조-직접-만들기"><a href="#Spring-MVC-구조-직접-만들기" class="headerlink" title="Spring MVC 구조 직접 만들기"></a>Spring MVC 구조 직접 만들기</h1><ol>
-<li><p>web.xml 설정</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>모든 요청이 Dispatcher Servlet을 거치도록 설정한다.</li>
-<li>Dispatcher Serlvet이 모든 클라이언트 요청을 첫 번째로 받는다.</li>
-</ul>
-</li>
-<li><p>Dispatcher Servlet 구현</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatcherServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HandlerMapping handlerMapping;</span><br><span class="line">    <span class="keyword">private</span> ViewResolver viewResolver;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DispatcherServlet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;===&gt; DispatcherServlet 생성&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">        handlerMapping = <span class="keyword">new</span> HandlerMapping();</span><br><span class="line">        viewResolver = <span class="keyword">new</span> ViewResolver();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ViewResolver의 접두사와 접미사를 결정한다</span></span><br><span class="line">        viewResolver.setPrefix(<span class="string">&quot;./&quot;</span>);</span><br><span class="line">        viewResolver.setSuffix(<span class="string">&quot;.jsp&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 사용자 요청 path 정보를 추출한다.</span></span><br><span class="line">        String uri = request.getRequestURI();</span><br><span class="line">        String path = uri.substring(uri.lastIndexOf(<span class="string">&quot;/&quot;</span>));</span><br><span class="line">        System.out.println(path);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. HandlerMapping을 통해 path에 해당하는 Controller를 검색한다.</span></span><br><span class="line">        Controller ctrl = handlerMapping.getController(path);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 검색된 Controller를 실행한다</span></span><br><span class="line">        String viewName = ctrl.handleRequest(request, response);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. ViewResolver를 통해 viewName에 해당하는 화면을 검색한다</span></span><br><span class="line">        String view = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!viewName.contains(<span class="string">&quot;.do&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (viewName.contains(<span class="string">&quot;.html&quot;</span>))&#123;</span><br><span class="line">                view = viewName;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                view = viewResolver.getView(viewName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            view = viewName;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. ViewResolver가 검색해준 화면으로 이동한다.</span></span><br><span class="line">        response.sendRedirect(view);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>요청이 들어오면 Dispatcher Serlvet에서 URI에 해당하는 Controller를 HandlerMapping 객체를 통해 받아온다</li>
-<li>Controller에서 logic을 처리하고 View Name을 Return해준다</li>
-<li>Return받은 View Name을 ViewResolver로 다시 재 조합한다</li>
-<li>재조합된 View Name으로 응답을 보낸다</li>
-</ul>
-</li>
-<li><p>Handler Mapping 구현</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerMapping</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Controller&gt; mappings;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandlerMapping</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 모든 컨트롤러 객체를 Map에 등록한다</span></span><br><span class="line">        mappings = <span class="keyword">new</span> HashMap&lt;String, Controller&gt;();</span><br><span class="line">        <span class="comment">// USERS관련 컨트롤러 등록</span></span><br><span class="line">        mappings.put(<span class="string">&quot;/login.do&quot;</span>, <span class="keyword">new</span> LoginController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/logout.do&quot;</span>, <span class="keyword">new</span> LogoutController());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// BOARD 관련 컨트롤러 등록</span></span><br><span class="line">        mappings.put(<span class="string">&quot;/getBoardList.do&quot;</span>, <span class="keyword">new</span> GetBoardListController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/insertBoard.do&quot;</span>, <span class="keyword">new</span> InsertBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/updateBoard.do&quot;</span>, <span class="keyword">new</span> UpdateBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/deleteBoard.do&quot;</span>, <span class="keyword">new</span> DeleteBoardController());</span><br><span class="line">        mappings.put(<span class="string">&quot;/getBoard.do&quot;</span>, <span class="keyword">new</span> GetBoardController());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Controller <span class="title">getController</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 매개변수로 받은 path에 해당하는 컨트롤러 객체를 검색하여 리턴한다.</span></span><br><span class="line">        <span class="keyword">return</span> mappings.get(path);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>각 요청에 대한 Controller 객체를 HashMap에 저장한다</li>
-<li>요청이 들어오면 HashMap에서 해당 Controller 객체를 가져온다</li>
-</ul>
-</li>
-<li><p>해당 Controller 구현</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsertBoardController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">handleRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        String title = request.getParameter(<span class="string">&quot;title&quot;</span>);</span><br><span class="line">        String writer = request.getParameter(<span class="string">&quot;writer&quot;</span>);</span><br><span class="line">        String content = request.getParameter(<span class="string">&quot;content&quot;</span>);</span><br><span class="line"></span><br><span class="line">        BoardVO vo = <span class="keyword">new</span> BoardVO();</span><br><span class="line">        vo.setTitle(title);</span><br><span class="line">        vo.setWriter(writer);</span><br><span class="line">        vo.setContent(content);</span><br><span class="line"></span><br><span class="line">        BoardDAO boardDAO = <span class="keyword">new</span> BoardDAOJDBC();</span><br><span class="line">        boardDAO.insertBoard(vo);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;getBoardList.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>DAO에서 요청한 데이터를 가져오는 등의 Business Logic을 진행한다.</li>
-<li>응답으로 보내져야할 View Name을 Return한다.</li>
-</ul>
-</li>
-<li><p>ViewResolver 구현</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewResolver</span> </span>&#123;</span><br><span class="line">    <span class="comment">//접두사</span></span><br><span class="line">    <span class="keyword">private</span> String prefix;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//접미사</span></span><br><span class="line">    <span class="keyword">public</span> String suffix;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrefix</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.prefix = prefix;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSuffix</span><span class="params">(String suffix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.suffix = suffix;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getView</span><span class="params">(String viewName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prefix + viewName + suffix;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Controller에서 받아온 View Name에 경로설정과 파일 확장자와 같은 부분을 Prefix나 Suffix로 붙혀서 Return한다</li>
-</ul>
-</li>
-</ol>
-<h1 id="Spring-MVC-XML을-통한-설정"><a href="#Spring-MVC-XML을-통한-설정" class="headerlink" title="Spring MVC (XML을 통한 설정)"></a>Spring MVC (XML을 통한 설정)</h1><h2 id="Servlet-Container와-Spring-Container와의-관계"><a href="#Servlet-Container와-Spring-Container와의-관계" class="headerlink" title="Servlet Container와 Spring Container와의 관계"></a>Servlet Container와 Spring Container와의 관계</h2><ul>
-<li><p>Web이 아닌 Spring Project에서 Spring Container를 구성할 때에는 GenericXmlApplicationContext나 AnnotationApplicationContext와 같은 Class를 통해서 xml이나 java파일을 설정파일로 등록하고 만들었다.</p>
-</li>
-<li><p>하지만 Spring Web Project는 Spring Container를 구성할 때 XmlWebApplicationContext같은 WebApplicationContext Class로 형성되어진다.</p>
-</li>
-<li><p>Spring Web Project의 Spring Container 형성과정은 Web이 아닌 Spring Project와는 형성과정에 차이가 있다</p>
-</li>
-<li><p>Spring Web Project Container 형성과정</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/100606765-451da080-334d-11eb-9eaf-0085c2041274.png" alt="image"></p>
-<ol>
-<li><p>Tomcat과 같은 WAS가 처음 로딩될 때 Servlet Container를 생성한다</p>
-</li>
-<li><p>Servlet Container를 통해서 DispatcherServlet에 요청이 들어왔을 때 DispatcherServlet이 메모리에 형성된다</p>
-</li>
-<li><p>DispatcherServlet이 처음 생성되어 질 때 init() 메소드가 호출되어 지는데 그 메소드에 Spring Container 생성 코드가 포함되어져 있다.</p>
-</li>
-<li><p>XmlWebAppolication과 같은 객체에 Spring Bean 정보가 들어있는 action-servlet.xml을 받아서 Spring Container를 생성한다</p>
-<p> <code>Servlet Container는 Servlet, Filter, Listener와 같은 클래스 밖에 관리를 못하지만, Spring Container는 일반 클래스들도 Bean으로 등록하여 관리할 수 있다.</code></p>
-</li>
-</ol>
-</li>
-</ul>
-<ol>
-<li><p>web.xml에 Spring DispatcherServlet 등록</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">            org.springframework.web.servlet.DispatcherServlet</span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/config/presentation-layer.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>action<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>이전에는 직접 구현한 DispatcherServlet을 web.xml에 등록했다</li>
-<li>지금은 Spring Framework에서 만들어진 Dispatcher Servlet을 모든 요청에 매핑되도록 등록했다</li>
-<li>Spring Container 빈 설정파일은 action-servlet.xml와 같은 이름 기본 등록되어있다</li>
-<li>다른 이름의 xml로 바꾸고싶다면 param에 contextConfigLocation을 변경해주면 된다</li>
-</ul>
-</li>
-<li><p>presentation-layer.xml 설정 (Spring Bean 설정파일)</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"></span></span></span><br><span class="line"><span class="tag"><span class="string">   &lt;!-- 모든 컨트롤러 클래스들을 bean으로 등록한다 --&gt;</span></span></span><br><span class="line"><span class="tag"><span class="string">    &lt;bean id=&quot;</span><span class="attr">getBoardList</span>&quot; <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.GetBoardListController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;login&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.user.LoginController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;logout&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.user.LogoutController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;getBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.GetBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;insertBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.InsertBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;updateBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.UpdateBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;deleteBoard&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.rubypaper.web.controller.board.DeleteBoardController&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 클라이언트의 요청을 어떤 컨트롤러가 처리할지 HandlerMapping으로 매핑한다 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- handleMapping id 고정 (spring에서 등록한 bean은 마지막 단어 두개 중 첫 단어만 소문자로 변경해서 id로 등록)--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;handlerMapping&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mappings&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/login.do&quot;</span>&gt;</span>login<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/logout.do&quot;</span>&gt;</span>logout<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/getBoardList.do&quot;</span>&gt;</span>getBoardList<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/getBoard.do&quot;</span>&gt;</span>getBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/insertBoard.do&quot;</span>&gt;</span>insertBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/updateBoard.do&quot;</span>&gt;</span>updateBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;/deleteBoard.do&quot;</span>&gt;</span>deleteBoard<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--  View Resolver를 등록한다</span></span><br><span class="line"><span class="comment">            브라우저는 절대 서버가 관리하는 프로젝트의 WEB-INF폴더에 접근할 수 없다.</span></span><br><span class="line"><span class="comment">            따라서 브라우저가 직접 접근해서는 안되는 파일은 WEB-INF폴더에 은닉한다.</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/board/&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>모든 컨트롤러 클래스를 bean으로 등록한다</li>
-<li>클라이언트 각 요청의 URI마다 어떤 Controller가 처리할 지 Spring HandlerMapping으로 매핑한다</li>
-<li>Spring ViewResolver을 등록한다</li>
-<li>브라우저는 WEB-INF 폴더에 접근할 수 없으므로 브라우저가 접근하면 안되는 파일은 WEB-INF 디렉토리에 은닉한다</li>
-</ul>
-</li>
-<li><p>Spring Controller Interface를 구현한 Controller 클래스 생성</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">handleRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        String id = request.getParameter(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">        String password = request.getParameter(<span class="string">&quot;password&quot;</span>);</span><br><span class="line"></span><br><span class="line">        UserVO vo = <span class="keyword">new</span> UserVO();</span><br><span class="line">        vo.setId(id);</span><br><span class="line">        vo.setPassword(password);</span><br><span class="line"></span><br><span class="line">        UserDAO userDAO = <span class="keyword">new</span> UserDAOJDBC();</span><br><span class="line">        UserVO user = userDAO.getUser(vo);</span><br><span class="line"></span><br><span class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">        <span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">            HttpSession session = request.getSession();</span><br><span class="line">            session.setAttribute(<span class="string">&quot;user&quot;</span>, user);</span><br><span class="line">            <span class="comment">// forward: 이나 redirect: 을 뷰 이름 앞에 붙이면 ViewResolver를 무시한다</span></span><br><span class="line">            mav.setViewName(<span class="string">&quot;forward:getBoardList.do&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mav.setViewName(<span class="string">&quot;redirect:login.jsp&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>org.springframework.web.servlet.mvc.Controller의 구현체 클래스를 만든다</li>
-<li>이전에는 View Name을 String 값으로 return했다면 지금은 ModelAndView 객체로 Return한다</li>
-<li>Spring ViewResolver를 거치지 않고 ViewName을 설정하려면 redirect: 나 forward: 를 ViewName에 추가한다</li>
-</ul>
-</li>
-</ol>
-<h1 id="Spring-MVC-Annotation을-통한-설정"><a href="#Spring-MVC-Annotation을-통한-설정" class="headerlink" title="Spring MVC (Annotation을 통한 설정)"></a>Spring MVC (Annotation을 통한 설정)</h1><ol>
-<li><p>ComponentScan 설정</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">    http://www.springframework.org/schema/context/spring-context-4.2.xsd&quot;</span>&gt;</span></span><br><span class="line">     </span><br><span class="line">    <span class="comment">&lt;!-- 컴포넌트 스캔 설정 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.rubypaper&quot;</span>/&gt;</span>&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>@Controller를 Bean으로 인식하기 위해서 ComponentScan을 할 package를 지정한다 </li>
-<li>xml로 component scan을 설정하지 않고 @ComponentScan Annotation을 시작 패키지안의 클래스에 붙여줘도 된다</li>
-</ul>
-</li>
-<li><p>Controller 설정</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsertBoardController</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/insertBoard.do&quot;)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertBoard</span><span class="params">(BoardVO vo)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>Controller Class에 @Controller Annotation을 추가해서 Spring Container에게 Controller클래스로 Bean을 등록한다</p>
-</li>
-<li><p>Controller Class안의 메소드에 매핑할 URI값을 @RequsetMapping(value = “URI”)로 설정한다</p>
-</li>
-<li><p>Controller 메소드의 Parameter 매핑<br>  <img src="https://user-images.githubusercontent.com/12459864/100863944-a8880980-34d8-11eb-8e49-454ab363da54.png" alt="image"></p>
-<ul>
-<li>Client에서 input 태그의 name값으로 요청이 들어오면 매핑되는 Method의 파라미터값에서 name과 매핑되는 setter메소드를 통해 값이 바인딩된다           </li>
-</ul>
-</li>
-<li><p>요청 방식에 따른 @RequestMapping 사용</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/login.do&quot;, method=RequestMethod.GET)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">loginView</span><span class="params">(UserVO vo)</span> </span>&#123;</span><br><span class="line">        vo.setId(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">                vo.setPassword(<span class="string">&quot;test123&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;login.jsp&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="meta">@RequestMapping(value=&quot;/login.do&quot;, method=RequestMethod.POST)</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(UserVO vo, UserDAO userDAO)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(userDAO.getUser(vo) != <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">&quot;getBoardList.do&quot;</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">&quot;login.jsp&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>@RequestMapping에서 매핑될 URI를 value로 정하고 Http Method를 method값에 지정한다</p>
-</li>
-<li><p>@RequestMapping은 Http Method에 따라서 @GetMapping, @PostMapping등으로 사용될 수 있다</p>
-</li>
-</ul>
-</li>
-</ol>
-<h1 id="Layer-통합하기-Presentation-Layer-Business-Layer"><a href="#Layer-통합하기-Presentation-Layer-Business-Layer" class="headerlink" title="Layer 통합하기 (Presentation-Layer, Business-Layer)"></a>Layer 통합하기 (Presentation-Layer, Business-Layer)</h1><h2 id="DispatcherServlet를-통해-만들어진-Spring-Container만-사용"><a href="#DispatcherServlet를-통해-만들어진-Spring-Container만-사용" class="headerlink" title="DispatcherServlet를 통해 만들어진 Spring Container만 사용"></a>DispatcherServlet를 통해 만들어진 Spring Container만 사용</h2><p><img src="https://user-images.githubusercontent.com/12459864/100865866-3d8c0200-34db-11eb-8f6c-b9b2b273702c.png" alt="image"></p>
-<ul>
-<li>요청이 들어오면 DispatcherServlet이 생성되고 생성될 때 presentation-layer.xml을 가져와서 xml에 설정되어진 Bean들을 가지고 Spring Container가 생성된다</li>
-<li>해당 Spring Container에는 Controller Bean들만 등록되어지고 직접 DAO에 접근해서 로직을 처리한다</li>
-</ul>
-<h2 id="Service를-통해서-Controller가-접근-시-문제점"><a href="#Service를-통해서-Controller가-접근-시-문제점" class="headerlink" title="Service를 통해서 Controller가 접근 시 문제점"></a>Service를 통해서 Controller가 접근 시 문제점</h2><p><img src="https://user-images.githubusercontent.com/12459864/100866290-c86cfc80-34db-11eb-9fb8-d950d792dd2c.png" alt="image"></p>
-<ul>
-<li>Controller를 직접 DAO로 접근시키지 않고 Service Class를 통해서 접근한다</li>
-<li>하지만 presentaion-layer.xml에 등록되어진 Bean은 Controller Bean 밖에 없다</li>
-<li>따라서 해당 Spring Container는 Service Bean들에 접근할 수 없다</li>
-</ul>
-<h2 id="Layer를-분리하여-연결"><a href="#Layer를-분리하여-연결" class="headerlink" title="Layer를 분리하여 연결"></a>Layer를 분리하여 연결</h2><ul>
-<li><p>Presentation Layer와 Business Layer를 분리한다<br>  <img src="https://user-images.githubusercontent.com/12459864/100866665-56e17e00-34dc-11eb-961c-e93a83a5cd3c.png" alt="image"></p>
-<ul>
-<li>Controller에 해당하는 부분은 Presentation Layer로 분리한다</li>
-<li>DAO, Service에 해당하는 부분은 Business Layer로 분리한다</li>
-<li>Controller는 분리된 두개의 개층을 Service Class를 통해서 접근한다</li>
-</ul>
-</li>
-<li><p>Business Layer용 Spring Container 생성</p>
-<ul>
-<li>ContextLoaderListener 등록  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:business-*.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span></span><br><span class="line">        org.springframework.web.context.ContextLoaderListener</span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span>    </span><br></pre></td></tr></table></figure>
-<ul>
-<li>Servlet 설정 파일인 web.xml에 ContextLoaderListener를 등록한다</li>
-<li>해당 Listener는 business layer 설정파일 xml을 가지고 있다</li>
-<li>ContextLoaderListener는 ServletContextListener를 구현하고 있다. </li>
-<li>ServletContextListener는 Servlet Container가 시작하거나 종료 될 때 동작하는 Listenr이다.</li>
-<li>따라서 ContextLoaderListener는 Servlet Container가 시작할 때 contextLoader로 business layer xml 정보를 가지고 WebApplicationContext를 만들어서 Spring Container를 생성한다</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Container간의 관계<br>  <img src="https://user-images.githubusercontent.com/12459864/100867825-0d922e00-34de-11eb-999b-aabc808b72a1.png" alt="image"></p>
-<ul>
-<li><p>Root Spring Container가 ContextLoaderListener를 통해서 생성된 Container로 Service와 DAO Bean들을 가지고 있다</p>
-</li>
-<li><p>하위 Spring Contaienr를 DispatcherServlet을 통해서 생성된 Container로 Controller를 Bean으로 가지고 있다</p>
-</li>
-<li><p>하위 Container는 Root Container의 Bean들을 상속받아서 사용한다</p>
-</li>
-<li><p>이제 Controller는 Root Spring Container에 생성되어진 Service Bean에 접근이 가능해진다</p>
-</li>
-</ul>
-</li>
-<li><p>Container 생성과정</p>
-<ol>
-<li><p>Tomcat Server를 가동하면 Servlet Container가 생성된다</p>
-</li>
-<li><p>Servlet Container가 생성될 때 ContextLoadListener가 동작해여 businees layer xml 설정정보를 가지고 Spring Container가 생성된다</p>
-</li>
-<li><p>Server가 가동된 이후에 Client를 통해서 요청이 들어오면<br>DispatcherServlet이 메모리에 생성되어진다</p>
-</li>
-<li><p>DispatcherServlet이 생성되어 초기화 될 때 presentation layer xml 설정정보를 가지고 또 다른 Spring Container를 생성한다</p>
-<p><code>Web Application에서 생성되어진 Container는 Servlet Container, Businees Spring Container, Presentation Layer Container 총 3개이다</code></p>
-</li>
-</ol>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/30/Spring-Spring-MVC-1-MVC-Framework-%EC%A7%81%EC%A0%91%EA%B5%AC%ED%98%84/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
