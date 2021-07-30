@@ -325,6 +325,187 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/07/30/OS-11-File-Systems/"
+                            aria-label=": OS-11-File Systems"
+                        >
+                            OS-11-File Systems
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-07-30T16:37:53+09:00">
+	
+		    Jul 30, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="File-and-File-System"><a href="#File-and-File-System" class="headerlink" title="File and File System"></a>File and File System</h2><ul>
+<li>File<ul>
+<li>“A named collection of related information”</li>
+<li>일반적으로 비휘발성의 보조 기억 장치에 저장</li>
+<li>운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌</li>
+<li>Operation<ul>
+<li>create, read, write, reposition (lseek), delete, open, close 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>File attribute (혹은 파일 metadata)<ul>
+<li>파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들<ul>
+<li>파일 이름, 유형, 저장된 위치, 파일 사이즈</li>
+<li>접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>File system<ul>
+<li>운영체제에서 파일을 관리하는 부분</li>
+<li>파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리</li>
+<li>파일의 저장 방법 결정</li>
+<li>파일 보호 등</li>
+</ul>
+</li>
+</ul>
+<h2 id="open"><a href="#open" class="headerlink" title="open()"></a>open()</h2><img width="600" alt="스크린샷 2021-07-30 오후 5 07 37" src="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
+
+<ul>
+<li><p>open(“/a/b/c)</p>
+<ul>
+<li><p>디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴</p>
+</li>
+<li><p>이를 위하여 directory path를 search</p>
+<ul>
+<li>루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득</li>
+<li>파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득</li>
+<li>파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득</li>
+<li>파일 “c”를 open한다</li>
+</ul>
+</li>
+<li><p>Directory path의 search에 너무 많은 시간 소요</p>
+<ul>
+<li>Open을 read/write와 별도로 두는 이유임</li>
+<li>한 번 open한 파일은 read/ write 시 directory search 불필요</li>
+</ul>
+</li>
+<li><p>Open file table</p>
+<ul>
+<li>현재 open된 파일들의 메타데이터 보관소 (in memory)</li>
+<li>디스크의 메타데이터보다 몇 가지 정보가 추가<ul>
+<li>Open한 프로세스 수</li>
+<li>한 번 open한 파일은 read/ write 시 directory search 불필요</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>File descriptor (file handle, file control block)</p>
+<ul>
+<li>Open file table에 대한 위치 정보 (프로세스 별)</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-30 오후 5 23 03" src="https://user-images.githubusercontent.com/12459864/127624201-35498f7b-f6e1-45af-91fc-dfe9a44545a1.png">
+</li>
+<li><p>/a/b/c search 및 파일 읽기 과정</p>
+<ol>
+<li>OS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다</li>
+<li>root metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다</li>
+<li>앞의 과정을 반복한다</li>
+<li>file descripter를 통해서 fd에 b의 metadata 정보를 읽는다</li>
+<li>b의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다</li>
+<li>OS 메모리에 올라간 정보를 Process A의 메모리에 올린다</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="File-Protection"><a href="#File-Protection" class="headerlink" title="File Protection"></a>File Protection</h2><ul>
+<li><p>각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?</p>
+</li>
+<li><p>Access Control 방법</p>
+<ul>
+<li><p>Access Control Matrix</p>
+  <img width="655" alt="스크린샷 2021-07-30 오후 5 52 46" src="https://user-images.githubusercontent.com/12459864/127628107-b108794f-8c27-4fa4-abb7-e1d5970d8b7f.png">
+  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시
+  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시</li>
+<li><p>Grouping</p>
+<ul>
+<li><p>전체 user를 owner, group, public의 세 그룹으로 구분</p>
+</li>
+<li><p>각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분</p>
+<img width="186" alt="스크린샷 2021-07-30 오후 5 57 58" src="https://user-images.githubusercontent.com/12459864/127628781-15d7a625-9aee-4b02-8262-9008134724b9.png">
+</li>
+</ul>
+</li>
+<li><p>Password</p>
+<ul>
+<li>파일마다 password를 두는 방법</li>
+<li>모든 접근 권한에 대해 하나의 password: all or noting</li>
+<li>접근 권한별 password: 암기 문제, 관리 문제</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="File-System의-Mounting"><a href="#File-System의-Mounting" class="headerlink" title="File System의 Mounting"></a>File System의 Mounting</h2><ul>
+<li>물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝</li>
+<li>이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 6 02 03" src="https://user-images.githubusercontent.com/12459864/127629316-13641a15-031c-4afc-b52a-16a1b1d042f6.png">
+
+<br>
+
+<img width="500" alt="스크린샷 2021-07-30 오후 6 03 03" src="https://user-images.githubusercontent.com/12459864/127629437-8795be58-7e79-4aca-b60b-5068eee88c40.png">
+
+<h2 id="Access-Methods"><a href="#Access-Methods" class="headerlink" title="Access Methods"></a>Access Methods</h2><ul>
+<li>시스템이 제공하는 파일 정보의 접근 방식<ul>
+<li>순차 접근 (sequential access)<ul>
+<li>카세트 테이프를 상요하는 방식처럼 접근</li>
+<li>읽거나 쓰면 offset은 자동적으로 증가</li>
+</ul>
+</li>
+<li>직접 접근 (direct access, random access)<ul>
+<li>LP 레코드 판과 같이 접근하도록 함</li>
+<li>파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/07/30/OS-11-File-Systems/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/28/OS-10-Virtual-Memory/"
                             aria-label=": OS-10-Virtual Memory"
                         >
@@ -2778,127 +2959,6 @@
                         <p>
                             <a
                                 href="/2021/05/12/OS-2-System-Structure-Program-Execution/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/05/07/OS-1-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/"
-                            aria-label=": OS-1.운영체제란 무엇인가?"
-                        >
-                            OS-1.운영체제란 무엇인가?
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-05-07T15:31:31+09:00">
-	
-		    May 07, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h1 id="운영체제란-무엇인가"><a href="#운영체제란-무엇인가" class="headerlink" title="운영체제란 무엇인가?"></a>운영체제란 무엇인가?</h1><ul>
-<li>운영체제 : 컴퓨터 하드웨어 바로 위에 설치된 소프트웨어 계층으로서 모든 컴퓨터 시스템의 필수적인 부분입니다<br><img src="https://user-images.githubusercontent.com/12459864/117847604-7667a880-b2bd-11eb-9334-4d5a17a6fd74.png" alt="os"></li>
-<li>운영체제의 목표<ul>
-<li>컴퓨터 시스템을 편리하게 사용할 수 있는 환경을 제공합니다<ul>
-<li>동시 사용자/프로그램들이 각각 독자적 컴퓨터에서 수행되는 것 같은 환상을 제공합니다</li>
-<li>하드웨어를 직접 다루는 복잡한 부분을 운영체제가 대행해줍니다</li>
-</ul>
-</li>
-<li>컴퓨터 시스템의 자원(프로세서, 기억장치, 입출력 장치)을 효율적으로 관리해줍니다 <ul>
-<li>사용자간의 형평성 있게 자원을 분배해줍니다</li>
-<li>주어진 자원으로 최대한의 성능을 내도록 합니다</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>운영 체제의 분류<ul>
-<li>동시 작업 가능 여부<ul>
-<li>단일 작업(single tasking)</li>
-<li>다중 작업(multo tasking)</li>
-</ul>
-</li>
-<li>사용자의 수<ul>
-<li>단일 사용자(single user)</li>
-<li>다중 사용자(multi user)</li>
-</ul>
-</li>
-<li>처리 방식<ul>
-<li>일괄 처리(batch processing)<ul>
-<li>작업 요청의 일정량을 모아서 한꺼번에 처리하며, 따라서 작업이 완전 종료될 때까지 기다려야 합니다</li>
-</ul>
-</li>
-<li>시분할(time sharing)<ul>
-<li>여러 작업을 수행할 때 컴퓨터 처리 능력을 일정한 시간 단위로 분할하여 사용하여, 일괄 처리 시스템에 비해<br>짧은 응답시간을 가지고, interactive한 방식입니다.</li>
-</ul>
-</li>
-<li>실시간(Realtime OS)<ul>
-<li>정해진 시간 안에 어떠한 일이 반드시 종료됨이 보장되어야하는 실시간 시스템을 위한 OS입니다.</li>
-<li>예) 미사일 제어, 반도체 장비, 로보트 제어</li>
-<li>실시간 시스템의 개념의 확장<ul>
-<li>Hard realtime system : 데드라인이 존재하며 데드라인안에 작업이 완료되어야 합니다</li>
-<li>Soft realtime system : 데드라인은 존재하지만 완벽하게 지켜지지 않아도 되는 시스템 입니다</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>용어 정리<ul>
-<li>컴퓨터에서 여러 작업을 동시에 수행하는 것을 강조한 용어<ul>
-<li>Multitasking : 하나의 프로그램이 끝나기전에 다른 프로그램을 실행시킬 수 있습니다</li>
-<li>Multiprogramming : 메모리에 여러 프로그램이 올라갈 수 있는 부분을 집중한 용어입니다</li>
-<li>Time sharing : cpu를 강조한 측면의 유사한 용어입니다</li>
-<li>Multiprocess</li>
-</ul>
-</li>
-<li>Multiprocessor : 하나의 컴퓨터에 CPU (processor)가 여러 개 붙어 있음을 의미합니다</li>
-</ul>
-</li>
-</ul>
-<h3 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h3><ul>
-<li>반효경 교수님 강의</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/05/07/OS-1-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

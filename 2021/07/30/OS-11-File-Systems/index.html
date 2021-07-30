@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Run PSVM">
+    <title>OS-11-File Systems - Run PSVM</title>
+    <meta name="author" content="Yechan Kim">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"File and File System\nFile\n“A named collection of related information”\n일반적으로 비휘발성의 보조 기억 장치에 저장\n운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌\nOperation\ncreate, read, write, reposition (lseek), delete, open, close 등\n\n\n\n\nFile attribute (혹은 파일 metadata)\n파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들\n파일 이름, 유형, 저장된 위치, 파일 사이즈\n접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등\n\n\n\n\nFile system\n운영체제에서 파일을 관리하는 부분\n파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리\n파일의 저장 방법 결정\n파일 보호 등\n\n\n\nopen()\n\n\nopen(“/a/b/c)\n\n디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴\n\n이를 위하여 directory path를 search\n\n루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득\n파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득\n파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득\n파일 “c”를 open한다\n\n\nDirectory path의 search에 너무 많은 시간 소요\n\nOpen을 read/write와 별도로 두는 이유임\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\nOpen file table\n\n현재 open된 파일들의 메타데이터 보관소 (in memory)\n디스크의 메타데이터보다 몇 가지 정보가 추가\nOpen한 프로세스 수\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\n\n\nFile descriptor (file handle, file control block)\n\nOpen file table에 대한 위치 정보 (프로세스 별)\n\n\n\n/a/b/c search 및 파일 읽기 과정\n\nOS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다\nroot metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다\n앞의 과정을 반복한다\nfile descripter를 통해서 fd에 b의 metadata 정보를 읽는다\nb의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다\nOS 메모리에 올라간 정보를 Process A의 메모리에 올린다\n\n\n\n\n\nFile Protection\n각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?\n\nAccess Control 방법\n\nAccess Control Matrix\n  \n  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시\n  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시\nGrouping\n\n전체 user를 owner, group, public의 세 그룹으로 구분\n\n각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분\n\n\n\n\nPassword\n\n파일마다 password를 두는 방법\n모든 접근 권한에 대해 하나의 password: all or noting\n접근 권한별 password: 암기 문제, 관리 문제\n\n\n\n\n\nFile System의 Mounting\n물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝\n이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)\n\n\n\n\n\n\n\nAccess Methods\n시스템이 제공하는 파일 정보의 접근 방식\n순차 접근 (sequential access)\n카세트 테이프를 상요하는 방식처럼 접근\n읽거나 쓰면 offset은 자동적으로 증가\n\n\n직접 접근 (direct access, random access)\nLP 레코드 판과 같이 접근하도록 함\n파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음\n\n\n\n\n\n","dateCreated":"2021-07-30T16:37:53+09:00","dateModified":"2021-07-30T18:06:27+09:00","datePublished":"2021-07-30T16:37:53+09:00","description":"","headline":"OS-11-File Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"}</script>
+    <meta name="description" content="File and File System File “A named collection of related information” 일반적으로 비휘발성의 보조 기억 장치에 저장 운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌 Operation create, read, write, reposition (lseek), delete">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="OS-11-File Systems">
+<meta property="og:url" content="https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/index.html">
+<meta property="og:site_name" content="Run PSVM">
+<meta property="og:description" content="File and File System File “A named collection of related information” 일반적으로 비휘발성의 보조 기억 장치에 저장 운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌 Operation create, read, write, reposition (lseek), delete">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127624201-35498f7b-f6e1-45af-91fc-dfe9a44545a1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127628107-b108794f-8c27-4fa4-abb7-e1d5970d8b7f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127628781-15d7a625-9aee-4b02-8262-9008134724b9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629316-13641a15-031c-4afc-b52a-16a1b1d042f6.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629437-8795be58-7e79-4aca-b60b-5068eee88c40.png">
+<meta property="article:published_time" content="2021-07-30T07:37:53.000Z">
+<meta property="article:modified_time" content="2021-07-30T09:06:27.518Z">
+<meta property="article:author" content="Yechan Kim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/all.css">
+
+    
+<link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+
+    
+<link rel="stylesheet" href="/assets/css/thumbs.css">
+
+    
+<link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Run PSVM
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="http://stackoverflow.com/users"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Stack Overflow"
+                        >
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://plus.google.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Google +"
+                        >
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://www.linkedin.com/profile/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="LinkedIn"
+                        >
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            OS-11-File Systems
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-07-30T16:37:53+09:00">
+	
+		    Jul 30, 2021
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="File-and-File-System"><a href="#File-and-File-System" class="headerlink" title="File and File System"></a>File and File System</h2><ul>
+<li>File<ul>
+<li>“A named collection of related information”</li>
+<li>일반적으로 비휘발성의 보조 기억 장치에 저장</li>
+<li>운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌</li>
+<li>Operation<ul>
+<li>create, read, write, reposition (lseek), delete, open, close 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>File attribute (혹은 파일 metadata)<ul>
+<li>파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들<ul>
+<li>파일 이름, 유형, 저장된 위치, 파일 사이즈</li>
+<li>접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>File system<ul>
+<li>운영체제에서 파일을 관리하는 부분</li>
+<li>파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리</li>
+<li>파일의 저장 방법 결정</li>
+<li>파일 보호 등</li>
+</ul>
+</li>
+</ul>
+<h2 id="open"><a href="#open" class="headerlink" title="open()"></a>open()</h2><img width="600" alt="스크린샷 2021-07-30 오후 5 07 37" src="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
+
+<ul>
+<li><p>open(“/a/b/c)</p>
+<ul>
+<li><p>디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴</p>
+</li>
+<li><p>이를 위하여 directory path를 search</p>
+<ul>
+<li>루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득</li>
+<li>파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득</li>
+<li>파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득</li>
+<li>파일 “c”를 open한다</li>
+</ul>
+</li>
+<li><p>Directory path의 search에 너무 많은 시간 소요</p>
+<ul>
+<li>Open을 read/write와 별도로 두는 이유임</li>
+<li>한 번 open한 파일은 read/ write 시 directory search 불필요</li>
+</ul>
+</li>
+<li><p>Open file table</p>
+<ul>
+<li>현재 open된 파일들의 메타데이터 보관소 (in memory)</li>
+<li>디스크의 메타데이터보다 몇 가지 정보가 추가<ul>
+<li>Open한 프로세스 수</li>
+<li>한 번 open한 파일은 read/ write 시 directory search 불필요</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>File descriptor (file handle, file control block)</p>
+<ul>
+<li>Open file table에 대한 위치 정보 (프로세스 별)</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-30 오후 5 23 03" src="https://user-images.githubusercontent.com/12459864/127624201-35498f7b-f6e1-45af-91fc-dfe9a44545a1.png">
+</li>
+<li><p>/a/b/c search 및 파일 읽기 과정</p>
+<ol>
+<li>OS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다</li>
+<li>root metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다</li>
+<li>앞의 과정을 반복한다</li>
+<li>file descripter를 통해서 fd에 b의 metadata 정보를 읽는다</li>
+<li>b의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다</li>
+<li>OS 메모리에 올라간 정보를 Process A의 메모리에 올린다</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="File-Protection"><a href="#File-Protection" class="headerlink" title="File Protection"></a>File Protection</h2><ul>
+<li><p>각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?</p>
+</li>
+<li><p>Access Control 방법</p>
+<ul>
+<li><p>Access Control Matrix</p>
+  <img width="655" alt="스크린샷 2021-07-30 오후 5 52 46" src="https://user-images.githubusercontent.com/12459864/127628107-b108794f-8c27-4fa4-abb7-e1d5970d8b7f.png">
+  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시
+  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시</li>
+<li><p>Grouping</p>
+<ul>
+<li><p>전체 user를 owner, group, public의 세 그룹으로 구분</p>
+</li>
+<li><p>각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분</p>
+<img width="186" alt="스크린샷 2021-07-30 오후 5 57 58" src="https://user-images.githubusercontent.com/12459864/127628781-15d7a625-9aee-4b02-8262-9008134724b9.png">
+</li>
+</ul>
+</li>
+<li><p>Password</p>
+<ul>
+<li>파일마다 password를 두는 방법</li>
+<li>모든 접근 권한에 대해 하나의 password: all or noting</li>
+<li>접근 권한별 password: 암기 문제, 관리 문제</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="File-System의-Mounting"><a href="#File-System의-Mounting" class="headerlink" title="File System의 Mounting"></a>File System의 Mounting</h2><ul>
+<li>물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝</li>
+<li>이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 6 02 03" src="https://user-images.githubusercontent.com/12459864/127629316-13641a15-031c-4afc-b52a-16a1b1d042f6.png">
+
+<br>
+
+<img width="500" alt="스크린샷 2021-07-30 오후 6 03 03" src="https://user-images.githubusercontent.com/12459864/127629437-8795be58-7e79-4aca-b60b-5068eee88c40.png">
+
+<h2 id="Access-Methods"><a href="#Access-Methods" class="headerlink" title="Access Methods"></a>Access Methods</h2><ul>
+<li>시스템이 제공하는 파일 정보의 접근 방식<ul>
+<li>순차 접근 (sequential access)<ul>
+<li>카세트 테이프를 상요하는 방식처럼 접근</li>
+<li>읽거나 쓰면 offset은 자동적으로 증가</li>
+</ul>
+</li>
+<li>직접 접근 (direct access, random access)<ul>
+<li>LP 레코드 판과 같이 접근하도록 함</li>
+<li>파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/07/28/OS-10-Virtual-Memory/"
+                    data-tooltip="OS-10-Virtual Memory"
+                    aria-label="NEXT: OS-10-Virtual Memory"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Yechan Kim. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/07/28/OS-10-Virtual-Memory/"
+                    data-tooltip="OS-10-Virtual Memory"
+                    aria-label="NEXT: OS-10-Virtual Memory"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Yechan Kim</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/jquery.js"></script>
+
+
+<script src="/assets/js/jquery.fancybox.js"></script>
+
+
+<script src="/assets/js/thumbs.js"></script>
+
+
+<script src="/assets/js/tranquilpeak.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/';
+              
+            this.page.identifier = '2021/07/30/OS-11-File-Systems/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
