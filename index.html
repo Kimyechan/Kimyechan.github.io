@@ -474,6 +474,43 @@
 </ul>
 </li>
 </ul>
+<h2 id="Allocation-of-File-Data-in-Disk"><a href="#Allocation-of-File-Data-in-Disk" class="headerlink" title="Allocation of File Data in Disk"></a>Allocation of File Data in Disk</h2><ul>
+<li>Contiguous Allocation</li>
+<li>Linked Allocation</li>
+<li>Indexed Allocation</li>
+</ul>
+<h3 id="Contiguous-Allocation"><a href="#Contiguous-Allocation" class="headerlink" title="Contiguous Allocation"></a>Contiguous Allocation</h3><ul>
+<li>단점<ul>
+<li>external fragmentation</li>
+<li>File grow가 어려움<ul>
+<li>file 생성시 얼마나 큰 hole을 할당할 것인가?</li>
+<li>grow 가능 vs 낭비 (internal fragmentation)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>장점<ul>
+<li>Fast I/O<ul>
+<li>한 번의 seek/rotation으로 많은 바이트 transfer</li>
+<li>Realtime file 용으로, 또는 이미 run중이던 process의 swapping 용 </li>
+<li>swap area의 저장 데이터는 영구저장용이 아니기 때문에 공간 효율성을 중요하게 여기지 않는다</li>
+</ul>
+</li>
+<li>Direct access(=random access)가능</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linked-Allocation"><a href="#Linked-Allocation" class="headerlink" title="Linked Allocation"></a>Linked Allocation</h3><ul>
+<li>장점<ul>
+<li>External fragmentation 발생 안 함</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>No random access</li>
+<li>Reliability 문제</li>
+</ul>
+</li>
+</ul>
 
                     
                         

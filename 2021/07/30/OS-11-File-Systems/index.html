@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"File and File System\nFile\n“A named collection of related information”\n일반적으로 비휘발성의 보조 기억 장치에 저장\n운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌\nOperation\ncreate, read, write, reposition (lseek), delete, open, close 등\n\n\n\n\nFile attribute (혹은 파일 metadata)\n파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들\n파일 이름, 유형, 저장된 위치, 파일 사이즈\n접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등\n\n\n\n\nFile system\n운영체제에서 파일을 관리하는 부분\n파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리\n파일의 저장 방법 결정\n파일 보호 등\n\n\n\nopen()\n\n\nopen(“/a/b/c)\n\n디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴\n\n이를 위하여 directory path를 search\n\n루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득\n파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득\n파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득\n파일 “c”를 open한다\n\n\nDirectory path의 search에 너무 많은 시간 소요\n\nOpen을 read/write와 별도로 두는 이유임\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\nOpen file table\n\n현재 open된 파일들의 메타데이터 보관소 (in memory)\n디스크의 메타데이터보다 몇 가지 정보가 추가\nOpen한 프로세스 수\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\n\n\nFile descriptor (file handle, file control block)\n\nOpen file table에 대한 위치 정보 (프로세스 별)\n\n\n\n/a/b/c search 및 파일 읽기 과정\n\nOS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다\nroot metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다\n앞의 과정을 반복한다\nfile descripter를 통해서 fd에 b의 metadata 정보를 읽는다\nb의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다\nOS 메모리에 올라간 정보를 Process A의 메모리에 올린다\n\n\n\n\n\nFile Protection\n각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?\n\nAccess Control 방법\n\nAccess Control Matrix\n  \n  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시\n  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시\nGrouping\n\n전체 user를 owner, group, public의 세 그룹으로 구분\n\n각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분\n\n\n\n\nPassword\n\n파일마다 password를 두는 방법\n모든 접근 권한에 대해 하나의 password: all or noting\n접근 권한별 password: 암기 문제, 관리 문제\n\n\n\n\n\nFile System의 Mounting\n물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝\n이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)\n\n\n\n\n\n\n\nAccess Methods\n시스템이 제공하는 파일 정보의 접근 방식\n순차 접근 (sequential access)\n카세트 테이프를 상요하는 방식처럼 접근\n읽거나 쓰면 offset은 자동적으로 증가\n\n\n직접 접근 (direct access, random access)\nLP 레코드 판과 같이 접근하도록 함\n파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음\n\n\n\n\n\n","dateCreated":"2021-07-30T16:37:53+09:00","dateModified":"2021-07-30T18:06:27+09:00","datePublished":"2021-07-30T16:37:53+09:00","description":"","headline":"OS-11-File Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"File and File System\nFile\n“A named collection of related information”\n일반적으로 비휘발성의 보조 기억 장치에 저장\n운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌\nOperation\ncreate, read, write, reposition (lseek), delete, open, close 등\n\n\n\n\nFile attribute (혹은 파일 metadata)\n파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들\n파일 이름, 유형, 저장된 위치, 파일 사이즈\n접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등\n\n\n\n\nFile system\n운영체제에서 파일을 관리하는 부분\n파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리\n파일의 저장 방법 결정\n파일 보호 등\n\n\n\nopen()\n\n\nopen(“/a/b/c)\n\n디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴\n\n이를 위하여 directory path를 search\n\n루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득\n파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득\n파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득\n파일 “c”를 open한다\n\n\nDirectory path의 search에 너무 많은 시간 소요\n\nOpen을 read/write와 별도로 두는 이유임\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\nOpen file table\n\n현재 open된 파일들의 메타데이터 보관소 (in memory)\n디스크의 메타데이터보다 몇 가지 정보가 추가\nOpen한 프로세스 수\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\n\n\nFile descriptor (file handle, file control block)\n\nOpen file table에 대한 위치 정보 (프로세스 별)\n\n\n\n/a/b/c search 및 파일 읽기 과정\n\nOS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다\nroot metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다\n앞의 과정을 반복한다\nfile descripter를 통해서 fd에 b의 metadata 정보를 읽는다\nb의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다\nOS 메모리에 올라간 정보를 Process A의 메모리에 올린다\n\n\n\n\n\nFile Protection\n각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?\n\nAccess Control 방법\n\nAccess Control Matrix\n  \n  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시\n  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시\nGrouping\n\n전체 user를 owner, group, public의 세 그룹으로 구분\n\n각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분\n\n\n\n\nPassword\n\n파일마다 password를 두는 방법\n모든 접근 권한에 대해 하나의 password: all or noting\n접근 권한별 password: 암기 문제, 관리 문제\n\n\n\n\n\nFile System의 Mounting\n물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝\n이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)\n\n\n\n\n\n\n\nAccess Methods\n시스템이 제공하는 파일 정보의 접근 방식\n순차 접근 (sequential access)\n카세트 테이프를 상요하는 방식처럼 접근\n읽거나 쓰면 offset은 자동적으로 증가\n\n\n직접 접근 (direct access, random access)\nLP 레코드 판과 같이 접근하도록 함\n파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음\n\n\n\n\n\nAllocation of File Data in Disk\nContiguous Allocation\nLinked Allocation\nIndexed Allocation\n\nContiguous Allocation\n단점\nexternal fragmentation\nFile grow가 어려움\nfile 생성시 얼마나 큰 hole을 할당할 것인가?\ngrow 가능 vs 낭비 (internal fragmentation)\n\n\n\n\n장점\nFast I/O\n한 번의 seek/rotation으로 많은 바이트 transfer\nRealtime file 용으로, 또는 이미 run중이던 process의 swapping 용 \nswap area의 저장 데이터는 영구저장용이 아니기 때문에 공간 효율성을 중요하게 여기지 않는다\n\n\nDirect access(=random access)가능\n\n\n\nLinked Allocation\n장점\nExternal fragmentation 발생 안 함\n\n\n단점\nNo random access\nReliability 문제\n\n\n\n","dateCreated":"2021-07-30T16:37:53+09:00","dateModified":"2021-07-30T23:26:04+09:00","datePublished":"2021-07-30T16:37:53+09:00","description":"","headline":"OS-11-File Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"}</script>
     <meta name="description" content="File and File System File “A named collection of related information” 일반적으로 비휘발성의 보조 기억 장치에 저장 운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌 Operation create, read, write, reposition (lseek), delete">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="OS-11-File Systems">
@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629316-13641a15-031c-4afc-b52a-16a1b1d042f6.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629437-8795be58-7e79-4aca-b60b-5068eee88c40.png">
 <meta property="article:published_time" content="2021-07-30T07:37:53.000Z">
-<meta property="article:modified_time" content="2021-07-30T09:06:27.518Z">
+<meta property="article:modified_time" content="2021-07-30T14:26:04.406Z">
 <meta property="article:author" content="Yechan Kim">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
@@ -480,6 +480,43 @@
 <li>파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h2 id="Allocation-of-File-Data-in-Disk"><a href="#Allocation-of-File-Data-in-Disk" class="headerlink" title="Allocation of File Data in Disk"></a>Allocation of File Data in Disk</h2><ul>
+<li>Contiguous Allocation</li>
+<li>Linked Allocation</li>
+<li>Indexed Allocation</li>
+</ul>
+<h3 id="Contiguous-Allocation"><a href="#Contiguous-Allocation" class="headerlink" title="Contiguous Allocation"></a>Contiguous Allocation</h3><ul>
+<li>단점<ul>
+<li>external fragmentation</li>
+<li>File grow가 어려움<ul>
+<li>file 생성시 얼마나 큰 hole을 할당할 것인가?</li>
+<li>grow 가능 vs 낭비 (internal fragmentation)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>장점<ul>
+<li>Fast I/O<ul>
+<li>한 번의 seek/rotation으로 많은 바이트 transfer</li>
+<li>Realtime file 용으로, 또는 이미 run중이던 process의 swapping 용 </li>
+<li>swap area의 저장 데이터는 영구저장용이 아니기 때문에 공간 효율성을 중요하게 여기지 않는다</li>
+</ul>
+</li>
+<li>Direct access(=random access)가능</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linked-Allocation"><a href="#Linked-Allocation" class="headerlink" title="Linked Allocation"></a>Linked Allocation</h3><ul>
+<li>장점<ul>
+<li>External fragmentation 발생 안 함</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>No random access</li>
+<li>Reliability 문제</li>
 </ul>
 </li>
 </ul>
