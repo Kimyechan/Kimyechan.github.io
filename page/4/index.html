@@ -325,6 +325,84 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/09/Algorithm-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9/"
+                            aria-label=": Algorithm-효율적인 해킹"
+                        >
+                            Algorithm-효율적인 해킹
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-09T11:43:17+09:00">
+	
+		    Nov 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/BFS/">BFS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 1325 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1325">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li><p>그래프 탐색</p>
+</li>
+<li><p>BFS</p>
+</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>DFS, BFS를 수행할 때마다 방문하게 되는 노드의 개수를 계산</li>
+<li>가장 노드의 개수가 크게 되는 시작 정점을 출력</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">n, m = map(int, input().split())</span><br><span class="line">adj = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">    x, y = map(int, input().split())</span><br><span class="line">    adj[y].append(x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span>(<span class="params">v</span>):</span></span><br><span class="line">    q = deque([v])</span><br><span class="line">    visited = [<span class="literal">False</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    visited[v] = <span class="literal">True</span></span><br><span class="line">    count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        v = q.popleft()</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> adj[v]:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> visited[e]:</span><br><span class="line">                q.append(e)</span><br><span class="line">                visited[e] = <span class="literal">True</span></span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line">max_value = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">c = bfs(i)</span><br><span class="line"><span class="keyword">if</span> c &gt; max_value:</span><br><span class="line">    result = [i]</span><br><span class="line">    max_value = c</span><br><span class="line"><span class="keyword">elif</span> c == max_value:</span><br><span class="line">    result.append(i)</span><br><span class="line">    max_value = c</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> result:</span><br><span class="line">    print(e, end = <span class="string">&quot; &quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/09/Algorithm-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/09/Algorithm-%EC%9C%A0%EA%B8%B0%EB%86%8D-%EB%B0%B0%EC%B6%94/"
                             aria-label=": Algorithm-유기농 배추"
                         >
@@ -1083,84 +1161,6 @@
                         <p>
                             <a
                                 href="/2020/11/05/Algorithm-%ED%8F%89%EB%B2%94%ED%95%9C-%EB%B0%B0%EB%82%AD/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/30/Algorithm-01%ED%83%80%EC%9D%BC/"
-                            aria-label=": Algorithm-01타일"
-                        >
-                            Algorithm-01타일
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-30T19:14:51+09:00">
-	
-		    Oct 30, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/DynamicProgramming/">DynamicProgramming</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1904 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1904">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>동적 프로그래밍</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>동적 프로그래밍 문제를 풀기 위해서는 점화식(인접한 항들 사이의 관계식)을 세워야 한다.</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/97693770-ffb74a80-1ae4-11eb-9ad2-d56235883a3a.png" alt="스크린샷 2020-10-30 오후 7 19 58"></p>
-</li>
-<li><p>D[i] = 수열의 길이가 i일 때의 경우에 수</p>
-</li>
-<li><p>D[i] = D[i-1] + D[i-2]</p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">dp = [<span class="number">0</span>] * <span class="number">1000001</span></span><br><span class="line">dp[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">dp[<span class="number">2</span>] = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, n+<span class="number">1</span>)</span><br><span class="line">    dp[i] = (dp[i - <span class="number">2</span>] + dp[i - <span class="number">1</span>]) % <span class="number">15746</span></span><br><span class="line"></span><br><span class="line">print(d[[n]])</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/30/Algorithm-01%ED%83%80%EC%9D%BC/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

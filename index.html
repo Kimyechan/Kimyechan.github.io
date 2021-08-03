@@ -325,6 +325,227 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
+                            aria-label=": OS-12-Disk Management and Scheduling"
+                        >
+                            OS-12-Disk Management and Scheduling
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-03T13:35:03+09:00">
+	
+		    Aug 03, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Disk-Structure"><a href="#Disk-Structure" class="headerlink" title="Disk Structure"></a>Disk Structure</h2><ul>
+<li>logical block<ul>
+<li>디스크의 외부에서 보는 디스크의 단위 정보 저장 공간들</li>
+<li>주소를 가진 1차원 배열처럼 취급</li>
+<li>정보를 전송하는 최소 단위</li>
+</ul>
+</li>
+<li>Sector<ul>
+<li>Logical block이 물리적인 디스크에 매핑된 위치</li>
+<li>Sector 0은 최외각 실린더의 첫 트랙에 있는 첫 번째 섹터이다</li>
+</ul>
+</li>
+</ul>
+<h2 id="Disk-Scheduling"><a href="#Disk-Scheduling" class="headerlink" title="Disk Scheduling"></a>Disk Scheduling</h2><ul>
+<li>Access time의 구성<ul>
+<li>Seek time<ul>
+<li>헤드를 해당 실린더로 움직이는데 걸리는 시간</li>
+</ul>
+</li>
+<li>Rotational latency<ul>
+<li>헤드가 원하는 섹터에 도달하기까지 걸리는 회전지연시간</li>
+</ul>
+</li>
+<li>Transfer time<ul>
+<li>실제 데이터의 전송 시간</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Disk bandwidth<ul>
+<li>단위 시간 당 전송된 바이트의 수</li>
+</ul>
+</li>
+<li>Disk Scheduling<ul>
+<li>seek time을 최소화하는 것이 목표</li>
+<li>Seek time := seek distance</li>
+</ul>
+</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-03 오후 2 01 34" src="https://user-images.githubusercontent.com/12459864/127960663-5a1fb836-7595-4445-93df-14667c3a55b5.png">
+
+<h2 id="Disk-Management"><a href="#Disk-Management" class="headerlink" title="Disk Management"></a>Disk Management</h2><ul>
+<li>physical formatting (Low-level formatting)<ul>
+<li>디스크를 컨트롤러가 읽고 쓸 수 있도록 섹터들로 나누는 과정</li>
+<li>각 섹터는 header + 실제 data(보통 512 bytes) + trailer로 구성</li>
+<li>header와 trailer는 sector number, ECC (Error-Correcting Code) 등의 정보가 저장되며 controller가 직접 접근 및 운영</li>
+</ul>
+</li>
+<li>Partitioning<ul>
+<li>디스크를 하나 이상의 실린더 그룹으로 나누는 과정</li>
+<li>OS는 이것을 독립적 disk로 취급 (logical disk)</li>
+</ul>
+</li>
+<li>Logical formatting<ul>
+<li>파일 시스템을 만드는 것</li>
+<li>FAT, inode, free space 등의 구조 포함</li>
+</ul>
+</li>
+<li>Booting<ul>
+<li>ROM에 있는 “small bootstrap loader”의 실행</li>
+<li>sector 0 (boot block)을 load하여 실행</li>
+<li>sector 0은 “full Bootstrap loader program”</li>
+<li>OS를 디스크에서 load하여 실행</li>
+</ul>
+</li>
+</ul>
+<h2 id="Disk-Scheduling-Algorithm"><a href="#Disk-Scheduling-Algorithm" class="headerlink" title="Disk Scheduling Algorithm"></a>Disk Scheduling Algorithm</h2><ul>
+<li><p>큐에 다음과 같은 실린더 위치의 요청이 존재하는 경우 디스크 헤드 53번에서 시작한 각 알고리즘의 수행 결과는? (실린더 위치는 0-199)</p>
+<ul>
+<li>98, 183, 37, 122, 14, 124, 65, 67</li>
+</ul>
+</li>
+<li><p>FCFS</p>
+</li>
+<li><p>SSTF</p>
+</li>
+<li><p>SCAN</p>
+</li>
+<li><p>C-SCAN</p>
+</li>
+<li><p>N-SCAN</p>
+</li>
+<li><p>LOOK</p>
+</li>
+<li><p>C-LOOK</p>
+</li>
+</ul>
+<h3 id="FCFS-First-Come-First-Service"><a href="#FCFS-First-Come-First-Service" class="headerlink" title="FCFS (First Come First Service)"></a>FCFS (First Come First Service)</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 17 35" src="https://user-images.githubusercontent.com/12459864/127961886-143c42a8-7109-491d-8805-54a3c7afff70.png">
+
+<h3 id="SSTF-Shortest-Seek-Time-First"><a href="#SSTF-Shortest-Seek-Time-First" class="headerlink" title="SSTF (Shortest Seek Time First)"></a>SSTF (Shortest Seek Time First)</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 19 20" src="https://user-images.githubusercontent.com/12459864/127961957-6b34b4a6-fc89-427d-9258-0d1484826d9b.png">
+
+<h3 id="SCAN"><a href="#SCAN" class="headerlink" title="SCAN"></a>SCAN</h3><ul>
+<li>disk arm이 디스크의 한쪽 끝에서 다른쪽 끝으로 이동하며 가는 길목에 있는 모든 요청을 처리한다</li>
+<li>다른 한쪽 끝에 도달하면 역방향으로 이동하며 오는 길목에 있는 모든 요청을 처리하며 다시 반대쪽 끝으로 이동한다</li>
+<li>문제점: 실린더 위치에 따라 대기시간이 다르다 (중앙에 위치한 것이 2배 더 많이 실행된다)</li>
+</ul>
+<img width="500" alt="스크린샷 2021-08-03 오후 2 22 43" src="https://user-images.githubusercontent.com/12459864/127962204-8405f439-5cc5-49f3-b2c5-b5cb908cf397.png">
+
+<h3 id="C-SCAN"><a href="#C-SCAN" class="headerlink" title="C-SCAN"></a>C-SCAN</h3><ul>
+<li>헤드가 한쪽 끝에서 다른쪽 끝으로 이동하며 가는 길목에 있는 모든 요청을 처리</li>
+<li>다른쪽 긑에 도달했으면 요청을 처리하지 않고 곧바로 출발점으로 다시 이동</li>
+<li>SCAN보다 균일한 대기 시간을 제공한다</li>
+</ul>
+<img width="300" alt="스크린샷 2021-08-03 오후 2 26 31" src="https://user-images.githubusercontent.com/12459864/127962516-36db7f90-ff5c-4a71-a56c-2f3f695fc09a.png">
+
+<h3 id="Other-Algorithms"><a href="#Other-Algorithms" class="headerlink" title="Other Algorithms"></a>Other Algorithms</h3><ul>
+<li>N-SCAN<ul>
+<li>SCAN의 변형 알고리즘</li>
+<li>일단 arm이 한 방향으로 움직이기 시작하면 그 시점 이후에 도착한 job은 되돌아올 때 service</li>
+</ul>
+</li>
+<li>LOOK and C-LOOK<ul>
+<li>SCAN이나 C-SCAN은 헤드가 디스크 끝에서 끝으로 이동</li>
+<li>LOOK과 C-LOOK은 헤드가 진행 중이다가 그 방향에 더 이상 기다리는 요청이 없으면 헤드의 이동방향을 즉시 반대로 이동한다</li>
+</ul>
+</li>
+</ul>
+<h3 id="C-LOOK"><a href="#C-LOOK" class="headerlink" title="C-LOOK"></a>C-LOOK</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 30 03" src="https://user-images.githubusercontent.com/12459864/127963087-aa458841-7689-491f-8f48-bddb7334a491.png">
+
+<h2 id="Disk-Scheduling-Algorithm의-결정"><a href="#Disk-Scheduling-Algorithm의-결정" class="headerlink" title="Disk-Scheduling Algorithm의 결정"></a>Disk-Scheduling Algorithm의 결정</h2><ul>
+<li>SCAN, C-SCAN 및 그 응용 알고리즘은 LOOK, C-LOOK 등이 일반적으로 디스크 입출력이 많은 시스템에서 효율적인 것으로 알려져 있음</li>
+<li>File의 할당 방법에 따라 디스크 요청이 영향을 받음</li>
+<li>디스크 스케줄링 알고리즘은 필요할 경우 다른 알고리즘으로 쉽게 교체할 수 있도록 OS와 별도의 모듈로 작성되는 것이 바람직하다</li>
+</ul>
+<h2 id="Swap-Space-Management"><a href="#Swap-Space-Management" class="headerlink" title="Swap-Space Management"></a>Swap-Space Management</h2><ul>
+<li>Disk를 사용하는 두 가지 이유<ul>
+<li>memory의 volatile한 특성 -&gt; file system</li>
+<li>프로그램 실행을 위한 memory 공간 부족 -&gt; swap space (swap area)</li>
+</ul>
+</li>
+<li>Swap-space<ul>
+<li>Virtual memory system에서는 디스크를 memory의 연장 공간으로 사용</li>
+<li>파일 시스템 내부에 둘 수도 있으나 별도 patition 사용이 일반적<ul>
+<li>공간 효율성보다는 속도 효율성이 우선</li>
+<li>일반 파일보다 휠씬 짧은 시간만 존재하고 자주 참조됨</li>
+<li>따라서, block의 크기 및 저장 방식이 일반 파일시스템과 다름</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-03 오후 2 49 13" src="https://user-images.githubusercontent.com/12459864/127964531-a1544978-8857-4b41-9643-0ceee5df2f91.png">
+
+<h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><ul>
+<li>RAID (Redundant Array of Independent Disks)<ul>
+<li>여러 개의 디스크를 묶어서 사용</li>
+</ul>
+</li>
+<li>RAID의 사용 목적<ul>
+<li>디스크 처리 속도 향상<ul>
+<li>여러 디스크에 block의 내용을 분산 저장</li>
+<li>병렬적으로 읽어 옴 (interleaving, striping)</li>
+</ul>
+</li>
+<li>신뢰성(reliability) 향상<ul>
+<li>동일 정보를 여러 디스크에 중복 저장</li>
+<li>하나의 디스크가 고장시 다른 디스크에서 읽어옴 (Mirroring, shadowing)</li>
+<li>단순히 중복 저장이 아니라 일부 디스크에 parity를 저장하여 공간의 효율성을 높일 수 있다</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-03 오후 2 53 00" src="https://user-images.githubusercontent.com/12459864/127964885-fe078ca1-f241-4ce4-959c-eadc1827ea66.png">
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/07/30/OS-11-File-Systems/"
                             aria-label=": OS-11-File Systems"
                         >
@@ -338,6 +559,12 @@
 		    Jul 30, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
     
 </div>
 
@@ -500,6 +727,8 @@
 </ul>
 </li>
 </ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 11 28 16" src="https://user-images.githubusercontent.com/12459864/127667973-30dfcc6c-74a5-465f-94e9-216cb0f76125.png">
+
 <h3 id="Linked-Allocation"><a href="#Linked-Allocation" class="headerlink" title="Linked Allocation"></a>Linked Allocation</h3><ul>
 <li>장점<ul>
 <li>External fragmentation 발생 안 함</li>
@@ -507,9 +736,108 @@
 </li>
 <li>단점<ul>
 <li>No random access</li>
-<li>Reliability 문제</li>
+<li>Reliability 문제<ul>
+<li>한 sector가 고장나면 pointer가 유실되면 많은 부분을 잃음</li>
 </ul>
 </li>
+<li>Pointer를 위한 공간이 block의 일부가 되어 공간 효율성을 떨어뜨림<ul>
+<li>512 bytes/sector, 4 bytes/pointer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>변형<ul>
+<li>File-allocation table (FAT) 파일 시스템<ul>
+<li>포인터를 별도의 위치에 보관하여 reliability와 공간 효율성 문제 해결</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 11 40 18" src="https://user-images.githubusercontent.com/12459864/127669778-b5ee6477-9ab9-4658-ba70-a019d98a5c0b.png">
+
+<h3 id="Indexed-Allocation"><a href="#Indexed-Allocation" class="headerlink" title="Indexed Allocation"></a>Indexed Allocation</h3><ul>
+<li>장점<ul>
+<li>External fragmentation이 발생하지 않음</li>
+<li>Direct access 가능</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>Small file의 경우 공간 낭비 (실제로 많은 file들이 small)</li>
+<li>Too Large file의 경우 하나의 block으로 index를 저장하기에 부족<ul>
+<li>linked scheme</li>
+<li>multi-level index</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="UNIX-파일-시스템의-구조"><a href="#UNIX-파일-시스템의-구조" class="headerlink" title="UNIX 파일 시스템의 구조"></a>UNIX 파일 시스템의 구조</h2><img width="600" alt="스크린샷 2021-07-30 오후 11 54 03" src="https://user-images.githubusercontent.com/12459864/127671556-460a9f6a-6864-47ca-a570-c644c8a59622.png">
+
+<p><code>inode에서 index allocation 사용하며 파일 사이즈에 따라 multi level index의 수가 달라집니다</code><br><br></p>
+<img width="600" alt="스크린샷 2021-07-31 오전 12 04 25" src="https://user-images.githubusercontent.com/12459864/127672915-a915cc68-3ae9-4d30-bbe6-908cab13132a.png">
+
+<h2 id="FAT-File-System"><a href="#FAT-File-System" class="headerlink" title="FAT File System"></a>FAT File System</h2><img width="600" alt="스크린샷 2021-07-31 오전 12 12 16" src="https://user-images.githubusercontent.com/12459864/127674053-6c4164fc-0c7d-4b56-abca-d61a411a89cf.png">
+
+<p><code>Linked Allocation 방식으로 파일을 저장합니다</code></p>
+<p><code>사용하면 파일에 파일 시작 주소값 217을 저장하고 다음 데이터가 저장된 주소값은 FAT에 217번지에 저장되어있는 주소값을 제공하는 방식으로 파일 데이터의 저장 위치를 제공합니다</code></p>
+<h2 id="VFS-and-NFS"><a href="#VFS-and-NFS" class="headerlink" title="VFS and NFS"></a>VFS and NFS</h2><ul>
+<li>Virtual File System (VFS)<ul>
+<li>서로 다른 다양한 file system에 대해 동일한 시스템 콜 인터페이스 (API)를 통해 접근할 수 있게 해주는 OS의 layer</li>
+</ul>
+</li>
+<li>Network File System (NFS)<ul>
+<li>분산 시스템에서는 네트워크를 통해 파일이 공유될 수 있다</li>
+<li>NFS는 분산 환경에서의 대표적인 파일 공유 방법이다</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-31 오전 12 20 00" src="https://user-images.githubusercontent.com/12459864/127674817-a7ed575d-abfa-4bf0-bebb-9c3c96fc7886.png">
+
+<h2 id="Page-Cache-and-Buffer-Cache"><a href="#Page-Cache-and-Buffer-Cache" class="headerlink" title="Page Cache and Buffer Cache"></a>Page Cache and Buffer Cache</h2><ul>
+<li><p>Page Cache</p>
+<ul>
+<li>Vitrual memory의 paging system에서 사용하는 page frame을 caching의 관점에서 설명하는 용어</li>
+<li>Memory-Mapped I/O를 쓰는 경우 file의 I/O에서도 page cache 사용</li>
+</ul>
+</li>
+<li><p>Memory-Mapped I/O</p>
+<ul>
+<li><p>File의 일부를 virtual memory에 mapping 시킴</p>
+</li>
+<li><p>매핑시킨 영역에 대한 메모리 접근 연산은 파일의 입출력을 수행하게 함</p>
+</li>
+<li><p>OS를 거치지 않고 File에 접근 할 수 있다.</p>
+<p><code>Process의 code, data, stack 영역중 code 영역은 read-only 파일이 때문에</code> </p>
+<p><code>swap area에 존재하지 않으며 memory-mapped I/O 빙식을 사용할 수 있다.</code></p>
+</li>
+</ul>
+</li>
+<li><p>Buffer Cache</p>
+<ul>
+<li>파일 시스템을 통한 I/O 연산은 메모리의 특정 영역인 buffer cache 사용</li>
+<li>File 사용의 locality 활용<ul>
+<li>한 번 읽어온 block에 대한 후속 요청시 buffer cache에서 즉시 전달</li>
+</ul>
+</li>
+<li>모든 프로세스가 공용으로 사용</li>
+<li>Replacement algorithm 필요 (LRU, LFU 등)</li>
+</ul>
+</li>
+<li><p>Unified Buffer Cache</p>
+<ul>
+<li>최근의 OS에서는 기존의 buffer cache가 page cache에 통합됨</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-31 오전 1 51 01" src="https://user-images.githubusercontent.com/12459864/127685977-54ebfcc1-5fcb-4d5c-8ce3-497f8e09e342.png">
+
+<br>
+
+<img width="600" alt="스크린샷 2021-07-31 오전 1 52 46" src="https://user-images.githubusercontent.com/12459864/127686104-cc498542-732e-4a7d-ad3b-4b986b12b0a5.png">
+
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
 </ul>
 
                     
@@ -556,6 +884,12 @@
 		    Jul 28, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
     
 </div>
 
@@ -2795,207 +3129,6 @@
                         <p>
                             <a
                                 href="/2021/05/14/OS-3-Process/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/05/12/OS-2-System-Structure-Program-Execution/"
-                            aria-label=": OS-2.System Structure &amp; Program Execution"
-                        >
-                            OS-2.System Structure &amp; Program Execution
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-05-12T01:17:35+09:00">
-	
-		    May 12, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="컴퓨터-시스템-구조"><a href="#컴퓨터-시스템-구조" class="headerlink" title="컴퓨터 시스템 구조"></a>컴퓨터 시스템 구조</h2><ul>
-<li><p>Computer</p>
-<ul>
-<li>CPU<ul>
-<li>mode bit : 사용자 모드 (0 : 커널, 1 : 사용자)</li>
-<li>registers : CPU가 일시적으로 데이터를 저장하는 기억장치 입니다</li>
-<li>interrupt line : 들어온 인터럽트를 확인하는 공간입니다</li>
-</ul>
-</li>
-<li>Memory: CPU의 작업 공간입니다</li>
-</ul>
-</li>
-<li><p>timer : 한 작업 당 CPU를 일정시간 동안만 사용할 수 있도록하는 하드웨어 입니다 (인터럽트를 CPU에 겁니다)</p>
-</li>
-<li><p>DMA controller: CPU의 interrupt 작업을 대신해줍니다 (I/O 작업의 결과를 메모리에 반영하고 완료하면 CPU에 Interrupt를 한 번만 작업합니다)</p>
-</li>
-<li><p>memoery controller : DMA, CPU의 메모리 접근을 제어합니다 (DMA와 CPU가 동시에 같은 메모리를 작업하지 않도록 합니다)</p>
-</li>
-<li><p>I/O device</p>
-<ul>
-<li><p>device controller : 각 device를 제어합니다</p>
-</li>
-<li><p>local buffuer : device controller 작업 공간입니다</p>
-<img width="763" alt="스크린샷 2021-05-12 오전 1 20 27" src="https://user-images.githubusercontent.com/12459864/117925870-d0568580-b332-11eb-9b9c-98304b9349cb.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Device-Controller"><a href="#Device-Controller" class="headerlink" title="Device Controller"></a>Device Controller</h3><ul>
-<li>해당 I/O 장치유형을 관리하는 일종의 작은 CPU입니다</li>
-<li>제어 정보를 위해 control register, status register를 가집니다</li>
-<li>일종의 data register인 local buffer를 가집니다</li>
-<li>I/O 작업은 실제 device와 local buffer 사이에 일어나고 I/O 작업이 완료되면 Device Controller는 Interrupt로 CPU나 DMA에 완료됨을 알려줍니다</li>
-<li>device driver VS device controller<ul>
-<li>device driver는 OS 코드 중에서 각 장치별 처리루틴을 작성한 software 입니다</li>
-<li>device controller는 각 장치를 통제하는 일종의 작은 CPU인 hareware 입니다</li>
-</ul>
-</li>
-</ul>
-<h3 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h3><ul>
-<li>정해진 시간이 흐른 뒤 운영체제에게 제어권이 넘어가도록 인터럽트를 발생시키는 하드웨어 입니다</li>
-<li>타이머는 매 클럭마다 1씩 감소되고 0이 되어지면 타이머 인터럽트가 발생합니다</li>
-<li>CPU를 특정 프로그램이 독점하는 것으로부터 보호합니다</li>
-<li>타이머는 time sharing을 하기위해 많이 사용되어집니다</li>
-</ul>
-<h3 id="DMA-Direct-Memory-Access"><a href="#DMA-Direct-Memory-Access" class="headerlink" title="DMA (Direct Memory Access)"></a>DMA (Direct Memory Access)</h3><ul>
-<li>CPU의 중재 없이 device controller가 device의 buffer storage의 내용을 메모리에 block 단위로 직접 전송하도록 해줍니다</li>
-<li>바이트 단위가 아니라 block 단위로 인터럽트를 발생시키기 때문에 CPU에 인터럽트가 적게 걸립니다</li>
-</ul>
-<h2 id="인터럽트-Interrupt"><a href="#인터럽트-Interrupt" class="headerlink" title="인터럽트 (Interrupt)"></a>인터럽트 (Interrupt)</h2><ul>
-<li>인터럽트 : 인터럽트를 당한 시점의 레지스터와 program counter를 저장한 후 CPU의 제어를 인터럽트 처리 루틴에 넘깁니다</li>
-<li>인터럽트의 종류<ul>
-<li>Interrupt (하드웨어 인터럽트): 하드웨어가 발생시킨 인터럽트입니다</li>
-<li>Trap (소프트웨어 인터럽트)<ul>
-<li>Exception: 프로그램이 오류를 범한 경우</li>
-<li>System call: 사용자 프로그램이 운영체제의 서비스를 받기 위해 커널 함수를 호출하는 것</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>인터럽트 관련 용어<ul>
-<li>인터럽트 벡터 : 해당 인터럽트의 처리 루틴 주소를 가지고 있습니다</li>
-<li>인터럽트 처리 루틴(Interrupt Service Routine, 인터럽트 핸들러) : 해당 인터럽트를 처리하는 커널 함수입니다</li>
-</ul>
-</li>
-</ul>
-<h2 id="I-O-System-Call-흐름-자세히-보기"><a href="#I-O-System-Call-흐름-자세히-보기" class="headerlink" title="I/O System Call 흐름 자세히 보기"></a>I/O System Call 흐름 자세히 보기</h2><ol>
-<li>사용자 프로그램은 I/O 명령은 특권 명령이여서 OS의 도움이 필요합니다.</li>
-<li>따라서 System Call을 사용하여 운영체제에게 I/O를 요청하게 됩니다.</li>
-<li>trap을 사용하여 인터럽트 벡터의 특정 위치로 이동하고 인터럽트 벡터가 가리키는 인터럽트 서비스 루틴으로 이동합니다</li>
-<li>이 I/O 요청이 올바른 요청인지 확인후 I/O를 수행합니다</li>
-<li>I/O 완료 시 제어권을 시스템 콜 다음 명령으로 옮깁니다</li>
-</ol>
-<h2 id="작업-흐름-I-O-작업"><a href="#작업-흐름-I-O-작업" class="headerlink" title="작업 흐름 - I/O 작업"></a>작업 흐름 - I/O 작업</h2><ol>
-<li>CPU가 Program A를 작업하고 있습니다</li>
-<li>Program1에서 I/O 작업을 요청하기 위해 시스템 콜을 실행합니다</li>
-<li>해당 시스템 콜로 인해서 인터럽트가 걸려서 CPU 제어권이 OS로 넘어갑니다</li>
-<li>OS에서 I/O 작업을 처리하도록 해당 device에 요청합니다</li>
-<li>OS에서 스케쥴링하여 다음 작업인 Program B에 CPU를 넘겨줍니다</li>
-<li>이후에 해당 device에서 I/O 작업을 마치고 CPU의 interrupt line에 완료 인터럽트를 겁니다</li>
-<li>CPU는 instruction을 실행하면서 interrupt line에 인터럽트가 들어온 것을 확인하고 CPU 제어권이 OS로 넘어갑니다</li>
-<li>OS에서는 완료된 I/O 작업을 확인하고 Program1을 실행 가능 상태로 전환하여 스케쥴링합니다.</li>
-</ol>
-<h2 id="작업-흐름-Timer"><a href="#작업-흐름-Timer" class="headerlink" title="작업 흐름 - Timer"></a>작업 흐름 - Timer</h2><ol>
-<li>OS에서 스케쥴링하여 Program A에 CPU 제어권을 넘겨주고 Timer를 설정합니다.</li>
-<li>Program A가 작업하고 있다가 작업이 완료되기 전에 Timer에 시간이 만료되어서 CPU에 Interrupt가 걸립니다.</li>
-<li>CPU는 Interrupt를 확인하고 CPU의 제어권이 OS로 넘어갑니다</li>
-<li>OS는 동일하게 다음 스케쥴링된 프로그램에게 CPU 제어권을 넘겨주고 Timer를 설정합니다</li>
-</ol>
-<h2 id="동기식-입출력과-비동기식-입출력"><a href="#동기식-입출력과-비동기식-입출력" class="headerlink" title="동기식 입출력과 비동기식 입출력"></a>동기식 입출력과 비동기식 입출력</h2><ul>
-<li>동기식 입출력 (synchronous I/O)<ul>
-<li>I/O 요청 후 입출력 작업이 완료된 후에야 제어가 사용자 프로그램으로 넘어갑니다</li>
-<li>구현 방법 1<ul>
-<li>I/O가 끝날 때까지 CPU를 가지고 있습니다</li>
-<li>CPU낭비가 심하고 매시점 하나의 I/O만 일어날 수 있습니다</li>
-</ul>
-</li>
-<li>구현 방법 2<ul>
-<li>I/O가 완료될 때까지 해당 프로그램에게서 CPU를 빼앗습니다</li>
-<li>I/O 처리를 기다리는 줄에 그 프로그램을 줄 세우고 다른 프로그램에게 CPU를 줍니다</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>비동기식 입출력 (asynchronous I/O)<ul>
-<li>I/O가 시작된 후 입출력 작업이 끝나기를 기다리지 않고 제어가 다시 원래의 사용자 프로그램에게 넘어갑니다</li>
-</ul>
-</li>
-<li>두 경우 모두 I/O 완료는 인터럽트를 통해서 알려줍니다</li>
-</ul>
-<h2 id="프로그램의-실행-메모리-load"><a href="#프로그램의-실행-메모리-load" class="headerlink" title="프로그램의 실행 (메모리 load)"></a>프로그램의 실행 (메모리 load)</h2><ul>
-<li><p>File System에 존재하는 프로그램이 메모리에 load될 때 code, data, stack 영역으로 구분되어지는 Virtual memory로 형성되어 지고, 실제 메모리에 올라가는 부분은 Virtual memory와 매핑되어지는 일부분만 올라갑니다. 이후에 메모리의 일부분은 File System에 존재하는 Swap area와 교체가 일어나면서 메모리에 올라갔다가 내려오게 됩니다.</p>
-  <img width="896" alt="스크린샷 2021-05-12 오후 3 45 09" src="https://user-images.githubusercontent.com/12459864/117977878-3b707e00-b36c-11eb-945d-fe28964aab0a.png">
-
-
-</li>
-</ul>
-<h2 id="커널-주소-공간의-내용"><a href="#커널-주소-공간의-내용" class="headerlink" title="커널 주소 공간의 내용"></a>커널 주소 공간의 내용</h2><ul>
-<li><p>code</p>
-<ul>
-<li>시스템 콜, 인터럽트 처리 코드</li>
-<li>자원 관리를 위한 코드</li>
-<li>편리한 서비스 제공을 위한 코드</li>
-</ul>
-</li>
-<li><p>data</p>
-<ul>
-<li>PCB</li>
-<li>CPU, Memory, Disk에 관한 데이터</li>
-</ul>
-</li>
-<li><p>stack</p>
-<ul>
-<li><p>각 프로세스에 관한 커널 스택</p>
-<img width="898" alt="스크린샷 2021-05-12 오후 3 47 17" src="https://user-images.githubusercontent.com/12459864/117978233-a0c46f00-b36c-11eb-8253-3d0aa49c6d95.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/05/12/OS-2-System-Structure-Program-Execution/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

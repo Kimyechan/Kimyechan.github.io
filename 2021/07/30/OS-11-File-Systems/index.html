@@ -11,7 +11,7 @@
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"File and File System\nFile\n“A named collection of related information”\n일반적으로 비휘발성의 보조 기억 장치에 저장\n운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌\nOperation\ncreate, read, write, reposition (lseek), delete, open, close 등\n\n\n\n\nFile attribute (혹은 파일 metadata)\n파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들\n파일 이름, 유형, 저장된 위치, 파일 사이즈\n접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등\n\n\n\n\nFile system\n운영체제에서 파일을 관리하는 부분\n파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리\n파일의 저장 방법 결정\n파일 보호 등\n\n\n\nopen()\n\n\nopen(“/a/b/c)\n\n디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴\n\n이를 위하여 directory path를 search\n\n루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득\n파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득\n파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득\n파일 “c”를 open한다\n\n\nDirectory path의 search에 너무 많은 시간 소요\n\nOpen을 read/write와 별도로 두는 이유임\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\nOpen file table\n\n현재 open된 파일들의 메타데이터 보관소 (in memory)\n디스크의 메타데이터보다 몇 가지 정보가 추가\nOpen한 프로세스 수\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\n\n\nFile descriptor (file handle, file control block)\n\nOpen file table에 대한 위치 정보 (프로세스 별)\n\n\n\n/a/b/c search 및 파일 읽기 과정\n\nOS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다\nroot metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다\n앞의 과정을 반복한다\nfile descripter를 통해서 fd에 b의 metadata 정보를 읽는다\nb의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다\nOS 메모리에 올라간 정보를 Process A의 메모리에 올린다\n\n\n\n\n\nFile Protection\n각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?\n\nAccess Control 방법\n\nAccess Control Matrix\n  \n  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시\n  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시\nGrouping\n\n전체 user를 owner, group, public의 세 그룹으로 구분\n\n각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분\n\n\n\n\nPassword\n\n파일마다 password를 두는 방법\n모든 접근 권한에 대해 하나의 password: all or noting\n접근 권한별 password: 암기 문제, 관리 문제\n\n\n\n\n\nFile System의 Mounting\n물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝\n이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)\n\n\n\n\n\n\n\nAccess Methods\n시스템이 제공하는 파일 정보의 접근 방식\n순차 접근 (sequential access)\n카세트 테이프를 상요하는 방식처럼 접근\n읽거나 쓰면 offset은 자동적으로 증가\n\n\n직접 접근 (direct access, random access)\nLP 레코드 판과 같이 접근하도록 함\n파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음\n\n\n\n\n\nAllocation of File Data in Disk\nContiguous Allocation\nLinked Allocation\nIndexed Allocation\n\nContiguous Allocation\n단점\nexternal fragmentation\nFile grow가 어려움\nfile 생성시 얼마나 큰 hole을 할당할 것인가?\ngrow 가능 vs 낭비 (internal fragmentation)\n\n\n\n\n장점\nFast I/O\n한 번의 seek/rotation으로 많은 바이트 transfer\nRealtime file 용으로, 또는 이미 run중이던 process의 swapping 용 \nswap area의 저장 데이터는 영구저장용이 아니기 때문에 공간 효율성을 중요하게 여기지 않는다\n\n\nDirect access(=random access)가능\n\n\n\nLinked Allocation\n장점\nExternal fragmentation 발생 안 함\n\n\n단점\nNo random access\nReliability 문제\n\n\n\n","dateCreated":"2021-07-30T16:37:53+09:00","dateModified":"2021-07-30T23:26:04+09:00","datePublished":"2021-07-30T16:37:53+09:00","description":"","headline":"OS-11-File Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"File and File System\nFile\n“A named collection of related information”\n일반적으로 비휘발성의 보조 기억 장치에 저장\n운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌\nOperation\ncreate, read, write, reposition (lseek), delete, open, close 등\n\n\n\n\nFile attribute (혹은 파일 metadata)\n파일 자체의 내용이 아니라 파일을 관리하기 위한 각종 정보들\n파일 이름, 유형, 저장된 위치, 파일 사이즈\n접근 권한 (읽기/쓰기/실행), 시간 (생성/변경/사용), 소유자 등\n\n\n\n\nFile system\n운영체제에서 파일을 관리하는 부분\n파일 및 파일의 메타 데이터, 디렉토리 정보 등을 관리\n파일의 저장 방법 결정\n파일 보호 등\n\n\n\nopen()\n\n\nopen(“/a/b/c)\n\n디스크로부터 파일 c의 메타 데이터를 메모리로 가지고 옴\n\n이를 위하여 directory path를 search\n\n루트 디렉토리 “/“를 open하고 그 안에서 파일 “a”의 위치 획득\n파일 “a”를 open한 후 read하여 그 안에서 파일 “b”의 위치 획득\n파일 “b”를 open한 후 read하여 그 안에서 파일 “c”의 위치 획득\n파일 “c”를 open한다\n\n\nDirectory path의 search에 너무 많은 시간 소요\n\nOpen을 read/write와 별도로 두는 이유임\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\nOpen file table\n\n현재 open된 파일들의 메타데이터 보관소 (in memory)\n디스크의 메타데이터보다 몇 가지 정보가 추가\nOpen한 프로세스 수\n한 번 open한 파일은 read/ write 시 directory search 불필요\n\n\n\n\nFile descriptor (file handle, file control block)\n\nOpen file table에 대한 위치 정보 (프로세스 별)\n\n\n\n/a/b/c search 및 파일 읽기 과정\n\nOS가 hard disk의 root metadata의 저장 위치를 알기 때문에 Open file table에 root metadata 정보를 저장한다\nroot metadata에서 a의 metadata 위치정보를 통해 metadata 정보를 불러온다\n앞의 과정을 반복한다\nfile descripter를 통해서 fd에 b의 metadata 정보를 읽는다\nb의 metadata 정보로 file b의 내용을 OS의 메모리에 올린다\nOS 메모리에 올라간 정보를 Process A의 메모리에 올린다\n\n\n\n\n\nFile Protection\n각 파일에 대해 누구에게 어떤 유형의 접근(read/write/execution)을 허락할 것인가?\n\nAccess Control 방법\n\nAccess Control Matrix\n  \n  - Access control list: 파일별로 누구에게 어떤 접근 권한이 있는지 표시\n  - Capability: 사용자별로 자신이 접근 권한을 가진 파일 및 해당 권한 표시\nGrouping\n\n전체 user를 owner, group, public의 세 그룹으로 구분\n\n각 파일에 대해 세 그룹의 접근 권한 (rwx)을 3비트씩으로 구분\n\n\n\n\nPassword\n\n파일마다 password를 두는 방법\n모든 접근 권한에 대해 하나의 password: all or noting\n접근 권한별 password: 암기 문제, 관리 문제\n\n\n\n\n\nFile System의 Mounting\n물리적 디스크로 논리적 디스크 disk1 disk2, disk3으로 파티셔닝\n이후에 disk1의 root 디렉토리의 하위 디렉토리 중 하나로 disk1, disk2를 위치시킴 (= Mounting)\n\n\n\n\n\n\n\nAccess Methods\n시스템이 제공하는 파일 정보의 접근 방식\n순차 접근 (sequential access)\n카세트 테이프를 상요하는 방식처럼 접근\n읽거나 쓰면 offset은 자동적으로 증가\n\n\n직접 접근 (direct access, random access)\nLP 레코드 판과 같이 접근하도록 함\n파일을 구성하는 레코드를 임의의 순서로 접근할 수 있음\n\n\n\n\n\nAllocation of File Data in Disk\nContiguous Allocation\nLinked Allocation\nIndexed Allocation\n\nContiguous Allocation\n단점\nexternal fragmentation\nFile grow가 어려움\nfile 생성시 얼마나 큰 hole을 할당할 것인가?\ngrow 가능 vs 낭비 (internal fragmentation)\n\n\n\n\n장점\nFast I/O\n한 번의 seek/rotation으로 많은 바이트 transfer\nRealtime file 용으로, 또는 이미 run중이던 process의 swapping 용 \nswap area의 저장 데이터는 영구저장용이 아니기 때문에 공간 효율성을 중요하게 여기지 않는다\n\n\nDirect access(=random access)가능\n\n\n\n\n\nLinked Allocation\n장점\nExternal fragmentation 발생 안 함\n\n\n단점\nNo random access\nReliability 문제\n한 sector가 고장나면 pointer가 유실되면 많은 부분을 잃음\n\n\nPointer를 위한 공간이 block의 일부가 되어 공간 효율성을 떨어뜨림\n512 bytes/sector, 4 bytes/pointer\n\n\n\n\n변형\nFile-allocation table (FAT) 파일 시스템\n포인터를 별도의 위치에 보관하여 reliability와 공간 효율성 문제 해결\n\n\n\n\n\n\n\nIndexed Allocation\n장점\nExternal fragmentation이 발생하지 않음\nDirect access 가능\n\n\n단점\nSmall file의 경우 공간 낭비 (실제로 많은 file들이 small)\nToo Large file의 경우 하나의 block으로 index를 저장하기에 부족\nlinked scheme\nmulti-level index\n\n\n\n\n\nUNIX 파일 시스템의 구조\n\ninode에서 index allocation 사용하며 파일 사이즈에 따라 multi level index의 수가 달라집니다\n\n\nFAT File System\n\nLinked Allocation 방식으로 파일을 저장합니다\n사용하면 파일에 파일 시작 주소값 217을 저장하고 다음 데이터가 저장된 주소값은 FAT에 217번지에 저장되어있는 주소값을 제공하는 방식으로 파일 데이터의 저장 위치를 제공합니다\nVFS and NFS\nVirtual File System (VFS)\n서로 다른 다양한 file system에 대해 동일한 시스템 콜 인터페이스 (API)를 통해 접근할 수 있게 해주는 OS의 layer\n\n\nNetwork File System (NFS)\n분산 시스템에서는 네트워크를 통해 파일이 공유될 수 있다\nNFS는 분산 환경에서의 대표적인 파일 공유 방법이다\n\n\n\n\n\nPage Cache and Buffer Cache\nPage Cache\n\nVitrual memory의 paging system에서 사용하는 page frame을 caching의 관점에서 설명하는 용어\nMemory-Mapped I/O를 쓰는 경우 file의 I/O에서도 page cache 사용\n\n\nMemory-Mapped I/O\n\nFile의 일부를 virtual memory에 mapping 시킴\n\n매핑시킨 영역에 대한 메모리 접근 연산은 파일의 입출력을 수행하게 함\n\nOS를 거치지 않고 File에 접근 할 수 있다.\nProcess의 code, data, stack 영역중 code 영역은 read-only 파일이 때문에 \nswap area에 존재하지 않으며 memory-mapped I/O 빙식을 사용할 수 있다.\n\n\n\nBuffer Cache\n\n파일 시스템을 통한 I/O 연산은 메모리의 특정 영역인 buffer cache 사용\nFile 사용의 locality 활용\n한 번 읽어온 block에 대한 후속 요청시 buffer cache에서 즉시 전달\n\n\n모든 프로세스가 공용으로 사용\nReplacement algorithm 필요 (LRU, LFU 등)\n\n\nUnified Buffer Cache\n\n최근의 OS에서는 기존의 buffer cache가 page cache에 통합됨\n\n\n\n\n\n\n\n\n\n참고\n반효경 교수님 운영체제 강의\n\n","dateCreated":"2021-07-30T16:37:53+09:00","dateModified":"2021-08-03T13:53:34+09:00","datePublished":"2021-07-30T16:37:53+09:00","description":"","headline":"OS-11-File Systems","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/07/30/OS-11-File-Systems/","keywords":"OS"}</script>
     <meta name="description" content="File and File System File “A named collection of related information” 일반적으로 비휘발성의 보조 기억 장치에 저장 운영체제는 다양한 저장 장치를 file이라는 동일한 논리적 단위로 볼 수 있게 해 줌 Operation create, read, write, reposition (lseek), delete">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="OS-11-File Systems">
@@ -25,9 +25,18 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127628781-15d7a625-9aee-4b02-8262-9008134724b9.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629316-13641a15-031c-4afc-b52a-16a1b1d042f6.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127629437-8795be58-7e79-4aca-b60b-5068eee88c40.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127667973-30dfcc6c-74a5-465f-94e9-216cb0f76125.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127669778-b5ee6477-9ab9-4658-ba70-a019d98a5c0b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127671556-460a9f6a-6864-47ca-a570-c644c8a59622.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127672915-a915cc68-3ae9-4d30-bbe6-908cab13132a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127674053-6c4164fc-0c7d-4b56-abca-d61a411a89cf.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127674817-a7ed575d-abfa-4bf0-bebb-9c3c96fc7886.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127685977-54ebfcc1-5fcb-4d5c-8ce3-497f8e09e342.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/127686104-cc498542-732e-4a7d-ad3b-4b986b12b0a5.png">
 <meta property="article:published_time" content="2021-07-30T07:37:53.000Z">
-<meta property="article:modified_time" content="2021-07-30T14:26:04.406Z">
+<meta property="article:modified_time" content="2021-08-03T04:53:34.168Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/127622292-2d9b3f35-39b7-4706-af01-d61bbc30ef37.png">
     
@@ -345,6 +354,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
+
+
+    
 </div>
 
     
@@ -509,6 +524,8 @@
 </ul>
 </li>
 </ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 11 28 16" src="https://user-images.githubusercontent.com/12459864/127667973-30dfcc6c-74a5-465f-94e9-216cb0f76125.png">
+
 <h3 id="Linked-Allocation"><a href="#Linked-Allocation" class="headerlink" title="Linked Allocation"></a>Linked Allocation</h3><ul>
 <li>장점<ul>
 <li>External fragmentation 발생 안 함</li>
@@ -516,9 +533,108 @@
 </li>
 <li>단점<ul>
 <li>No random access</li>
-<li>Reliability 문제</li>
+<li>Reliability 문제<ul>
+<li>한 sector가 고장나면 pointer가 유실되면 많은 부분을 잃음</li>
 </ul>
 </li>
+<li>Pointer를 위한 공간이 block의 일부가 되어 공간 효율성을 떨어뜨림<ul>
+<li>512 bytes/sector, 4 bytes/pointer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>변형<ul>
+<li>File-allocation table (FAT) 파일 시스템<ul>
+<li>포인터를 별도의 위치에 보관하여 reliability와 공간 효율성 문제 해결</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="500" alt="스크린샷 2021-07-30 오후 11 40 18" src="https://user-images.githubusercontent.com/12459864/127669778-b5ee6477-9ab9-4658-ba70-a019d98a5c0b.png">
+
+<h3 id="Indexed-Allocation"><a href="#Indexed-Allocation" class="headerlink" title="Indexed Allocation"></a>Indexed Allocation</h3><ul>
+<li>장점<ul>
+<li>External fragmentation이 발생하지 않음</li>
+<li>Direct access 가능</li>
+</ul>
+</li>
+<li>단점<ul>
+<li>Small file의 경우 공간 낭비 (실제로 많은 file들이 small)</li>
+<li>Too Large file의 경우 하나의 block으로 index를 저장하기에 부족<ul>
+<li>linked scheme</li>
+<li>multi-level index</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="UNIX-파일-시스템의-구조"><a href="#UNIX-파일-시스템의-구조" class="headerlink" title="UNIX 파일 시스템의 구조"></a>UNIX 파일 시스템의 구조</h2><img width="600" alt="스크린샷 2021-07-30 오후 11 54 03" src="https://user-images.githubusercontent.com/12459864/127671556-460a9f6a-6864-47ca-a570-c644c8a59622.png">
+
+<p><code>inode에서 index allocation 사용하며 파일 사이즈에 따라 multi level index의 수가 달라집니다</code><br><br></p>
+<img width="600" alt="스크린샷 2021-07-31 오전 12 04 25" src="https://user-images.githubusercontent.com/12459864/127672915-a915cc68-3ae9-4d30-bbe6-908cab13132a.png">
+
+<h2 id="FAT-File-System"><a href="#FAT-File-System" class="headerlink" title="FAT File System"></a>FAT File System</h2><img width="600" alt="스크린샷 2021-07-31 오전 12 12 16" src="https://user-images.githubusercontent.com/12459864/127674053-6c4164fc-0c7d-4b56-abca-d61a411a89cf.png">
+
+<p><code>Linked Allocation 방식으로 파일을 저장합니다</code></p>
+<p><code>사용하면 파일에 파일 시작 주소값 217을 저장하고 다음 데이터가 저장된 주소값은 FAT에 217번지에 저장되어있는 주소값을 제공하는 방식으로 파일 데이터의 저장 위치를 제공합니다</code></p>
+<h2 id="VFS-and-NFS"><a href="#VFS-and-NFS" class="headerlink" title="VFS and NFS"></a>VFS and NFS</h2><ul>
+<li>Virtual File System (VFS)<ul>
+<li>서로 다른 다양한 file system에 대해 동일한 시스템 콜 인터페이스 (API)를 통해 접근할 수 있게 해주는 OS의 layer</li>
+</ul>
+</li>
+<li>Network File System (NFS)<ul>
+<li>분산 시스템에서는 네트워크를 통해 파일이 공유될 수 있다</li>
+<li>NFS는 분산 환경에서의 대표적인 파일 공유 방법이다</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-31 오전 12 20 00" src="https://user-images.githubusercontent.com/12459864/127674817-a7ed575d-abfa-4bf0-bebb-9c3c96fc7886.png">
+
+<h2 id="Page-Cache-and-Buffer-Cache"><a href="#Page-Cache-and-Buffer-Cache" class="headerlink" title="Page Cache and Buffer Cache"></a>Page Cache and Buffer Cache</h2><ul>
+<li><p>Page Cache</p>
+<ul>
+<li>Vitrual memory의 paging system에서 사용하는 page frame을 caching의 관점에서 설명하는 용어</li>
+<li>Memory-Mapped I/O를 쓰는 경우 file의 I/O에서도 page cache 사용</li>
+</ul>
+</li>
+<li><p>Memory-Mapped I/O</p>
+<ul>
+<li><p>File의 일부를 virtual memory에 mapping 시킴</p>
+</li>
+<li><p>매핑시킨 영역에 대한 메모리 접근 연산은 파일의 입출력을 수행하게 함</p>
+</li>
+<li><p>OS를 거치지 않고 File에 접근 할 수 있다.</p>
+<p><code>Process의 code, data, stack 영역중 code 영역은 read-only 파일이 때문에</code> </p>
+<p><code>swap area에 존재하지 않으며 memory-mapped I/O 빙식을 사용할 수 있다.</code></p>
+</li>
+</ul>
+</li>
+<li><p>Buffer Cache</p>
+<ul>
+<li>파일 시스템을 통한 I/O 연산은 메모리의 특정 영역인 buffer cache 사용</li>
+<li>File 사용의 locality 활용<ul>
+<li>한 번 읽어온 block에 대한 후속 요청시 buffer cache에서 즉시 전달</li>
+</ul>
+</li>
+<li>모든 프로세스가 공용으로 사용</li>
+<li>Replacement algorithm 필요 (LRU, LFU 등)</li>
+</ul>
+</li>
+<li><p>Unified Buffer Cache</p>
+<ul>
+<li>최근의 OS에서는 기존의 buffer cache가 page cache에 통합됨</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-07-31 오전 1 51 01" src="https://user-images.githubusercontent.com/12459864/127685977-54ebfcc1-5fcb-4d5c-8ce3-497f8e09e342.png">
+
+<br>
+
+<img width="600" alt="스크린샷 2021-07-31 오전 1 52 46" src="https://user-images.githubusercontent.com/12459864/127686104-cc498542-732e-4a7d-ad3b-4b986b12b0a5.png">
+
+<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
+<li>반효경 교수님 운영체제 강의</li>
 </ul>
 
             
@@ -528,17 +644,27 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/OS/" rel="tag">OS</a>
+
+            </div>
+        
         
             <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
+                    data-tooltip="OS-12-Disk Management and Scheduling"
+                    aria-label="PREVIOUS: OS-12-Disk Management and Scheduling"
+                >
+                    
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -660,11 +786,14 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a
-                        class="post-action-btn btn btn--disabled"
-                        aria-hidden="true"
-                    >
-                        
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
+                    data-tooltip="OS-12-Disk Management and Scheduling"
+                    aria-label="PREVIOUS: OS-12-Disk Management and Scheduling"
+                >
+                    
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
