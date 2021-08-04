@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Run PSVM">
-    <title>Archives: 2021/8 - Run PSVM</title>
+    <title>Tag: Network - Run PSVM</title>
     <meta name="author" content="Yechan Kim">
     
     
@@ -14,7 +14,7 @@
     <script type="application/ld+json">{}</script>
     <meta property="og:type" content="blog">
 <meta property="og:title" content="Run PSVM">
-<meta property="og:url" content="https://kimyechan.github.io/archives/2021/08/index.html">
+<meta property="og:url" content="https://kimyechan.github.io/tags/Network/index.html">
 <meta property="og:site_name" content="Run PSVM">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yechan Kim">
@@ -504,227 +504,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
-                            aria-label=": OS-12-Disk Management and Scheduling"
-                        >
-                            OS-12-Disk Management and Scheduling
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-08-03T13:35:03+09:00">
-	
-		    Aug 03, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Disk-Structure"><a href="#Disk-Structure" class="headerlink" title="Disk Structure"></a>Disk Structure</h2><ul>
-<li>logical block<ul>
-<li>디스크의 외부에서 보는 디스크의 단위 정보 저장 공간들</li>
-<li>주소를 가진 1차원 배열처럼 취급</li>
-<li>정보를 전송하는 최소 단위</li>
-</ul>
-</li>
-<li>Sector<ul>
-<li>Logical block이 물리적인 디스크에 매핑된 위치</li>
-<li>Sector 0은 최외각 실린더의 첫 트랙에 있는 첫 번째 섹터이다</li>
-</ul>
-</li>
-</ul>
-<h2 id="Disk-Scheduling"><a href="#Disk-Scheduling" class="headerlink" title="Disk Scheduling"></a>Disk Scheduling</h2><ul>
-<li>Access time의 구성<ul>
-<li>Seek time<ul>
-<li>헤드를 해당 실린더로 움직이는데 걸리는 시간</li>
-</ul>
-</li>
-<li>Rotational latency<ul>
-<li>헤드가 원하는 섹터에 도달하기까지 걸리는 회전지연시간</li>
-</ul>
-</li>
-<li>Transfer time<ul>
-<li>실제 데이터의 전송 시간</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Disk bandwidth<ul>
-<li>단위 시간 당 전송된 바이트의 수</li>
-</ul>
-</li>
-<li>Disk Scheduling<ul>
-<li>seek time을 최소화하는 것이 목표</li>
-<li>Seek time := seek distance</li>
-</ul>
-</li>
-</ul>
-<img width="400" alt="스크린샷 2021-08-03 오후 2 01 34" src="https://user-images.githubusercontent.com/12459864/127960663-5a1fb836-7595-4445-93df-14667c3a55b5.png">
-
-<h2 id="Disk-Management"><a href="#Disk-Management" class="headerlink" title="Disk Management"></a>Disk Management</h2><ul>
-<li>physical formatting (Low-level formatting)<ul>
-<li>디스크를 컨트롤러가 읽고 쓸 수 있도록 섹터들로 나누는 과정</li>
-<li>각 섹터는 header + 실제 data(보통 512 bytes) + trailer로 구성</li>
-<li>header와 trailer는 sector number, ECC (Error-Correcting Code) 등의 정보가 저장되며 controller가 직접 접근 및 운영</li>
-</ul>
-</li>
-<li>Partitioning<ul>
-<li>디스크를 하나 이상의 실린더 그룹으로 나누는 과정</li>
-<li>OS는 이것을 독립적 disk로 취급 (logical disk)</li>
-</ul>
-</li>
-<li>Logical formatting<ul>
-<li>파일 시스템을 만드는 것</li>
-<li>FAT, inode, free space 등의 구조 포함</li>
-</ul>
-</li>
-<li>Booting<ul>
-<li>ROM에 있는 “small bootstrap loader”의 실행</li>
-<li>sector 0 (boot block)을 load하여 실행</li>
-<li>sector 0은 “full Bootstrap loader program”</li>
-<li>OS를 디스크에서 load하여 실행</li>
-</ul>
-</li>
-</ul>
-<h2 id="Disk-Scheduling-Algorithm"><a href="#Disk-Scheduling-Algorithm" class="headerlink" title="Disk Scheduling Algorithm"></a>Disk Scheduling Algorithm</h2><ul>
-<li><p>큐에 다음과 같은 실린더 위치의 요청이 존재하는 경우 디스크 헤드 53번에서 시작한 각 알고리즘의 수행 결과는? (실린더 위치는 0-199)</p>
-<ul>
-<li>98, 183, 37, 122, 14, 124, 65, 67</li>
-</ul>
-</li>
-<li><p>FCFS</p>
-</li>
-<li><p>SSTF</p>
-</li>
-<li><p>SCAN</p>
-</li>
-<li><p>C-SCAN</p>
-</li>
-<li><p>N-SCAN</p>
-</li>
-<li><p>LOOK</p>
-</li>
-<li><p>C-LOOK</p>
-</li>
-</ul>
-<h3 id="FCFS-First-Come-First-Service"><a href="#FCFS-First-Come-First-Service" class="headerlink" title="FCFS (First Come First Service)"></a>FCFS (First Come First Service)</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 17 35" src="https://user-images.githubusercontent.com/12459864/127961886-143c42a8-7109-491d-8805-54a3c7afff70.png">
-
-<h3 id="SSTF-Shortest-Seek-Time-First"><a href="#SSTF-Shortest-Seek-Time-First" class="headerlink" title="SSTF (Shortest Seek Time First)"></a>SSTF (Shortest Seek Time First)</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 19 20" src="https://user-images.githubusercontent.com/12459864/127961957-6b34b4a6-fc89-427d-9258-0d1484826d9b.png">
-
-<h3 id="SCAN"><a href="#SCAN" class="headerlink" title="SCAN"></a>SCAN</h3><ul>
-<li>disk arm이 디스크의 한쪽 끝에서 다른쪽 끝으로 이동하며 가는 길목에 있는 모든 요청을 처리한다</li>
-<li>다른 한쪽 끝에 도달하면 역방향으로 이동하며 오는 길목에 있는 모든 요청을 처리하며 다시 반대쪽 끝으로 이동한다</li>
-<li>문제점: 실린더 위치에 따라 대기시간이 다르다 (중앙에 위치한 것이 2배 더 많이 실행된다)</li>
-</ul>
-<img width="500" alt="스크린샷 2021-08-03 오후 2 22 43" src="https://user-images.githubusercontent.com/12459864/127962204-8405f439-5cc5-49f3-b2c5-b5cb908cf397.png">
-
-<h3 id="C-SCAN"><a href="#C-SCAN" class="headerlink" title="C-SCAN"></a>C-SCAN</h3><ul>
-<li>헤드가 한쪽 끝에서 다른쪽 끝으로 이동하며 가는 길목에 있는 모든 요청을 처리</li>
-<li>다른쪽 긑에 도달했으면 요청을 처리하지 않고 곧바로 출발점으로 다시 이동</li>
-<li>SCAN보다 균일한 대기 시간을 제공한다</li>
-</ul>
-<img width="300" alt="스크린샷 2021-08-03 오후 2 26 31" src="https://user-images.githubusercontent.com/12459864/127962516-36db7f90-ff5c-4a71-a56c-2f3f695fc09a.png">
-
-<h3 id="Other-Algorithms"><a href="#Other-Algorithms" class="headerlink" title="Other Algorithms"></a>Other Algorithms</h3><ul>
-<li>N-SCAN<ul>
-<li>SCAN의 변형 알고리즘</li>
-<li>일단 arm이 한 방향으로 움직이기 시작하면 그 시점 이후에 도착한 job은 되돌아올 때 service</li>
-</ul>
-</li>
-<li>LOOK and C-LOOK<ul>
-<li>SCAN이나 C-SCAN은 헤드가 디스크 끝에서 끝으로 이동</li>
-<li>LOOK과 C-LOOK은 헤드가 진행 중이다가 그 방향에 더 이상 기다리는 요청이 없으면 헤드의 이동방향을 즉시 반대로 이동한다</li>
-</ul>
-</li>
-</ul>
-<h3 id="C-LOOK"><a href="#C-LOOK" class="headerlink" title="C-LOOK"></a>C-LOOK</h3><img width="500" alt="스크린샷 2021-08-03 오후 2 30 03" src="https://user-images.githubusercontent.com/12459864/127963087-aa458841-7689-491f-8f48-bddb7334a491.png">
-
-<h2 id="Disk-Scheduling-Algorithm의-결정"><a href="#Disk-Scheduling-Algorithm의-결정" class="headerlink" title="Disk-Scheduling Algorithm의 결정"></a>Disk-Scheduling Algorithm의 결정</h2><ul>
-<li>SCAN, C-SCAN 및 그 응용 알고리즘은 LOOK, C-LOOK 등이 일반적으로 디스크 입출력이 많은 시스템에서 효율적인 것으로 알려져 있음</li>
-<li>File의 할당 방법에 따라 디스크 요청이 영향을 받음</li>
-<li>디스크 스케줄링 알고리즘은 필요할 경우 다른 알고리즘으로 쉽게 교체할 수 있도록 OS와 별도의 모듈로 작성되는 것이 바람직하다</li>
-</ul>
-<h2 id="Swap-Space-Management"><a href="#Swap-Space-Management" class="headerlink" title="Swap-Space Management"></a>Swap-Space Management</h2><ul>
-<li>Disk를 사용하는 두 가지 이유<ul>
-<li>memory의 volatile한 특성 -&gt; file system</li>
-<li>프로그램 실행을 위한 memory 공간 부족 -&gt; swap space (swap area)</li>
-</ul>
-</li>
-<li>Swap-space<ul>
-<li>Virtual memory system에서는 디스크를 memory의 연장 공간으로 사용</li>
-<li>파일 시스템 내부에 둘 수도 있으나 별도 patition 사용이 일반적<ul>
-<li>공간 효율성보다는 속도 효율성이 우선</li>
-<li>일반 파일보다 휠씬 짧은 시간만 존재하고 자주 참조됨</li>
-<li>따라서, block의 크기 및 저장 방식이 일반 파일시스템과 다름</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img width="600" alt="스크린샷 2021-08-03 오후 2 49 13" src="https://user-images.githubusercontent.com/12459864/127964531-a1544978-8857-4b41-9643-0ceee5df2f91.png">
-
-<h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><ul>
-<li>RAID (Redundant Array of Independent Disks)<ul>
-<li>여러 개의 디스크를 묶어서 사용</li>
-</ul>
-</li>
-<li>RAID의 사용 목적<ul>
-<li>디스크 처리 속도 향상<ul>
-<li>여러 디스크에 block의 내용을 분산 저장</li>
-<li>병렬적으로 읽어 옴 (interleaving, striping)</li>
-</ul>
-</li>
-<li>신뢰성(reliability) 향상<ul>
-<li>동일 정보를 여러 디스크에 중복 저장</li>
-<li>하나의 디스크가 고장시 다른 디스크에서 읽어옴 (Mirroring, shadowing)</li>
-<li>단순히 중복 저장이 아니라 일부 디스크에 parity를 저장하여 공간의 효율성을 높일 수 있다</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img width="400" alt="스크린샷 2021-08-03 오후 2 53 00" src="https://user-images.githubusercontent.com/12459864/127964885-fe078ca1-f241-4ce4-959c-eadc1827ea66.png">
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -734,7 +513,6 @@
 </div>
 
 </section>
-
 
 
                 <footer id="footer" class="main-content-wrap">

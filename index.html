@@ -325,6 +325,193 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/08/04/Network-Application-Layer/"
+                            aria-label=": Network-Application Layer"
+                        >
+                            Network-Application Layer
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-04T14:21:38+09:00">
+	
+		    Aug 04, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Application-architectures"><a href="#Application-architectures" class="headerlink" title="Application architectures"></a>Application architectures</h2><ul>
+<li>possible structure of applications<ul>
+<li>client-server</li>
+<li>peer-to-peer (P2P)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Client-server-architecture"><a href="#Client-server-architecture" class="headerlink" title="Client-server architecture"></a>Client-server architecture</h3><ul>
+<li>server<ul>
+<li>always-on host</li>
+<li>permanent IP address</li>
+<li>data centers for scaling</li>
+</ul>
+</li>
+<li>clients<ul>
+<li>communicate with server</li>
+<li>do not communicate directly with each other</li>
+<li>may be intermittently(on and off) connect</li>
+<li>may have dynamic IP addresses</li>
+</ul>
+</li>
+</ul>
+<h3 id="P2P-architecture"><a href="#P2P-architecture" class="headerlink" title="P2P architecture"></a>P2P architecture</h3><ul>
+<li>no always-on server</li>
+<li>arbitrary end systems directly communicate</li>
+<li>peers request service from other peers, provide service in return to ohter peers<ul>
+<li><code>self scalability - new peers bring new service capacity, as well as new service demands</code></li>
+</ul>
+</li>
+<li>peers are intermittently connected and change IP address<ul>
+<li>complex management</li>
+</ul>
+</li>
+</ul>
+<h2 id="Processes-communicating"><a href="#Processes-communicating" class="headerlink" title="Processes communicating"></a>Processes communicating</h2><ul>
+<li><p>process: program running within a host</p>
+<ul>
+<li>within same host, tow processes communicate using <code>inter-process communication</code> (defined by OS)</li>
+<li>processes in different hosts communicate by exchanging messages</li>
+</ul>
+</li>
+<li><p>clients, servers</p>
+<ul>
+<li><p>client process: process that initiates communication</p>
+</li>
+<li><p>server process: process that waits to be contacted</p>
+<p><code>aside: applications with P2P architectures have client processes &amp; server processes</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Sockets"><a href="#Sockets" class="headerlink" title="Sockets"></a>Sockets</h2><ul>
+<li>process sends/receives messages to/from its socket</li>
+<li>socket analogous to door<ul>
+<li>sending process shoves message out door</li>
+<li>sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-04 오후 2 48 00" src="https://user-images.githubusercontent.com/12459864/128128644-1ce9194e-ca3f-482d-907f-f7b2ee0a8ba9.png">
+
+<h2 id="Addressing-processes"><a href="#Addressing-processes" class="headerlink" title="Addressing processes"></a>Addressing processes</h2><ul>
+<li>to receive messages, process must have <code>identifier</code></li>
+<li>host device has unique 32-bit IP address</li>
+<li>Q: does IP address of host on which process runs suffice for identifying th process?<ul>
+<li>A: no, many processes can be running on same host</li>
+</ul>
+</li>
+<li><code>identifier</code> include both <code>IP adderss</code> and <code>port numbers</code></li>
+<li>example port numbers:<ul>
+<li>HTTP server: 80</li>
+<li>mail server: 25</li>
+</ul>
+</li>
+<li>to send HTTP message to <a target="_blank" rel="noopener" href="http://www.naver.com/">www.naver.com</a> web server<ul>
+<li>IP address: 121.33.223.11</li>
+<li>port number: 80</li>
+</ul>
+</li>
+</ul>
+<h2 id="What-transport-service-does-an-app-need"><a href="#What-transport-service-does-an-app-need" class="headerlink" title="What transport service does an app need?"></a>What transport service does an app need?</h2><ul>
+<li>data integrity<ul>
+<li>some apps (e.g., file transfer, web transactions) require 100% reliable data transfer</li>
+<li>other apps (e.g., audio) can tolerate some loss</li>
+</ul>
+</li>
+<li>timing<ul>
+<li>some apps (e.g., Internet telephony, interactive games) require lo delay to be “effective”</li>
+</ul>
+</li>
+<li>throughput<ul>
+<li>some apps (e.g., multimedia) require minimum amount of throughtput to be “effective”</li>
+<li>other apps (“elastic apps”) make use of whatever throughtput they get</li>
+</ul>
+</li>
+</ul>
+<h3 id="Transport-service-requirements-common-apps"><a href="#Transport-service-requirements-common-apps" class="headerlink" title="Transport service requirements: common apps"></a>Transport service requirements: common apps</h3><img width="600" alt="스크린샷 2021-08-04 오후 3 21 17" src="https://user-images.githubusercontent.com/12459864/128131812-dee57e44-b2a0-403f-9a82-a2100c36866e.png">
+
+<h2 id="Internet-transport-protocols-services"><a href="#Internet-transport-protocols-services" class="headerlink" title="Internet transport protocols services"></a>Internet transport protocols services</h2><ul>
+<li>TCP service<ul>
+<li><code>reliable transport</code> between sending and receiving process</li>
+<li><code>flow control</code>: sender won’t overwhelm receiver</li>
+<li><code>connection-oriented</code>: setup required between client and server processes</li>
+<li><code>congestion control</code>: throttle sender when network overloaded</li>
+<li><code>does not provide</code>: timing, minimum throughput guarantee, security</li>
+</ul>
+</li>
+<li>UDP service<ul>
+<li><code>unreliable data transfer</code> between sending and reveiving process</li>
+<li><code>does not provide</code>: reliability, flow control, congestiong control, timing, throughput guarantee, security, or connection setup<h3 id="Internet-apps-application-transport-protocols"><a href="#Internet-apps-application-transport-protocols" class="headerlink" title="Internet apps: application, transport protocols"></a>Internet apps: application, transport protocols</h3></li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-04 오후 3 33 28" src="https://user-images.githubusercontent.com/12459864/128133122-93a5459b-d247-45ea-8587-9883030bdea9.png">
+
+<h2 id="Application-layer-protocol-defines"><a href="#Application-layer-protocol-defines" class="headerlink" title="Application layer protocol defines"></a>Application layer protocol defines</h2><ul>
+<li>types of messages exchanged<ul>
+<li>e.g., request, response</li>
+</ul>
+</li>
+<li>message syntax<ul>
+<li>what fields in messages &amp; how fields are delineated</li>
+</ul>
+</li>
+<li>message semantics<ul>
+<li>meaning of information in fields</li>
+</ul>
+</li>
+<li>rules for when and how processes send &amp; responsd to messages</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/04/Network-Application-Layer/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
                             aria-label=": OS-12-Disk Management and Scheduling"
                         >
@@ -2919,216 +3106,6 @@
                         <p>
                             <a
                                 href="/2021/05/14/OS-4-Thread/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/05/14/OS-3-Process/"
-                            aria-label=": OS-3.Process"
-                        >
-                            OS-3.Process
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-05-14T14:30:20+09:00">
-	
-		    May 14, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Process-Concept"><a href="#Process-Concept" class="headerlink" title="Process Concept"></a>Process Concept</h2><ul>
-<li>Process is a program in execution</li>
-<li>프로세스의 문맥 (context)<ul>
-<li>CPU 수행 상태를 나타내는 하드웨어 문맥<ul>
-<li>Program Counter(PC)</li>
-<li>각종 register</li>
-</ul>
-</li>
-<li>프로세스의 주소 공간<ul>
-<li>code, data, stack</li>
-</ul>
-</li>
-<li>프로세스 관련 커널 자료 구조<ul>
-<li>PCB (Process Control Block)</li>
-<li>Kernel stack</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img width="464" alt="스크린샷 2021-05-14 오후 2 34 58" src="https://user-images.githubusercontent.com/12459864/118230050-fc573f80-b4c7-11eb-9f13-f086c060da31.png">
-
-<h2 id="Process-State"><a href="#Process-State" class="headerlink" title="Process State"></a>Process State</h2><ul>
-<li><p>프로세스는 상태(state)가 변경되며 수행됩니다</p>
-</li>
-<li><p>Running : CPU를 잡고 instruction을 수행중인 상태</p>
-</li>
-<li><p>Ready : CPU를 기다리는 상태(CPU만 얻으면 실행할 수 있는 상태)</p>
-</li>
-<li><p>Blocked(wait, sleep)</p>
-<ul>
-<li>CPU를 주어도 당장 instruction을 실행할 수 없는 상태</li>
-<li>Process 자신이 요청한 event(I/O)가 즉시 만족되지 않아 이를 기다리는 상태</li>
-<li>디스크에서 file을 읽어와야 하는 경우</li>
-</ul>
-</li>
-<li><p>New: 프로세스가 생성중인 상태</p>
-</li>
-<li><p>Terminated: 수행이 끝난 상태</p>
-  <img width="942" alt="스크린샷 2021-05-14 오후 2 41 11" src="https://user-images.githubusercontent.com/12459864/118230358-83a4b300-b4c8-11eb-8af5-21d3f804904c.png">
-</li>
-<li><p>각 작업의 큐는 Kernel의 Data영역에서 관리되어집니다</p>
-  <img width="927" alt="스크린샷 2021-05-14 오후 2 47 09" src="https://user-images.githubusercontent.com/12459864/118230425-a0d98180-b4c8-11eb-9a91-5251a28ec036.png">
-
-</li>
-</ul>
-<h2 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h2><ul>
-<li><p>운영체제가 각 프로세스를 관리하기 위해 프로세스당 유지하는 정보</p>
-</li>
-<li><p>다음의 구성 요소를 가집니다 (구조체로 유지)</p>
-<ol>
-<li><p>OS가 관리상 사용하는 정보</p>
-<ul>
-<li>Process state, Process ID</li>
-<li>scheduling information, priority</li>
-</ul>
-</li>
-<li><p>CPU 수행 관련 하드웨어 값</p>
-<ul>
-<li>program counter(PC), registers</li>
-</ul>
-</li>
-<li><p>메모리 관련</p>
-<ul>
-<li>code, data, stack의 위치 정보</li>
-</ul>
-</li>
-<li><p>파일 관련</p>
-<ul>
-<li>Open file descriptiors…</li>
-</ul>
-<img width="343" alt="스크린샷 2021-05-14 오후 3 31 13" src="https://user-images.githubusercontent.com/12459864/118231014-72a87180-b4c9-11eb-8de1-815ea7323c3f.png">
-
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="문맥-교환-Context-Switching"><a href="#문맥-교환-Context-Switching" class="headerlink" title="문맥 교환 (Context Switching)"></a>문맥 교환 (Context Switching)</h2><ul>
-<li><p>CPU를 한 프로세스에서 다른 프로세스로 넘겨주는 과정</p>
-</li>
-<li><p>CPU가 다른 프로세스에게 넘어갈 때 운영체제는 운영체제는 다음을 수행합니다</p>
-<ul>
-<li><p>CPU를 내어주는 프로세스의 상태를 그 프로세스의 PCB에 저장</p>
-</li>
-<li><p>CPU를 새롭게 얻는 프로세스의 상태를 PCB에서 읽어옴</p>
-<img width="698" alt="스크린샷 2021-05-14 오후 3 33 34" src="https://user-images.githubusercontent.com/12459864/118231230-c61abf80-b4c9-11eb-9a38-51faf544b6ed.png">
-</li>
-</ul>
-</li>
-<li><p>System Call이나 Interrupt 발생시 반드시 Context switching이 일어나는 것은 아닙니다</p>
-  <img width="809" alt="스크린샷 2021-05-14 오후 3 35 50" src="https://user-images.githubusercontent.com/12459864/118231487-31fd2800-b4ca-11eb-98b7-dbc65b75ca66.png">
-
-<ul>
-<li>1번의 경우에도 CPU 수행 정보 등 context의 일부를 PCB에 save해야 하지만 문맥교환을 하는 2번의 경우 cache memory flush가 발생하기 때문에 성능 부담이 훨씬 큽니다</li>
-</ul>
-</li>
-</ul>
-<h2 id="프로세스를-스케줄링하기-위한-큐"><a href="#프로세스를-스케줄링하기-위한-큐" class="headerlink" title="프로세스를 스케줄링하기 위한 큐"></a>프로세스를 스케줄링하기 위한 큐</h2><ul>
-<li><p>Job Queue: 현재 시스템 내에 있는 모든 프로세스의 집합 (Process Queue + Device Queue)</p>
-</li>
-<li><p>Ready Queue: 현재 메모리 내에 있으면서 CPU를 잡아서 실행되기를 기다리는 프로세스의 집합</p>
-</li>
-<li><p>Device Queue: I/O device의 처리를 기다리는 프로세스의 집합</p>
-<p>  <code>프로세스들은 각 큐를 오가며 수행됩니다</code></p>
-</li>
-</ul>
-<h2 id="스케줄러"><a href="#스케줄러" class="headerlink" title="스케줄러"></a>스케줄러</h2><ul>
-<li><p>장기 스케줄러 (job scheduler)</p>
-<ul>
-<li>시작 프로세스 중 어떤 것들을 ready queue로 보낼지 결정합니다</li>
-<li>프로세스에 memory(및 각종 자원)을 주는 문제</li>
-<li>degree of multiprogramming을 제어</li>
-<li>time sharing system에는 보통 장기 스케줄러 없이 무조건 ready 상태가 됩니다</li>
-</ul>
-</li>
-<li><p>단기 스케줄러 (cpu scheduler)</p>
-<ul>
-<li>어떤 프로세스를 다음번에 running 시킬 지 결정합니다</li>
-<li>프로세스에 CPU를 주는 문제</li>
-</ul>
-</li>
-<li><p>중기 스케줄러 (swapper)</p>
-<ul>
-<li><p>여유 공간 마련을 위해 프로세스를 통째로 메모레에서 디스크로 쫓아냅니다</p>
-</li>
-<li><p>프로세스에게서 memory를 뺏는 문제</p>
-</li>
-<li><p>degree of multiprogramming을 제어</p>
-</li>
-<li><p>현재 시스템은 프로그램을 무조건 메모리에 올리고 swapper를 이용해서 메모리에서 쫓아낸다 (장기 스케줄러대신 중기 스케줄러를 사용한다)</p>
-<p><code>중기 스케줄러로 인해서 Suspended라는 프로세스의 상태가 추가됩니다</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="새로운-프로세스-상태"><a href="#새로운-프로세스-상태" class="headerlink" title="새로운 프로세스 상태"></a>새로운 프로세스 상태</h2><ul>
-<li>Running</li>
-<li>Ready</li>
-<li>Blocked</li>
-<li>Suspended (stopped)<ul>
-<li>외부적인 이유로 프로세스의 수행이 정지된 상태</li>
-<li>프로세스는 통째로 디스크에서 swap out 됩니다</li>
-<li>(예) 메모리에 너무 많은 프로세스가 올라와서 성능이 저하되었을 때 사용자가 직접 process를 중단시거나 시스템이 중단시킵니다</li>
-</ul>
-</li>
-</ul>
-<p><code>Block은 자신이 요청한 event가 만족되면 Ready 상태가 되어집니다</code></p>
-<p><code>Suspended는 외부에서 다시 resume해 주어야 Activce됩니다</code></p>
-<img width="934" alt="스크린샷 2021-05-14 오후 3 09 54" src="https://user-images.githubusercontent.com/12459864/118233147-7d183a80-b4cc-11eb-85e5-ca4b8c9dd302.png">
-
-<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/05/14/OS-3-Process/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
