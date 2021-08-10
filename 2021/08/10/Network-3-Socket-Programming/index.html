@@ -6,28 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Run PSVM">
-    <title>Network-Application Layer - Run PSVM</title>
+    <title>Network-3-Socket Programming - Run PSVM</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Application architectures\npossible structure of applications\nclient-server\npeer-to-peer (P2P)\n\n\n\nClient-server architecture\nserver\nalways-on host\npermanent IP address\ndata centers for scaling\n\n\nclients\ncommunicate with server\ndo not communicate directly with each other\nmay be intermittently(on and off) connect\nmay have dynamic IP addresses\n\n\n\nP2P architecture\nno always-on server\narbitrary end systems directly communicate\npeers request service from other peers, provide service in return to ohter peers\nself scalability - new peers bring new service capacity, as well as new service demands\n\n\npeers are intermittently connected and change IP address\ncomplex management\n\n\n\nProcesses communicating\nprocess: program running within a host\n\nwithin same host, tow processes communicate using inter-process communication (defined by OS)\nprocesses in different hosts communicate by exchanging messages\n\n\nclients, servers\n\nclient process: process that initiates communication\n\nserver process: process that waits to be contacted\naside: applications with P2P architectures have client processes &amp; server processes\n\n\n\n\nSockets\nprocess sends/receives messages to/from its socket\nsocket analogous to door\nsending process shoves message out door\nsending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process\n\n\n\n\n\nAddressing processes\nto receive messages, process must have identifier\nhost device has unique 32-bit IP address\nQ: does IP address of host on which process runs suffice for identifying th process?\nA: no, many processes can be running on same host\n\n\nidentifier include both IP adderss and port numbers\nexample port numbers:\nHTTP server: 80\nmail server: 25\n\n\nto send HTTP message to www.naver.com web server\nIP address: 121.33.223.11\nport number: 80\n\n\n\nWhat transport service does an app need?\ndata integrity\nsome apps (e.g., file transfer, web transactions) require 100% reliable data transfer\nother apps (e.g., audio) can tolerate some loss\n\n\ntiming\nsome apps (e.g., Internet telephony, interactive games) require lo delay to be “effective”\n\n\nthroughput\nsome apps (e.g., multimedia) require minimum amount of throughtput to be “effective”\nother apps (“elastic apps”) make use of whatever throughtput they get\n\n\n\nTransport service requirements: common apps\n\nInternet transport protocols services\nTCP service\nreliable transport between sending and receiving process\nflow control: sender won’t overwhelm receiver\nconnection-oriented: setup required between client and server processes\ncongestion control: throttle sender when network overloaded\ndoes not provide: timing, minimum throughput guarantee, security\n\n\nUDP service\nunreliable data transfer between sending and reveiving process\ndoes not provide: reliability, flow control, congestiong control, timing, throughput guarantee, security, or connection setupInternet apps: application, transport protocols\n\n\n\n\n\nApplication layer protocol defines\ntypes of messages exchanged\ne.g., request, response\n\n\nmessage syntax\nwhat fields in messages &amp; how fields are delineated\n\n\nmessage semantics\nmeaning of information in fields\n\n\nrules for when and how processes send &amp; responsd to messages\n\n","dateCreated":"2021-08-04T14:21:38+09:00","dateModified":"2021-08-04T15:44:24+09:00","datePublished":"2021-08-04T14:21:38+09:00","description":"","headline":"Network-Application Layer","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/08/04/Network-Application-Layer/","keywords":"Network"}</script>
-    <meta name="description" content="Application architectures possible structure of applications client-server peer-to-peer (P2P)    Client-server architecture server always-on host permanent IP address data centers for scaling   client">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Socket programming\ngoal: learn how to build client/server applications that communicate using sockets\nsocket: door between application process and end-end-transport protocol\n\n\n\n\nTwo socket types for two transport services\nUDP : unreliable datagram\nTCP : reliable, byte stream-oriented\n\n\nApplication Example\nclient reads a line of characters (data) from its keyboard and sends data to server\nserver receives the data and converts characters to uppercase\nserver send modified data to client\nclient receives modified data and displays line on its screen\n\n\n\nSocket programming with UDP\nUDP: no “connection” between client &amp; server\nno handshaking before sending data\nsender explicitly attaches IP destination address and port $ to each packet\nreceiver extracts sender IP address and port # from received packet\n\n\nUDP : transmitted data may be lost or received out-of-order\nApplication viewpoint\nUDP provides unreliable transfer of groups of bytes (“datagrams”) between client and server\n\n\n\nClient/server socket interaction: UDP\n\nExample app: UDP client\n\nExample app: UDP server\n\nSocket programming with TCP\nclient must contact server\nserver process must first be running\nserver must have created socket(door) that welcomes client’s contact\n\n\nclient contacts server by\nCreating TCP socket, specifying IP address, port, number of server process\nwhen client creates socket\nclient TCP establishes connection to server TCP\n\n\nwhen contacted by client, server TCP creates new socket for server process to communicate with that particular client\nallows server to talk with multiple clients\nsource port numbers userd to distinguish clients\n\n\n\n\napplication viewpoint\nTCP provides reliable, in-order byte-stream transfer (“pipe”) between cient and server\n\n\n\nClient/server socket interaction: TCP\n\nExample app: TCP client\n\nExample app: TCP server\n\n연결을 담당하는 serverSocket 1개와 각 연결이 완료되면 요청마다 처리를 담당하는 connectionSocket이 생성된다\n참조\n컴퓨터 네트워크 이미정 교수님 강의\nComputer Networking: A Top-Down Approach Featuring the Internet\n\n","dateCreated":"2021-08-10T13:50:06+09:00","dateModified":"2021-08-10T14:32:36+09:00","datePublished":"2021-08-10T13:50:06+09:00","description":"","headline":"Network-3-Socket Programming","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/","keywords":"Network"}</script>
+    <meta name="description" content="Socket programming goal: learn how to build client&#x2F;server applications that communicate using sockets socket: door between application process and end-end-transport protocol     Two socket types for t">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Network-Application Layer">
-<meta property="og:url" content="https://kimyechan.github.io/2021/08/04/Network-Application-Layer/index.html">
+<meta property="og:title" content="Network-3-Socket Programming">
+<meta property="og:url" content="https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/index.html">
 <meta property="og:site_name" content="Run PSVM">
-<meta property="og:description" content="Application architectures possible structure of applications client-server peer-to-peer (P2P)    Client-server architecture server always-on host permanent IP address data centers for scaling   client">
+<meta property="og:description" content="Socket programming goal: learn how to build client&#x2F;server applications that communicate using sockets socket: door between application process and end-end-transport protocol     Two socket types for t">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128128644-1ce9194e-ca3f-482d-907f-f7b2ee0a8ba9.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128131812-dee57e44-b2a0-403f-9a82-a2100c36866e.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128133122-93a5459b-d247-45ea-8587-9883030bdea9.png">
-<meta property="article:published_time" content="2021-08-04T05:21:38.000Z">
-<meta property="article:modified_time" content="2021-08-04T06:44:24.190Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128810472-76dafe62-1124-40fe-b1f2-4d7efc6596e5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128811213-aaf13d49-f2b4-44f6-8d1c-a314353664a9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128811334-dc73fd5e-8176-4cc8-97b6-a0ec07fb3038.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128811488-876294f3-6250-41ab-842a-f015c31f56ed.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128812370-6fe2d7a8-d6d6-484c-b87e-51cd764a53ac.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128812584-cda45fe0-1c40-4557-a0a2-f86b118dc2b1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128812965-7b219328-3d65-4431-bb1c-e987d014a023.png">
+<meta property="article:published_time" content="2021-08-10T04:50:06.000Z">
+<meta property="article:modified_time" content="2021-08-10T05:32:36.015Z">
 <meta property="article:author" content="Yechan Kim">
 <meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/128128644-1ce9194e-ca3f-482d-907f-f7b2ee0a8ba9.png">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/128810472-76dafe62-1124-40fe-b1f2-4d7efc6596e5.png">
     
     
         
@@ -332,14 +336,14 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Network-Application Layer
+            Network-3-Socket Programming
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-08-04T14:21:38+09:00">
+    <time datetime="2021-08-10T13:50:06+09:00">
 	
-		    Aug 04, 2021
+		    Aug 10, 2021
     	
     </time>
     
@@ -357,135 +361,79 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h2 id="Application-architectures"><a href="#Application-architectures" class="headerlink" title="Application architectures"></a>Application architectures</h2><ul>
-<li>possible structure of applications<ul>
-<li>client-server</li>
-<li>peer-to-peer (P2P)</li>
+            <h2 id="Socket-programming"><a href="#Socket-programming" class="headerlink" title="Socket programming"></a>Socket programming</h2><ul>
+<li>goal: learn how to build client/server applications that communicate using sockets</li>
+<li>socket: door between application process and end-end-transport protocol</li>
 </ul>
-</li>
-</ul>
-<h3 id="Client-server-architecture"><a href="#Client-server-architecture" class="headerlink" title="Client-server architecture"></a>Client-server architecture</h3><ul>
-<li>server<ul>
-<li>always-on host</li>
-<li>permanent IP address</li>
-<li>data centers for scaling</li>
-</ul>
-</li>
-<li>clients<ul>
-<li>communicate with server</li>
-<li>do not communicate directly with each other</li>
-<li>may be intermittently(on and off) connect</li>
-<li>may have dynamic IP addresses</li>
-</ul>
-</li>
-</ul>
-<h3 id="P2P-architecture"><a href="#P2P-architecture" class="headerlink" title="P2P architecture"></a>P2P architecture</h3><ul>
-<li>no always-on server</li>
-<li>arbitrary end systems directly communicate</li>
-<li>peers request service from other peers, provide service in return to ohter peers<ul>
-<li><code>self scalability - new peers bring new service capacity, as well as new service demands</code></li>
-</ul>
-</li>
-<li>peers are intermittently connected and change IP address<ul>
-<li>complex management</li>
-</ul>
-</li>
-</ul>
-<h2 id="Processes-communicating"><a href="#Processes-communicating" class="headerlink" title="Processes communicating"></a>Processes communicating</h2><ul>
-<li><p>process: program running within a host</p>
+<img width="500" alt="스크린샷 2021-08-10 오후 1 56 42" src="https://user-images.githubusercontent.com/12459864/128810472-76dafe62-1124-40fe-b1f2-4d7efc6596e5.png">
+
 <ul>
-<li>within same host, tow processes communicate using <code>inter-process communication</code> (defined by OS)</li>
-<li>processes in different hosts communicate by exchanging messages</li>
+<li>Two socket types for two transport services<ul>
+<li>UDP : unreliable datagram</li>
+<li>TCP : reliable, byte stream-oriented</li>
 </ul>
 </li>
-<li><p>clients, servers</p>
-<ul>
-<li><p>client process: process that initiates communication</p>
+<li>Application Example<ol>
+<li>client reads a line of characters (data) from its keyboard and sends data to server</li>
+<li>server receives the data and converts characters to uppercase</li>
+<li>server send modified data to client</li>
+<li>client receives modified data and displays line on its screen</li>
+</ol>
 </li>
-<li><p>server process: process that waits to be contacted</p>
-<p><code>aside: applications with P2P architectures have client processes &amp; server processes</code></p>
+</ul>
+<h2 id="Socket-programming-with-UDP"><a href="#Socket-programming-with-UDP" class="headerlink" title="Socket programming with UDP"></a>Socket programming with UDP</h2><ul>
+<li>UDP: no “connection” between client &amp; server<ul>
+<li>no handshaking before sending data</li>
+<li>sender explicitly attaches IP destination address and port $ to each packet</li>
+<li>receiver extracts sender IP address and port # from received packet</li>
+</ul>
 </li>
+<li>UDP : transmitted data may be lost or received out-of-order</li>
+<li>Application viewpoint<ul>
+<li>UDP provides unreliable transfer of groups of bytes (“datagrams”) between client and server</li>
 </ul>
 </li>
 </ul>
-<h2 id="Sockets"><a href="#Sockets" class="headerlink" title="Sockets"></a>Sockets</h2><ul>
-<li>process sends/receives messages to/from its socket</li>
-<li>socket analogous to door<ul>
-<li>sending process shoves message out door</li>
-<li>sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process</li>
-</ul>
-</li>
-</ul>
-<img width="600" alt="스크린샷 2021-08-04 오후 2 48 00" src="https://user-images.githubusercontent.com/12459864/128128644-1ce9194e-ca3f-482d-907f-f7b2ee0a8ba9.png">
+<h3 id="Client-server-socket-interaction-UDP"><a href="#Client-server-socket-interaction-UDP" class="headerlink" title="Client/server socket interaction: UDP"></a>Client/server socket interaction: UDP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 07 36" src="https://user-images.githubusercontent.com/12459864/128811213-aaf13d49-f2b4-44f6-8d1c-a314353664a9.png">
 
-<h2 id="Addressing-processes"><a href="#Addressing-processes" class="headerlink" title="Addressing processes"></a>Addressing processes</h2><ul>
-<li>to receive messages, process must have <code>identifier</code></li>
-<li>host device has unique 32-bit IP address</li>
-<li>Q: does IP address of host on which process runs suffice for identifying th process?<ul>
-<li>A: no, many processes can be running on same host</li>
-</ul>
-</li>
-<li><code>identifier</code> include both <code>IP adderss</code> and <code>port numbers</code></li>
-<li>example port numbers:<ul>
-<li>HTTP server: 80</li>
-<li>mail server: 25</li>
-</ul>
-</li>
-<li>to send HTTP message to <a target="_blank" rel="noopener" href="http://www.naver.com/">www.naver.com</a> web server<ul>
-<li>IP address: 121.33.223.11</li>
-<li>port number: 80</li>
-</ul>
-</li>
-</ul>
-<h2 id="What-transport-service-does-an-app-need"><a href="#What-transport-service-does-an-app-need" class="headerlink" title="What transport service does an app need?"></a>What transport service does an app need?</h2><ul>
-<li>data integrity<ul>
-<li>some apps (e.g., file transfer, web transactions) require 100% reliable data transfer</li>
-<li>other apps (e.g., audio) can tolerate some loss</li>
-</ul>
-</li>
-<li>timing<ul>
-<li>some apps (e.g., Internet telephony, interactive games) require lo delay to be “effective”</li>
-</ul>
-</li>
-<li>throughput<ul>
-<li>some apps (e.g., multimedia) require minimum amount of throughtput to be “effective”</li>
-<li>other apps (“elastic apps”) make use of whatever throughtput they get</li>
-</ul>
-</li>
-</ul>
-<h3 id="Transport-service-requirements-common-apps"><a href="#Transport-service-requirements-common-apps" class="headerlink" title="Transport service requirements: common apps"></a>Transport service requirements: common apps</h3><img width="600" alt="스크린샷 2021-08-04 오후 3 21 17" src="https://user-images.githubusercontent.com/12459864/128131812-dee57e44-b2a0-403f-9a82-a2100c36866e.png">
+<h3 id="Example-app-UDP-client"><a href="#Example-app-UDP-client" class="headerlink" title="Example app: UDP client"></a>Example app: UDP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 09 01" src="https://user-images.githubusercontent.com/12459864/128811334-dc73fd5e-8176-4cc8-97b6-a0ec07fb3038.png">
 
-<h2 id="Internet-transport-protocols-services"><a href="#Internet-transport-protocols-services" class="headerlink" title="Internet transport protocols services"></a>Internet transport protocols services</h2><ul>
-<li>TCP service<ul>
-<li><code>reliable transport</code> between sending and receiving process</li>
-<li><code>flow control</code>: sender won’t overwhelm receiver</li>
-<li><code>connection-oriented</code>: setup required between client and server processes</li>
-<li><code>congestion control</code>: throttle sender when network overloaded</li>
-<li><code>does not provide</code>: timing, minimum throughput guarantee, security</li>
-</ul>
-</li>
-<li>UDP service<ul>
-<li><code>unreliable data transfer</code> between sending and reveiving process</li>
-<li><code>does not provide</code>: reliability, flow control, congestiong control, timing, throughput guarantee, security, or connection setup<h3 id="Internet-apps-application-transport-protocols"><a href="#Internet-apps-application-transport-protocols" class="headerlink" title="Internet apps: application, transport protocols"></a>Internet apps: application, transport protocols</h3></li>
-</ul>
-</li>
-</ul>
-<img width="600" alt="스크린샷 2021-08-04 오후 3 33 28" src="https://user-images.githubusercontent.com/12459864/128133122-93a5459b-d247-45ea-8587-9883030bdea9.png">
+<h3 id="Example-app-UDP-server"><a href="#Example-app-UDP-server" class="headerlink" title="Example app: UDP server"></a>Example app: UDP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 10 30" src="https://user-images.githubusercontent.com/12459864/128811488-876294f3-6250-41ab-842a-f015c31f56ed.png">
 
-<h2 id="Application-layer-protocol-defines"><a href="#Application-layer-protocol-defines" class="headerlink" title="Application layer protocol defines"></a>Application layer protocol defines</h2><ul>
-<li>types of messages exchanged<ul>
-<li>e.g., request, response</li>
+<h2 id="Socket-programming-with-TCP"><a href="#Socket-programming-with-TCP" class="headerlink" title="Socket programming with TCP"></a>Socket programming with TCP</h2><ul>
+<li>client must contact server<ul>
+<li>server process must first be running</li>
+<li>server must have created socket(door) that welcomes client’s contact</li>
 </ul>
 </li>
-<li>message syntax<ul>
-<li>what fields in messages &amp; how fields are delineated</li>
+<li>client contacts server by<ul>
+<li>Creating TCP socket, specifying IP address, port, number of server process</li>
+<li>when client creates socket<ul>
+<li>client TCP establishes connection to server TCP</li>
 </ul>
 </li>
-<li>message semantics<ul>
-<li>meaning of information in fields</li>
+<li>when contacted by client, server TCP creates new socket for server process to communicate with that particular client<ul>
+<li>allows server to talk with multiple clients</li>
+<li>source port numbers userd to distinguish clients</li>
 </ul>
 </li>
-<li>rules for when and how processes send &amp; responsd to messages</li>
+</ul>
+</li>
+<li>application viewpoint<ul>
+<li>TCP provides reliable, in-order byte-stream transfer (“pipe”) between cient and server</li>
+</ul>
+</li>
+</ul>
+<h3 id="Client-server-socket-interaction-TCP"><a href="#Client-server-socket-interaction-TCP" class="headerlink" title="Client/server socket interaction: TCP"></a>Client/server socket interaction: TCP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 21 11" src="https://user-images.githubusercontent.com/12459864/128812370-6fe2d7a8-d6d6-484c-b87e-51cd764a53ac.png">
+
+<h3 id="Example-app-TCP-client"><a href="#Example-app-TCP-client" class="headerlink" title="Example app: TCP client"></a>Example app: TCP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 23 25" src="https://user-images.githubusercontent.com/12459864/128812584-cda45fe0-1c40-4557-a0a2-f86b118dc2b1.png">
+
+<h3 id="Example-app-TCP-server"><a href="#Example-app-TCP-server" class="headerlink" title="Example app: TCP server"></a>Example app: TCP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 26 56" src="https://user-images.githubusercontent.com/12459864/128812965-7b219328-3d65-4431-bb1c-e987d014a023.png">
+
+<p><code>연결을 담당하는 serverSocket 1개와 각 연결이 완료되면 요청마다 처리를 담당하는 connectionSocket이 생성된다</code></p>
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>컴퓨터 네트워크 이미정 교수님 강의</li>
+<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
 </ul>
 
             
@@ -522,9 +470,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
-                    data-tooltip="OS-12-Disk Management and Scheduling"
-                    aria-label="NEXT: OS-12-Disk Management and Scheduling"
+                    href="/2021/08/04/Network-2-Web-and-HTTP/"
+                    data-tooltip="Network-2-Web and HTTP"
+                    aria-label="NEXT: Network-2-Web and HTTP"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -549,7 +497,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -562,7 +510,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -575,7 +523,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -648,9 +596,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/08/03/OS-12-Disk-Management-and-Scheduling/"
-                    data-tooltip="OS-12-Disk Management and Scheduling"
-                    aria-label="NEXT: OS-12-Disk Management and Scheduling"
+                    href="/2021/08/04/Network-2-Web-and-HTTP/"
+                    data-tooltip="Network-2-Web and HTTP"
+                    aria-label="NEXT: Network-2-Web and HTTP"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -675,7 +623,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -688,7 +636,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -701,7 +649,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -745,7 +693,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -758,7 +706,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -771,7 +719,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-Application-Layer/"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
@@ -832,9 +780,9 @@
     
         <script>
           var disqus_config = function() {
-            this.page.url = 'https://kimyechan.github.io/2021/08/04/Network-Application-Layer/';
+            this.page.url = 'https://kimyechan.github.io/2021/08/10/Network-3-Socket-Programming/';
               
-            this.page.identifier = '2021/08/04/Network-Application-Layer/';
+            this.page.identifier = '2021/08/10/Network-3-Socket-Programming/';
               
           };
           (function() {

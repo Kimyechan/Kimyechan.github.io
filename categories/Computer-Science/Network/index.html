@@ -326,10 +326,446 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2021/08/04/Network-Application-Layer/"
-                            aria-label=": Network-Application Layer"
+                            href="/2021/08/10/Network-3-Socket-Programming/"
+                            aria-label=": Network-3-Socket Programming"
                         >
-                            Network-Application Layer
+                            Network-3-Socket Programming
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-10T13:50:06+09:00">
+	
+		    Aug 10, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Socket-programming"><a href="#Socket-programming" class="headerlink" title="Socket programming"></a>Socket programming</h2><ul>
+<li>goal: learn how to build client/server applications that communicate using sockets</li>
+<li>socket: door between application process and end-end-transport protocol</li>
+</ul>
+<img width="500" alt="스크린샷 2021-08-10 오후 1 56 42" src="https://user-images.githubusercontent.com/12459864/128810472-76dafe62-1124-40fe-b1f2-4d7efc6596e5.png">
+
+<ul>
+<li>Two socket types for two transport services<ul>
+<li>UDP : unreliable datagram</li>
+<li>TCP : reliable, byte stream-oriented</li>
+</ul>
+</li>
+<li>Application Example<ol>
+<li>client reads a line of characters (data) from its keyboard and sends data to server</li>
+<li>server receives the data and converts characters to uppercase</li>
+<li>server send modified data to client</li>
+<li>client receives modified data and displays line on its screen</li>
+</ol>
+</li>
+</ul>
+<h2 id="Socket-programming-with-UDP"><a href="#Socket-programming-with-UDP" class="headerlink" title="Socket programming with UDP"></a>Socket programming with UDP</h2><ul>
+<li>UDP: no “connection” between client &amp; server<ul>
+<li>no handshaking before sending data</li>
+<li>sender explicitly attaches IP destination address and port $ to each packet</li>
+<li>receiver extracts sender IP address and port # from received packet</li>
+</ul>
+</li>
+<li>UDP : transmitted data may be lost or received out-of-order</li>
+<li>Application viewpoint<ul>
+<li>UDP provides unreliable transfer of groups of bytes (“datagrams”) between client and server</li>
+</ul>
+</li>
+</ul>
+<h3 id="Client-server-socket-interaction-UDP"><a href="#Client-server-socket-interaction-UDP" class="headerlink" title="Client/server socket interaction: UDP"></a>Client/server socket interaction: UDP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 07 36" src="https://user-images.githubusercontent.com/12459864/128811213-aaf13d49-f2b4-44f6-8d1c-a314353664a9.png">
+
+<h3 id="Example-app-UDP-client"><a href="#Example-app-UDP-client" class="headerlink" title="Example app: UDP client"></a>Example app: UDP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 09 01" src="https://user-images.githubusercontent.com/12459864/128811334-dc73fd5e-8176-4cc8-97b6-a0ec07fb3038.png">
+
+<h3 id="Example-app-UDP-server"><a href="#Example-app-UDP-server" class="headerlink" title="Example app: UDP server"></a>Example app: UDP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 10 30" src="https://user-images.githubusercontent.com/12459864/128811488-876294f3-6250-41ab-842a-f015c31f56ed.png">
+
+<h2 id="Socket-programming-with-TCP"><a href="#Socket-programming-with-TCP" class="headerlink" title="Socket programming with TCP"></a>Socket programming with TCP</h2><ul>
+<li>client must contact server<ul>
+<li>server process must first be running</li>
+<li>server must have created socket(door) that welcomes client’s contact</li>
+</ul>
+</li>
+<li>client contacts server by<ul>
+<li>Creating TCP socket, specifying IP address, port, number of server process</li>
+<li>when client creates socket<ul>
+<li>client TCP establishes connection to server TCP</li>
+</ul>
+</li>
+<li>when contacted by client, server TCP creates new socket for server process to communicate with that particular client<ul>
+<li>allows server to talk with multiple clients</li>
+<li>source port numbers userd to distinguish clients</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>application viewpoint<ul>
+<li>TCP provides reliable, in-order byte-stream transfer (“pipe”) between cient and server</li>
+</ul>
+</li>
+</ul>
+<h3 id="Client-server-socket-interaction-TCP"><a href="#Client-server-socket-interaction-TCP" class="headerlink" title="Client/server socket interaction: TCP"></a>Client/server socket interaction: TCP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 21 11" src="https://user-images.githubusercontent.com/12459864/128812370-6fe2d7a8-d6d6-484c-b87e-51cd764a53ac.png">
+
+<h3 id="Example-app-TCP-client"><a href="#Example-app-TCP-client" class="headerlink" title="Example app: TCP client"></a>Example app: TCP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 23 25" src="https://user-images.githubusercontent.com/12459864/128812584-cda45fe0-1c40-4557-a0a2-f86b118dc2b1.png">
+
+<h3 id="Example-app-TCP-server"><a href="#Example-app-TCP-server" class="headerlink" title="Example app: TCP server"></a>Example app: TCP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 26 56" src="https://user-images.githubusercontent.com/12459864/128812965-7b219328-3d65-4431-bb1c-e987d014a023.png">
+
+<p><code>연결을 담당하는 serverSocket 1개와 각 연결이 완료되면 요청마다 처리를 담당하는 connectionSocket이 생성된다</code></p>
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>컴퓨터 네트워크 이미정 교수님 강의</li>
+<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/10/Network-3-Socket-Programming/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/08/04/Network-2-Web-and-HTTP/"
+                            aria-label=": Network-2-Web and HTTP"
+                        >
+                            Network-2-Web and HTTP
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-04T17:00:19+09:00">
+	
+		    Aug 04, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="Web-and-HTTP"><a href="#Web-and-HTTP" class="headerlink" title="Web and HTTP"></a>Web and HTTP</h2><ul>
+<li><p>web page consists of objects</p>
+</li>
+<li><p>object can be HTML file, JPEG image, Java applet, audio file, …</p>
+</li>
+<li><p>web page consists of base HTML-file which includes several referenced objects</p>
+</li>
+<li><p>each object is addressable by a URL, e.g.,</p>
+  <img width="400" alt="스크린샷 2021-08-04 오후 5 08 42" src="https://user-images.githubusercontent.com/12459864/128145738-262795ec-48e8-4ca3-ab3a-c7bef5f84118.png">
+
+</li>
+</ul>
+<h2 id="HTTP-overview"><a href="#HTTP-overview" class="headerlink" title="HTTP overview"></a>HTTP overview</h2><p><code>HTTP: hypertext transfer protocol</code></p>
+<ul>
+<li>Web’s application layer protocol</li>
+<li>client/server model<ul>
+<li>client: browser that requests, revceives, (using HTTP protocol) and displays Web objects</li>
+<li>server: Web server sends (using HTTP protocol) objects in response to requests</li>
+</ul>
+</li>
+</ul>
+<img width="300" alt="스크린샷 2021-08-04 오후 5 11 59" src="https://user-images.githubusercontent.com/12459864/128146221-4359763a-fd65-49a7-abf3-2dddbf76dce0.png">
+
+<ul>
+<li>uses TCP<ol>
+<li>client initiates TCP connection(creates socket) to server, port 80</li>
+<li>server accepts TCP connection from client</li>
+<li>HTTP messages (application-layer protocol messages) exchanged between browser (HTTP client) and Web server (HTTP server)</li>
+<li>TCP connection closed</li>
+</ol>
+</li>
+<li>HTTP is “stateless”<ul>
+<li>server maintains no information about past client requests</li>
+<li>aside : <code>protocols that maintain &quot;state&quot; are complex!</code><ul>
+<li>past history (state) must be maintained</li>
+<li>if server/client crashes, their views of “state” may be inconsistent, must be reconciled</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP-connections"><a href="#HTTP-connections" class="headerlink" title="HTTP connections"></a>HTTP connections</h2><ul>
+<li>non-persistent HTTP<ul>
+<li>at most one object sent over TCP connection<ul>
+<li>connection then closed</li>
+</ul>
+</li>
+<li>downloading multiple obejcts requires multiple connections</li>
+</ul>
+</li>
+<li>persistent HTTP<ul>
+<li>multiple objects can be sent over single TCP connection between client, server</li>
+</ul>
+</li>
+</ul>
+<h2 id="Non-persistent-HTTP"><a href="#Non-persistent-HTTP" class="headerlink" title="Non-persistent HTTP"></a>Non-persistent HTTP</h2><p><code>suppose user enters URL: </code></p>
+<p><code>www.someSchool.edu/someDepartment/home.index</code></p>
+<img width="600" alt="스크린샷 2021-08-04 오후 6 39 30" src="https://user-images.githubusercontent.com/12459864/128159248-fd30cc8b-fe2c-4fc9-88c3-49d37ce05459.png">
+<img width="600" alt="스크린샷 2021-08-04 오후 6 39 52" src="https://user-images.githubusercontent.com/12459864/128159325-210de324-b02e-455e-9c50-f4d5c8af8a78.png">
+
+<h2 id="Non-persistent-HTTP-response-time"><a href="#Non-persistent-HTTP-response-time" class="headerlink" title="Non-persistent HTTP: response time"></a>Non-persistent HTTP: response time</h2><ul>
+<li>RTT (definition): time for a small packet to travel from client to server and back</li>
+<li>HTTP response time<ul>
+<li>one RTT to initiate TCP connection</li>
+<li>one RTT for HTTP request and first few bytes of HTTP response to return</li>
+<li>file transmission time</li>
+<li>non-persistent HTTP response time = 2RTT + file transmission time</li>
+</ul>
+</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-04 오후 6 45 50" src="https://user-images.githubusercontent.com/12459864/128160079-5dc4802f-560d-4584-8d70-195cfdf98b07.png">
+
+<h2 id="Persistent-HTTP"><a href="#Persistent-HTTP" class="headerlink" title="Persistent HTTP"></a>Persistent HTTP</h2><ul>
+<li>non-persistent HTTP issues<ul>
+<li>requires 2 RTTs per object</li>
+<li>browsers often open parallel TCP connections to fetch referenced objects</li>
+<li>OS overhead for each TCP connection (each tcp buffer, socket)</li>
+</ul>
+</li>
+<li>persistent HTTP<ul>
+<li>server leaves connection open after sending response</li>
+<li>subsequent HTTP messages between same client/server sent over open connection</li>
+<li>client sends request as soon as it encounters a referenced object</li>
+<li>as little as one RTT for all the referenced objects</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP-request-message"><a href="#HTTP-request-message" class="headerlink" title="HTTP request message"></a>HTTP request message</h2><ul>
+<li>two types of HTTP messages: request, response</li>
+<li>HTTP request message<ul>
+<li>ASCII (human-readable format)</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-04 오후 6 57 53" src="https://user-images.githubusercontent.com/12459864/128161983-fd479ecf-5052-4cca-a885-fee076a7611f.png">
+
+<p><code>Keep-Alive Header is persistent HTTP configure</code></p>
+<h3 id="general-format"><a href="#general-format" class="headerlink" title="general format"></a>general format</h3><img width="600" alt="스크린샷 2021-08-04 오후 7 00 07" src="https://user-images.githubusercontent.com/12459864/128162327-092e29a1-a9d7-402d-b1b4-a4808a19b0a1.png">
+
+<h3 id="Uploading-form-input"><a href="#Uploading-form-input" class="headerlink" title="Uploading form input"></a>Uploading form input</h3><ul>
+<li>POST method:<ul>
+<li>web page often includes form input</li>
+<li>input is uploaded to server in entity body</li>
+</ul>
+</li>
+<li>URL methoed:<ul>
+<li>uses GET method</li>
+<li>input is uploaded in URL field of request line<ul>
+<li><a target="_blank" rel="noopener" href="http://www.somesite.com/animalserach?monkeys&amp;banana">www.somesite.com/animalserach?monkeys&amp;banana</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Method-types"><a href="#Method-types" class="headerlink" title="Method types"></a>Method types</h3><ul>
+<li>HTTP/1.0<ul>
+<li>GET</li>
+<li>POST</li>
+<li>HEAD<ul>
+<li>asks server to leave requested object out of response</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>HTTP/1.1<ul>
+<li>GET, POST, HEAD</li>
+<li>PUT<ul>
+<li>uploads file in entity body to path specified in URL field</li>
+</ul>
+</li>
+<li>DELETE<ul>
+<li>deletes file specified in the URL field</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP-response-message"><a href="#HTTP-response-message" class="headerlink" title="HTTP response message"></a>HTTP response message</h2><img width="600" alt="스크린샷 2021-08-04 오후 7 07 22" src="https://user-images.githubusercontent.com/12459864/128163425-0a969561-c5ad-4701-a916-78346edbc8d4.png">
+
+<h3 id="HTTP-response-status-codes"><a href="#HTTP-response-status-codes" class="headerlink" title="HTTP response status codes"></a>HTTP response status codes</h3><ul>
+<li>status code appears in 1st line in server to client response message</li>
+<li>some sample codes<ul>
+<li>200 OK<ul>
+<li>request succeeded, requested object later in this msg</li>
+</ul>
+</li>
+<li>301 Moved Permanently<ul>
+<li>request object moved, new location specified later in this msg (Location Header)</li>
+</ul>
+</li>
+<li>400 Bad Request<ul>
+<li>request msg not understood by server</li>
+</ul>
+</li>
+<li>404 Not Found<ul>
+<li>requested document not found on this server</li>
+</ul>
+</li>
+<li>505 HTTP Version Not Supported</li>
+</ul>
+</li>
+</ul>
+<h2 id="User-server-state-cookies"><a href="#User-server-state-cookies" class="headerlink" title="User-server state: cookies"></a>User-server state: cookies</h2><ul>
+<li>many Web sites use cookies four components<ol>
+<li>cookie header line of HTTP response message</li>
+<li>cookie header line in next HTTP request message</li>
+<li>cookie file kept on user’s host, managed by user’s browser</li>
+<li>back-end database at Web site</li>
+</ol>
+</li>
+<li>example<ul>
+<li>Susan always access Internet from PC</li>
+<li>visits specific e-commerce site for first time</li>
+<li>when initial HTTP requests arrives at site, site creates<ul>
+<li>unique ID</li>
+<li>entry in backend database for ID</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-04 오후 4 19 27" src="https://user-images.githubusercontent.com/12459864/128165149-fb138c20-1286-4465-8fe9-b1d483f382b1.png">
+
+<ul>
+<li>what cookies can be used for<ul>
+<li>authorization</li>
+<li>shopping carts</li>
+<li>recommendations</li>
+<li>user session state (Web e-mail)</li>
+</ul>
+</li>
+<li>how to keep “state”<ul>
+<li>protocol endpoint: maintain stat at sender/receiver over multiple transactions</li>
+<li>cookies: http messages carry state</li>
+</ul>
+</li>
+<li>aside : cookies and privacy<ul>
+<li>cookies permit sites to learn a lot about you</li>
+<li>you may supply name and e-amil to sites</li>
+</ul>
+</li>
+</ul>
+<h2 id="Web-caches-proxy-server"><a href="#Web-caches-proxy-server" class="headerlink" title="Web caches (proxy server)"></a>Web caches (proxy server)</h2><ul>
+<li><code>goal</code>: satisfy client request with out involving origin server</li>
+<li>user sets browser: Web access via cache</li>
+<li>browser sends all HTTP requests to cache<ul>
+<li>object in cache: cache returns object</li>
+</ul>
+</li>
+<li>else cache requets object from origin server, then returns object to client</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-04 오후 7 28 32" src="https://user-images.githubusercontent.com/12459864/128166417-3ec0fb10-9761-4012-8444-d02c3195f66e.png">
+
+<ul>
+<li>cache acts as both client and server<ul>
+<li>server for original requesting client</li>
+<li>client to origin server</li>
+</ul>
+</li>
+<li>typically cache is installed by ISP (university, company, residential ISP)</li>
+<li>why Web cacing?<ul>
+<li>reduce response time for cient request</li>
+<li>reduce traffic on an institution’s access link</li>
+<li>Internet dense with caches: enables “poor” content providers to effectively deliver content (so Too does P2P file sharing)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Conditional-GET"><a href="#Conditional-GET" class="headerlink" title="Conditional GET"></a>Conditional GET</h3><ul>
+<li><code>Goal</code>: don’t send object if cache has up-to-date cached version<ul>
+<li>reduce delay</li>
+<li>lower link utilization</li>
+</ul>
+</li>
+<li>cache: specify date of cached copy in HTTP request<ul>
+<li>If-modified-since: date</li>
+</ul>
+</li>
+<li>server response contatins no object if cached copy is up-to-date<ul>
+<li>HTTP/1.0 304 Not Modified</li>
+</ul>
+</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-04 오후 7 37 57" src="https://user-images.githubusercontent.com/12459864/128167349-8ce4d5d5-2e6b-4dd1-a568-61459f0775e0.png">
+
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>컴퓨터 네트워크 이미정 교수님 강의</li>
+<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/04/Network-2-Web-and-HTTP/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/08/04/Network-1-Application-Layer/"
+                            aria-label=": Network-1-Application Layer"
+                        >
+                            Network-1-Application Layer
                         </a>
                     
                 </h1>
@@ -481,6 +917,10 @@
 </li>
 <li>rules for when and how processes send &amp; responsd to messages</li>
 </ul>
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>컴퓨터 네트워크 이미정 교수님 강의</li>
+<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
+</ul>
 
                     
                         
@@ -490,7 +930,7 @@
                     
                         <p>
                             <a
-                                href="/2021/08/04/Network-Application-Layer/#post-footer"
+                                href="/2021/08/04/Network-1-Application-Layer/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

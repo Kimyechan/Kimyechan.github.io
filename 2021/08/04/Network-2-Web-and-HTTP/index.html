@@ -6,19 +6,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Run PSVM">
-    <title>Tag: Network - Run PSVM</title>
+    <title>Network-2-Web and HTTP - Run PSVM</title>
     <meta name="author" content="Yechan Kim">
     
     
     
-    <script type="application/ld+json">{}</script>
-    <meta property="og:type" content="blog">
-<meta property="og:title" content="Run PSVM">
-<meta property="og:url" content="https://kimyechan.github.io/tags/Network/index.html">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Web and HTTP\nweb page consists of objects\n\nobject can be HTML file, JPEG image, Java applet, audio file, …\n\nweb page consists of base HTML-file which includes several referenced objects\n\neach object is addressable by a URL, e.g.,\n  \n\n\n\nHTTP overviewHTTP: hypertext transfer protocol\n\nWeb’s application layer protocol\nclient/server model\nclient: browser that requests, revceives, (using HTTP protocol) and displays Web objects\nserver: Web server sends (using HTTP protocol) objects in response to requests\n\n\n\n\n\n\nuses TCP\nclient initiates TCP connection(creates socket) to server, port 80\nserver accepts TCP connection from client\nHTTP messages (application-layer protocol messages) exchanged between browser (HTTP client) and Web server (HTTP server)\nTCP connection closed\n\n\nHTTP is “stateless”\nserver maintains no information about past client requests\naside : protocols that maintain &quot;state&quot; are complex!\npast history (state) must be maintained\nif server/client crashes, their views of “state” may be inconsistent, must be reconciled\n\n\n\n\n\nHTTP connections\nnon-persistent HTTP\nat most one object sent over TCP connection\nconnection then closed\n\n\ndownloading multiple obejcts requires multiple connections\n\n\npersistent HTTP\nmultiple objects can be sent over single TCP connection between client, server\n\n\n\nNon-persistent HTTPsuppose user enters URL: \nwww.someSchool.edu/someDepartment/home.index\n\n\n\nNon-persistent HTTP: response time\nRTT (definition): time for a small packet to travel from client to server and back\nHTTP response time\none RTT to initiate TCP connection\none RTT for HTTP request and first few bytes of HTTP response to return\nfile transmission time\nnon-persistent HTTP response time = 2RTT + file transmission time\n\n\n\n\n\nPersistent HTTP\nnon-persistent HTTP issues\nrequires 2 RTTs per object\nbrowsers often open parallel TCP connections to fetch referenced objects\nOS overhead for each TCP connection (each tcp buffer, socket)\n\n\npersistent HTTP\nserver leaves connection open after sending response\nsubsequent HTTP messages between same client/server sent over open connection\nclient sends request as soon as it encounters a referenced object\nas little as one RTT for all the referenced objects\n\n\n\nHTTP request message\ntwo types of HTTP messages: request, response\nHTTP request message\nASCII (human-readable format)\n\n\n\n\n\nKeep-Alive Header is persistent HTTP configure\ngeneral format\n\nUploading form input\nPOST method:\nweb page often includes form input\ninput is uploaded to server in entity body\n\n\nURL methoed:\nuses GET method\ninput is uploaded in URL field of request line\nwww.somesite.com/animalserach?monkeys&amp;banana\n\n\n\n\n\nMethod types\nHTTP/1.0\nGET\nPOST\nHEAD\nasks server to leave requested object out of response\n\n\n\n\nHTTP/1.1\nGET, POST, HEAD\nPUT\nuploads file in entity body to path specified in URL field\n\n\nDELETE\ndeletes file specified in the URL field\n\n\n\n\n\nHTTP response message\n\nHTTP response status codes\nstatus code appears in 1st line in server to client response message\nsome sample codes\n200 OK\nrequest succeeded, requested object later in this msg\n\n\n301 Moved Permanently\nrequest object moved, new location specified later in this msg (Location Header)\n\n\n400 Bad Request\nrequest msg not understood by server\n\n\n404 Not Found\nrequested document not found on this server\n\n\n505 HTTP Version Not Supported\n\n\n\nUser-server state: cookies\nmany Web sites use cookies four components\ncookie header line of HTTP response message\ncookie header line in next HTTP request message\ncookie file kept on user’s host, managed by user’s browser\nback-end database at Web site\n\n\nexample\nSusan always access Internet from PC\nvisits specific e-commerce site for first time\nwhen initial HTTP requests arrives at site, site creates\nunique ID\nentry in backend database for ID\n\n\n\n\n\n\n\n\nwhat cookies can be used for\nauthorization\nshopping carts\nrecommendations\nuser session state (Web e-mail)\n\n\nhow to keep “state”\nprotocol endpoint: maintain stat at sender/receiver over multiple transactions\ncookies: http messages carry state\n\n\naside : cookies and privacy\ncookies permit sites to learn a lot about you\nyou may supply name and e-amil to sites\n\n\n\nWeb caches (proxy server)\ngoal: satisfy client request with out involving origin server\nuser sets browser: Web access via cache\nbrowser sends all HTTP requests to cache\nobject in cache: cache returns object\n\n\nelse cache requets object from origin server, then returns object to client\n\n\n\n\ncache acts as both client and server\nserver for original requesting client\nclient to origin server\n\n\ntypically cache is installed by ISP (university, company, residential ISP)\nwhy Web cacing?\nreduce response time for cient request\nreduce traffic on an institution’s access link\nInternet dense with caches: enables “poor” content providers to effectively deliver content (so Too does P2P file sharing)\n\n\n\nConditional GET\nGoal: don’t send object if cache has up-to-date cached version\nreduce delay\nlower link utilization\n\n\ncache: specify date of cached copy in HTTP request\nIf-modified-since: date\n\n\nserver response contatins no object if cached copy is up-to-date\nHTTP/1.0 304 Not Modified\n\n\n\n\n\n참조\n컴퓨터 네트워크 이미정 교수님 강의\nComputer Networking: A Top-Down Approach Featuring the Internet\n\n","dateCreated":"2021-08-04T17:00:19+09:00","dateModified":"2021-08-10T14:32:42+09:00","datePublished":"2021-08-04T17:00:19+09:00","description":"","headline":"Network-2-Web and HTTP","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"},"publisher":{"@type":"Organization","name":"Yechan Kim","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/","keywords":"Network"}</script>
+    <meta name="description" content="Web and HTTP web page consists of objects  object can be HTML file, JPEG image, Java applet, audio file, …  web page consists of base HTML-file which includes several referenced objects  each object i">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Network-2-Web and HTTP">
+<meta property="og:url" content="https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/index.html">
 <meta property="og:site_name" content="Run PSVM">
+<meta property="og:description" content="Web and HTTP web page consists of objects  object can be HTML file, JPEG image, Java applet, audio file, …  web page consists of base HTML-file which includes several referenced objects  each object i">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128145738-262795ec-48e8-4ca3-ab3a-c7bef5f84118.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128146221-4359763a-fd65-49a7-abf3-2dddbf76dce0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128159248-fd30cc8b-fe2c-4fc9-88c3-49d37ce05459.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128159325-210de324-b02e-455e-9c50-f4d5c8af8a78.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128160079-5dc4802f-560d-4584-8d70-195cfdf98b07.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128161983-fd479ecf-5052-4cca-a885-fee076a7611f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128162327-092e29a1-a9d7-402d-b1b4-a4808a19b0a1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128163425-0a969561-c5ad-4701-a916-78346edbc8d4.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128165149-fb138c20-1286-4465-8fe9-b1d483f382b1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128166417-3ec0fb10-9761-4012-8444-d02c3195f66e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/12459864/128167349-8ce4d5d5-2e6b-4dd1-a568-61459f0775e0.png">
+<meta property="article:published_time" content="2021-08-04T08:00:19.000Z">
+<meta property="article:modified_time" content="2021-08-10T05:32:42.399Z">
 <meta property="article:author" content="Yechan Kim">
+<meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/12459864/128145738-262795ec-48e8-4ca3-ab3a-c7bef5f84118.png">
     
     
         
@@ -46,6 +63,8 @@
     
 
     
+        
+    
 </head>
 
     <body>
@@ -55,7 +74,7 @@
 
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -82,7 +101,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
         
         
@@ -310,161 +329,22 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="5"
                  class="
                         hasCoverMetaIn
                         ">
                 
-    <section class="postShorten-group main-content-wrap">
+<article class="post">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/08/10/Network-3-Socket-Programming/"
-                            aria-label=": Network-3-Socket Programming"
-                        >
-                            Network-3-Socket Programming
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-08-10T13:50:06+09:00">
-	
-		    Aug 10, 2021
-    	
-    </time>
+        <div class="post-header main-content-wrap text-left">
     
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Socket-programming"><a href="#Socket-programming" class="headerlink" title="Socket programming"></a>Socket programming</h2><ul>
-<li>goal: learn how to build client/server applications that communicate using sockets</li>
-<li>socket: door between application process and end-end-transport protocol</li>
-</ul>
-<img width="500" alt="스크린샷 2021-08-10 오후 1 56 42" src="https://user-images.githubusercontent.com/12459864/128810472-76dafe62-1124-40fe-b1f2-4d7efc6596e5.png">
-
-<ul>
-<li>Two socket types for two transport services<ul>
-<li>UDP : unreliable datagram</li>
-<li>TCP : reliable, byte stream-oriented</li>
-</ul>
-</li>
-<li>Application Example<ol>
-<li>client reads a line of characters (data) from its keyboard and sends data to server</li>
-<li>server receives the data and converts characters to uppercase</li>
-<li>server send modified data to client</li>
-<li>client receives modified data and displays line on its screen</li>
-</ol>
-</li>
-</ul>
-<h2 id="Socket-programming-with-UDP"><a href="#Socket-programming-with-UDP" class="headerlink" title="Socket programming with UDP"></a>Socket programming with UDP</h2><ul>
-<li>UDP: no “connection” between client &amp; server<ul>
-<li>no handshaking before sending data</li>
-<li>sender explicitly attaches IP destination address and port $ to each packet</li>
-<li>receiver extracts sender IP address and port # from received packet</li>
-</ul>
-</li>
-<li>UDP : transmitted data may be lost or received out-of-order</li>
-<li>Application viewpoint<ul>
-<li>UDP provides unreliable transfer of groups of bytes (“datagrams”) between client and server</li>
-</ul>
-</li>
-</ul>
-<h3 id="Client-server-socket-interaction-UDP"><a href="#Client-server-socket-interaction-UDP" class="headerlink" title="Client/server socket interaction: UDP"></a>Client/server socket interaction: UDP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 07 36" src="https://user-images.githubusercontent.com/12459864/128811213-aaf13d49-f2b4-44f6-8d1c-a314353664a9.png">
-
-<h3 id="Example-app-UDP-client"><a href="#Example-app-UDP-client" class="headerlink" title="Example app: UDP client"></a>Example app: UDP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 09 01" src="https://user-images.githubusercontent.com/12459864/128811334-dc73fd5e-8176-4cc8-97b6-a0ec07fb3038.png">
-
-<h3 id="Example-app-UDP-server"><a href="#Example-app-UDP-server" class="headerlink" title="Example app: UDP server"></a>Example app: UDP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 10 30" src="https://user-images.githubusercontent.com/12459864/128811488-876294f3-6250-41ab-842a-f015c31f56ed.png">
-
-<h2 id="Socket-programming-with-TCP"><a href="#Socket-programming-with-TCP" class="headerlink" title="Socket programming with TCP"></a>Socket programming with TCP</h2><ul>
-<li>client must contact server<ul>
-<li>server process must first be running</li>
-<li>server must have created socket(door) that welcomes client’s contact</li>
-</ul>
-</li>
-<li>client contacts server by<ul>
-<li>Creating TCP socket, specifying IP address, port, number of server process</li>
-<li>when client creates socket<ul>
-<li>client TCP establishes connection to server TCP</li>
-</ul>
-</li>
-<li>when contacted by client, server TCP creates new socket for server process to communicate with that particular client<ul>
-<li>allows server to talk with multiple clients</li>
-<li>source port numbers userd to distinguish clients</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>application viewpoint<ul>
-<li>TCP provides reliable, in-order byte-stream transfer (“pipe”) between cient and server</li>
-</ul>
-</li>
-</ul>
-<h3 id="Client-server-socket-interaction-TCP"><a href="#Client-server-socket-interaction-TCP" class="headerlink" title="Client/server socket interaction: TCP"></a>Client/server socket interaction: TCP</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 21 11" src="https://user-images.githubusercontent.com/12459864/128812370-6fe2d7a8-d6d6-484c-b87e-51cd764a53ac.png">
-
-<h3 id="Example-app-TCP-client"><a href="#Example-app-TCP-client" class="headerlink" title="Example app: TCP client"></a>Example app: TCP client</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 23 25" src="https://user-images.githubusercontent.com/12459864/128812584-cda45fe0-1c40-4557-a0a2-f86b118dc2b1.png">
-
-<h3 id="Example-app-TCP-server"><a href="#Example-app-TCP-server" class="headerlink" title="Example app: TCP server"></a>Example app: TCP server</h3><img width="600" alt="스크린샷 2021-08-10 오후 2 26 56" src="https://user-images.githubusercontent.com/12459864/128812965-7b219328-3d65-4431-bb1c-e987d014a023.png">
-
-<p><code>연결을 담당하는 serverSocket 1개와 각 연결이 완료되면 요청마다 처리를 담당하는 connectionSocket이 생성된다</code></p>
-<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
-<li>컴퓨터 네트워크 이미정 교수님 강의</li>
-<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/08/10/Network-3-Socket-Programming/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
+        <h1 class="post-title">
+            Network-2-Web and HTTP
+        </h1>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/08/04/Network-2-Web-and-HTTP/"
-                            aria-label=": Network-2-Web and HTTP"
-                        >
-                            Network-2-Web and HTTP
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
+        <div class="post-meta">
     <time datetime="2021-08-04T17:00:19+09:00">
 	
 		    Aug 04, 2021
@@ -479,10 +359,13 @@
     
 </div>
 
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Web-and-HTTP"><a href="#Web-and-HTTP" class="headerlink" title="Web and HTTP"></a>Web and HTTP</h2><ul>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="Web-and-HTTP"><a href="#Web-and-HTTP" class="headerlink" title="Web and HTTP"></a>Web and HTTP</h2><ul>
 <li><p>web page consists of objects</p>
 </li>
 <li><p>object can be HTML file, JPEG image, Java applet, audio file, …</p>
@@ -731,228 +614,139 @@
 <li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
 </ul>
 
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/08/04/Network-2-Web-and-HTTP/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
+
+
         </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/08/04/Network-1-Application-Layer/"
-                            aria-label=": Network-1-Application Layer"
-                        >
-                            Network-1-Application Layer
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-08-04T14:21:38+09:00">
-	
-		    Aug 04, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
-
-
-    
-</div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Network/" rel="tag">Network</a>
 
             </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/10/Network-3-Socket-Programming/"
+                    data-tooltip="Network-3-Socket Programming"
+                    aria-label="PREVIOUS: Network-3-Socket Programming"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/04/Network-1-Application-Layer/"
+                    data-tooltip="Network-1-Application Layer"
+                    aria-label="NEXT: Network-1-Application Layer"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
             
-                <div class="postShorten-content">
-                    <h2 id="Application-architectures"><a href="#Application-architectures" class="headerlink" title="Application architectures"></a>Application architectures</h2><ul>
-<li>possible structure of applications<ul>
-<li>client-server</li>
-<li>peer-to-peer (P2P)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Client-server-architecture"><a href="#Client-server-architecture" class="headerlink" title="Client-server architecture"></a>Client-server architecture</h3><ul>
-<li>server<ul>
-<li>always-on host</li>
-<li>permanent IP address</li>
-<li>data centers for scaling</li>
-</ul>
-</li>
-<li>clients<ul>
-<li>communicate with server</li>
-<li>do not communicate directly with each other</li>
-<li>may be intermittently(on and off) connect</li>
-<li>may have dynamic IP addresses</li>
-</ul>
-</li>
-</ul>
-<h3 id="P2P-architecture"><a href="#P2P-architecture" class="headerlink" title="P2P architecture"></a>P2P architecture</h3><ul>
-<li>no always-on server</li>
-<li>arbitrary end systems directly communicate</li>
-<li>peers request service from other peers, provide service in return to ohter peers<ul>
-<li><code>self scalability - new peers bring new service capacity, as well as new service demands</code></li>
-</ul>
-</li>
-<li>peers are intermittently connected and change IP address<ul>
-<li>complex management</li>
-</ul>
-</li>
-</ul>
-<h2 id="Processes-communicating"><a href="#Processes-communicating" class="headerlink" title="Processes communicating"></a>Processes communicating</h2><ul>
-<li><p>process: program running within a host</p>
-<ul>
-<li>within same host, tow processes communicate using <code>inter-process communication</code> (defined by OS)</li>
-<li>processes in different hosts communicate by exchanging messages</li>
-</ul>
-</li>
-<li><p>clients, servers</p>
-<ul>
-<li><p>client process: process that initiates communication</p>
-</li>
-<li><p>server process: process that waits to be contacted</p>
-<p><code>aside: applications with P2P architectures have client processes &amp; server processes</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Sockets"><a href="#Sockets" class="headerlink" title="Sockets"></a>Sockets</h2><ul>
-<li>process sends/receives messages to/from its socket</li>
-<li>socket analogous to door<ul>
-<li>sending process shoves message out door</li>
-<li>sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process</li>
-</ul>
-</li>
-</ul>
-<img width="600" alt="스크린샷 2021-08-04 오후 2 48 00" src="https://user-images.githubusercontent.com/12459864/128128644-1ce9194e-ca3f-482d-907f-f7b2ee0a8ba9.png">
-
-<h2 id="Addressing-processes"><a href="#Addressing-processes" class="headerlink" title="Addressing processes"></a>Addressing processes</h2><ul>
-<li>to receive messages, process must have <code>identifier</code></li>
-<li>host device has unique 32-bit IP address</li>
-<li>Q: does IP address of host on which process runs suffice for identifying th process?<ul>
-<li>A: no, many processes can be running on same host</li>
-</ul>
-</li>
-<li><code>identifier</code> include both <code>IP adderss</code> and <code>port numbers</code></li>
-<li>example port numbers:<ul>
-<li>HTTP server: 80</li>
-<li>mail server: 25</li>
-</ul>
-</li>
-<li>to send HTTP message to <a target="_blank" rel="noopener" href="http://www.naver.com/">www.naver.com</a> web server<ul>
-<li>IP address: 121.33.223.11</li>
-<li>port number: 80</li>
-</ul>
-</li>
-</ul>
-<h2 id="What-transport-service-does-an-app-need"><a href="#What-transport-service-does-an-app-need" class="headerlink" title="What transport service does an app need?"></a>What transport service does an app need?</h2><ul>
-<li>data integrity<ul>
-<li>some apps (e.g., file transfer, web transactions) require 100% reliable data transfer</li>
-<li>other apps (e.g., audio) can tolerate some loss</li>
-</ul>
-</li>
-<li>timing<ul>
-<li>some apps (e.g., Internet telephony, interactive games) require lo delay to be “effective”</li>
-</ul>
-</li>
-<li>throughput<ul>
-<li>some apps (e.g., multimedia) require minimum amount of throughtput to be “effective”</li>
-<li>other apps (“elastic apps”) make use of whatever throughtput they get</li>
-</ul>
-</li>
-</ul>
-<h3 id="Transport-service-requirements-common-apps"><a href="#Transport-service-requirements-common-apps" class="headerlink" title="Transport service requirements: common apps"></a>Transport service requirements: common apps</h3><img width="600" alt="스크린샷 2021-08-04 오후 3 21 17" src="https://user-images.githubusercontent.com/12459864/128131812-dee57e44-b2a0-403f-9a82-a2100c36866e.png">
-
-<h2 id="Internet-transport-protocols-services"><a href="#Internet-transport-protocols-services" class="headerlink" title="Internet transport protocols services"></a>Internet transport protocols services</h2><ul>
-<li>TCP service<ul>
-<li><code>reliable transport</code> between sending and receiving process</li>
-<li><code>flow control</code>: sender won’t overwhelm receiver</li>
-<li><code>connection-oriented</code>: setup required between client and server processes</li>
-<li><code>congestion control</code>: throttle sender when network overloaded</li>
-<li><code>does not provide</code>: timing, minimum throughput guarantee, security</li>
-</ul>
-</li>
-<li>UDP service<ul>
-<li><code>unreliable data transfer</code> between sending and reveiving process</li>
-<li><code>does not provide</code>: reliability, flow control, congestiong control, timing, throughput guarantee, security, or connection setup<h3 id="Internet-apps-application-transport-protocols"><a href="#Internet-apps-application-transport-protocols" class="headerlink" title="Internet apps: application, transport protocols"></a>Internet apps: application, transport protocols</h3></li>
-</ul>
-</li>
-</ul>
-<img width="600" alt="스크린샷 2021-08-04 오후 3 33 28" src="https://user-images.githubusercontent.com/12459864/128133122-93a5459b-d247-45ea-8587-9883030bdea9.png">
-
-<h2 id="Application-layer-protocol-defines"><a href="#Application-layer-protocol-defines" class="headerlink" title="Application layer protocol defines"></a>Application layer protocol defines</h2><ul>
-<li>types of messages exchanged<ul>
-<li>e.g., request, response</li>
-</ul>
-</li>
-<li>message syntax<ul>
-<li>what fields in messages &amp; how fields are delineated</li>
-</ul>
-</li>
-<li>message semantics<ul>
-<li>meaning of information in fields</li>
-</ul>
-</li>
-<li>rules for when and how processes send &amp; responsd to messages</li>
-</ul>
-<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
-<li>컴퓨터 네트워크 이미정 교수님 강의</li>
-<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/08/04/Network-1-Application-Layer/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
             
-        </div>
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
         
-    </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
         
         
-        <li class="pagination-number">page 1 of 1</li>
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
 
 
                 <footer id="footer" class="main-content-wrap">
@@ -962,6 +756,164 @@
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/10/Network-3-Socket-Programming/"
+                    data-tooltip="Network-3-Socket Programming"
+                    aria-label="PREVIOUS: Network-3-Socket Programming"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/08/04/Network-1-Application-Layer/"
+                    data-tooltip="Network-1-Application Layer"
+                    aria-label="NEXT: Network-1-Application Layer"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a
+                        class="post-action-btn btn btn--default"
+                        href="#disqus_thread"
+                        aria-label="Leave a comment"
+                    >
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
             
         </div>
         
@@ -1008,6 +960,25 @@
 
 <!--SCRIPTS END-->
 
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://kimyechan.github.io/2021/08/04/Network-2-Web-and-HTTP/';
+              
+            this.page.identifier = '2021/08/04/Network-2-Web-and-HTTP/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'xhandev';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
 
 
 
