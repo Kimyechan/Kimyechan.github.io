@@ -325,6 +325,72 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/10/23/Z/"
+                            aria-label=": Z"
+                        >
+                            Z
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-10-23T10:36:59+09:00">
+	
+		    Oct 23, 2020
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>백준 1074 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1074">문제링크</a></p>
+<ul>
+<li><p>문제유형 : 재귀</p>
+</li>
+<li><p>설명</p>
+<ol>
+<li><p>2^N의 사각형을 2^(N-1)의 사각형 4개로 나누어 재귀로 해결</p>
+</li>
+<li><p>N = 2일때 까지 분할</p>
+</li>
+</ol>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>(<span class="params">n, x, y</span>):</span> <span class="keyword">global</span> result</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x + <span class="number">1</span> == X <span class="keyword">and</span> y + <span class="number">1</span> == Y:</span><br><span class="line">            print(result)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        solve(n / <span class="number">2</span>, x, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x, y + n / <span class="number">2</span>)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y)</span><br><span class="line">        solve(n / <span class="number">2</span>, x + n / <span class="number">2</span>, y + n / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line">N, X, Y = map(int, input().split(<span class="string">&#x27; &#x27;</span>)) </span><br><span class="line">solve(<span class="number">2</span> ** N, <span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/10/23/Z/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/10/23/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98-%EC%88%98/"
                             aria-label=": 피보나치 수"
                         >
@@ -999,82 +1065,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/"
-                            aria-label=": 프린터 큐"
-                        >
-                            프린터 큐
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-10-20T21:14:36+09:00">
-	
-		    Oct 20, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Greedy/">Greedy</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 1874: <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1874">문제링크</a></p>
-<ul>
-<li><p>문제유형 : 큐, 구현, 그리디</p>
-</li>
-<li><p>설명</p>
-<ol>
-<li><p>queue의 head의 값이 최대값과 동일한 지 확인한다.</p>
-</li>
-<li><p>동일하면 지정한 값과 동일한 지 확인한다.</p>
-<p> 아니면 값을 queue의 tail로 보낸다</p>
-</li>
-<li><p>지정한 값과 동일하면 출력 아니면 값을 제거한다.</p>
-</li>
-</ol>
-</li>
-<li><p>풀이</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">test_case = int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(test_case):</span><br><span class="line">    n, m = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>)))</span><br><span class="line">    queue = list(map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line">    queue = [(i, idx) <span class="keyword">for</span> idx, i <span class="keyword">in</span> enumerate(queue)]</span><br><span class="line"></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> queue[<span class="number">0</span>][<span class="number">0</span>] == max(queue, key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>])[<span class="number">0</span>]:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> queue[<span class="number">0</span>][<span class="number">1</span>] == m:</span><br><span class="line">                print(count)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                queue.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            queue.append(queue.pop(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/10/20/%ED%94%84%EB%A6%B0%ED%84%B0-%ED%81%90/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1101,7 +1091,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 8 of 12</li>
+        <li class="pagination-number">page 8 of 13</li>
     </ul>
 </div>
 

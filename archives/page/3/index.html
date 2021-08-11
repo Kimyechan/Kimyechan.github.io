@@ -326,6 +326,81 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                            aria-label=": Algorithm-암호 만들기"
+                        >
+                            Algorithm-암호 만들기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-18T11:18:28+09:00">
+	
+		    Nov 18, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Back-Tracking/">Back Tracking</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 1759 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/1759">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>백 트레킹</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>C개의 문자들중에서 L개를 선택하는 모든 조합을 고려한다</li>
+<li>모음의 개수와 자음의 개수 조건을 확인한다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line">string = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combination</span>(<span class="params">array, length, index</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(string) == length:</span><br><span class="line">        result.append(copy.deepcopy(string))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(array)):</span><br><span class="line">        string.append(array[i])</span><br><span class="line">        combination(array, length, index + <span class="number">1</span>)</span><br><span class="line">        string.pop()</span><br><span class="line"></span><br><span class="line">vowels = (<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">l, c = map(int, input().split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line"></span><br><span class="line">array = input().split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">array.sort()</span><br><span class="line"></span><br><span class="line">combination(array, l, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> password <span class="keyword">in</span> result:</span><br><span class="line">    count = <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> password:</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> vowels:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> count &gt;= <span class="number">1</span> <span class="keyword">and</span> count &lt;= l - <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">&#x27;&#x27;</span>.join(password))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/18/Algorithm-%EC%95%94%ED%98%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/18/Algorithm-%EC%95%8C%ED%8C%8C%EB%B2%B3/"
                             aria-label=": Algorithm-알파벳"
                         >
@@ -1002,194 +1077,6 @@
         
     </article>
     
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/10/Web-Cookie-And-Session/"
-                            aria-label=": Web-Cookie And Session"
-                        >
-                            Web-Cookie And Session
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-10T20:58:13+09:00">
-	
-		    Nov 10, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Web/">Web</a>, <a class="category-link" href="/categories/Web/HTTP/">HTTP</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <hr>
-<h1 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h1><blockquote>
-<ul>
-<li>Cookie와 Session이 왜 필요한 이유</li>
-<li>Cookie란 무엇인지에 대해 이해한다</li>
-<li>Session이란 무엇인지에 대해 이해한다</li>
-<li>Cookie와 Session의 차이에 대해 이해한다</li>
-</ul>
-</blockquote>
-<h1 id="쿠키와-세션의-사용-이유"><a href="#쿠키와-세션의-사용-이유" class="headerlink" title="쿠키와 세션의 사용 이유"></a>쿠키와 세션의 사용 이유</h1><h2 id="HTTP-프로토콜의-특징"><a href="#HTTP-프로토콜의-특징" class="headerlink" title="HTTP 프로토콜의 특징"></a>HTTP 프로토콜의 특징</h2><ol>
-<li>비연결지향(Conectionless)<ul>
-<li>HTTP는 클라이언트가 요청(Request)을 서버에 보내고, 서버는 클라이언트에 요청에 맞는 응답(Response)를 보내면 바로 연결을 끊는다</li>
-</ul>
-</li>
-<li>상태 정보를 유지 안 함(Stateless)<ul>
-<li>연결을 끊는 순간 클라이언트와 서버의 통신은 끝나면 상태 정보를 유지하지 않는다</li>
-</ul>
-</li>
-</ol>
-<h2 id="쿠키와-세션의-필요성"><a href="#쿠키와-세션의-필요성" class="headerlink" title="쿠키와 세션의 필요성"></a>쿠키와 세션의 필요성</h2><ul>
-<li>HTTP 프로토콜은 위와 같은 특징으로 모든 요청간의 의존관계가 없다</li>
-<li>즉, 현재 접속한 사용자가 이전에 접속했던 사용자와 같은 사용자인지 아닌지 알 수 있는 방법이 없다</li>
-<li>계속해서 연결을 유지하지 않기 때문에 리소스 낭비가 줄어드는 것이 큰 장점이지만, 통신할 때마다 새로 연결하기 때문에 클라이언트는 매 요청마다 인증을 해야한다는 단점이 있다</li>
-<li>이전 요청과 현재 요청이 같은 사용자의 요청인지 알기 위해서는 상태를 유지해야한다</li>
-<li>HTTP프로토콜에서 상태를 유지하기 위한 기술로 쿠키와 세션이 있다</li>
-</ul>
-<h1 id="쿠키-Cookie"><a href="#쿠키-Cookie" class="headerlink" title="쿠키 (Cookie)"></a>쿠키 (Cookie)</h1><h2 id="쿠키란"><a href="#쿠키란" class="headerlink" title="쿠키란?"></a>쿠키란?</h2><ul>
-<li>쿠키는 클라이언트(브라우저) 로컬에 저장되는 키와 값이 들어있는 작은 데이터 파일한다</li>
-<li>유효한 시간을 명시할 수 있으며, 유효 시간이 정해지면 브라우저가 종료되어도 쿠키가 유지된다는 특징이 있다 </li>
-<li>쿠키는 클라이언트의 상태 정보를 로컬에 저장했다가 참조한다</li>
-</ul>
-<h2 id="구성요소"><a href="#구성요소" class="headerlink" title="구성요소"></a>구성요소</h2><ul>
-<li>쿠키의 이름(name)</li>
-<li>쿠키의 값(value)</li>
-<li>쿠키의 만료시간(Expire)</li>
-<li>쿠키를 전송할 도메인 이름(Domain)</li>
-<li>쿠키를 전송할 경로(Path)</li>
-<li>보안 연결 여부(Secure)</li>
-<li>HttpOnly 여부(HttpOnly)</li>
-</ul>
-<h2 id="세션쿠키-Session-Cookie-와-지속-쿠키-Persistent-Cookie"><a href="#세션쿠키-Session-Cookie-와-지속-쿠키-Persistent-Cookie" class="headerlink" title="세션쿠키(Session Cookie)와 지속 쿠키(Persistent Cookie)"></a>세션쿠키(Session Cookie)와 지속 쿠키(Persistent Cookie)</h2><ul>
-<li>지속 쿠키 <ul>
-<li>만료 날짜/시간을 지정하지 않으면 항상 유지하라는 것으로 판단하고 지속 쿠키에 저장된다</li>
-<li>파일로 저장되므로 브라우저가 종료되어도 쿠키는 남아있다</li>
-</ul>
-</li>
-<li>세션 쿠키<ul>
-<li>만료 날짜/시간을 지정하면 세션 쿠키로 저장된다</li>
-<li>브라우저 메모리에 저장되므로 브라우저가 종료되면 쿠키는 사라지게 된다</li>
-</ul>
-</li>
-</ul>
-<h2 id="동작-방식"><a href="#동작-방식" class="headerlink" title="동작 방식"></a>동작 방식</h2><p><img src="https://user-images.githubusercontent.com/12459864/98674901-d4621480-239c-11eb-90bb-1e620dc4b1b7.png" alt="스크린샷 2020-11-10 오후 9 36 25"></p>
-<ol>
-<li>웹 브라우저가 서버에 요청</li>
-<li>상태를 유지하고 싶은 값을 쿠키(Cookie)로 생성</li>
-<li>서버가 응답할 때 Http Response Header의 Set-Cookie에 쿠키를 포함해서 전송 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: id&#x3D;chan</span><br></pre></td></tr></table></figure></li>
-<li>전달받은 쿠키는 웹 브라우저에서 관리하고 있다가, 다음 요청 때 쿠키를 Http 헤더에 넣어서 전송 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookie: id&#x3D;chan</span><br></pre></td></tr></table></figure></li>
-<li>서버에서는 쿠키 정보를 읽어 이전 상태 정보를 확인 후 응답</li>
-</ol>
-<h2 id="쿠키-사용-예"><a href="#쿠키-사용-예" class="headerlink" title="쿠키 사용 예"></a>쿠키 사용 예</h2><ul>
-<li>아이디, 비밀번호 저장</li>
-<li>쇼핑몰 장바구니</li>
-</ul>
-<h2 id="쿠키의-제약사항"><a href="#쿠키의-제약사항" class="headerlink" title="쿠키의 제약사항"></a>쿠키의 제약사항</h2><ul>
-<li><p>클라이언트에 최대 300개까지 쿠키를 저장할 수 있다</p>
-</li>
-<li><p>서버 도메인 하나당 최대 20개의 쿠키를 저장할 수 있다</p>
-</li>
-<li><p>하나의 쿠키 값은 최대 4KB까지 저장할 수 있다</p>
-<blockquote>
-<p>쿠키는 사용자가 별도로 요청하지 않아도 브라우저(Client)에서 서버에 요청시 Request Header에 쿠키 값을 자동으로 넣어 보낸다</p>
-</blockquote>
-<blockquote>
-<p>그렇다고 모든 쿠키 값을 모든 요청에 넣어서 비효율적으로 동작하지 않고 지정 도메인에 해당하는 쿠키 값만을 제공한다</p>
-</blockquote>
-</li>
-</ul>
-<h1 id="세션-Session"><a href="#세션-Session" class="headerlink" title="세션(Session)"></a>세션(Session)</h1><h2 id="세션이란"><a href="#세션이란" class="headerlink" title="세션이란?"></a>세션이란?</h2><ul>
-<li>세션은 쿠키를 기반으로 동작하지만, 사용자 정보 파일을 브라우저에 저장하는 쿠키와 달리 세션은 서버 측에서 관리한다</li>
-<li>서버에서는 클라이언트를 구분하기 위해 세션 ID를 부여하며 웹 브라우저가 서버에 접속해서 브라우저를 종료할 때까지 인증상태를 유지한다</li>
-<li>접속 시간에 제한을 두어 일정 시간 응답이 없다면 정보가 유지되지 않게 설정이 가능하다</li>
-<li>사용자에 대한 정보를 서버에 두기 때문에 쿠키보다 보안에 좋지만, 사용자가 많아질수록 서버 메모리를 많이 차지하게 된다</li>
-<li>동접자 수가 많은 웹 사이트인 경우 서버에 과부하를 주게 되므로 성능 저하의 요인이 된다</li>
-<li>클라이언트가 Request를 보내면, 해당 서버 엔진이 클라이언트에게 유일한 ID를 부여하는데 이것이 세션이다</li>
-</ul>
-<h2 id="동작-방식-1"><a href="#동작-방식-1" class="headerlink" title="동작 방식"></a>동작 방식</h2><p><img src="https://user-images.githubusercontent.com/12459864/98686081-7c7eda00-23ab-11eb-9f4b-e7452314a2b2.png" alt="스크린샷 2020-11-10 오후 11 21 26"></p>
-<ol>
-<li>웹 브라우저가 서버에 요청</li>
-<li>서버가 해당 웹 브라우저(클라이언트)에 유일한 ID(Session ID)를 부여함</li>
-<li>서버가 응답할 때 HTTP Header(Set-Cookie)에 Session ID를 포함해서 전송<ul>
-<li>쿠키에 Session ID를 JSESSIONID라는 이름으로 저장  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie : JSESSIONID&#x3D;g3r2sddh</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>웹 브라우저는 이후 웹 브라우저를 닫기까지 다음 요청 때 부여된 Session ID가 담겨있는 쿠키를 HTTP Header에 넣어서 전송 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie : JSESSIONID&#x3D;g3r2sddh</span><br></pre></td></tr></table></figure></li>
-<li>서버는 세션 ID를 확인하고, 해당 세션에 관련된 정보를 확인한 후 응답</li>
-</ol>
-<blockquote>
-<p><code>세션도 쿠키를 사용하여 값을 주고받으며 클라이언트의 상태 정보를 유지한다</code></p>
-</blockquote>
-<blockquote>
-<p><code>즉, 세션이 상태 정보를 유지하는 수단으로 쿠키를 사용한다</code></p>
-</blockquote>
-<h1 id="쿠키와-세션의-차이"><a href="#쿠키와-세션의-차이" class="headerlink" title="쿠키와 세션의 차이"></a>쿠키와 세션의 차이</h1><ul>
-<li>저장 위치<ul>
-<li>쿠키는 클라이언트(브라우저)의 메모리 또는 파일에 저장</li>
-<li>세션은 서버 메모리에 저장</li>
-</ul>
-</li>
-<li>보안<ul>
-<li>쿠키는 로컬에 저장되고, 특히 파일로 저장되는 경우가 있어 탈취, 변조에 위험하고 Request/Response시에 스니핑당할 위험이 있다</li>
-<li>세션은 클라이언트 정보 자체가 서버에 저장되어 있으므로 비교적 안전하다</li>
-</ul>
-</li>
-<li>라이프 사이클<ul>
-<li>쿠키중 지속 쿠키는 브라우저가 종료하더라도 저장되어있다</li>
-<li>세션은 만료시간/날짜를 정해서 기간이 지나면 자동으로 삭제하고 세션쿠키에서 세션 아이디를 정한 경우, 브라우저 종료시 세션아이디가 삭제된다</li>
-</ul>
-</li>
-<li>속도<ul>
-<li>쿠키는 클라이언트에 저장되어 있기 때문에 서버 요청시 속도가 빠르다</li>
-<li>세션은 정보가 서버에 있기 때문에 처리가 요구되어 비교적 느린 속도를 낸다</li>
-</ul>
-</li>
-</ul>
-<h1 id="참고-캐시"><a href="#참고-캐시" class="headerlink" title="참고 - 캐시"></a>참고 - 캐시</h1><ul>
-<li>브라우저 캐시는 이미지(.png, .jpg)나 css, js파일등이 사용자의 브라우저에 저장되는 것이다</li>
-<li>이를 이용해서 같은 자원을 로드(load)해야할 경우에, 해당 자원을 다시 서버에 요청하지 않고 브라우저에 캐시되어 있는 자원을 쓰는 방식이다</li>
-<li>자원이 브라우저 캐시에 저장되면 브라우저에 있는 결 재사용하기 때문에 경우에 따라서 자원이 변경되어도 변경된 자원을 참조할 수 없는 경우가 있다</li>
-<li>따라서 사용자는 브라우저 캐시를 지워주거나 서버에서 클라이언트에 응답을 보낼 때 header에 자원 캐시 만료시간을 명시하는 방식을 사용하여 위와같은 문제를 해결할 수 있다</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/10/Web-Cookie-And-Session/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -1216,7 +1103,7 @@
             </a>
           </li>
         
-        <li class="pagination-number">page 3 of 12</li>
+        <li class="pagination-number">page 3 of 13</li>
     </ul>
 </div>
 

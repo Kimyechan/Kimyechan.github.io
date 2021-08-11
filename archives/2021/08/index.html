@@ -326,6 +326,538 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/08/10/Network-4-Transport-Layer/"
+                            aria-label=": Network-4-Transport Layer"
+                        >
+                            Network-4-Transport Layer
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-10T16:19:11+09:00">
+	
+		    Aug 10, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/Network/">Network</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <ul>
+<li>our goals<ul>
+<li>understand principles behind transport layer services<ul>
+<li>multiplexing, demultiplexing</li>
+<li>reliable data transfer</li>
+<li>flow control</li>
+<li>congestion control</li>
+</ul>
+</li>
+<li>learn about Internet transport layer protocols<ul>
+<li>UDP: connectionless transport</li>
+<li>TCP: connection-oriented reliable transport</li>
+<li>TCP congestion control</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Transport-services-and-protocols"><a href="#Transport-services-and-protocols" class="headerlink" title="Transport services and protocols"></a>Transport services and protocols</h2><ul>
+<li>provide <code>logical communication</code> between app processes on different hosts</li>
+<li>transport protocols run in end systems<ul>
+<li>send side: breaks app messages into segments, passes to entwork layer</li>
+<li>receive side: reassembles segments into messages, passes to app layer</li>
+</ul>
+</li>
+<li>more than one transport protocol abailable to apps<ul>
+<li>Internet: TCP and UDP</li>
+</ul>
+</li>
+</ul>
+<img width="400" alt="스크린샷 2021-08-10 오후 4 24 35" src="https://user-images.githubusercontent.com/12459864/128825610-f1e4cd67-1545-462e-afad-c83b0ae527e7.png">
+
+<h3 id="Transport-vs-network-layer"><a href="#Transport-vs-network-layer" class="headerlink" title="Transport vs network layer"></a>Transport vs network layer</h3><ul>
+<li>network layer: logical communication between hosts</li>
+<li>transport layer : logical communication between processes<ul>
+<li>relies on, enhances, network layer services </li>
+</ul>
+</li>
+</ul>
+<h3 id="Internet-transport-layer-protocols"><a href="#Internet-transport-layer-protocols" class="headerlink" title="Internet transport-layer protocols"></a>Internet transport-layer protocols</h3><ul>
+<li>reliable, in-order delivery (TCP)<ul>
+<li>congestion control</li>
+<li>flow control</li>
+<li>connection setup</li>
+</ul>
+</li>
+<li>unreliable, unordered delivery (UDP)<ul>
+<li>no-frills extension of “best-effort” IP</li>
+</ul>
+</li>
+<li>service not available<ul>
+<li>delay guarantees</li>
+<li>bandwidth guarantees</li>
+</ul>
+</li>
+</ul>
+<h2 id="Multiplexing-demultiplexing"><a href="#Multiplexing-demultiplexing" class="headerlink" title="Multiplexing/demultiplexing"></a>Multiplexing/demultiplexing</h2><img width="600" alt="스크린샷 2021-08-10 오후 4 35 55" src="https://user-images.githubusercontent.com/12459864/128827254-7cffc50f-70a6-4e49-b96a-ad0fc2741a57.png">
+
+<h3 id="How-demultiplexing-works"><a href="#How-demultiplexing-works" class="headerlink" title="How demultiplexing works"></a>How demultiplexing works</h3><ul>
+<li>host receives IP datagrams<ul>
+<li>each datagram has source IP address, destination IP address</li>
+<li>each datagram carries one transport-layer segment</li>
+<li>each segment has source, destination port number</li>
+</ul>
+</li>
+<li>host uses IP address &amp; port numberes to direct segment to appropriate socket</li>
+</ul>
+<h3 id="Connectionless-demultiplexing"><a href="#Connectionless-demultiplexing" class="headerlink" title="Connectionless demultiplexing"></a>Connectionless demultiplexing</h3><ul>
+<li><p>recall: created socket has host-local port #:</p>
+<ul>
+<li><code>DatagramSoket mySocket1 = new DatagramSocket(12534)</code></li>
+</ul>
+</li>
+<li><p>recall: when creating datagram to send into UDP socket, must specify</p>
+<ul>
+<li>destination IP address</li>
+<li>destination port #</li>
+</ul>
+</li>
+<li><p>when host receives UDP segment</p>
+<ul>
+<li><p>checks destination port # in segment</p>
+</li>
+<li><p>directs UDP segment to secket with that port #</p>
+<p><code>IP datagrams with same dest. post #, but different source   IP addesses and/or source port numbers will be directed to same socket at dest</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Connectionless-demux-example"><a href="#Connectionless-demux-example" class="headerlink" title="Connectionless demux: example"></a>Connectionless demux: example</h4><img width="500" alt="스크린샷 2021-08-10 오후 4 54 33" src="https://user-images.githubusercontent.com/12459864/128829842-2b2c88c0-29af-428b-9943-b2cabc83cdfe.png">
+
+<h3 id="Connection-oriented-demux"><a href="#Connection-oriented-demux" class="headerlink" title="Connection-oriented demux"></a>Connection-oriented demux</h3><ul>
+<li>TCP socket identified by 4-tuple<ul>
+<li>source IP address</li>
+<li>source port number</li>
+<li>dest IP address</li>
+<li>dest port number</li>
+</ul>
+</li>
+<li>demux<ul>
+<li>receiver uses all four values to direct segment to appropriate socket</li>
+</ul>
+</li>
+<li>server host may support many simutaneous TCP sockets<ul>
+<li>each socket identified by its own 4-tuple</li>
+</ul>
+</li>
+<li>web servers have different sockets for each connecting client<ul>
+<li>non-persistent HTTP will have different socket for each request</li>
+</ul>
+</li>
+</ul>
+<h3 id="Connection-oriented-demux-example"><a href="#Connection-oriented-demux-example" class="headerlink" title="Connection-oriented demux: example"></a>Connection-oriented demux: example</h3><img width="500" alt="스크린샷 2021-08-10 오후 5 01 17" src="https://user-images.githubusercontent.com/12459864/128830844-b7ba6ef3-2f3f-4ef0-addd-828b3da00ccc.png">
+
+<br>
+
+<img width="500" alt="스크린샷 2021-08-10 오후 5 01 34" src="https://user-images.githubusercontent.com/12459864/128830922-02c1959e-ec3b-4dd2-bc77-af8e43372532.png">
+
+<h2 id="UDP-User-Datagram-Protocol"><a href="#UDP-User-Datagram-Protocol" class="headerlink" title="UDP: User Datagram Protocol"></a>UDP: User Datagram Protocol</h2><ul>
+<li>“no frills”, “bare bones” Internet transport protocol</li>
+<li>“best effort” service, UDP segments may be<ul>
+<li>lost</li>
+<li>delivered out-of-order to app</li>
+</ul>
+</li>
+<li>connectionless<ul>
+<li>no handshaking between UDP sender, receiver</li>
+<li>each UDP segment handled independently of others</li>
+</ul>
+</li>
+<li>UDP use:<ul>
+<li>streaming multimedia apps (loss tolerant, rate sensitive)</li>
+<li>DNS</li>
+<li>SNMP</li>
+</ul>
+</li>
+<li>reliable transfer over UDP<ul>
+<li>add reliability at application layer</li>
+<li>application-specific error recovery</li>
+</ul>
+</li>
+</ul>
+<h3 id="UDP-segment-header"><a href="#UDP-segment-header" class="headerlink" title="UDP: segment header"></a>UDP: segment header</h3><img width="500" alt="스크린샷 2021-08-10 오후 5 13 04" src="https://user-images.githubusercontent.com/12459864/128832347-33953c81-c4ba-47b4-8640-94d03333fddb.png">
+
+<h3 id="UDP-checksum"><a href="#UDP-checksum" class="headerlink" title="UDP checksum"></a>UDP checksum</h3><ul>
+<li>Goal: detect “errors” in transmitted segment</li>
+<li>sender<ul>
+<li>treat segment contents, including header fields, as sequence of 16-bit integers</li>
+<li>checksum: additon (one’s complement sum) of segment contents</li>
+<li>sender puts checksum value into UDP checksum field</li>
+</ul>
+</li>
+<li>receiver:<ul>
+<li>compute checksum of received segment</li>
+<li>check if computed checksum equals checksum field value<ul>
+<li>No - error detected</li>
+<li>YES - no error detected. But maybe errors nonetheless?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Internet-checksum-example"><a href="#Internet-checksum-example" class="headerlink" title="Internet checksum: example"></a>Internet checksum: example</h4><img width="500" alt="스크린샷 2021-08-10 오후 5 21 30" src="https://user-images.githubusercontent.com/12459864/128833528-12ab9098-61f7-4769-9240-bc067675c66b.png">
+
+<p><code>carry된 비트를 더해주고 1의 보수를 취하면 checksum</code></p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><ul>
+<li>point-to-point<ul>
+<li>one sender, one receiver</li>
+</ul>
+</li>
+<li>reliable, in-order byte stream<ul>
+<li>no “messge boundaries”</li>
+</ul>
+</li>
+<li>pipelined<ul>
+<li>TCP congestion and flow control set window size</li>
+</ul>
+</li>
+<li>full duplex data<ul>
+<li>bi-directional data flow in same connection</li>
+<li>MSS: maximum segment size</li>
+</ul>
+</li>
+<li>connection-oriented<ul>
+<li>handshaking (exchange of control msgs) inits sender, receiver state before data exchange</li>
+</ul>
+</li>
+<li>flow controlled<ul>
+<li>sender will not overwhelm receiver</li>
+</ul>
+</li>
+</ul>
+<h3 id="TCP-segment-structure"><a href="#TCP-segment-structure" class="headerlink" title="TCP segment structure"></a>TCP segment structure</h3><img width="500" alt="스크린샷 2021-08-10 오후 7 19 58" src="https://user-images.githubusercontent.com/12459864/128850578-0ea1c763-63a4-44e7-b92a-13883af33292.png">
+
+<h4 id="TCP-seq-numbers-ACKs"><a href="#TCP-seq-numbers-ACKs" class="headerlink" title="TCP seq. numbers, ACKs"></a>TCP seq. numbers, ACKs</h4><ul>
+<li>sequnce number<ul>
+<li>byte stream “number” of first byte in segment’s data</li>
+</ul>
+</li>
+<li>acknowledgements<ul>
+<li>seq # of next byte expected from other side</li>
+<li>cumulative ACK</li>
+<li>Q: how receiver handles out-of-order segments<ul>
+<li>A: TCP spec doesn’t say, up to implementor</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="500" height="500" alt="스크린샷 2021-08-10 오후 7 27 34" src="https://user-images.githubusercontent.com/12459864/128851564-69fed45f-7d4d-47cc-aa9b-6cfa589db127.png">
+
+<br>
+
+<img width="500" height="500" alt="스크린샷 2021-08-10 오후 7 28 49" src="https://user-images.githubusercontent.com/12459864/128851725-61940a40-ab6b-4311-87b0-9d1d0434b90e.png">
+
+<h4 id="TCP-round-trip-time-timeout"><a href="#TCP-round-trip-time-timeout" class="headerlink" title="TCP round trip time, timeout"></a>TCP round trip time, timeout</h4><ul>
+<li>Q: how to set TCP timeout value?<ul>
+<li>longer than RTT<ul>
+<li>but RTT varies</li>
+</ul>
+</li>
+<li>too short: premature timeout, unneceessary retransmissions</li>
+<li>too long: slow reaction to segment loss</li>
+</ul>
+</li>
+<li>Q: how to estimate RTT<ul>
+<li>SampleRTT: measured time from segment transmission until ACK receipt<ul>
+<li>ignore retransmissions</li>
+</ul>
+</li>
+<li>SampleRTT will vary, want estimated RTT “smoother”<ul>
+<li>average several recent measurements, not just current SamplRTT</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="500" alt="스크린샷 2021-08-10 오후 7 35 40" src="https://user-images.githubusercontent.com/12459864/128852667-0ebb449c-2d31-4c90-baa6-8b5e914b3384.png">
+
+<br>
+
+<img width="500" alt="스크린샷 2021-08-10 오후 7 36 00" src="https://user-images.githubusercontent.com/12459864/128852672-5b84e987-7d74-4f14-b35a-d3375c4478d7.png">
+
+<h3 id="TCP-reliable-data-transfer"><a href="#TCP-reliable-data-transfer" class="headerlink" title="TCP: reliable data transfer"></a>TCP: reliable data transfer</h3><ul>
+<li>TCP creates rdt(reliable data transfer) service on top of IP’s unreliable service<ul>
+<li>pipelined segments</li>
+<li>cumulative acks</li>
+<li>sigle retransmission timer</li>
+</ul>
+</li>
+<li>retransmissions triggered by<ul>
+<li>time out</li>
+<li>duplicate acks</li>
+</ul>
+</li>
+<li>let’s initially consider simplified TCP sender<ul>
+<li>ignore duplicate acks</li>
+<li>ignore flow control, congestion control</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-sender-events"><a href="#TCP-sender-events" class="headerlink" title="TCP sender events"></a>TCP sender events</h4><ul>
+<li>data rcvd from app<ul>
+<li>create segment with seq #</li>
+<li>seq # is byte-stream number of first dta byte in segment</li>
+<li>start timer if not already running<ul>
+<li>think of timer as for oldest unacked segment</li>
+<li>expiration interval : TimeOutInterval</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>timeout<ul>
+<li>retransmit segment that caused timeout</li>
+<li>restart timer</li>
+</ul>
+</li>
+<li>ack rcvd<ul>
+<li>if ack acknowledges previously unacked segemtns<ul>
+<li>update what is known to be ACKed</li>
+<li>start timer if there are still unacked segments</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-11 오후 8 13 14" src="https://user-images.githubusercontent.com/12459864/129019612-7c970bcf-dfac-4deb-a3e3-02296014a7f2.png">
+
+<p><code>NextSeqNum은 보내야하는 Seq 번호, SendBase는 보냈지만 ACK 받지 않은 Seq 번호</code></p>
+<h4 id="TCP-retransmission-scenarios"><a href="#TCP-retransmission-scenarios" class="headerlink" title="TCP: retransmission scenarios"></a>TCP: retransmission scenarios</h4><img width="600" alt="스크린샷 2021-08-11 오후 8 17 16" src="https://user-images.githubusercontent.com/12459864/129019992-e2da3b7a-f02e-4650-b588-c84fe13cf156.png">
+<br>
+<img width="300" height="500" alt="스크린샷 2021-08-11 오후 8 19 12" src="https://user-images.githubusercontent.com/12459864/129020181-b634b6f0-521f-4c83-a977-06edc6de980c.png">
+
+<br>
+
+<h4 id="TCP-ACK-generation"><a href="#TCP-ACK-generation" class="headerlink" title="TCP ACK generation"></a>TCP ACK generation</h4><img width="600" alt="스크린샷 2021-08-11 오후 8 42 40" src="https://user-images.githubusercontent.com/12459864/129022996-d5346444-8baa-4880-9f18-133a0738ee5e.png">
+
+<h4 id="TCP-fast-retransmit"><a href="#TCP-fast-retransmit" class="headerlink" title="TCP fast retransmit"></a>TCP fast retransmit</h4><ul>
+<li>time-out period often relatively long<ul>
+<li>long delay before resending lost packet</li>
+</ul>
+</li>
+<li>detection lost segments via duplicate ACKs<ul>
+<li>sender often sends many segments back-to-back</li>
+<li>if segment is lost, there will likely be many duplicate ACKs</li>
+</ul>
+</li>
+<li><code>TCP fast retransmit</code><ul>
+<li>if sender receives 3 ACKs for same data (“triple duplicate ACKs), resend unacked<ul>
+<li>likely that unacked segment lost, so don’t wait for timeout</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="300" height="500" alt="스크린샷 2021-08-11 오후 8 49 24" src="https://user-images.githubusercontent.com/12459864/129023839-a7ffbb79-cb50-4bce-981f-6c885811e734.png">
+
+<h3 id="TCP-flow-control"><a href="#TCP-flow-control" class="headerlink" title="TCP: flow control"></a>TCP: flow control</h3><img width="600" alt="스크린샷 2021-08-11 오후 8 52 26" src="https://user-images.githubusercontent.com/12459864/129024155-4d77147f-8498-4630-b2cc-c276d57a442d.png">
+
+<ul>
+<li>receiver “advertises” free buffer space by including rwnd value in TCP header of receiver-to-sender segments<ul>
+<li>RcvBuffer size set via socket options (typical default is 4096 bytes)</li>
+<li>many operating systems autoadjust RcvBuffer</li>
+</ul>
+</li>
+<li>sender limits amount of unacked (“in-flight”) data to receiver’s rwnd value</li>
+<li>guarantees receive buffer will not overflow </li>
+</ul>
+<img width="300" alt="스크린샷 2021-08-11 오후 8 58 14" src="https://user-images.githubusercontent.com/12459864/129024807-32bc8ab7-9d44-41ff-a95a-214c19d4ac85.png">
+
+<h3 id="TCP-connection-management"><a href="#TCP-connection-management" class="headerlink" title="TCP: connection management"></a>TCP: connection management</h3><ul>
+<li>before exchanging data, sender/receiver “handshake”<ul>
+<li>agree to establish connection (each knowing the other willing to establish connection)</li>
+<li>agree on onnection parameters</li>
+</ul>
+</li>
+</ul>
+<img width="500" height="500" alt="스크린샷 2021-08-11 오후 9 02 50" src="https://user-images.githubusercontent.com/12459864/129025298-8695741d-8956-4afe-88fc-f0b5a348aaad.png">
+
+<h4 id="Agreeing-to-establish-a-connection"><a href="#Agreeing-to-establish-a-connection" class="headerlink" title="Agreeing to establish a connection"></a>Agreeing to establish a connection</h4><ul>
+<li>Q: will 2-way handshake always work in network?<ul>
+<li>variable delays</li>
+<li>retransmitted messages (e.g. req_conn(x)) due to message loss</li>
+<li>message reordering</li>
+<li>can’t “see” other side</li>
+</ul>
+</li>
+</ul>
+<img width="300" height="500" alt="스크린샷 2021-08-11 오후 9 05 37" src="https://user-images.githubusercontent.com/12459864/129025631-225527c7-24b1-4037-a83e-c3dcc1eacf64.png">
+
+<h4 id="2-way-handshake-failure-scenarios"><a href="#2-way-handshake-failure-scenarios" class="headerlink" title="2-way handshake failure scenarios"></a>2-way handshake failure scenarios</h4><img width="600" alt="스크린샷 2021-08-11 오후 9 08 34" src="https://user-images.githubusercontent.com/12459864/129026085-45586d1f-f4e7-4cbe-a420-4770437b7b8c.png">
+
+<h4 id="TCP-3-way-handshake"><a href="#TCP-3-way-handshake" class="headerlink" title="TCP 3-way handshake"></a>TCP 3-way handshake</h4><img width="600" alt="스크린샷 2021-08-11 오후 9 14 04" src="https://user-images.githubusercontent.com/12459864/129026843-4a81c2ce-be13-4eec-a1be-ed66f75644c2.png">
+
+<br>
+
+<img width="600" alt="스크린샷 2021-08-11 오후 9 15 40" src="https://user-images.githubusercontent.com/12459864/129026961-739126b9-22b3-4c4c-8ebd-dd7bd308ca8f.png">
+
+<h4 id="TCP-closing-a-connection"><a href="#TCP-closing-a-connection" class="headerlink" title="TCP: closing a connection"></a>TCP: closing a connection</h4><ul>
+<li>client, server each close ther side of connection<ul>
+<li>send TCP segment with FIN bit = 1</li>
+</ul>
+</li>
+<li>responsd to receved FINB with ACK<ul>
+<li>on receiving FIN, ACK can be combined with own FIN</li>
+</ul>
+</li>
+<li>simultaneous FIN exchanges can be handled</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-11 오후 9 18 57" src="https://user-images.githubusercontent.com/12459864/129027312-4749472e-bb25-4d09-a8b1-ecd64d28d8ea.png">
+
+<p><code>client가 마지막에 2 * max segment lifetime을 대기하는 이유는</code></p>
+<p><code>server측에서 FIN 요청을 하고 ACK를 못 받아서 다시 FIN 요청을 보낼 경우를 대비해서 대기한다</code></p>
+<h3 id="TCP-congetion-control"><a href="#TCP-congetion-control" class="headerlink" title="TCP congetion control"></a>TCP congetion control</h3><ul>
+<li>congestion<ul>
+<li>informally: “toioi many sources sending too much data too fast for network to handle”</li>
+<li>different from flow control!</li>
+<li>manifestations<ul>
+<li>lost packets (buffer overflow at routers)</li>
+<li>long delays (queueing in router buffers)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-congestion-control-additive-increase-multiplicative-decrease"><a href="#TCP-congestion-control-additive-increase-multiplicative-decrease" class="headerlink" title="TCP congestion control: additive increase, multiplicative decrease"></a>TCP congestion control: additive increase, multiplicative decrease</h4><ul>
+<li>approach: sender increases transmission rate (window size), probing for usable bandwidth, until loss occurs<ul>
+<li>additive increase: increase cwnd by 1 MSS every RTT until loss detected</li>
+<li>multiplicative decrease: cut cwnd in half after loss</li>
+</ul>
+</li>
+</ul>
+<img width="400" height="200" alt="스크린샷 2021-08-11 오후 11 59 18" src="https://user-images.githubusercontent.com/12459864/129053265-c489fbc6-bb55-49b2-b5d7-e53dee928a46.png"> 
+
+<h4 id="TCP-Congestion-Control-details"><a href="#TCP-Congestion-Control-details" class="headerlink" title="TCP Congestion Control: details"></a>TCP Congestion Control: details</h4><img width="300" height="200" alt="스크린샷 2021-08-12 오전 12 06 26" src="https://user-images.githubusercontent.com/12459864/129054448-daec438d-d3d2-41b2-aeb4-a1ab730a24a1.png">
+
+<ul>
+<li>sender limits transmission<ul>
+<li><code>LastByteSent - LastByteAcked &lt;= min(cwnd, rwnd)</code></li>
+</ul>
+</li>
+<li>cwnd is dynamic, function of perceived network congestion</li>
+<li>TCP sending rate<ul>
+<li>roughly: send cwnd bytes, wait RTT for ACKS, then send more bytes</li>
+<li>rate = cwnd / RTT (bytes/sec)</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-Slow-Start"><a href="#TCP-Slow-Start" class="headerlink" title="TCP Slow Start"></a>TCP Slow Start</h4><ul>
+<li>when connection begins, increase rate exponentially until first loss event<ul>
+<li>initially cwnd = 1 MSS</li>
+<li>double cwnd every RTT</li>
+<li>done by incrementing cwnd for every ACK received</li>
+</ul>
+</li>
+<li>summary: initial rate is slow but ramps up exponentially fast</li>
+</ul>
+<img width="300" height="400" alt="스크린샷 2021-08-12 오전 12 10 14" src="https://user-images.githubusercontent.com/12459864/129055074-e18b65a2-b40a-47bf-add1-f7cc5d33ad07.png">
+
+<h4 id="TCP-detecting-reacting-to-loss"><a href="#TCP-detecting-reacting-to-loss" class="headerlink" title="TCP: detecting, reacting to loss"></a>TCP: detecting, reacting to loss</h4><ul>
+<li>loss indicated by timeout<ul>
+<li>cwnd set to 1 MSS</li>
+<li>window then grows exponetially (as in slow start)</li>
+</ul>
+</li>
+<li>loss indicated by 3 duplicate ACKs: TCP RENO<ul>
+<li>dup ACKs indicate network capable of delivering som segments</li>
+<li>cwnd is cut in half window then grows linearly</li>
+</ul>
+</li>
+<li>TCP Tahoe always set cwnd to 1 (timeout or 3 duplicate acks)</li>
+</ul>
+<h4 id="TCP-switching-from-slow-start-to-CA"><a href="#TCP-switching-from-slow-start-to-CA" class="headerlink" title="TCP: switching from slow start to CA"></a>TCP: switching from slow start to CA</h4><ul>
+<li>Q: when should the exponential increase switch to linear?</li>
+<li>A: when cwnd gets to 1/2 of its value before timeout</li>
+<li>Implementation<ul>
+<li>variable ssthresh</li>
+<li>on loss event, ssthresh is set to 1/2 of cwnd just before loss event</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP-throughput"><a href="#TCP-throughput" class="headerlink" title="TCP throughput"></a>TCP throughput</h4><ul>
+<li>avg. TCP throughput as function of window size, RTT?<ul>
+<li>ignore slow start, assuum always data to send</li>
+</ul>
+</li>
+<li>W: window size (measured in bytes) where loss occurs<ul>
+<li>avg. window size (# in-flight bytes) is 3/4 W</li>
+<li>avg. throughput is 3/4W per RTT</li>
+</ul>
+</li>
+</ul>
+<img width="300" height="200" alt="스크린샷 2021-08-12 오전 12 24 56" src="https://user-images.githubusercontent.com/12459864/129057684-d8f38fec-95a3-4aad-b551-875e015cc137.png">
+
+<h4 id="TCP-Fairness"><a href="#TCP-Fairness" class="headerlink" title="TCP Fairness"></a>TCP Fairness</h4><ul>
+<li>fairness goal<ul>
+<li>if K TCP sessions share same bottleneck link of bandwidth R, each should have average rate of R/K</li>
+</ul>
+</li>
+</ul>
+<img width="400" height="200" alt="스크린샷 2021-08-12 오전 12 29 34" src="https://user-images.githubusercontent.com/12459864/129058788-47474566-7fea-465e-bdcc-fe31e1f3ee2f.png">
+
+<h4 id="Why-is-TCP-fair"><a href="#Why-is-TCP-fair" class="headerlink" title="Why is TCP fair?"></a>Why is TCP fair?</h4><ul>
+<li>two competing sessions<ul>
+<li>additive increase gives slope of 1, as throughout inscreases</li>
+<li>multiplicative decrease decreases throughput proportionally</li>
+</ul>
+</li>
+</ul>
+<img width="500" height="300" alt="스크린샷 2021-08-12 오전 12 29 41" src="https://user-images.githubusercontent.com/12459864/129058794-e030b1e5-09c8-4034-80b2-007c618c169c.png">
+
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>컴퓨터 네트워크 이미정 교수님 강의</li>
+<li>Computer Networking: A Top-Down Approach Featuring the Internet</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/10/Network-4-Transport-Layer/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/08/10/Network-3-Socket-Programming/"
                             aria-label=": Network-3-Socket Programming"
                         >
