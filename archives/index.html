@@ -326,6 +326,276 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/08/12/DATABASE-Connection-Pool/"
+                            aria-label=": DATABASE-Connection Pool"
+                        >
+                            DATABASE-Connection Pool
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-08-12T23:14:02+09:00">
+	
+		    Aug 12, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <ul>
+<li>목차<ul>
+<li>Connection Pool에 대한 개념과 기본적인 원리</li>
+<li>Commons DBCP로 Connection Pool 이해하기</li>
+</ul>
+</li>
+</ul>
+<h2 id="Connection-Pool이란"><a href="#Connection-Pool이란" class="headerlink" title="Connection Pool이란?"></a>Connection Pool이란?</h2><ul>
+<li>클라이언트의 요청에 따라 각 어플리케이션의 스레드에서 데이터베이스에 접근하기 위해서는 Connection이 필요하다</li>
+<li>Connection pool은 이런 Connection을 여러 개 생성해 두어 저장해 놓은 공간, 또는 이 공간의 Connection을 필요할 때 꺼내 쓰고 반환하는 기법을 만한다</li>
+</ul>
+<img width="500" alt="스크린샷 2021-08-13 오후 9 44 34" src="https://user-images.githubusercontent.com/12459864/129360250-cd019646-65de-4de3-a7f8-3853f3401a17.png">
+
+<h3 id="DB에-접근하는-단계"><a href="#DB에-접근하는-단계" class="headerlink" title="DB에 접근하는 단계"></a>DB에 접근하는 단계</h3><ol>
+<li>웹 컨테이너가 실행되면서 DB에 연결된 Connection 객체들을 미리 생성하여 pool에 저장한다</li>
+<li>DB에 요청 시, pool에서 Connection 객체를 가져와 DB에 접근한다</li>
+<li>처리가 끝나면 다시 </li>
+</ol>
+<img width="500" alt="스크린샷 2021-08-13 오후 9 44 45" src="https://user-images.githubusercontent.com/12459864/129360264-3d2fa805-766d-49b2-a239-1b62a70abf58.png">
+
+<h3 id="Connection이-부족하면"><a href="#Connection이-부족하면" class="headerlink" title="Connection이 부족하면?"></a>Connection이 부족하면?</h3><ul>
+<li>모든 요청이 DB에 접근하고 있고 남은 Connection이 없다면, 해당 클라이언트를 대기 상태로 전환시키고 Pool에 Connection이 반환되면 대기 상태에 있는 클라이언트에게 순차적으로 제공된다</li>
+</ul>
+<h3 id="왜-사용할까"><a href="#왜-사용할까" class="headerlink" title="왜 사용할까?"></a>왜 사용할까?</h3><ul>
+<li>매 연결마다 Connection 객체를 생성하고 소멸시키는 비용을 줄일 수 있다</li>
+<li>미리 생성된 Connection 객체를 사용하기 때문에, DB 접근 시간이 단축된다</li>
+<li>DB에 접근하는 Connection 수를 제한하여, 메모리와 DB에 걸리는 부하를 조정할 수 있다</li>
+</ul>
+<h2 id="Commons-DBCP로-Connection-Pool-이해하기"><a href="#Commons-DBCP로-Connection-Pool-이해하기" class="headerlink" title="Commons DBCP로 Connection Pool 이해하기"></a>Commons DBCP로 Connection Pool 이해하기</h2><h3 id="Commons-DBCP-속성-설정"><a href="#Commons-DBCP-속성-설정" class="headerlink" title="Commons DBCP 속성 설정"></a>Commons DBCP 속성 설정</h3><ul>
+<li><p>Commons DBCP의 속성은 BasicDataSource 클래스의 setter 메서드로 설정할 수 있다</p>
+</li>
+<li><p>Spring 프레임 워크를 사용한다면 다음과 같이 bean 설정으로 속성을 등록한다</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.apache.commons.dbcp.BasicDataSource&quot;</span>  </span></span><br><span class="line"><span class="tag">    <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:driverClassName</span>=<span class="string">&quot;$&#123;db.driverClassName &#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:url</span>=<span class="string">&quot;$&#123;db.url&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:username</span>=<span class="string">&quot;$&#123;db.username&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:password</span>=<span class="string">&quot;$&#123;db.password&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:maxActive</span>=<span class="string">&quot;$&#123;db.maxActive&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:maxIdle</span>=<span class="string">&quot;$&#123;db.maxIdle&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">p:maxWait</span>=<span class="string">&quot;$&#123;db.maxWait&#125;&quot;</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="커넥션의-개수"><a href="#커넥션의-개수" class="headerlink" title="커넥션의 개수"></a>커넥션의 개수</h3><h4 id="커넥션-풀의-저장-구조"><a href="#커넥션-풀의-저장-구조" class="headerlink" title="커넥션 풀의 저장 구조"></a>커넥션 풀의 저장 구조</h4><ul>
+<li>커넥션 생성은 Commons DBCP에서 이루어진다</li>
+<li>Commons DBCP는 PoolableConnection 타입의 커넥션을 생성하고 생성한 커넥션에 ConnectionEventListener를 등록한다</li>
+<li>ConnectionEventListener에는 애플리케이션이 사용한 커넥션을 풀로 반환하기 위해 JDBC 트라이버가 호출할 수 있는 콜백 메서드가 있다</li>
+<li>생선된 커넥션은 commons-pool의 addObject() 메서드로 커넥션 풀에 추가된다</li>
+<li>commons-pool은 내부적으로 현재 시간을 담고 있는 타임 스탬프와 추가된 커넥션의 레퍼런스를 한 쌍으로하는 ObjectTimestampPari라는 자료구조를생헝한다</li>
+<li>이들을 LIFO(last in first out) 형태의 CursorableLinkedList로 관리한다</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 9 58 31" src="https://user-images.githubusercontent.com/12459864/129361133-06879c87-e511-4d7a-b48a-ff34e992c27c.png">
+
+<h4 id="커넥션-개수-관련-속성"><a href="#커넥션-개수-관련-속성" class="headerlink" title="커넥션 개수 관련 속성"></a>커넥션 개수 관련 속성</h4><table>
+<thead>
+<tr>
+<th>속성 이름</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>initialSize</td>
+<td>BasicDataSource 클래스 생성 후 최초로 getConnection() 메서드를 호출할 때 커넥션 풀에 채워 넣을 커넥션 수</td>
+</tr>
+<tr>
+<td>maxActive</td>
+<td>동시에 사용할 수 있는 최대 커넥션 개수 (기본값: 8)</td>
+</tr>
+<tr>
+<td>maxIdle</td>
+<td>커넥션 풀에 반납할 때 최대로 유지될 수 있는 커넥션 개수 (기본값: 8)</td>
+</tr>
+<tr>
+<td>minIdle</td>
+<td>최소한으로 유지할 커넥션 개수 (기본값: 0)</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>8개의 커넥션을 최대로 활용할 수 있고 4개는 사용중이고 4개는 대기 중인 상태</p>
+  <img width="500" alt="스크린샷 2021-08-13 오후 11 06 15" src="https://user-images.githubusercontent.com/12459864/129369423-0d9c868f-4d87-479a-a079-30df962c06d1.png">
+</li>
+<li><p>커넥션 개수와 관련된 가장 중요한 성능 요소는 일반적을 커넥션의 최대 개수이다</p>
+</li>
+<li><p>maxActive 값은 DBMS의 설정과 애플리케이션 서버의 개수, Apache, Tomcat에서 동시에 처리할 수 있는 사용자 수 등을 고려해서 설정해야 한다.</p>
+</li>
+<li><p>DBMS가 수용할 수 잇는 커넥션 개수를 확인한 후에 어플리케이션 서버 인스턴스 1개가 사용하기에 적절한 개수를 설정한다</p>
+</li>
+<li><p>사용자가 몰려서 커넥션을 많이 사용할 때는 maxActive 값이 충분히 크지 않다면 병목 지점이 될 수 있다</p>
+</li>
+<li><p>반대로 사용자가 적어서 사용자가 적어서 상요 중인 커넥션이 많지 않은 시스템에서는 maxActive 값을 지나치게 작게 설정하지 않는 한 성능에 영향이 없다</p>
+</li>
+</ul>
+<h3 id="커넥션을-얻기-전-대기-시간"><a href="#커넥션을-얻기-전-대기-시간" class="headerlink" title="커넥션을 얻기 전 대기 시간"></a>커넥션을 얻기 전 대기 시간</h3><ul>
+<li>BasicDataSource 클래스의 maxWait 속성은 커넥션 풀 안의 커넥션이 고갈됐을 때 커넥션 반납을 대기하는 시간이며 기본값은 무한정이다</li>
+<li>사용자가 갑자기 급증하거나 DBMS에 장애가 발생했을 때 장애를 더욱 크게 확산시킬 수 있어 주의해야 한다.</li>
+<li>적절한 maxWait 값을 설정하려면 TPS(transaction per seconds)와 Tomcat에서 처리 가능한 스레드 개수 등을 이해해야 한다</li>
+</ul>
+<h4 id="TPS-transaction-per-seconds"><a href="#TPS-transaction-per-seconds" class="headerlink" title="TPS(transaction per seconds)"></a>TPS(transaction per seconds)</h4><ul>
+<li>maxActive = 5과 maxIdle = 5, minIdle = 5로 설정한 상황을 가정한다</li>
+<li>요청 하나당 쿼리 10개를 실행한다고 가정한다</li>
+<li>각 쿼리의 평균 실행 시간은 50밀리초라고 하면 전체 10개 쿼리의 실행 시간은 500밀리초 이다.</li>
+<li>요청에 대한 초종 응답 시간은 500밀리초라고 생각할 수 있다.</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 11 36 50" src="https://user-images.githubusercontent.com/12459864/129373713-47b6a934-5508-4f9d-abca-0221f34ec548.png">
+
+<ul>
+<li>커넥션 풀에 이용 가능한 유휴 상태의 커넥션이 5개일 때는 동시에 5개의 요청을 500밀리초 동안 처리한다</li>
+<li>따라서 1초 동안에는 10개의 요청을 처리할 수 있고 성능 지수는 10TPS라고 볼 수 있다</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 11 39 35" src="https://user-images.githubusercontent.com/12459864/129374488-f3e9bbc8-6ac1-403f-aba2-4752c0bc8f31.png">
+
+<h4 id="TPS와-커넥션-개수와의-관계"><a href="#TPS와-커넥션-개수와의-관계" class="headerlink" title="TPS와 커넥션 개수와의 관계"></a>TPS와 커넥션 개수와의 관계</h4><ul>
+<li>처리할 요청 수가 증가해도 커넥션 풀의 커넥션 개수가 5개이면 10TPS 이상의 성능을 낼 수 없다</li>
+<li>1번부터 5번까지 요청이 실행되는 동안은 커넥션 풀에 여분의 커넥션이 없다</li>
+<li>6번부터 10번까지 요청은 대기(wait)상태가 되 여분의 커넥션이 생길 때까지 maxWait 값만큼 기다린다</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 11 39 41" src="https://user-images.githubusercontent.com/12459864/129374493-f499dc43-efa9-4fef-98fb-ccf4e9693294.png">
+
+<ul>
+<li>이를 해결하는 가장 수운 방법은 maxActive 값을 높여서 커넥션 풀의 개수를 늘리는 것이다</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 11 42 44" src="https://user-images.githubusercontent.com/12459864/129374496-1dea2379-57b1-450d-a4df-90595822e7dd.png">
+
+<ul>
+<li>커넥션의 개수를 5에서 10으로 늘리면 전체적인 성능도 10TPS로 증가한다</li>
+<li>하지만 일반적을 DBMS의 리소스는 다른 서비스와 공유해 사용하는 경우가 많기 때문에 무조건 커넥션 개수를 크게 설정할 수 없다</li>
+<li>따라서 예상 접속자 수와 서비스의 실제 부하를 측정해 최적의 값을 설정하는 것이 중요하다</li>
+<li>대기 시간 (wait) 값 조절이 커넥션의 개수를 무한히 늘리지 않고 최적의 시스템을 환겨을 구축하는데 중요한 역할을 한다</li>
+<li>maxWait 값을 어떻게 설정했는지가 일시적인 과부하 상태에서 드러나는 시스템의 전체적인 견고함을 결정짓는다</li>
+</ul>
+<img width="600" alt="스크린샷 2021-08-13 오후 11 47 36" src="https://user-images.githubusercontent.com/12459864/129375608-11845037-adc0-40e0-8324-6f999ed25818.png">
+
+<ul>
+<li>적당한 maxWait 값은 Commons DBCP 외에 Tomcat의 동작 방식도 고려해야 한다</li>
+<li>Tomcat은 스레드 기반으로 동작해 사용자의 요청을 처리한다</li>
+<li>Tomcateh 내부에 스레드 풀을 가지고 잇어서 사용자의 요청이 들어올 때마다 스레드 풀에서 하나씩 스레드를 꺼내 요청을 처리한다</li>
+<li>1 ~ 5번의 요청이 처리되기 전에 또 다른 요청이 들어온다</li>
+<li>즉 동시에 6개의 요청이 들어왔을 때 6번 요청은 여분의 커넥션이 없으므로 maxWait 값 만큼 기다린다 (Tomcat의 스레드가 기다리는 주체이다)</li>
+</ul>
+<h4 id="적절한-maxWait-값은"><a href="#적절한-maxWait-값은" class="headerlink" title="적절한 maxWait 값은?"></a>적절한 maxWait 값은?</h4><ul>
+<li>위의 그림에서 maxWait 속성에 설정한 시간이 10,000 밀리초이면 처리량을 넘어서는 요청의 스레드는 10초 동안 대기 상태에 있게 된다</li>
+<li>그리고 사용자의 요청이 계속 증가하면 결국 Tomcat 스레드 풀의 모든 스레드가 소진돼 Tomcat은 아래와 같은 오류를 출력하며 응답을 멈출 것이다  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">심각: All threads (512) are currently busy, waiting. Increase maxThreads (512) or check the servlet status</span><br></pre></td></tr></table></figure></li>
+<li>10초 동안의 대기 상태가 해제되고 커넥션을 획득해 사용자의 요청을 열심히 처리하고 응답을 보내도 그 응답을 받을 사용자는 이미 떠나고 난 뒤인 경우도 있다</li>
+<li>이럴 경우 사용자가 인내할 수 있는 시간을 넘어서는 maxWait 값은 아무런 의미가 없다</li>
+<li>반대의 경우에는 커넥션 풀에 여분이 없을 때마다 오류가 반환된다</li>
+<li>maxWait 값도 사용자의 대기 가능한 시간 같은, 어플리케이션의 특성 및 자원의 상황을 고려해야한다</li>
+<li>만약 갑작스럽게 사용자가 증가해 maxWait 값 안에 커넥션을 얻지 못하는 빈도가 늘어난다면 maxWait을 줄여서 스레드가 한도에 도달하지 않도록 한다</li>
+<li>전체 시스템의 장애는 피하고 ‘간헐적 오류’가 발생하는 정도로 장애의 영향을 줄인다</li>
+<li>이런 상황이 자주 있다면 Commons DBCP의 maxActive 값과 Tomcat의 maxThread 값을 동시에 늘이는 것을 고려한다 </li>
+<li>그러나 시스템 자원의 한도를 넘어선다면 시스템을 확충해야한다</li>
+</ul>
+<h3 id="커넥션의-검사와-정리"><a href="#커넥션의-검사와-정리" class="headerlink" title="커넥션의 검사와 정리"></a>커넥션의 검사와 정리</h3><ul>
+<li>유효성 검사 쿼리 (validation query)와 Evictor 스레드 관련 설정으로도 애플리케이션의 안정성을 높일 수 있다</li>
+</ul>
+<h4 id="유효성-검사쿼리의-설정"><a href="#유효성-검사쿼리의-설정" class="headerlink" title="유효성 검사쿼리의 설정"></a>유효성 검사쿼리의 설정</h4><ul>
+<li>JDBC 커넥션의 유효성에 대한 validationQuery 옵션<ul>
+<li>testOnBorrow: 커넥션 풀에서 커넥션을 얻어올 때 테스트 실행(기본값: true)</li>
+<li>testOnReturn: 커넥션 풀로 커넥션을 반환할 때 테스트 실행(기본값: false)</li>
+<li>testWhileIdle: Evictor 스레드가 실행될 때 (timeBetwwenEvictionRunMills &gt; 0) 커넥션 풀 안에 있는 유휴 상태의 커넥션을 대상으로 테스트 실행 (기본값: false)</li>
+</ul>
+</li>
+<li>검증에 지나치게 자원을 소모하지 않게 testOnBorrow와 testOnReturn 옵션을 false로 설정한다</li>
+<li>오랫동안 대기상태였던 커넥션이 끊어지는 현상을 막기위해 testWhileIdle 옵션은 true로 설정한다</li>
+<li>부적절한 상태의 커넥션이 반납되었을 때 testWhileIdle = true이면 커넥션 풀에서 오류가 발생하는 커넥션을 제외할 수 있다</li>
+</ul>
+<h3 id="Evictor-스레드와-관련된-속성"><a href="#Evictor-스레드와-관련된-속성" class="headerlink" title="Evictor 스레드와 관련된 속성"></a>Evictor 스레드와 관련된 속성</h3><ul>
+<li><p>Evictor 스레드는 Commons DBCP 내부에서 커넥션의 자원을 정리하는 구성요소이며 별도의 스레드로 실행된다</p>
+</li>
+<li><p>관련 속성</p>
+<ul>
+<li>timeBetweenEvictionRunsMills: Evictor 스레드가 동작하는 간격, 기본값은 -1이며 Evictor 스레드의 실행이 비활성화되어있다</li>
+<li>numTestsPerEvictionRun: Evictor 스레드 동작 시 한 번에 검사할 커넥션 수</li>
+<li>minEvictableIdleTimeMillis: 스레드 동작 시 커넥션의 유휴 시간을 확인해 설정 값 이상일 경우 커넥션을 제거한다 (기본값: 30분)</li>
+</ul>
+</li>
+<li><p>역할</p>
+<ol>
+<li><p>커넥션 풀 내의 유휴 상태의 커넥션 중에서 오랫동안 사용되지 않은 커넥션을 추출해 제거한다</p>
+<ul>
+<li>Evictor 스레드 실행 시 설정된 numTestsPerEvictionRun 속서값만큼 CursorableLinkedList의 ObjectTimestampPar을 확인한다</li>
+<li>ObjectTimestampPair의 타임 스탬프 값과 현재 시간의 타임 스탬프 값의 차이가 minEvictableIdleTimeMillis 속성을 초과하면 해당 커넥션을 제거한다</li>
+<li>커넥션 숫자를 적극적으로 줄여야한다면 사용하지 않기</li>
+</ul>
+</li>
+<li><p>커넥션에 대해서 추가로 유효성 검사를 수행해 문제가 있을 경우 해당 커넥션을 제거한다</p>
+<ul>
+<li>testWhileIdle = true 일때만 이 동작을 수행한다</li>
+<li>첫 번째 작업 시 minEvictableIdleTimeMillis 속성값을 초과하지 않은 커넥션에 대해서 추가로 유효성 검사를 수행하는 것이다.</li>
+</ul>
+</li>
+<li><p>앞의 두 작업 이후 남아있는 커넥션의 개수가 minIdle 속성값보다 작으면 minIdle 속성값 만큼 커넥션을 생성해 유지한다</p>
+<p><code>testWhileIdle=true &amp;&amp; timeBetweenEvictionRunMillis &gt; 0이면 위의 3가지 역할을 다 수행하고, </code></p>
+<p><code>testWhileIdle=false &amp;&amp; timeBetweenEvictionRunMillis &gt; 0이면 두 번째 동작은 수행하지 않는다.</code></p>
+</li>
+</ol>
+</li>
+<li><p>주의점</p>
+<ul>
+<li>Evictor 스레드는 동작 시에 커넥션 풀에 잠금(lock)을 걸고 동작하기 때문에 너무 자주 실행하면 서비스 실행에 부담을 줄 수 있다</li>
+<li>numTestsPerEvictionRun 값을 너무 크게 설정하면 Evictor 스레드가 검사해야하는 커넥션 수가 많아져 잠금 상태에 있는 시간이 길어지므로 실행에 부담이 된다.</li>
+</ul>
+</li>
+<li><p>유용한 방안</p>
+<ul>
+<li>IDC(internet data center) 정책에 따라서는 서버 간의 소켓 연결 후 정해진 시간 이상 아무런 패킷도 주고받지 않으면 연결을 종료한다</li>
+<li>timeBetweenEvictionRunsMills 속성으로 의도하지 않게 연결이 끊어지는 것을 방어할 수 있다.</li>
+<li>ex) 30분 동안 통신이 없을 때 연결이 끊어지는 정책으로 네트워크를 운영한다면, BasicDataSource가 풀링(pooling)하는 커넥션의 수가 30개라고 가정할 때<ul>
+<li>30분 안에 모든 커넥션에 유효성 검사 쿼리를 한 번씩은 실행하는 것이 바람직하다.</li>
+<li>Evictor 스레드가 5분에 한 번씩 실행되도록 설정했을 때 30분 동안 Evictor 스레드 실행 횟수는 6번이므로 매번 5개의 커넥션을 검사해야 전체 커넥션을 테스트할 수 있다.</li>
+<li>30분 안에 5분마다 Evctor 스레드가 실행되면 6번 실행되지만 오차를 감안해 5번으로 가정하면 이때 설정해야 할 numTestsPerEvictionRun 값은 다음과 같이 구할 수 있다</li>
+<li><code>6 * numTestsPerEvictionRun &gt; 30개</code></li>
+<li>따라서 numTestsPerEvictionRun 속성값은 최소 6 이상이어야 한다. 일반적인 공식으로 정리하면 다음과 같다</li>
+<li><code>(&#39;IDC 정책에서 허용하는 최대 유휴 커넥션 유지 시간&#39; / timeBetweenEvictionRunsMillis 속성값) * numTestsPerEvictionRun 속성값) &gt; 전체 커넥션 개수</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://d2.naver.com/helloworld/5102792">https://d2.naver.com/helloworld/5102792</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/WeareSoft/tech-interview/blob/master/contents/db.md">https://github.com/WeareSoft/tech-interview/blob/master/contents/db.md</a></li>
+</ul>
+<h2 id="읽어보면-좋은-것들"><a href="#읽어보면-좋은-것들" class="headerlink" title="읽어보면 좋은 것들"></a>읽어보면 좋은 것들</h2><ul>
+<li>1부 : <a target="_blank" rel="noopener" href="https://techblog.woowahan.com/2664/">https://techblog.woowahan.com/2664/</a></li>
+<li>2부 : <a target="_blank" rel="noopener" href="https://techblog.woowahan.com/2663/">https://techblog.woowahan.com/2663/</a></li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/08/12/DATABASE-Connection-Pool/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/08/10/Network-4-Transport-Layer/"
                             aria-label=": Network-4-Transport Layer"
                         >
@@ -3174,360 +3444,6 @@
                         <p>
                             <a
                                 href="/2021/07/24/OS-8-Dead-Lock/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/07/23/OS-7-Process-Synchronization/"
-                            aria-label=": OS-7-Process Synchronization"
-                        >
-                            OS-7-Process Synchronization
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-07-23T15:46:42+09:00">
-	
-		    Jul 23, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Computer-Science/">Computer Science</a>, <a class="category-link" href="/categories/Computer-Science/OS/">OS</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <h2 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h2><img width="500" alt="스크린샷 2021-07-23 오후 8 05 59" src="https://user-images.githubusercontent.com/12459864/126773463-fc19db15-72ae-4162-9405-350accd49775.png">
-
-<ul>
-<li>S-box(Memory Address Space)를 공유하는 E-box(CPU Process)가 여럿 있는 경우 Race Condition의 가능성이 있음</li>
-<li>Multiprocessor system에서 공유 메모리를 사용하는 프로세스들이 커널 내부 데이터를 접근하는 루틴들 간에 발생할 수 있음</li>
-</ul>
-<h2 id="OS에서-Race-Conditoin이-발생하는-경우"><a href="#OS에서-Race-Conditoin이-발생하는-경우" class="headerlink" title="OS에서 Race Conditoin이 발생하는 경우"></a>OS에서 Race Conditoin이 발생하는 경우</h2><ol>
-<li>kernel 수행 중 인터럽트 발생 시</li>
-<li>Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우</li>
-<li>Multiprocessor에서 shared memory 내의 kernel data</li>
-</ol>
-<h3 id="Case1-interrupt-handler-v-s-kernel"><a href="#Case1-interrupt-handler-v-s-kernel" class="headerlink" title="Case1. interrupt handler v.s kernel"></a>Case1. interrupt handler v.s kernel</h3><img width="500" alt="스크린샷 2021-07-23 오후 8 14 11" src="https://user-images.githubusercontent.com/12459864/126774306-979760c3-61f3-4b37-94ba-98606150f0d6.png">
-
-<ul>
-<li><p>커널 모드 running 중 interrupt가 발생하여 인터럽트 처리 루틴이 수행</p>
-<p>  <code>양쪽 다 커널 코드이므로 kernel address space를 공유하기 때문에 Race Condition이 발생할 수 있다</code></p>
-<p>  <code>커널 모드 running중에는 interrupt가 걸리는 것을 막아서 Race Condition을 피할 수 있다</code></p>
-</li>
-</ul>
-<h3 id="Case2-Preempt-a-process-running-in-kernel"><a href="#Case2-Preempt-a-process-running-in-kernel" class="headerlink" title="Case2. Preempt a process running in kernel?"></a>Case2. Preempt a process running in kernel?</h3><img width="802" alt="스크린샷 2021-07-23 오후 8 19 09" src="https://user-images.githubusercontent.com/12459864/126774798-902683a9-3615-4347-b20c-7d930984afb1.png">
-
-<ul>
-<li><p>두 프로세스의 address space 간에는 data sharing이 없음</p>
-</li>
-<li><p>그러나 system call을 하는 동안에는 kernel address space의 data를 access하게 됨(share)</p>
-</li>
-<li><p>커널 작업 중간에 CPU를 preempt하면 Race Condition 발생</p>
-  <img width="500" alt="스크린샷 2021-07-23 오후 8 23 04" src="https://user-images.githubusercontent.com/12459864/126775122-5029628b-81f0-4399-926f-6d48406f30c5.png">
-</li>
-<li><p>해결책: 커널 모드에서 수행 중일 때는 CPU를 preempt하지않고, 커널 모드에서 사용자 모드로 돌아갈 때 preempt한다</p>
-</li>
-</ul>
-<h3 id="Case3-Multiprocessor"><a href="#Case3-Multiprocessor" class="headerlink" title="Case3. Multiprocessor"></a>Case3. Multiprocessor</h3><img width="762" alt="스크린샷 2021-07-23 오후 8 26 17" src="https://user-images.githubusercontent.com/12459864/126775403-8a09989f-188d-4926-abbd-d70eb03ab1cf.png">
-
-<ul>
-<li><p>여러 CPU가 한 자원에 동시 접근한다 -&gt; Race Condition</p>
-</li>
-<li><p>Multi Processor인 경우 서로 다른 CPU가 접근하기 때문에 interrupt를 enable/disable로 해결되지 않는다</p>
-</li>
-<li><p>해결 방법</p>
-<ol>
-<li>한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법</li>
-<li>커널 내부에 있는 각 공유 데이터를 접근할 때마다 그 데이터에 대한 lock/unlock하는 방법</li>
-</ol>
-</li>
-</ul>
-<h2 id="Process-Synchronization-문제"><a href="#Process-Synchronization-문제" class="headerlink" title="Process Synchronization 문제"></a>Process Synchronization 문제</h2><ul>
-<li><p>공유 데이터(shared data)의 동시 접근(concurrent access)은 데이터의 불일치 문제를 발생시킬 수 있다</p>
-</li>
-<li><p>일관성(consistency) 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 매커니즘이 필요하다</p>
-</li>
-<li><p>Race Condition</p>
-<ul>
-<li><p>여러 프로세스들이 동시에 공유 데이터를 접근하는 상황</p>
-</li>
-<li><p>데이터의 최종 연산 결과는 마지막에 그 데이터를 다룬 프로세스에 따라 달라짐</p>
-<img width="500" alt="스크린샷 2021-07-23 오후 8 45 23" src="https://user-images.githubusercontent.com/12459864/126777297-f71d04d8-757d-4ed4-9540-46b300beac5a.png">
-
-<p><code>race condition을 막기 위해서는 concurrent process는 동기화(synchronize) 되어야 한다</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="The-Critical-Section-Problem"><a href="#The-Critical-Section-Problem" class="headerlink" title="The Critical-Section Problem"></a>The Critical-Section Problem</h2><ul>
-<li>n 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우</li>
-<li>각 프로세스의 code segment에는 공유 데이터를 접근하는 코드인 critical section이 존재</li>
-<li>하나의 프로세스가 <code>critical section</code>에 있을때 다른 모든 프로세스는 critical section에 들어갈 수 없어야 한다</li>
-</ul>
-<h3 id="프로그램적-해결법의-충족-조건"><a href="#프로그램적-해결법의-충족-조건" class="headerlink" title="프로그램적 해결법의 충족 조건"></a>프로그램적 해결법의 충족 조건</h3><ul>
-<li>Mutual Exclusion : 프로세스가 critical section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 critical section에 들어가면 안된다</li>
-<li>Progress : 아무도 critical section에 있지 않은 상태에서 critical section에 들어가고자 하는 프로세스가 있으면 critical section에 들어가게 해주어야 한다</li>
-<li>Bounded Waiting(유한 대기) : 프로세스가 critical section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 critical section에 들어가는 횟수에 한계가 있어야한다</li>
-</ul>
-<h3 id="해결-알고리즘-Case-1"><a href="#해결-알고리즘-Case-1" class="headerlink" title="해결 알고리즘 Case 1"></a>해결 알고리즘 Case 1</h3><ul>
-<li><p>Synchronization variable</p>
-<ul>
-<li><p>int turn;</p>
-</li>
-<li><p>initially turn = 0;</p>
-<img width="400" alt="스크린샷 2021-07-23 오후 8 59 59" src="https://user-images.githubusercontent.com/12459864/126778753-4dc95f73-9551-4ad5-8273-52b6865e6f57.png">
-</li>
-</ul>
-</li>
-<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
-<p>  <code>반드시 한번씩 교대로 들어가야만 한다. 임계 구역에 작업하는 프로세스가 없어도, 한 프로세스가 연속해서 들어가지 못한다</code></p>
-</li>
-</ul>
-<h3 id="해결-알고리즘-Case-2"><a href="#해결-알고리즘-Case-2" class="headerlink" title="해결 알고리즘 Case 2"></a>해결 알고리즘 Case 2</h3><ul>
-<li><p>Synchronization variable</p>
-<ul>
-<li><p>boolean flag[2];</p>
-</li>
-<li><p>initially flag[] = false;</p>
-<img width="400" alt="스크린샷 2021-07-23 오후 9 05 34" src="https://user-images.githubusercontent.com/12459864/126779294-5d469692-5fab-48c2-9e06-4f832157fa5b.png">
-</li>
-</ul>
-</li>
-<li><p>mutual exclusion은 만족하나, progress를 만족하지 못함</p>
-<p>  <code>프로세스 둘 다 2행까지 수행 후에 끊임없이 서로에게 양보하는 상황 발생 가능</code></p>
-</li>
-</ul>
-<h3 id="해결-알고리즘-Case-3-Peterson’s-Algorithm"><a href="#해결-알고리즘-Case-3-Peterson’s-Algorithm" class="headerlink" title="해결 알고리즘 Case 3 (Peterson’s Algorithm)"></a>해결 알고리즘 Case 3 (Peterson’s Algorithm)</h3><ul>
-<li><p>algorithm 1 2 번을 조합함</p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 9 09 55" src="https://user-images.githubusercontent.com/12459864/126779735-01a7ad79-af16-458a-b106-a9f9cb255be6.png">
-</li>
-<li><p>두 프로세스의 임계영역 문제 해결조건을 모두 만족한다</p>
-<p>  <code>하지만 Busy Waiting!이다 (계속 CPU와 memroy를 쓰면서 wait)</code></p>
-</li>
-</ul>
-<h3 id="Synchronization-Hardware"><a href="#Synchronization-Hardware" class="headerlink" title="Synchronization Hardware"></a>Synchronization Hardware</h3><ul>
-<li><p>하드웨어적으로 Test &amp; modify를 atomic하게 수행할 수 있도록 지원하는 경우 앞의 문제는 간단히 해결</p>
-  <img width="300" alt="스크린샷 2021-07-23 오후 9 34 54" src="https://user-images.githubusercontent.com/12459864/126782372-6363c316-b832-42b0-83ba-86dae64a08dd.png">
-</li>
-<li><p>Mutual Exclusion with Test &amp; Set</p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 9 35 06" src="https://user-images.githubusercontent.com/12459864/126782378-1edfb6b3-0808-40da-aec4-92328d8d5a3c.png">
-
-</li>
-</ul>
-<h3 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h3><ul>
-<li><p>앞의 방식들을 추상화 시킴</p>
-</li>
-<li><p>Semaphores <code>S</code></p>
-<ul>
-<li><p>integer variable</p>
-</li>
-<li><p>S는 자원의 갯수</p>
-</li>
-<li><p>아래의 두 가지 atomic 연산에 의해서만 접근 가능</p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 9 51 37" src="https://user-images.githubusercontent.com/12459864/126784266-ab3f09b2-0f33-4850-8315-af5139c74bcf.png"></li>
-</ul>
-</li>
-<li><p>세마포어의 두가지 종류</p>
-<ol>
-<li>Counting Semaphore<ul>
-<li>도메인이 0 이상인 임의의 정수값</li>
-<li>주로 resource counting에 사용</li>
-</ul>
-</li>
-<li>Binary Semaphore (=mutex)<ul>
-<li>0 또는 1 값만 가질 수 있는 semaphore</li>
-<li>주로 mutual exclusion (lock/unlock)에 사용</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h4 id="Critical-Section-Of-n-Processes"><a href="#Critical-Section-Of-n-Processes" class="headerlink" title="Critical Section Of n Processes"></a>Critical Section Of n Processes</h4><img width="400" alt="스크린샷 2021-07-23 오후 9 56 55" src="https://user-images.githubusercontent.com/12459864/126784739-f940e8f8-671b-41d5-a395-20dcc6c169ed.png">
-
-<p><code>위의 방식은 busy-wait 방식으로 임계구역이 오래걸리는 작업일 경우 효율적이지 못하다 따라서 Block &amp; Wake up 방식을 사용하는 방법도 있다</code></p>
-<h3 id="Block-And-Wake-Up-구현"><a href="#Block-And-Wake-Up-구현" class="headerlink" title="Block And Wake Up 구현"></a>Block And Wake Up 구현</h3><ul>
-<li><p>Semaphore를 다음과 같이 정의한다</p>
-<p>  &lt;img width=”400” alt=”스크린샷 2021-07-23 오후 10 02 04” src=”<a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-">https://user-images.githubusercontent.com/12459864/126785511-2912b40c-b763-4646-a1ea-</a> </p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 10 02 23" src="https://user-images.githubusercontent.com/12459864/126785516-6f6156ad-a95c-4691-a0f2-1d2e28407f6e.png">
-</li>
-<li><p>block과 wakeup을 다음과 같이 가정</p>
-<ul>
-<li>block : 커널은 block을 호춝한 프로세스를 suspend시키고, 이 프로세스의 PCB를 semaphore에 대한 wait queue에 넣음</li>
-<li>wakeup(P) : block된 프로세스 P를 wakeup 시킴, 이 프로세스의 PCB를 ready queue로 </li>
-</ul>
-</li>
-<li><p>Semaphore 연산</p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 10 09 03" src="https://user-images.githubusercontent.com/12459864/126786403-d142893d-e779-4251-a7cb-0831523e35f5.png">
-
-<p>  <code>value는 block과 wake up의 기준</code></p>
-</li>
-</ul>
-<h3 id="Busy-wait-vs-Block-wakeup"><a href="#Busy-wait-vs-Block-wakeup" class="headerlink" title="Busy-wait vs Block/wakeup"></a>Busy-wait vs Block/wakeup</h3><ul>
-<li>Critical section의 길이가 긴 경우 Block/wakeup이 적당</li>
-<li>Critical section의 길이가 매우 짧은 경우 Block/wakeup 오버헤드가 busy-wait 오버헤드보다 더 커질 수 있음</li>
-<li>일반적으로는 Block/wakeup 방식이 더 좋음</li>
-</ul>
-<h2 id="Deadlock-and-Starvation"><a href="#Deadlock-and-Starvation" class="headerlink" title="Deadlock and Starvation"></a>Deadlock and Starvation</h2><ul>
-<li><p>Deadlock : 둘 이상의 프로세스가 서로 상대방에 의행 충족될 수 있는 event를 무한히 기다리는 현상</p>
-  <img width="400" alt="스크린샷 2021-07-23 오후 11 18 04" src="https://user-images.githubusercontent.com/12459864/126795452-7f6e8dec-dc11-4982-ba83-65ec421db03a.png">
-</li>
-<li><p>Starvation : <code>indefinite blocking</code>, 프로세스가 suspend된 이후에 해당하는 세마포어 큐에서 빠져나갈 수 없는 현상</p>
-</li>
-</ul>
-<h2 id="대표적인-Race-Condition-문제"><a href="#대표적인-Race-Condition-문제" class="headerlink" title="대표적인 Race Condition 문제"></a>대표적인 Race Condition 문제</h2><h3 id="Bounded-Buffer-Problem"><a href="#Bounded-Buffer-Problem" class="headerlink" title="Bounded-Buffer Problem"></a>Bounded-Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-23 오후 11 22 10" src="https://user-images.githubusercontent.com/12459864/126796039-cade610e-36bc-4a9b-987b-697188c75901.png">
-
-<ul>
-<li><p>shared data</p>
-<ul>
-<li>buffer 자체</li>
-<li>buffer 조작 변수 (empty/full buffer의 시작 위치)</li>
-</ul>
-</li>
-<li><p>Synchronization variables</p>
-<ul>
-<li><p>mutual exclusion -&gt; Need binary semaphore (Buffer의 사용 여부)</p>
-</li>
-<li><p>resource count -&gt; Need integer semaphore (남은 empty/full buffer의 수 표시)</p>
-<img width="500" alt="스크린샷 2021-07-23 오후 11 27 27" src="https://user-images.githubusercontent.com/12459864/126796801-75ef6b43-9d0d-4c5e-a30a-d95971ff1d05.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Readers-Writers-Problem"><a href="#Readers-Writers-Problem" class="headerlink" title="Readers-Writers Problem"></a>Readers-Writers Problem</h3><ul>
-<li><p>한 프로세스가 DB에 write 중일 때 다른 process가 접근하면 안됨</p>
-</li>
-<li><p>read는 동시에 여럿이 해도 됨</p>
-</li>
-<li><p>solution</p>
-<ul>
-<li>Writer가 DB에 접근 허가를 아직 얻지 못한 상태에서는 모든 대기중인 Reader들을 다 DB에 접근하게 해준다</li>
-<li>Writer는 대기 중인 Reader가 하나도 없을 때 DB 접근이 허용된다</li>
-<li>일단 Wrtier가 DB에 접근 중이면 Reader들은 접근이 금지된다</li>
-<li>Wrtier가 DB에서 빠져나가야만 Reader의 접근이 허용된다</li>
-</ul>
-</li>
-<li><p>shared data</p>
-<ul>
-<li>DB 자체</li>
-<li>readcount; -&gt; 현재 DB에 접근 중인 Reader의 수</li>
-</ul>
-</li>
-<li><p>Synchronization variables</p>
-<ul>
-<li><p>mutex -&gt; 공유 변수 readcount의 mutual exclusion을 보장</p>
-</li>
-<li><p>db -&gt; reader와 writer가 공유 DB 자체를 올바르게 접근하게 하는 역할</p>
-<img width="500" alt="스크린샷 2021-07-23 오후 11 39 11" src="https://user-images.githubusercontent.com/12459864/126798380-8a4486c7-98a4-4f6d-b49b-a42d8a5eebf5.png">
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Dining-Philosophers-Problem"><a href="#Dining-Philosophers-Problem" class="headerlink" title="Dining-Philosophers Problem"></a>Dining-Philosophers Problem</h3><img width="500" alt="스크린샷 2021-07-23 오후 11 48 06" src="https://user-images.githubusercontent.com/12459864/126799613-27f45259-1028-4e52-8f15-777c1bdc5adb.png">
-
-<ul>
-<li><p>위의 solution의 문제점</p>
-<ul>
-<li>Deadlock 가능성이 있다</li>
-<li>모든 철학자가 동시에 배가 고파져서 왼쪽 젓가락만 집을 경우</li>
-</ul>
-</li>
-<li><p>해결 방안</p>
-<ul>
-<li>4명의 철학자만이 동시에 테이블에 앉을 수 있도록 한다</li>
-<li>젓가락을 두 개 모두 집을 수 있을 때에만 젓가락을 집도록한다</li>
-<li>짝수(홀수) 철학자는 왼쪽(오른쪽) 젓가락부터 집도록한다</li>
-</ul>
-</li>
-</ul>
-<img width="500" alt="스크린샷 2021-07-23 오후 11 52 10" src="https://user-images.githubusercontent.com/12459864/126800179-689d5ff5-3df5-4fba-99a2-cfa033768de3.png">
-
-<h2 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h2><ul>
-<li><p>Semaphore의 문제점</p>
-<ul>
-<li><p>코딩하기 힘들다</p>
-</li>
-<li><p>정확성의 입증이 어렵다</p>
-</li>
-<li><p>자발적 협력이 필요하다</p>
-</li>
-<li><p>한 번의 실수가 모든 시스템에 치명적인 영향을 미친다</p>
-  <img width="300" alt="스크린샷 2021-07-23 오후 11 57 14" src="https://user-images.githubusercontent.com/12459864/126800849-f5b6c1b3-a26b-4ce8-a10e-c1a961958b6c.png">
-</li>
-</ul>
-</li>
-<li><p>모니터란?</p>
-<ul>
-<li><p>동시 수행중인 프로세스 사이에서 abstract data type의 안전한 공유를 보장하기 위한 high-level synchronization construct</p>
-  <img width="300" alt="스크린샷 2021-07-24 오전 12 01 53" src="https://user-images.githubusercontent.com/12459864/126801996-c765b406-a4dc-43bf-b363-a889113b4b3d.png"></li>
-<li><p>모니터 내에서는 한 번에 하나의 프로세스만이 활동 가능하다</p>
-</li>
-<li><p>프로그래머가 동기화 제약 조건을 명시적으로 코딩할 필요없음</p>
-</li>
-<li><p>프로세스가 모니터 안에서 대기할 수 있도록 하기 위해 <code>conditional variable</code> 사용</p>
-<ul>
-<li>condition x, y;</li>
-</ul>
-</li>
-<li><p>condition variable은 wait와 signal 연산에 의해서만 접근 가능</p>
-<ul>
-<li><p><code>x.wait();</code> : x.wait()을 invoke한 프로세스는 다른 프로세스가 x.signal()을 invoke하기 전까지는 suspend된다</p>
-</li>
-<li><p><code>x.signal();</code> : x.signal()은 정확하게 하나의 suspend된 프로세스를 resume한다. Suspend된 프로세스가 없으면 아무 일도 일어나지 않는다</p>
-<img width="600" alt="스크린샷 2021-07-24 오전 12 06 19" src="https://user-images.githubusercontent.com/12459864/126802092-30fc9555-362e-4ede-a636-63d728dde445.png">
-
-<p><code>monitor에 프로세스가 작업중이면 외부 entry queue에서 대기한다</code></p>
-<p><code>monitor내부에서 condition x가 없으면 x에 관한 queue에서 대기한다</code></p>
-<p><code>내부에서 작업중인 프로세스가 없거나 작업중인 프로세스가 condition 대기 queue에서 sleep하고 있으면 외부 작업 큐에서 프로세스가 monitor를 작업한다</code></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Monitor를-적용한-Bounded-Buffer-Problem"><a href="#Monitor를-적용한-Bounded-Buffer-Problem" class="headerlink" title="Monitor를 적용한 Bounded Buffer Problem"></a>Monitor를 적용한 Bounded Buffer Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 11 51" src="https://user-images.githubusercontent.com/12459864/126802932-f1e76993-dc72-47c1-90cd-7a8f66590721.png">
-
-<h3 id="Monitor를-적용한-Dining-Philosophers-Problem"><a href="#Monitor를-적용한-Dining-Philosophers-Problem" class="headerlink" title="Monitor를 적용한 Dining-Philosophers Problem"></a>Monitor를 적용한 Dining-Philosophers Problem</h3><img width="600" alt="스크린샷 2021-07-24 오전 12 12 05" src="https://user-images.githubusercontent.com/12459864/126803056-9f7ca7e7-1c4d-4e7e-bb10-51e527fd5833.png">
-
-<h2 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h2><ul>
-<li>반효경 교수님 운영체제 강의</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/07/23/OS-7-Process-Synchronization/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >

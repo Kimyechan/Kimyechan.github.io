@@ -325,6 +325,82 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/"
+                            aria-label=": Algorithm-해킹"
+                        >
+                            Algorithm-해킹
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-11-13T17:38:55+09:00">
+	
+		    Nov 13, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Graph/">Graph</a>, <a class="category-link" href="/categories/Algorithm/Graph/Dijkstra/">Dijkstra</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <hr>
+<p>백준 10282 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/10282">문제링크</a></p>
+<ul>
+<li><p>문제유형 : </p>
+<ul>
+<li>그래프</li>
+<li>다익스트라 최단 경로 알고리즘</li>
+</ul>
+</li>
+<li><p>설명</p>
+<ul>
+<li>정점의 개수 N, 간선의 개수 D</li>
+<li>우선순위 큐를 이용하여, 시간복잡도 O(NlogD)로 해결할 수 있습니다</li>
+</ul>
+</li>
+<li><p>풀이</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">input = sys.stdin.readline</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span>(<span class="params">strat</span>):</span></span><br><span class="line">    heap_data = []</span><br><span class="line">    heapq.heappush(heap_data, (<span class="number">0</span>, start))</span><br><span class="line">    distance[start] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> heap_data:</span><br><span class="line">        dist, now = heapq.heappop(heap_data)</span><br><span class="line">        <span class="keyword">if</span> distance[now] &lt; dist:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> adj[now]:</span><br><span class="line">            cost = dist + i[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> distance[i[<span class="number">0</span>]] &gt; cost:</span><br><span class="line">                distance[i[<span class="number">0</span>]] = cost</span><br><span class="line">                heapq.heappush(heap_data, (cost, i[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(int(input())):</span><br><span class="line">    n, m, start = map(int, input().split())</span><br><span class="line">    adj = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">    distance = [<span class="number">1e9</span>] * (n + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(m):</span><br><span class="line">        x, y, cost = map(int, input().split())</span><br><span class="line">        adj[y].append((x, cost))</span><br><span class="line">    dijkstra(start)</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    max_distance = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> distance:</span><br><span class="line">        <span class="keyword">if</span> i != <span class="number">1e9</span>:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; max_distance:</span><br><span class="line">                max_distance = i</span><br><span class="line">    print(count, max_distance)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2020/11/13/Algorithm-%ED%95%B4%ED%82%B9/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2020/11/10/Web-Cookie-And-Session/"
                             aria-label=": Web-Cookie And Session"
                         >
@@ -1477,112 +1553,6 @@
                         <p>
                             <a
                                 href="/2020/11/09/Algorithm-DFS%EC%99%80-BFS/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/"
-                            aria-label=": Algorithm-가장 높은 탑 쌓기"
-                        >
-                            Algorithm-가장 높은 탑 쌓기
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2020-11-06T21:18:59+09:00">
-	
-		    Nov 06, 2020
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>, <a class="category-link" href="/categories/Algorithm/Dynamic-Programming/">Dynamic Programming</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>백준 9251 : <a target="_blank" rel="noopener" href="https://www.acmicpc.net/problem/9251">문제링크</a></p>
-<ul>
-<li><p>문제유형 : </p>
-<ul>
-<li>동적 프로그래밍</li>
-</ul>
-</li>
-<li><p>설명</p>
-<ul>
-<li><p>곡의 개수가 N, 볼륨의 최댓값은 M이므로 동적프로그래밍을 이용하여 시간 복잡도 O(NM)</p>
-</li>
-<li><p>핵심 아이디어: 모든 볼륨에 대하여 연주 가능 여부 계산</p>
-</li>
-<li><p>D[i][j+1] =&gt; i번째 노래일 때 j 크기의 볼륨으로 연주 가능한지 여부</p>
-</li>
-<li><p>노래를 순서대로 확인, 매 번 모든 크기의 볼륨을 검사</p>
-</li>
-<li><p>D[i][j - V[i]] = True if D[i-1][j] = True</p>
-</li>
-<li><p>D[i][j + V[i]] = True if D[i-1][j] = True</p>
-<p>  <img src="https://user-images.githubusercontent.com/12459864/98364040-63a4ba80-2073-11eb-870e-3099a816f906.png" alt="스크린샷 2020-11-06 오후 9 02 20"></p>
-</li>
-</ul>
-</li>
-<li><p>풀이</p>
-<pre><code class="python">    n, s, m = map(int, input().split())
-    array = list(map(int, input().split()))
-
-    dp = [[0] * (m + 1) for _ in range(n + 1)]
-    dp[0][s] = 1
-
-    for i in range(1, n + 1):
-        for j in range(m + 1):
-            if dp[i - 1][j] == 0:
-                continue
-            if j - array[i - 1] &gt;= 0:
-                dp[i][j - array[i - 1]] = 1
-            if j + array[i - 1] &lt;= m:
-                dp[i][j + array[i - 1]] = 1
-
-    result = -1
-    for i in range(m, -1, -1):
-        if dp[n][i] == 1:
-            result = i
-            break
-
-    print(result)</code></pre>
-</li>
-</ul>
-
-                    
-                        
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2020/11/06/Algorithm-%EA%B0%80%EC%9E%A5-%EB%86%92%EC%9D%80-%ED%83%91-%EC%8C%93%EA%B8%B0/#post-footer"
                                 class="postShorten-excerpt_link link"
                                 aria-label=""
                             >
